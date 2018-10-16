@@ -7,12 +7,13 @@ import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,De
 import Calendar from 'react-native-calendar-datepicker';
 import Moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Iccon from 'react-native-vector-icons/SimpleLineIcons';
-import Icons from 'react-native-vector-icons/FontAwesome5';
-import Iccons from 'react-native-vector-icons/Foundation'
+import Iccon from 'react-native-vector-icons/FontAwesome';
+import Icons from 'react-native-vector-icons/FontAwesome';
+import Iccons from 'react-native-vector-icons/FontAwesome'
 import BottomNavigation, {
     ShiftingTab
 } from 'react-native-material-bottom-navigation';
+import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
 // import Spinner from 'react-native-spinkit';
 import Drawer from 'react-native-drawer';
@@ -44,89 +45,7 @@ const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
 const search_magnifier_black = require('../Images/search_magnifier_black.png');
 const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
-var params;
-var favoriteticketdata={mobile: "9999988888",stops:[],routes:[]};
-const drawerStyles = {
-    drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
-    main: {paddingLeft: 3},
-};
-var locationkey={};
-var locationlabel={};
-var poiarray=[];
-var currentpoi;
-var favcardListArr;
-var favticketkeys;
-var poi = [
-    {
-        id: "1212",
-        code:"CNTLGCB",
-        name: "Hyderabad Central Gachibowli"
-    },
-    {
-        id: "1213",
-        code:"RDISSON",
-        name: "Radisson Hotel Gachibowli"
-    },
-    {
-        id: "1214",
-        code:"GCHBWLI",
-        name: "Gachibowli"
-    },
 
-    {
-        id:125,
-        code:"TLCMNGR",
-        name: "TelecomNagar Bus Stop",
-        nearby: [
-            {
-                id: "1212",
-                code:"CNTLGCB",
-                name: "Hyderabad Central Gachibowli"
-            },
-            {
-                id: "1213",
-                code:"RDISSON",
-                name: "Radisson Hotel Gachibowli"
-            },
-            {
-                id: "1214",
-                code:"GCHBWLI",
-                name: "Gachibowli"
-            }
-        ]
-    },
-];
-
-var options = [    {
-    key: '',
-    label: ''
-
-}];
-// var options = [    {
-//     key: 'kenya',
-//     label: 'Kenya',
-//     searchKey: 'Africa',
-// },
-//     {
-//         key: 'uganda',
-//         label: 'Uganda',
-//         searchKey: 'Africa',
-//     },
-//     {
-//         key: 'libya',
-//         label: 'Libya',
-//         searchKey: 'Africa',
-//     },
-//     {
-//         key: 'japan',
-//         label: 'Japan',
-//         searchKey: 'Asia',
-//     },
-//     {
-//         key: 'estonia',
-//         label: 'Estonia',
-//         searchKey: 'Europe',
-//     }];
 
 export default class Home extends Component {
 
@@ -136,11 +55,11 @@ export default class Home extends Component {
         this.state = {
             loading:false,
             favticket:[],
-            activeTab: 'home',
+            activeTab: 'tests',
+            active: 'false',
             isDateTimePickerVisible: false,
             selectedItem: undefined,
             selected2: '',
-            viewSection :false,
             results: {
                 items: []
             },
@@ -159,43 +78,35 @@ export default class Home extends Component {
 
     tabs = [
         {
-            key:"home",
+            key:"tests",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
-            label:"Home",
-            icon : 'home',
-            barColor: '#2eacde',
+            label:"Tests",
+            icon : 'description',
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"favourite",
+            key:"reports",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'star' ,
-            label:"Favourite",
-            barColor: '#2eacde',
+            icon : 'timeline' ,
+            label:"Reports",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"track",
+            key:"alerts",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'location-on' ,
-            label:"Track",
-            barColor: '#2eacde',
+            icon : 'schedule' ,
+            label:"Alerts",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"ticket",
+            key:"profile",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon :'receipt' ,
-            label:"Ticket",
-            barColor: '#2eacde',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
-        },
-        {
-            key:"more",
-            // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'menu' ,
-            label:"More",
-            barColor: '#2eacde',
+            icon : 'person-pin' ,
+            label:"Profile",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
@@ -250,7 +161,7 @@ export default class Home extends Component {
     //     activeTab: this.tabs[0].key
     // }
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="white" name={icon} />
+        <Icon size={24} color="gery" name={icon} />
 
     );
 
@@ -264,16 +175,6 @@ export default class Home extends Component {
         />
     );
 
-    onValueChange (value: string) {
-        this.setState({
-            selected1 : value
-        });
-    }
-    onChangeValue (value: string) {
-        this.setState({
-            selected2 : value
-        });
-    }
     _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
 
@@ -313,22 +214,15 @@ export default class Home extends Component {
     // }
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'home':
+            case 'tests':
                 break;
-            case 'favourite':
-                // Actions.homeScreen();
-                // {this.buttonPress}
-                this.setState({viewSection:!this.state.viewSection});
-                // {this.renderBottomComponent()}
+            case 'reports':
+
                 break;
-            case 'track':
-                Actions.tripScreen();
+            case 'alerts':
                 break;
-            case 'ticket':
-                Actions.ticketScreen(params);
-                break;
-            case 'more':
-                Actions.moreScreen();
+            case 'profile':
+                Actions.profileScreen();
                 break;
             default:
 
@@ -399,24 +293,25 @@ export default class Home extends Component {
     //     }, 3000)
     // };
     async componentDidMount() {
-        await AsyncStorage.getItem('favs')
-            .then((favs) => {
-                let tempfavticket = favoriteticketdata;
-                // alert("all tick"+favs+"favticket");
-                favoriteticketdata = favs ? JSON.parse(favs) : tempfavticket;
-                // this.setState({favticket: favoriteticketdata});
-                // alert("all tick"+JSON.stringify(favoriteticketdata.routes));
-            }).done();
-        await AsyncStorage.getItem('mobileno')
-            .then((mobileno) => {
-                // let tempfavticket = favoriteticketdata;
-                // alert("all tick"+favs+"favticket");
-                favoriteticketdata.mobile = mobileno;
-                // this.setState({favticket: favoriteticketdata});
-                // AsyncStorage.setItem('number', (favoriteticketdata.mobile));
-                // alert("all tick"+(favoriteticketdata.mobile));
-                BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-            }).done();
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        // await AsyncStorage.getItem('favs')
+        //     .then((favs) => {
+        //         let tempfavticket = favoriteticketdata;
+        //         // alert("all tick"+favs+"favticket");
+        //         favoriteticketdata = favs ? JSON.parse(favs) : tempfavticket;
+        //         // this.setState({favticket: favoriteticketdata});
+        //         // alert("all tick"+JSON.stringify(favoriteticketdata.routes));
+        //     }).done();
+        // await AsyncStorage.getItem('mobileno')
+        //     .then((mobileno) => {
+        //         // let tempfavticket = favoriteticketdata;
+        //         // alert("all tick"+favs+"favticket");
+        //         favoriteticketdata.mobile = mobileno;
+        //         // this.setState({favticket: favoriteticketdata});
+        //         // AsyncStorage.setItem('number', (favoriteticketdata.mobile));
+        //         // alert("all tick"+(favoriteticketdata.mobile));
+        //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        //     }).done();
         // AppState.addEventListener('change',this.handleAppStateChange);
     }
 
@@ -425,44 +320,6 @@ export default class Home extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
 
-    // handleAppStateChange = ()  => {
-    //     // if(appState === 'background'){
-    //         PushNotification.localNotification({
-    //             /* Android Only Properties */
-    //             id: '0', // (optional) Valid unique 32 bit integer specified as string. default: Autogenerated Unique ID
-    //             ticker: "My Notification Ticker", // (optional)
-    //             autoCancel: true, // (optional) default: true
-    //             largeIcon: "ic_launcher", // (optional) default: "ic_launcher"
-    //             smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher"
-    //             bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-    //             subText: "This is a subText", // (optional) default: none
-    //             color: "red", // (optional) default: system default
-    //             vibrate: true, // (optional) default: true
-    //             vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-    //             tag: 'some_tag', // (optional) add tag to message
-    //             group: "group", // (optional) add group to message
-    //             ongoing: false, // (optional) set whether this is an "ongoing" notification
-    //             priority: "high", // (optional) set notification priority, default: high
-    //             visibility: "private", // (optional) set notification visibility, default: private
-    //             importance: "high", // (optional) set notification importance, default: high
-    //
-    //             //     /* iOS only properties */
-    //             //     alertAction: // (optional) default: view
-    //             //     category: // (optional) default: null
-    //             // userInfo: // (optional) default: null (object containing additional notification data)
-    //
-    //             /* iOS and Android properties */
-    //             title: "My Notification Title", // (optional)
-    //             message: "My Notification Message", // (required)
-    //             playSound: false, // (optional) default: true
-    //             soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-    //             number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    //             repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-    //             actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-    //         });
-    //
-    //     // }
-    // };
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
@@ -481,307 +338,237 @@ export default class Home extends Component {
         return true;
     };
 
-    resetData(){
-    this.setState({
-        picked2 : ''
-                  });
-};
     render() {
-        params = {};
-         params = {
-             fromLoc:this.state.picked1,
-             toLoc:this.state.picked2,
-             tripdte:this.state.date,
 
-         };
-
-        fetch("http://35.240.147.215:3037/poi/name", { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-            method: 'POST', // USE GET, POST, PUT,ETC
-            headers: { //MODIFY HEADERS
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                //    application/x-www-form-urlencoded
-            },
-            body: 'name='
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                // alert(responseJson.message);
-               // if (responseJson.message==="poi found"){
-
-                    poiarray=responseJson.POI;
-                    options = poiarray.map( (currentpoi) => {
-                        return{
-                            key: currentpoi.name,
-                            label: currentpoi.name,
-                        };
-                    });
-
-               // }
-
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-
-            favcardListArr = favoriteticketdata.routes.map((AllfavTicket,index)=> {
-            // favticketkeys = Object.keys(AllfavTicket);
-            // let favcardlistlen = favoritedata.length;
-            // alert("all tick" + AllfavTicket.from);
-
-            // if(this.state.viewSection===true) {
-            return (
-
-                <Card style={styles.view}>
-                    <TouchableOpacity  onPress={ () => {
-                        params.fromLoc= favoriteticketdata.routes[index].from;
-                        params.toLoc= favoriteticketdata.routes[index].to;
-
-                        // alert("all tick "+index+" from"+params.fromLoc+"to"+params.toLoc+"date"+params.tripdte);
-                        Actions.searchScreen(params);
-                    }}>
-                    <View style={{flexDirection:'column'}}>
-                    <Text style={{textAlign: 'center',marginTop: 5, fontSize: 14, color: '#000'}}>
-                        {AllfavTicket.from}
-                    </Text>
-                    <Text  style={{textAlign:'center',fontSize:16,color:'#000',marginTop:10}} > To
-                    </Text>
-                    <Text style={{textAlign: 'center',marginTop: 5, fontSize: 14, color: '#000'}}>
-                         {AllfavTicket.to}
-                    </Text>
-                    </View>
-                    </TouchableOpacity>
-                </Card>
-
-            );
-            // }
-        });
         return (
 
             <View style={styles.container}>
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#f1f1f1f1'/>
                 </View>
 
                 <View style={[styles.headerview]}>
 
-                    <Card styles={card}>
-
-                        <View style={{flexDirection:"row",marginTop:10}}>
-                            <View style={{flexDirection:"column",justifyContent:'space-evenly',marginLeft: 15}}>
-                                {/*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}>*/}
-                                <Image source={require('../Images/from_icon.png')}
-                                       style={{width: 25, height: 35, paddingLeft: 5}}/>
-                                <Image source={require('../Images/to_icon.png')}
-                                       style={{width: 25, height: 35, paddingLeft: 5}}/>
-
-                            </View>
-                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center',marginBottom:20}}>
-
-                                <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
-                                                  onPress={this.onFromShowpicker}>
-                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="From Location"
-                                    lineHeight={30}
-                                    value={this.state.picked1}
-                                    fontSize={16}
-                                    editable={false}
-                                    // onChangeText={(itemValue) => {this.setState({selected1: this.findPOI(itemValue)})}}
-                                    containerStyle={{height:55,width:280,justifyContent:'flex-end'}}
-                                    />
-                                </TouchableOpacity>
-                                <ModalFilterPicker
-                                    visible={this.state.pickervisible1}
-                                    onSelect={this.onFromSelectpicker}
-                                    onCancel={this.onFromCancelpicker}
-                                    options={options}
-                                    optionTextStyle={style={fontSize:16}}
-                                />
-                                    <TouchableOpacity  style={{marginTop:20}} onPress={this._SwapPickerText.bind(this)}>
-                                        <Icon type='MaterialIcons' name='swap-vertical-circle' size={35} color="#2eacde"/>
-                                    </TouchableOpacity>
-                                    {/*<View style={{*/}
-                                        {/*flex: 1,*/}
-                                        {/*borderBottomColor: 'black',*/}
-                                        {/*borderBottomWidth: 1,*/}
-                                        {/*width: width - 10,}}>*/}
-                                    {/*</View>*/}
-                                </View>
-                                <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                   onPress={this.onToShowpicker}>
-                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                <TextField label="To Location"
-                                           lineHeight={30}
-                                           value={this.state.picked2}
-                                           editable={false}
-                                           fontSize={16}
-                                           // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                           containerStyle={{height:55,width:280,marginTop:10,justifyContent:'flex-end'}}/>
-                                </TouchableOpacity>
-                                <ModalFilterPicker
-                                    visible={this.state.pickervisible2}
-                                    onSelect={this.onToSelectpicker}
-                                    onCancel={this.onToCancelpicker}
-                                    options={options}
-                                    optionTextStyle={style={fontSize:16}}
-                                />
-
-                            </View>
-                        </View>
-                        <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
-
-                            <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                <Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}
-                                />
-                            </TouchableOpacity>
-                            <Text note style={{fontSize:12,textAlign:'center'}} >  Journey Date</Text>
-                        </View>
-
-                        <View style={{flexDirection:"row",justifyContent:'flex-start'}}>
-                            <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                <DateTimePicker
-                                    isVisible={this.state.isDateTimePickerVisible}
-                                    mode={'date'}
-                                    minimumDate={Moment().toDate()}
-                                    onConfirm={this._handleDatePicked}
-                                    onCancel={this._hideDateTimePicker}
-                                />
-
-
-                            </TouchableOpacity>
-
-
+                        <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
+                                <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
 
                         </View>
-                        <TouchableOpacity onPress={this._showDateTimePicker}>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}
-                                  onPress={this._showDateTimePicker}>
+                    <ScrollView>
+                    <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>
+                        <Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 16/10/2018</Text>
 
-                                <Text note style={{fontSize:25,color:'#000',marginLeft:15}} onPress={this._showDateTimePicker}> {
-                                    Moment(this.state.date).format('DD')} </Text>
+                    </View>
 
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}
-                                      onPress={this._showDateTimePicker}>
-                                    {/*<Text note style={{fontSize:10,color:'#000'}}*/}
-                                          {/*onPress={this._showDateTimePicker}> {*/}
-                                        {/*Moment(this.state.date).format('ddd')} </Text>*/}
-                                    <Text note style={{fontSize:25,color:'#000'}}
-                                          onPress={this._showDateTimePicker}> {
-                                        Moment(this.state.date).format('MMM')} </Text>
-                                </View>
-                                {/*<Text note style={{fontSize:16,color:'#2eacde',textAlign:'center',fontWeight:'bold'}} > {*/}
-                                {/*Moment(this.state.date).format('h:mm A')} </Text>*/}
-                                <Text note style={{fontSize:25,color:'#000',marginLeft:98,justifyContent: 'flex-end'}}
-                                      onPress={this._showDateTimePicker}> {
-                                    Moment(this.state.date).format('dddd')} </Text>
+
+
+                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                            <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Blood Sugar Level</Text>
+
                             </View>
-                        </TouchableOpacity>
+                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                            <View style={{flexDirection:"column",marginTop:10}}>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > FBS  </Text>
 
 
-                        <Button style={{height:60,width:width-10,backgroundColor: '#2eacde',
-                            marginTop:10,justifyContent:'space-evenly'}}
-                                onPress={() => {
-                                if(!this.state.picked1 || !this.state.picked2){
-                                    // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
-                                    Snackbar.show({
-                                        title: 'From or To Location cannot be empty!',
-                                        duration: Snackbar.LENGTH_SHORT,
-                                    });
-                                }
-                                else if(this.state.picked1 === this.state.picked2){
-                                    // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-                                    Snackbar.show({
-                                        title: 'From and To Location cannot be same!',
-                                        duration: Snackbar.LENGTH_SHORT,
-                                    });
-                                    this.resetData();
-                                }
-                                else{
-                                    // Actions.searchScreen(params);
-                                    this.ShowHideActivityIndicator();
-                                    // this._onButtonPressed();
-                                }}}>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > PPBS </Text>
+
+
+                            </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <Image source={require('../Images/search_magnifie.png')} style = {{ width: 20,
-                                    height: 20,alignItems:'center'}}/>
-                                <Text style={{fontSize:20,color:'#FFFFFF'
-                                    ,textAlign:'center',paddingLeft:10}}>Search</Text>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 146  </Text>
+
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 127 </Text>
+                                </View>
                             </View>
-                        </Button>
+
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 140)</Text>
+                                </View>
+                            </View>
+
+
+                        </View>
 
                     </Card>
-                    {
-                        // Here the ? Question Mark represent the ternary operator.
-                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
-                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
-                                                                 size = "large" style={{padding: 20}} /> : null
-                    }
-                    {/*{(this.state.viewSection) &&*/}
-                    {/*<ActivityIndicator*/}
-                        {/*animating = {this.state.loading}*/}
-                        {/*color = '#bc2b78'*/}
-                        {/*size = "large"*/}
-                        {/*style = {styles.activityIndicator}/>*/}
 
-                        {/*<ScrollView*/}
-                        {/*style={styles.container1}*/}
-                        {/*ref={(scrollView) => { this.scrollView = scrollView; }}*/}
-                        {/*//pagingEnabled={true}*/}
-                        {/*horizontal= {true}*/}
-                        {/*decelerationRate={0}*/}
-                        {/*snapToInterval={width - 60}*/}
-                        {/*snapToAlignment={"center"}*/}
-                        {/*contentInset={{*/}
-                        {/*top:0,*/}
-                        {/*left: 30,*/}
-                        {/*bottom:0,*/}
-                        {/*right: 30,*/}
-                    {/*}}>*/}
+
+                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Cholestrol Level</Text>
+
+                        </View>
+                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                            <View style={{flexDirection:"column",marginTop:10}}>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Tri Glycer  </Text>
+
+
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Cholestrol </Text>
+
+
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > LDL </Text>
+
+
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
+
+
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 277  </Text>
+
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 105 </Text>
+
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 27 </Text>
+
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 23 </Text>
+                                </View>
+
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 150)</Text>
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 200)</Text>
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (40-60)</Text>
+                                </View>
+                            </View>
+
+
+                        </View>
+
+                    </Card>
+
+
+                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
+
+                        </View>
+                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                            <View style={{flexDirection:"column",marginTop:10}}>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
+
+
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 3.51  </Text>
+
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 28.97 </Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>
+                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
+
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 50)</Text>
+                                </View>
+                            </View>
+
+                        </View>
+
+                    </Card>
+                    </ScrollView>
+                    {/*{*/}
+                        {/*// Here the ? Question Mark represent the ternary operator.*/}
+                        {/*//style={{backgroundColor:'#FFFFFF',width:width-220}}*/}
+                        {/*this.state.loading ?  <ActivityIndicator color = '#2eacde'*/}
+                                                                 {/*size = "large" style={{padding: 20}} /> : null*/}
+                    {/*}*/}
 
                         {/*</ScrollView>*/}
 
-                    {/*}*/}
-                    {(this.state.viewSection) &&
-                    <View>
-                        <Text  style={{justifyContent:'flex-start',fontSize:16,color:'#FFFFFF'}} > Favourite Routes
-                        </Text>
-
-                    <ScrollView
-                        style={styles.container1}
-                        ref={(scrollView) => { this.scrollView = scrollView; }}
-                        //pagingEnabled={true}
-                        horizontal= {true}
-                        decelerationRate={0}
-                        snapToInterval={width - 60}
-                        snapToAlignment={"center"}
-                        contentInset={{
-                            top:0,
-                            left: 30,
-                            bottom:0,
-                            right: 30,
-                        }}>
-
-                        {favcardListArr}
-                        {/*<Card style={styles.view}>*/}
-                            {/*/!*<Text style={{textAlign:'center'}}>*!/*/}
-                            {/*/!*Date:date*!/*/}
-                            {/*/!*</Text>*!/*/}
-                            {/*<Text style={{textAlign: 'center'}}>*/}
-                               {/*From:from*/}
-                            {/*</Text>*/}
-                            {/*<Text style={{textAlign: 'center'}}>*/}
-                                {/*To:to*/}
-                            {/*</Text>*/}
-                        {/*</Card>*/}
-
-                    </ScrollView>
-                    </View>
-                    }
 
                 </View>
+                <Fab
+                    // active={this.state.active}
+                    active={!this.state.active}
+                    direction="up"
+                    containerStyle={{position:'absolute',bottom:60}}
+                    style={{ backgroundColor: '#071398' }}
+                    position="bottomRight"
+                    // onPress={this.onButtonPress}
+                    onPress={() => this.setState({ active: !this.state.active })}
+                >
+                    {/*<Image  source={require('../Images/menu_symbol.png')} />*/}
+                    <Icons type='FontAwesome' name='hand-o-up' size={30} color="#FFFFFF"/>
+                    <Button style={{ backgroundColor: '#071398' }}>
+                        <Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>
+                    </Button>
+                    <Button style={{ backgroundColor: '#071398' }}>
+                        <Icons type='FontAwesome' name='plus' size={30} color="#FFFFFF"/>
+                    </Button>
+                    <Button disabled style={{ backgroundColor: '#071398' }}>
+                        <Icons type='FontAwesome' name='share-alt' size={30} color="#FFFFFF"/>
+                    </Button>
+
+                </Fab>
+                {/*<View style={{flex:1, backgroundColor: '#f3f3f3'}}>*/}
+                    {/* Rest of the app comes ABOVE the action button component !*/}
+                    {/*<ActionButton buttonColor="rgba(231,76,60,1)" style={{position:'absolute',bottom:40}}>*/}
+                        {/*<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>*/}
+                            {/*<Icon name="md-create" style={styles.actionButtonIcon} />*/}
+                        {/*</ActionButton.Item>*/}
+                        {/*<ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>*/}
+                            {/*<Icon name="md-notifications-off" style={styles.actionButtonIcon} />*/}
+                        {/*</ActionButton.Item>*/}
+                        {/*<ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>*/}
+                            {/*<Icon name="md-done-all" style={styles.actionButtonIcon} />*/}
+                        {/*</ActionButton.Item>*/}
+                    {/*</ActionButton>*/}
+                {/*</View>*/}
                 <View style={[styles.footer]}>
                     <BottomNavigation
                         tabs={this.tabs}
@@ -803,8 +590,13 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor: '#4d6bcb',
+        backgroundColor: '#f1f1f1f1',
 
+    },
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
     },
     headerview: {
         // height: 250,
@@ -812,10 +604,10 @@ const styles = StyleSheet.create({
         // borderWidth:5,
         // borderColor:'#917cb7',
         position: 'absolute',
-        backgroundColor: '#4d6bcb',
-        paddingRight:15,
-        paddingLeft:15,
-        paddingTop:55,
+        backgroundColor: '#f1f1f1f1',
+        // paddingRight:15,
+        // paddingLeft:15,
+        // paddingTop:35,
         left: 0,
         right: 0,
         top:0,
@@ -844,7 +636,7 @@ const styles = StyleSheet.create({
     },
     box: {
 
-        backgroundColor: '#4d6bcb',
+        backgroundColor: '#f1f1f1f1',
         // marginBottom: 10
         marginRight:5,
         marginLeft:5,
@@ -857,7 +649,7 @@ const styles = StyleSheet.create({
         height: 80
     },
     header: {
-        backgroundColor: '#4d6bcb',
+        backgroundColor: '#f1f1f1f1',
         padding: 10,
         borderTopEndRadius:5,
         borderWidth:2,
@@ -873,7 +665,7 @@ const styles = StyleSheet.create({
     },
     content: {
         padding: 20,
-        backgroundColor: '#4d6bcb',
+        backgroundColor: '#f1f1f1f1',
         // color:'#B7B152',
         marginRight:5,
         marginLeft:5,

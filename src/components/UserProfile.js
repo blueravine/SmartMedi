@@ -40,14 +40,14 @@ const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
 const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
 var paramsmobile={tempnumber:''};
 
-export default class More extends Component {
+export default class UserProfile extends Component {
 
 
     constructor() {
         super();
 
         this.state= {
-            activeTab: 'more',
+            activeTab: 'profile',
             avatarSource: null
         };
 
@@ -61,80 +61,63 @@ export default class More extends Component {
 
     tabs = [
         {
-            key:"home",
+            key:"tests",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
-            label:"Home",
-            icon : 'home',
-            barColor: '#2eacde',
+            label:"Tests",
+            icon : 'description',
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"favourite",
+            key:"reports",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'star' ,
-            label:"Favourite",
-            barColor: '#2eacde',
+            icon : 'timeline' ,
+            label:"Reports",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"track",
+            key:"alerts",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'location-on' ,
-            label:"Track",
-            barColor: '#2eacde',
+            icon : 'schedule' ,
+            label:"Alerts",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
-            key:"ticket",
+            key:"profile",
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon :'receipt' ,
-            label:"Ticket",
-            barColor: '#2eacde',
-            pressColor: 'rgba(255, 255, 255, 0.16)'
-        },
-        {
-            key:"more",
-            // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
-            icon : 'menu' ,
-            label:"More",
-            barColor: '#2eacde',
+            icon : 'person-pin' ,
+            label:"Profile",
+            barColor: '#FFFFFF',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
 
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="white" name={icon} />
+        <Icon size={24} color="gery" name={icon} />
 
     )
 
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'home':
+            case 'tests':
                 Actions.homeScreen();
                 break;
-            case 'favourite':
-                Actions.homeScreen();
-                // {this.buttonPress}
-                this.setState({viewSection:!this.state.viewSection});
-                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                // {this.renderBottomComponent()}
+            case 'reports':
+
                 break;
-            case 'track':
-                Actions.tripScreen();
-                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            case 'alerts':
                 break;
-            case 'ticket':
-                Actions.ticketScreen();
-                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                break;
-            case 'more':
+            case 'profile':
+                // Actions.profileScreen();
                 break;
             default:
 
         }
-    }
+    };
     renderTab = ({ tab, isActive }) => (
         <ShiftingTab
             isActive={isActive}
@@ -151,7 +134,7 @@ export default class More extends Component {
                 {(section.title === 'Profile') &&
                 <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5,marginBottom:10}}>
                     <View style={{marginLeft:10}}>
-                    <Iccons type='FontAwesome' name={'user-circle'} size={20} color={'#2eacde'}/>
+                        <Iccons type='FontAwesome' name={'user-circle'} size={20} color={'#2eacde'}/>
                     </View>
                     <Text style={{marginLeft:10}}>{section.title}</Text>
                 </View>
@@ -159,7 +142,7 @@ export default class More extends Component {
                 {(section.title === 'Settings (App Version 0.01)') &&
                 <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
                     <View style={{marginLeft:10}}>
-                    <Icoons type='SimpleLineIcons' name={'settings'} size={20} color={'#2eacde'} />
+                        <Icoons type='SimpleLineIcons' name={'settings'} size={20} color={'#2eacde'} />
                     </View>
                     <Text style={{marginLeft:10}}>{section.title}</Text>
                 </View>
@@ -168,7 +151,7 @@ export default class More extends Component {
                 {(section.title === 'Help and Feedback') &&
                 <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
                     <View style={{marginLeft:10}}>
-                    <Icon type='MaterialIcons' name={'help-outline'} size={20} color={'#2eacde'} />
+                        <Icon type='MaterialIcons' name={'help-outline'} size={20} color={'#2eacde'} />
                     </View>
                     <Text style={{marginLeft:10}}>{section.title}</Text>
                 </View>
@@ -301,33 +284,33 @@ export default class More extends Component {
                 {/*<ScrollView >*/}
                 <View style={[styles.headerview]}>
                     <ScrollView ref={ (c) => {this.scroll = c}} >
-                    {/*<Container style={[styles.headerview]}>*/}
-                    {/*<Content>*/}
-                    <View style={{flexDirection:"row",backgroundColor:'#0c71b7',paddingRight:10,
-                        paddingLeft:10,}}>
-                        <TouchableOpacity onPress={() => Actions.homeScreen()} >
-                            <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
-                        </TouchableOpacity>
-                        <Text note style={{marginTop:5,fontSize:16,textAlign:'center',color:'#FFFFFF', flex:5}} >Profile Details</Text>
-                        <Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>
-                    </View>
-                    {/*<ScrollView>*/}
+                        {/*<Container style={[styles.headerview]}>*/}
+                        {/*<Content>*/}
+                        <View style={{flexDirection:"row",backgroundColor:'#0c71b7',paddingRight:10,
+                            paddingLeft:10,}}>
+                            <TouchableOpacity onPress={() => Actions.homeScreen()} >
+                                <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
+                            </TouchableOpacity>
+                            <Text note style={{marginTop:5,fontSize:16,textAlign:'center',color:'#FFFFFF', flex:5}} >Profile Details</Text>
+                            <Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>
+                        </View>
+                        {/*<ScrollView>*/}
                         {/*<Card >*/}
-                            {/*/!*<ImageBackground source={require('../Images/profilebackground.png')}*!/*/}
-                            {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
-                                {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
-                                    {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
-                                        {/*<Image style={styles.avatar} source={this.state.avatarSource} />*/}
-                                    {/*}*/}
-                                {/*</View>*/}
-                            {/*</TouchableOpacity>*/}
-                            {/*/!*<Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>*!/*/}
+                        {/*/!*<ImageBackground source={require('../Images/profilebackground.png')}*!/*/}
+                        {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
+                        {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
+                        {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
+                        {/*<Image style={styles.avatar} source={this.state.avatarSource} />*/}
+                        {/*}*/}
+                        {/*</View>*/}
+                        {/*</TouchableOpacity>*/}
+                        {/*/!*<Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>*!/*/}
                         {/*</Card>*/}
                         {/*<ScrollView>*/}
                         {/*<Accordion*/}
-                            {/*sections={SECTIONS}*/}
-                            {/*renderHeader={this._renderHeader}*/}
-                            {/*renderContent={this._renderContent}*/}
+                        {/*sections={SECTIONS}*/}
+                        {/*renderHeader={this._renderHeader}*/}
+                        {/*renderContent={this._renderContent}*/}
                         {/*>*/}
                         <Card style={{ borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
@@ -335,42 +318,26 @@ export default class More extends Component {
                                 {/*<View style={[{backgroundColor: '#FFFFFF',flex:1}]}>*/}
                                 {/*<Image source = {require('../Images/smartranlogo.png')} style={styles.ImageStyle} />*/}
                                 {/*</View>*/}
-                                <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                                    <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-                                        { this.state.avatarSource === null ? <Text>Select a Photo</Text> :
-                                            <Image style={styles.avatar} source={this.state.avatarSource} />
-                                        }
-                                    </View>
-                                </TouchableOpacity>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > User Information  </Text>
+                                {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
+                                    {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
+                                        {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
+                                            {/*<Image style={styles.avatar} source={this.state.avatarSource} />*/}
+                                        {/*}*/}
+                                    {/*</View>*/}
+                                {/*</TouchableOpacity>*/}
                                 <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
                                     {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
-                                    <Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>
-                                    <TextField label="Mobile Number"
+                                    {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
+                                    <TextField label="Name"
                                                lineHeight={30}
                                         // value={this.state.picked2}
-                                               editable={false}
+                                               editable={true}
                                                fontSize={16}
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                    {/*<View style={styles.loginFormTextInputnonedit}>*/}
 
-                                        {/*<TextInput*/}
-                                            {/*placeholder="   mobile number"*/}
-                                            {/*keyboardType='phone-pad'*/}
-                                            {/*editable={false}*/}
-                                            {/*selectTextOnFocus={false}*/}
-                                            {/*placeholderTextColor="#2CA8DB"*/}
-                                            {/*returnKeyType={"done"}*/}
-                                            {/*selectionColor="#2CA8DB"*/}
-                                            {/*underlineColorAndroid="#fafafa"*/}
-                                            {/*// value={this.state.mobile}*/}
-                                            {/*// onChangeText={(mobile) => this.setState({mobile})}*/}
-                                            {/*maxLength={10}*/}
-                                            {/*style={{justifyContent: 'flex-end',}}>*/}
-                                            {/*{this.props.tempnumber}*/}
-                                        {/*</TextInput>*/}
-                                    {/*</View>*/}
                                 </View>
 
 
@@ -381,8 +348,8 @@ export default class More extends Component {
 
                                     <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
                                         {/*<Image source = {require('../Images/padlock.png')} style = {{ width: 45, height: 45,marginTop: 15 }} />*/}
-                                        <Icons type='SimpleLineIcons' name='user' size={22} color="#bbbfbc" style = {{marginTop: 15 }}/>
-                                        <TextField label="Name"
+                                        {/*<Icons type='SimpleLineIcons' name='user' size={22} color="#bbbfbc" style = {{marginTop: 15 }}/>*/}
+                                        <TextField label="Age"
                                                    lineHeight={30}
                                             // value={this.state.picked2}
                                                    editable={true}
@@ -392,24 +359,24 @@ export default class More extends Component {
 
                                         {/*<View style={styles.loginFormTextInput1}>*/}
 
-                                            {/*<TextInput*/}
-                                                {/*placeholder="   Name"*/}
-                                                {/*placeholderTextColor="#2CA8DB"*/}
-                                                {/*underlineColorAndroid="#fafafa"*/}
-                                                {/*returnKeyType={"next"}*/}
-                                                {/*// value={this.state.otp}*/}
-                                                {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
-                                                {/*selectionColor="#2CA8DB"*/}
-                                                {/*maxLength={6}*/}
-                                                {/*style={{justifyContent: 'flex-end',}}/>*/}
+                                        {/*<TextInput*/}
+                                        {/*placeholder="   Name"*/}
+                                        {/*placeholderTextColor="#2CA8DB"*/}
+                                        {/*underlineColorAndroid="#fafafa"*/}
+                                        {/*returnKeyType={"next"}*/}
+                                        {/*// value={this.state.otp}*/}
+                                        {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
+                                        {/*selectionColor="#2CA8DB"*/}
+                                        {/*maxLength={6}*/}
+                                        {/*style={{justifyContent: 'flex-end',}}/>*/}
                                         {/*</View>*/}
                                     </View>
 
                                 </View>
                                 <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
                                     {/*<Image source = {require('../Images/key.png')} style = {{ width: 45, height: 45,marginTop: 18 }} />*/}
-                                    <Icoon type='MaterialIcons' name='email' size={22} color="#bbbfbc" style = {{marginTop: 18 }}/>
-                                    <TextField label="Email-Id"
+                                    {/*<Icoon type='MaterialIcons' name='email' size={22} color="#bbbfbc" style = {{marginTop: 18 }}/>*/}
+                                    <TextField label="Gender"
                                                lineHeight={30}
                                         // value={this.state.picked2}
                                                editable={true}
@@ -419,20 +386,20 @@ export default class More extends Component {
 
                                     {/*<View style={styles.loginFormTextInput1}>*/}
 
-                                        {/*<TextInput*/}
-                                            {/*placeholder="   Email-Id"*/}
-                                            {/*placeholderTextColor="#2CA8DB"*/}
-                                            {/*underlineColorAndroid="#fafafa"*/}
-                                            {/*returnKeyType={"done"}*/}
-                                            {/*// value={this.state.otp}*/}
-                                            {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
-                                            {/*selectionColor="#2CA8DB"*/}
-                                            {/*maxLength={6}*/}
-                                            {/*style={{justifyContent: 'flex-end',}}/>*/}
-                                        {/*/!*<TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>*!/*/}
-                                            {/*/!*<Image source = { ( this.state.hidePassword ) ? require('../Images/hide.png') : require('../Images/view.png') }*!/*/}
-                                                   {/*/!*style = { styles.btnImage } />*!/*/}
-                                        {/*/!*</TouchableOpacity>*!/*/}
+                                    {/*<TextInput*/}
+                                    {/*placeholder="   Email-Id"*/}
+                                    {/*placeholderTextColor="#2CA8DB"*/}
+                                    {/*underlineColorAndroid="#fafafa"*/}
+                                    {/*returnKeyType={"done"}*/}
+                                    {/*// value={this.state.otp}*/}
+                                    {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
+                                    {/*selectionColor="#2CA8DB"*/}
+                                    {/*maxLength={6}*/}
+                                    {/*style={{justifyContent: 'flex-end',}}/>*/}
+                                    {/*/!*<TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>*!/*/}
+                                    {/*/!*<Image source = { ( this.state.hidePassword ) ? require('../Images/hide.png') : require('../Images/view.png') }*!/*/}
+                                    {/*/!*style = { styles.btnImage } />*!/*/}
+                                    {/*/!*</TouchableOpacity>*!/*/}
                                     {/*</View>*/}
                                 </View>
 
@@ -440,7 +407,7 @@ export default class More extends Component {
                         </Card>
 
                         {/*</Accordion>*/}
-                    {/*</ScrollView>*/}
+                        {/*</ScrollView>*/}
                     </ScrollView>
                 </View>
 

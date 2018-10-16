@@ -1,4 +1,4 @@
-package com.smartran;
+package com.SmartMedi;
 
 import android.app.Application;
 

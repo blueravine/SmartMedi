@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smartran">
+    package="com.SmartMedi">
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -33,9 +33,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-        <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyD3a7smG62nUL0Wp4jsP4Iv3rNg763HFyQ"/>
+        <!--<meta-data-->
+                <!--android:name="com.google.android.geo.API_KEY"-->
+                <!--android:value="AIzaSyD3a7smG62nUL0Wp4jsP4Iv3rNg763HFyQ"/>-->
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
