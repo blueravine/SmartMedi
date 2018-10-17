@@ -46,11 +46,25 @@ const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
 const search_magnifier_black = require('../Images/search_magnifier_black.png');
 const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
-var options = [    {
-    key: '',
-    label: ''
 
-}];
+var options = [
+    {
+        key: 'Thyroid Test Result ',
+        label: 'Thyroid Test Result',
+    },
+    {
+        key: 'Cholestrol Test Result',
+        label: 'Cholestrol Test Result',
+    },
+    {
+        key: 'Blood Test Result',
+        label: 'Blood Test Result',
+    },
+    {
+        key: 'Body Mass Index Test Result',
+        label: 'Body Mass Index Test Result',
+    },
+];
 
 export default class Home extends Component {
 
@@ -313,13 +327,50 @@ export default class Home extends Component {
         return true;
     };
 
+    onTestNameShowpicker = () => {
+        this.setState({ pickervisible2: true });
+    };
+
+    onTestNameSelectpicker = (picked) => {
+        this.setState({
+            picked2: picked,
+            pickervisible2: false,
+        });
+    };
+
+    onTestNameCancelpicker = () => {
+        this.setState({
+            pickervisible2: false
+        });
+    };
+
     onplusButtonPress = () => {
         Actions.addtestScreen();
     };
+    onsearchButtonPress = () => {
+        // if(this.state.picked1===0){
+        // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+        Snackbar.show({
+            title: 'Searched Results!',
+            duration: Snackbar.LENGTH_SHORT,
+        });
+        Actions.homeScreen();
+        // }
+        // else if(this.state.picked2===0){
+        //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+        //     Snackbar.show({
+        //         title: 'TestType cannot be empty!',
+        //         duration: Snackbar.LENGTH_SHORT,
+        //     });
+        //     this.resetData();
+        // }
+        // else{
+        //     // Actions.searchScreen(params);
+        //     this.ShowHideActivityIndicator();
+        //     // this._onButtonPressed();
+        // }
+    };
 
-    // onsearchButtonPress = () => {
-    //     Actions.addtestScreen();
-    // };
 
     openDialog(show) {
         this.setState({ showDialog: show })
@@ -811,6 +862,7 @@ export default class Home extends Component {
                                         backgroundColor:'#071398',
                                         borderRadius:100,
                                     }}
+                                    onPress={() => {this.onsearchButtonPress(), (this.openDialog(false))}}
                                 >
                                     {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*/}
                                         {/*,textAlign:'center'}}>Edit</Text>*/}

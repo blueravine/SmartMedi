@@ -253,7 +253,7 @@ export default class UserProfile extends Component {
         // if(this.state.picked1===0){
             // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
             Snackbar.show({
-                title: 'User profile Updated empty!',
+                title: 'User profile Updated',
                 duration: Snackbar.LENGTH_SHORT,
             });
             Actions.profileScreen();
