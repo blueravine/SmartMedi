@@ -18,6 +18,7 @@ import { TextField } from 'react-native-material-textfield';
 import ImagePicker from 'react-native-image-picker';
 var params;
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Iccon from 'react-native-vector-icons/Entypo';
 import Icoons from 'react-native-vector-icons/SimpleLineIcons';
 import Iccons from 'react-native-vector-icons/FontAwesome';
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -51,8 +52,8 @@ export default class UserProfile extends Component {
             avatarSource: null
         };
 
-        this._renderHeader = this._renderHeader.bind(this);
-        this._renderContent=this._renderContent.bind(this)
+        // this._renderHeader = this._renderHeader.bind(this);
+        // this._renderContent=this._renderContent.bind(this)
     }
 
     // state = {
@@ -127,65 +128,65 @@ export default class UserProfile extends Component {
         />
     )
 
-    _renderHeader(section) {
-        return (
-            <View style={styles.headermoretitle}>
+    // _renderHeader(section) {
+    //     return (
+    //         <View style={styles.headermoretitle}>
+    //
+    //             {(section.title === 'Profile') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5,marginBottom:10}}>
+    //                 <View style={{marginLeft:10}}>
+    //                     <Iccons type='FontAwesome' name={'user-circle'} size={20} color={'#2eacde'}/>
+    //                 </View>
+    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
+    //             </View>
+    //             }
+    //             {(section.title === 'Settings (App Version 0.01)') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
+    //                 <View style={{marginLeft:10}}>
+    //                     <Icoons type='SimpleLineIcons' name={'settings'} size={20} color={'#2eacde'} />
+    //                 </View>
+    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
+    //             </View>
+    //             }
+    //
+    //             {(section.title === 'Help and Feedback') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
+    //                 <View style={{marginLeft:10}}>
+    //                     <Icon type='MaterialIcons' name={'help-outline'} size={20} color={'#2eacde'} />
+    //                 </View>
+    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
+    //             </View>
+    //             }
+    //
+    //         </View>
+    //     );
+    // }
 
-                {(section.title === 'Profile') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5,marginBottom:10}}>
-                    <View style={{marginLeft:10}}>
-                        <Iccons type='FontAwesome' name={'user-circle'} size={20} color={'#2eacde'}/>
-                    </View>
-                    <Text style={{marginLeft:10}}>{section.title}</Text>
-                </View>
-                }
-                {(section.title === 'Settings (App Version 0.01)') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
-                    <View style={{marginLeft:10}}>
-                        <Icoons type='SimpleLineIcons' name={'settings'} size={20} color={'#2eacde'} />
-                    </View>
-                    <Text style={{marginLeft:10}}>{section.title}</Text>
-                </View>
-                }
-
-                {(section.title === 'Help and Feedback') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
-                    <View style={{marginLeft:10}}>
-                        <Icon type='MaterialIcons' name={'help-outline'} size={20} color={'#2eacde'} />
-                    </View>
-                    <Text style={{marginLeft:10}}>{section.title}</Text>
-                </View>
-                }
-
-            </View>
-        );
-    }
-
-    _renderContent(section) {
-        return (
-            <View style={styles.contentmore}>
-
-                {(section.title === 'Profile') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5}}>
-                    <Text>{section.content}</Text>
-
-                </View>
-                }
-                {(section.title === 'Settings (App Version 0.01)') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
-                    <Text>{section.content}</Text>
-                </View>
-                }
-
-                {(section.title === 'Help and Feedback') &&
-                <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
-                    <Text>{section.content}</Text>
-                </View>
-                }
-
-            </View>
-        );
-    }
+    // _renderContent(section) {
+    //     return (
+    //         <View style={styles.contentmore}>
+    //
+    //             {(section.title === 'Profile') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5}}>
+    //                 <Text>{section.content}</Text>
+    //
+    //             </View>
+    //             }
+    //             {(section.title === 'Settings (App Version 0.01)') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
+    //                 <Text>{section.content}</Text>
+    //             </View>
+    //             }
+    //
+    //             {(section.title === 'Help and Feedback') &&
+    //             <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
+    //                 <Text>{section.content}</Text>
+    //             </View>
+    //             }
+    //
+    //         </View>
+    //     );
+    // }
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -213,69 +214,43 @@ export default class UserProfile extends Component {
         return true;
     };
 
-    selectPhotoTapped() {
-        const options = {
-            quality: 1.0,
-            maxWidth: 500,
-            maxHeight: 500,
-            storageOptions: {
-                skipBackup: true
-            }
-        };
-
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled photo picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                let source = { uri: response.uri };
-
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-                this.setState({
-                    avatarSource: source
-                });
-            }
-        });
-    }
+    // selectPhotoTapped() {
+    //     const options = {
+    //         quality: 1.0,
+    //         maxWidth: 500,
+    //         maxHeight: 500,
+    //         storageOptions: {
+    //             skipBackup: true
+    //         }
+    //     };
+    //
+    //     ImagePicker.showImagePicker(options, (response) => {
+    //         console.log('Response = ', response);
+    //
+    //         if (response.didCancel) {
+    //             console.log('User cancelled photo picker');
+    //         }
+    //         else if (response.error) {
+    //             console.log('ImagePicker Error: ', response.error);
+    //         }
+    //         else if (response.customButton) {
+    //             console.log('User tapped custom button: ', response.customButton);
+    //         }
+    //         else {
+    //             let source = { uri: response.uri };
+    //
+    //             // You can also display the image using data:
+    //             // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+    //
+    //             this.setState({
+    //                 avatarSource: source
+    //             });
+    //         }
+    //     });
+    // }
 
 
     render() {
-        paramsmobile = {
-            tempnumber:this.props.tempnumber,
-        };
-        // params = {};
-        // params = {
-        //     fromLoc:this.props.fromLoc,
-        //     toLoc:this.props.toLoc,
-        //     tripdte:this.props.tripdte,
-        // };
-        const SECTIONS = [
-            {
-                title:'Profile',
-                content:'Users Profile',
-            },
-            {
-                title:'Settings (App Version 0.01)',
-                content:'This the updated version of the app 0.01',
-
-            },
-            {
-                title:'Help and Feedback',
-                content:'Help and Feedback',
-            },
-        ];
-
-
 
         return (
 
@@ -286,39 +261,27 @@ export default class UserProfile extends Component {
                     <ScrollView ref={ (c) => {this.scroll = c}} >
                         {/*<Container style={[styles.headerview]}>*/}
                         {/*<Content>*/}
-                        <View style={{flexDirection:"row",backgroundColor:'#0c71b7',paddingRight:10,
-                            paddingLeft:10,}}>
-                            <TouchableOpacity onPress={() => Actions.homeScreen()} >
-                                <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
-                            </TouchableOpacity>
-                            <Text note style={{marginTop:5,fontSize:16,textAlign:'center',color:'#FFFFFF', flex:5}} >Profile Details</Text>
-                            <Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>
+                        <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
+                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add User Info</Text>
+
                         </View>
-                        {/*<ScrollView>*/}
-                        {/*<Card >*/}
-                        {/*/!*<ImageBackground source={require('../Images/profilebackground.png')}*!/*/}
-                        {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
-                        {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
-                        {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
-                        {/*<Image style={styles.avatar} source={this.state.avatarSource} />*/}
-                        {/*}*/}
-                        {/*</View>*/}
-                        {/*</TouchableOpacity>*/}
-                        {/*/!*<Text note style={{marginTop:5,fontSize:12,textAlign:'right',color:'#FFFFFF', flex:1}} > </Text>*!/*/}
-                        {/*</Card>*/}
-                        {/*<ScrollView>*/}
-                        {/*<Accordion*/}
-                        {/*sections={SECTIONS}*/}
-                        {/*renderHeader={this._renderHeader}*/}
-                        {/*renderContent={this._renderContent}*/}
-                        {/*>*/}
-                        <Card style={{ borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+
+                        <Card style={{height:500}}>
+                        <Card style={{height:400, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                            <View style={[styles.halfHeight,{paddingLeft:25,paddingRight:25}]} >
+                            {/*<View style={[styles.halfHeight,{paddingLeft:25,paddingRight:25}]} >*/}
                                 {/*<View style={[{backgroundColor: '#FFFFFF',flex:1}]}>*/}
                                 {/*<Image source = {require('../Images/smartranlogo.png')} style={styles.ImageStyle} />*/}
                                 {/*</View>*/}
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > User Information  </Text>
+                            <View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>
+                                <Iconns type='FontAwesome' name='user-circle' size={30} color="grey"/>
+                                <Text note style={{fontSize:18,textAlign:'left',color:'#000'}} > User Information  </Text>
+                                <Button  style={{height: 25,width:width-280,backgroundColor: '#FFFFFF',marginTop:10,borderColor:'#f1f1f1f1', borderRadius:20,
+                                    borderWidth:1}}>
+                                    <Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2
+                                        ,textAlign:'center'}}>Edit</Text>
+                                </Button>
+                            </View>
                                 {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
                                     {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
                                         {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
@@ -326,7 +289,7 @@ export default class UserProfile extends Component {
                                         {/*}*/}
                                     {/*</View>*/}
                                 {/*</TouchableOpacity>*/}
-                                <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
+                                <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
                                     {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
                                     {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
                                     <TextField label="Name"
@@ -338,17 +301,10 @@ export default class UserProfile extends Component {
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
-                                </View>
+                                {/*</View>*/}
 
 
-                            </View>
-                            <View style={styles.quarterHeight}>
-                                <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
 
-
-                                    <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
-                                        {/*<Image source = {require('../Images/padlock.png')} style = {{ width: 45, height: 45,marginTop: 15 }} />*/}
-                                        {/*<Icons type='SimpleLineIcons' name='user' size={22} color="#bbbfbc" style = {{marginTop: 15 }}/>*/}
                                         <TextField label="Age"
                                                    lineHeight={30}
                                             // value={this.state.picked2}
@@ -357,25 +313,8 @@ export default class UserProfile extends Component {
                                             // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                        {/*<View style={styles.loginFormTextInput1}>*/}
 
-                                        {/*<TextInput*/}
-                                        {/*placeholder="   Name"*/}
-                                        {/*placeholderTextColor="#2CA8DB"*/}
-                                        {/*underlineColorAndroid="#fafafa"*/}
-                                        {/*returnKeyType={"next"}*/}
-                                        {/*// value={this.state.otp}*/}
-                                        {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
-                                        {/*selectionColor="#2CA8DB"*/}
-                                        {/*maxLength={6}*/}
-                                        {/*style={{justifyContent: 'flex-end',}}/>*/}
-                                        {/*</View>*/}
-                                    </View>
 
-                                </View>
-                                <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
-                                    {/*<Image source = {require('../Images/key.png')} style = {{ width: 45, height: 45,marginTop: 18 }} />*/}
-                                    {/*<Icoon type='MaterialIcons' name='email' size={22} color="#bbbfbc" style = {{marginTop: 18 }}/>*/}
                                     <TextField label="Gender"
                                                lineHeight={30}
                                         // value={this.state.picked2}
@@ -384,26 +323,30 @@ export default class UserProfile extends Component {
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                    {/*<View style={styles.loginFormTextInput1}>*/}
-
-                                    {/*<TextInput*/}
-                                    {/*placeholder="   Email-Id"*/}
-                                    {/*placeholderTextColor="#2CA8DB"*/}
-                                    {/*underlineColorAndroid="#fafafa"*/}
-                                    {/*returnKeyType={"done"}*/}
-                                    {/*// value={this.state.otp}*/}
-                                    {/*onChangeText={(otp) => this.setState({otp:otp})}*/}
-                                    {/*selectionColor="#2CA8DB"*/}
-                                    {/*maxLength={6}*/}
-                                    {/*style={{justifyContent: 'flex-end',}}/>*/}
-                                    {/*/!*<TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>*!/*/}
-                                    {/*/!*<Image source = { ( this.state.hidePassword ) ? require('../Images/hide.png') : require('../Images/view.png') }*!/*/}
-                                    {/*/!*style = { styles.btnImage } />*!/*/}
-                                    {/*/!*</TouchableOpacity>*!/*/}
-                                    {/*</View>*/}
-                                </View>
-
                             </View>
+
+                            <Fab
+                                // active={this.state.active}
+                                // active={!this.state.active}
+                                direction="up"
+                                containerStyle={{position:'absolute'}}
+                                style={{ backgroundColor: '#071398' }}
+                                position="bottomRight"
+                                onPress={this.onAddButtonPress}>
+                                <Icon type='MaterialIcons' name='done' size={30} color="#FFFFFF"/>
+                            </Fab>
+
+                            <Fab
+                                // active={this.state.active}
+                                // active={!this.state.active}
+                                direction="up"
+                                containerStyle={{position:'absolute',marginTop:100,marginLeft:150}}
+                                style={{ backgroundColor: '#ff0f20' }}
+                                position="bottomLeft"
+                                onPress={this.onCancelButtonPress}>
+                                <Icon type='MaterialIcons' name='edit' size={30} color="#FFFFFF"/>
+                            </Fab>
+                        </Card>
                         </Card>
 
                         {/*</Accordion>*/}
@@ -429,7 +372,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        backgroundColor:'#0c71b7',
+        backgroundColor:'#f1f1f1f1',
     },
     headerview: {
         // height: 250,
@@ -437,10 +380,10 @@ const styles = StyleSheet.create({
         // borderWidth:5,
         // borderColor:'#2EACDE',
         position: 'absolute',
-        paddingRight:5,
-        paddingLeft:5,
-        paddingTop:15,
-        backgroundColor:'#0c71b7',
+        // paddingRight:5,
+        // paddingLeft:5,
+        // paddingTop:15,
+        backgroundColor:'#f1f1f1f1',
         left: 0,
         right: 0,
         top:0,
@@ -467,7 +410,7 @@ const styles = StyleSheet.create({
         borderTopColor: 'black',
         borderTopWidth: 1,
         width: width - 20,
-        borderColor:'#0c71b7',
+        borderColor:'#f1f1f1f1',
         // borderBottomColor:'#FFFFFF',
         marginBottom:0,
         marginRight:5,

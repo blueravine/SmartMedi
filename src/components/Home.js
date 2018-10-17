@@ -229,37 +229,6 @@ export default class Home extends Component {
         }
     };
 
-    onFromShowpicker = () => {
-        this.setState({ pickervisible1: true });
-    };
-    onToShowpicker = () => {
-        this.setState({ pickervisible2: true });
-    };
-
-    onFromSelectpicker = (picked) => {
-        this.setState({
-            picked1: picked,
-            pickervisible1: false,
-        });
-        // Keyboard.dismiss();
-    };
-    onToSelectpicker = (picked) => {
-        this.setState({
-            picked2: picked,
-            pickervisible2: false,
-        });
-    };
-
-    onFromCancelpicker = () => {
-        this.setState({
-            pickervisible1: false
-        });
-    };
-    onToCancelpicker = () => {
-        this.setState({
-            pickervisible2: false
-        });
-    };
 
     // favouritedata(recivedindex){
     //     // this.setState({
@@ -338,6 +307,10 @@ export default class Home extends Component {
         return true;
     };
 
+    onplusButtonPress = () => {
+        Actions.addtestScreen();
+    };
+
     render() {
 
         return (
@@ -356,6 +329,7 @@ export default class Home extends Component {
 
                         </View>
                     <ScrollView>
+                        <Card >
                     <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>
                         <Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 16/10/2018</Text>
@@ -520,6 +494,7 @@ export default class Home extends Component {
                         </View>
 
                     </Card>
+                        </Card>
                     </ScrollView>
                     {/*{*/}
                         {/*// Here the ? Question Mark represent the ternary operator.*/}
@@ -547,7 +522,8 @@ export default class Home extends Component {
                     <Button style={{ backgroundColor: '#071398' }}>
                         <Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>
                     </Button>
-                    <Button style={{ backgroundColor: '#071398' }}>
+                    <Button style={{ backgroundColor: '#071398' }}
+                            onPress={this.onplusButtonPress}>
                         <Icons type='FontAwesome' name='plus' size={30} color="#FFFFFF"/>
                     </Button>
                     <Button disabled style={{ backgroundColor: '#071398' }}>

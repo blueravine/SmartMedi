@@ -4,6 +4,7 @@ import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 import SplashScreen from './SplashScreen';
 import Home from './Home';
 import UserProfile from './UserProfile';
+import AddTestData from './AddTestData';
 
 
 export default class Main extends Component {
@@ -31,7 +32,14 @@ export default class Main extends Component {
                      animation='fade'
                      hideNavBar={true}
               />
-	      </Scene>
+
+              <Scene key="addtestScreen"
+                     component={AddTestData}
+                     animation='fade'
+                     hideNavBar={true}
+              />
+
+		  </Scene>
 
 
 
