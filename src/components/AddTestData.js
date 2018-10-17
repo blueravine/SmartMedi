@@ -45,12 +45,39 @@ const drawerStyles = {
 };
 
 
-var options = [    {
-    key: '',
-    label: ''
+var options = [
+    {
+        key: 'Thyroid Test Result ',
+        label: 'Thyroid Test Result',
+    },
+    {
+        key: 'Cholestrol Test Result',
+        label: 'Cholestrol Test Result',
+    },
+    {
+        key: 'Blood Test Result',
+        label: 'Blood Test Result',
+    },
+    {
+        key: 'Body Mass Index Test Result',
+        label: 'Body Mass Index Test Result',
+    },
+];
 
-}];
-
+var optionsname = [
+    {
+        key: 'FBS ',
+        label: 'FBS',
+    },
+    {
+        key: 'PPBS',
+        label: 'PPBS',
+    },
+    {
+        key: 'FBC',
+        label: 'FBC',
+    },
+];
 
 export default class AddTestData extends Component {
 
@@ -370,7 +397,7 @@ export default class AddTestData extends Component {
                 </View>
 
                 <View style={[styles.headerview]}>
-                    <ScrollView>
+                    <ScrollView ref={ (c) => {this.scroll = c}} >
                     <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Test Result</Text>
 
@@ -387,7 +414,7 @@ export default class AddTestData extends Component {
                                 <Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}
                                 />
                             </TouchableOpacity>
-                            <Text note style={{fontSize:25,color:'#000'}}
+                            <Text note style={{fontSize:20,color:'#000'}}
                                   onPress={this._showDateTimePicker}> {
                                 Moment(this.state.date).format('DD MMM YYYY')} </Text>
                         </View>
@@ -424,7 +451,7 @@ export default class AddTestData extends Component {
                                     <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
                                                       onPress={this.onTestTypeShowpicker}>
                                         {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                        <TextField label="Select Test Type"
+                                        <TextField label="Select Test Cateogory"
                                                    lineHeight={30}
                                                    value={this.state.picked1}
                                                    fontSize={16}
@@ -453,7 +480,7 @@ export default class AddTestData extends Component {
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                    onPress={this.onTestNameShowpicker}>
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="Select Test Name"
+                                    <TextField label="Select Test Type"
                                                lineHeight={30}
                                                value={this.state.picked2}
                                                editable={false}
@@ -465,14 +492,14 @@ export default class AddTestData extends Component {
                                     visible={this.state.pickervisible2}
                                     onSelect={this.onTestNameSelectpicker}
                                     onCancel={this.onTestNameCancelpicker}
-                                    options={options}
+                                    options={optionsname}
                                     optionTextStyle={style={fontSize:16}}
                                 />
 
                                 <TextField label="Test Result Value"
                                            lineHeight={30}
                                     // value={this.state.picked2}
-                                           editable={false}
+                                           editable={true}
                                            fontSize={16}
                                     // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
@@ -492,6 +519,7 @@ export default class AddTestData extends Component {
                                            editable={true}
                                            fontSize={16}
                                            multiline = {true}
+                                           returnKeyType={"done"}
                                     // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
@@ -512,7 +540,7 @@ export default class AddTestData extends Component {
                             // active={this.state.active}
                             // active={!this.state.active}
                             direction="up"
-                            containerStyle={{position:'absolute',marginTop:100,marginLeft:150}}
+                            containerStyle={{position:'absolute',marginLeft:150}}
                             style={{ backgroundColor: '#ff0f20' }}
                             position="bottomLeft"
                             onPress={this.onCancelButtonPress}>

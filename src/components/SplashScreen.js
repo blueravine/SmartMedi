@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Platform, StyleSheet,Dimensions, View, Text, Image,AsyncStorage, TouchableOpacity,StatusBar, Alert } from 'react-native';
 import { Actions, ActionConst } from 'react-native-router-flux';
+import Moment from "moment/moment";
 // import Registration from "./Registration"; // 4.0.0-beta.31
 // var mobiledata={mobile: null};
 // var paramsmobile ;
@@ -49,7 +50,7 @@ export default class SplashScreen extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#f1f1f1f1'/>
                 </View>
             <View style={{  justifyContent: 'space-between',
                 alignItems: 'center',
@@ -57,9 +58,15 @@ export default class SplashScreen extends Component {
 
                 {/* Put all your components Image and Text here inside Child view which you want to show in Splash Screen. */}
 
-                <Image source={require('../Images/SmarTran_newlogo.png')}
-                       style={{justifyContent: 'space-between',
-                           alignItems: 'center',}} />
+                {/*<Image source={require('../Images/SmarTran_newlogo.png')}*/}
+                       {/*style={{justifyContent: 'space-between',*/}
+                           {/*alignItems: 'center',}} />*/}
+                <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
+
+                    <Text note style={{fontSize:20,color:'#2eacde'}}> Smart </Text>
+                    <Text note style={{fontSize:20,color:'#46de21'}}>Medi </Text>
+                </View>
+
             </View>
             </View>
         )
@@ -71,7 +78,7 @@ const styles = StyleSheet.create(
             {
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#4d6bcb',
+                backgroundColor: '#f1f1f1f1',
                 flex:1,
             },
     });

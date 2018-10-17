@@ -266,7 +266,7 @@ export default class UserProfile extends Component {
 
                         </View>
 
-                        <Card style={{height:500}}>
+                        {/*<Card style={{height:500}}>*/}
                         <Card style={{height:400, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
                             {/*<View style={[styles.halfHeight,{paddingLeft:25,paddingRight:25}]} >*/}
@@ -276,11 +276,11 @@ export default class UserProfile extends Component {
                             <View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>
                                 <Iconns type='FontAwesome' name='user-circle' size={30} color="grey"/>
                                 <Text note style={{fontSize:18,textAlign:'left',color:'#000'}} > User Information  </Text>
-                                <Button  style={{height: 25,width:width-280,backgroundColor: '#FFFFFF',marginTop:10,borderColor:'#f1f1f1f1', borderRadius:20,
-                                    borderWidth:1}}>
-                                    <Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2
-                                        ,textAlign:'center'}}>Edit</Text>
-                                </Button>
+                                {/*<Button  style={{height: 25,width:width-280,backgroundColor: '#FFFFFF',marginTop:10,borderColor:'#f1f1f1f1', borderRadius:20,*/}
+                                    {/*borderWidth:1}}>*/}
+                                    {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*/}
+                                        {/*,textAlign:'center'}}>Edit</Text>*/}
+                                {/*</Button>*/}
                             </View>
                                 {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
                                     {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
@@ -292,6 +292,16 @@ export default class UserProfile extends Component {
                                 <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
                                     {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
                                     {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
+                                    <TextField label="Phone No"
+                                               lineHeight={30}
+                                               keyboardType='phone-pad'
+                                        // value={this.state.picked2}
+                                               editable={true}
+                                               fontSize={16}
+                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+
+
                                     <TextField label="Name"
                                                lineHeight={30}
                                         // value={this.state.picked2}
@@ -320,6 +330,7 @@ export default class UserProfile extends Component {
                                         // value={this.state.picked2}
                                                editable={true}
                                                fontSize={16}
+                                               returnKeyType={"done"}
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
@@ -340,14 +351,14 @@ export default class UserProfile extends Component {
                                 // active={this.state.active}
                                 // active={!this.state.active}
                                 direction="up"
-                                containerStyle={{position:'absolute',marginTop:100,marginLeft:150}}
+                                containerStyle={{position:'absolute',marginLeft:150}}
                                 style={{ backgroundColor: '#ff0f20' }}
                                 position="bottomLeft"
                                 onPress={this.onCancelButtonPress}>
                                 <Icon type='MaterialIcons' name='edit' size={30} color="#FFFFFF"/>
                             </Fab>
                         </Card>
-                        </Card>
+                        {/*</Card>*/}
 
                         {/*</Accordion>*/}
                         {/*</ScrollView>*/}
