@@ -437,10 +437,10 @@ export default class Home extends Component {
                             </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                 <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 146  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  146  </Text>
 
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 127 </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  127 </Text>
                                 </View>
                             </View>
 
@@ -475,38 +475,30 @@ export default class Home extends Component {
 
                         </View>
                         <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                            <View style={{flexDirection:"column",marginTop:10}}>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Tri Glycer  </Text>
-
-
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Cholestrol </Text>
-
-
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > LDL </Text>
-
-
+                            <View style={{flexDirection:"column",marginTop:35}}>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
+                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
                                 <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
 
 
                             </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                 <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 277  </Text>
+                                    {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
 
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 105 </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
 
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 27 </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
 
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 23 </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
                                 </View>
 
                             </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                <View style={{flexDirection:"column",justifyContent:'space-evenly',marginTop: 10}}>
 
                                     <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
                                     <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
@@ -549,10 +541,10 @@ export default class Home extends Component {
                             </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                 <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 3.51  </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
 
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 28.97 </Text>
+                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
                                 </View>
                             </View>
                             <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
@@ -604,10 +596,10 @@ export default class Home extends Component {
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 146  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  146  </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 127 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  127 </Text>
                                         </View>
                                     </View>
 
@@ -650,10 +642,10 @@ export default class Home extends Component {
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 3.51  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 28.97 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
                                         </View>
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
@@ -692,38 +684,30 @@ export default class Home extends Component {
 
                                 </View>
                                 <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                    <View style={{flexDirection:"column",marginTop:10}}>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Tri Glycer  </Text>
-
-
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Cholestrol </Text>
-
-
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > LDL </Text>
-
-
+                                    <View style={{flexDirection:"column",marginTop:35}}>
+                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
+                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
+                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
                                         <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
 
 
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 277  </Text>
+                                            {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 105 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 27 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 23 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
                                         </View>
 
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",justifyContent:'space-evenly',marginTop: 10}}>
 
                                             <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
                                             <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
@@ -766,10 +750,10 @@ export default class Home extends Component {
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
                                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 3.51  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
 
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual 28.97 </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
                                         </View>
                                     </View>
                                     <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
