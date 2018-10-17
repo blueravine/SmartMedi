@@ -296,27 +296,27 @@ export default class AddTestData extends Component {
             picked2 : ''
         });
     };
-    onAddButtonPress = () => {
-        if(this.state.picked1===0){
-            // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
-            Snackbar.show({
-                title: 'TestType cannot be empty!',
-                duration: Snackbar.LENGTH_SHORT,
-            });
-        }
-        else if(this.state.picked2===0){
-            // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-            Snackbar.show({
-                title: 'TestType cannot be empty!',
-                duration: Snackbar.LENGTH_SHORT,
-            });
-            this.resetData();
-        }
-        else{
-            // Actions.searchScreen(params);
-            this.ShowHideActivityIndicator();
-            // this._onButtonPressed();
-        }    };
+    // onAddButtonPress = () => {
+    //     if(this.state.picked1===0){
+    //         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+    //         Snackbar.show({
+    //             title: 'TestType cannot be empty!',
+    //             duration: Snackbar.LENGTH_SHORT,
+    //         });
+    //     }
+    //     else if(this.state.picked2===0){
+    //         // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+    //         Snackbar.show({
+    //             title: 'TestType cannot be empty!',
+    //             duration: Snackbar.LENGTH_SHORT,
+    //         });
+    //         this.resetData();
+    //     }
+    //     else{
+    //         // Actions.searchScreen(params);
+    //         this.ShowHideActivityIndicator();
+    //         // this._onButtonPressed();
+    //     }    };
 
     onCancelButtonPress = () => {
         Actions.homeScreen();
@@ -451,7 +451,7 @@ export default class AddTestData extends Component {
                                     <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
                                                       onPress={this.onTestTypeShowpicker}>
                                         {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                        <TextField label="Select Test Cateogory"
+                                        <TextField label="Select Test Category"
                                                    lineHeight={30}
                                                    value={this.state.picked1}
                                                    fontSize={16}
@@ -532,7 +532,26 @@ export default class AddTestData extends Component {
                             containerStyle={{position:'absolute'}}
                             style={{ backgroundColor: '#071398' }}
                             position="bottomRight"
-                            onPress={this.onAddButtonPress}>
+                            onPress={() => {        if(this.state.picked1===''){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Test Category cannot be empty!',
+                                    duration: Snackbar.LENGTH_SHORT,
+                                });
+                            }
+                            else if(this.state.picked2===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Test Type cannot be empty!',
+                                    duration: Snackbar.LENGTH_SHORT,
+                                });
+                                // this.resetData();
+                            }
+                            else{
+                                // Actions.searchScreen(params);
+                                this.ShowHideActivityIndicator();
+                                // this._onButtonPressed();
+                            }}}>
                             <Icon type='MaterialIcons' name='done' size={30} color="#FFFFFF"/>
                         </Fab>
 

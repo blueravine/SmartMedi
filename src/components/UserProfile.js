@@ -249,6 +249,29 @@ export default class UserProfile extends Component {
     //     });
     // }
 
+    onAddButtonPress = () => {
+        // if(this.state.picked1===0){
+            // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+            Snackbar.show({
+                title: 'User profile Updated empty!',
+                duration: Snackbar.LENGTH_SHORT,
+            });
+            Actions.profileScreen();
+        // }
+        // else if(this.state.picked2===0){
+        //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+        //     Snackbar.show({
+        //         title: 'TestType cannot be empty!',
+        //         duration: Snackbar.LENGTH_SHORT,
+        //     });
+        //     this.resetData();
+        // }
+        // else{
+        //     // Actions.searchScreen(params);
+        //     this.ShowHideActivityIndicator();
+        //     // this._onButtonPressed();
+        // }
+         };
 
     render() {
 
