@@ -6,14 +6,289 @@ import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,De
     Footer, FooterTab} from 'native-base';
 import Calendar from 'react-native-calendar-datepicker';
 import Moment from 'moment';
+import Swiper from 'react-native-deck-swiper'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/FontAwesome';
-import Icons from 'react-native-vector-icons/FontAwesome';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dropdown } from 'react-native-material-dropdown';
 import Iccons from 'react-native-vector-icons/FontAwesome'
 import { Dialog } from 'react-native-simple-dialogs';
 import BottomNavigation, {
     ShiftingTab
 } from 'react-native-material-bottom-navigation';
+
+
+const users = {
+    name: 'John Doe',
+    mobile: 9674892081
+};
+const testresults=[
+    {
+        id: 7616,
+    testdate: 16102018,
+    category:[
+        {	id: 1142,
+        name: "Blood Test",
+        type:[{	id: 1267,
+            name: 'FBS',
+            value: 146,
+            normal: {min: null,
+                max: 100,
+                comparator: 'lessthan'
+            },
+            result: 'high'
+        },
+            { id: 1268,
+                name: 'PPBS',
+                value: 127,
+                normal: {min: null,
+                    max: 140,
+                    comparator: 'lessthan'
+                },
+                result: 'normal'
+            }
+        ]
+    },
+        {	id: 1142,
+            name: "Cholestrol Level",
+            type:[{	id: 1267,
+                name: 'Tri Glycer',
+                value: 277,
+                normal: {min: null,
+                    max: 150,
+                    comparator: 'lessthan'
+                },
+                result: 'high'
+            },
+                { id: 1268,
+                    name: 'Cholestrol',
+                    value: 105,
+                    normal: {min: null,
+                        max: 200,
+                        comparator: 'lessthan'
+                    },
+                    result: 'normal'
+                },
+                { id: 1268,
+                    name: 'LDL',
+                    value: 27,
+                    normal: {min: null,
+                        max: 100,
+                        comparator: 'lessthan'
+                    },
+                    result: 'normal'
+                },
+                { id: 1268,
+                    name: 'HDL',
+                    value: 23,
+                    normal: {min: null,
+                        max: 40-60,
+                        comparator: 'between'
+                    },
+                    result: 'normal'
+                }
+
+
+            ]
+        },
+        {	id: 1142,
+            name: "Thyroid & Vitamin D Level",
+            type:[{	id: 1267,
+                name: 'TSH',
+                value: 3.51,
+                normal: {min: null,
+                    max: 0.27-4.2,
+                    comparator: 'between'
+                },
+                result: 'high'
+            },
+                { id: 1268,
+                    name: 'Vitamin D',
+                    value: 28.97,
+                    normal: {min: null,
+                        max: 50,
+                        comparator: 'lessthan'
+                    },
+                    result: 'normal'
+                }
+            ]
+        },
+    ]
+},
+
+    {
+        id: 7616,
+        testdate: 14102018,
+        category:[
+            {	id: 1142,
+                name: "Blood Test",
+                type:[{	id: 1267,
+                    name: 'FBS',
+                    value: 146,
+                    normal: {min: null,
+                        max: 100,
+                        comparator: 'lessthan'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'PPBS',
+                        value: 127,
+                        normal: {min: null,
+                            max: 140,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    }
+                ]
+            },
+            {	id: 1142,
+                name: "Cholestrol Level",
+                type:[{	id: 1267,
+                    name: 'Tri Glycer',
+                    value: 277,
+                    normal: {min: null,
+                        max: 150,
+                        comparator: 'lessthan'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'Cholestrol',
+                        value: 105,
+                        normal: {min: null,
+                            max: 200,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'LDL',
+                        value: 27,
+                        normal: {min: null,
+                            max: 100,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'HDL',
+                        value: 23,
+                        normal: {min: null,
+                            max: 40-60,
+                            comparator: 'between'
+                        },
+                        result: 'normal'
+                    }
+
+
+                ]
+            },
+        ]
+    },
+
+    {
+        id: 7616,
+        testdate: 12102018,
+        category:[
+            {	id: 1142,
+                name: "Cholestrol Level",
+                type:[{	id: 1267,
+                    name: 'Tri Glycer',
+                    value: 277,
+                    normal: {min: null,
+                        max: 150,
+                        comparator: 'lessthan'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'Cholestrol',
+                        value: 105,
+                        normal: {min: null,
+                            max: 200,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'LDL',
+                        value: 27,
+                        normal: {min: null,
+                            max: 100,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'HDL',
+                        value: 23,
+                        normal: {min: null,
+                            max: 40-60,
+                            comparator: 'between'
+                        },
+                        result: 'normal'
+                    }
+
+
+                ]
+            },
+            {	id: 1142,
+                name: "Thyroid & Vitamin D Level",
+                type:[{	id: 1267,
+                    name: 'TSH',
+                    value: 3.51,
+                    normal: {min: null,
+                        max: 0.27-4.2,
+                        comparator: 'between'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'Vitamin D',
+                        value: 28.97,
+                        normal: {min: null,
+                            max: 50,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    }
+                ]
+            },
+        ]
+    },
+];
+
+  const  testdata  = [
+    {
+        text: 'Test Date',
+        name: 'One',
+        testcategory:'Blood Sugar Level',
+        testtypeblood:'FBS',
+        testtypeblood1:'PPBS',
+        // image: require('./img/swiper-1.png'),
+    },
+
+    {
+        text1: 'Test Date',
+        name1: 'two',
+        testcategory1:'Cholestrol Level',
+        testtypecholestrol:'Tri Glycer',
+        testtypecholestrol1:'Cholestrol',
+        testtypecholestrol2:'LDL',
+        testtypecholestrol3:'HDL',
+        // image: require('./img/swiper-1.png'),
+    },
+
+    {
+        text2: 'Test Date',
+        name2: 'three',
+        testcategory2:'Thyroid & Vitamin-D Level',
+        testtypethroid:'TSH',
+        testtypevitamin:'Vitamin-D',
+        // image: require('./img/swiper-1.png'),
+    },
+];
 import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
 // import Spinner from 'react-native-spinkit';
@@ -34,8 +309,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 // import { BottomNavigation } from 'react-native-material-ui';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import Swiper from 'react-native-swiper';
-const card      = {card: {width: 300,height:500}};
+// const card      = {card: {width: 300,height:500}};
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -49,20 +323,20 @@ import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var options = [
     {
-        key: 'Thyroid Test Result ',
-        label: 'Thyroid Test Result',
+        key: '16/10/2018 ',
+        label: '16/10/2018',
     },
     {
-        key: 'Cholestrol Test Result',
-        label: 'Cholestrol Test Result',
+        key: '14/09/2018',
+        label: '14/09/2018',
     },
     {
-        key: 'Blood Test Result',
-        label: 'Blood Test Result',
+        key: '12/08/2018',
+        label: '12/08/2018',
     },
     {
-        key: 'Body Mass Index Test Result',
-        label: 'Body Mass Index Test Result',
+        key: '12/07/2018',
+        label: '12/07/2018',
     },
 ];
 
@@ -376,8 +650,18 @@ export default class Home extends Component {
         this.setState({ showDialog: show })
     };
 
+
     render() {
 
+        let data = [{
+            value: this.state.date,
+        }
+        // , {
+        //     value: 'A/C Buses',
+        // }, {
+        //     value: 'Non A/C Buses',
+        // }
+        ];
         return (
 
             <View style={styles.container}>
@@ -389,509 +673,330 @@ export default class Home extends Component {
 
                 <View style={[styles.headerview]}>
 
-                        <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
+                        <View style={{flexDirection:"row",paddingRight:10,
+                            paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                                 <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
 
-                        </View>
-                    <ScrollView
-                        style={styles.container1}
-                        ref={(scrollView) => { this.scrollView = scrollView; }}
-                        //pagingEnabled={true}
-                        horizontal= {true}
-                        decelerationRate={0}
-                        snapToInterval={width - 60}
-                        snapToAlignment={"center"}
-                        contentInset={{
-                            top:0,
-                            left: 30,
-                            bottom:0,
-                            right: 30,
-                        }}>
-
-                        <Card style={{width:DEVICE_WIDTH - 10}}>
-                    <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>
-                        <Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 16/10/2018</Text>
-
-                    </View>
-
-
-
-                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                            <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Blood Sugar Level</Text>
-
-                            </View>
-                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                            <View style={{flexDirection:"column",marginTop:10}}>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > FBS  </Text>
-
-
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > PPBS </Text>
-
-
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  146  </Text>
-
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  127 </Text>
-                                </View>
-                            </View>
-
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                </View>
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 140)</Text>
-                                </View>
-                            </View>
-
-
-                        </View>
-
-                    </Card>
-
-
-                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Cholestrol Level</Text>
-
-                        </View>
-                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                            <View style={{flexDirection:"column",marginTop:35}}>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
-
-
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
-
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
-
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
-
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
-                                </View>
-
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly',marginTop: 10}}>
-
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                </View>
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 150)</Text>
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 200)</Text>
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (40-60)</Text>
-                                </View>
-                            </View>
-
-
-                        </View>
-
-                    </Card>
-
-
-                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
-
-                        </View>
-                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                            <View style={{flexDirection:"column",marginTop:10}}>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
-
-
-                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
-
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>
-                                    <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                </View>
-                            </View>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
-
-                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 50)</Text>
-                                </View>
-                            </View>
-
-                        </View>
-
-                    </Card>
-                        </Card>
-
-                        <Card style={{width:DEVICE_WIDTH - 10}}>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>
-                                <Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 14/06/2018</Text>
-
-                            </View>
-
-
-
-                            <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                    <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Blood Sugar Level</Text>
-
-                                </View>
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                    <View style={{flexDirection:"column",marginTop:10}}>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > FBS  </Text>
-
-
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > PPBS </Text>
-
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  146  </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  127 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 140)</Text>
-                                        </View>
-                                    </View>
-
-
-                                </View>
-
-                            </Card>
-
-                            <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                    <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
-
-                                </View>
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                    <View style={{flexDirection:"column",marginTop:10}}>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
-
-
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
-
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 50)</Text>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-                            </Card>
-                        </Card>
-
-                        <Card style={{width:DEVICE_WIDTH - 10}}>
-                            <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>
-                                <Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 12/07/2018</Text>
-
-                            </View>
-
-                            <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                    <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Cholestrol Level</Text>
-
-                                </View>
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                    <View style={{flexDirection:"column",marginTop:35}}>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
-
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
-                                        </View>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly',marginTop: 10}}>
-
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 150)</Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 200)</Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 100)</Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (40-60)</Text>
-                                        </View>
-                                    </View>
-
-
-                                </View>
-
-                            </Card>
-
-
-                            <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                    <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
-
-                                </View>
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                    <View style={{flexDirection:"column",marginTop:10}}>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
-
-
-                                        <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>
-                                            <Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>
-                                        </View>
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
-
-                                            <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (less than 50)</Text>
-                                        </View>
-                                    </View>
-
-                                </View>
-
-                            </Card>
-                        </Card>
-
-                    </ScrollView>
-                    {/*{*/}
-                        {/*// Here the ? Question Mark represent the ternary operator.*/}
-                        {/*//style={{backgroundColor:'#FFFFFF',width:width-220}}*/}
-                        {/*this.state.loading ?  <ActivityIndicator color = '#2eacde'*/}
-                                                                 {/*size = "large" style={{padding: 20}} /> : null*/}
-                    {/*}*/}
-
-                        {/*</ScrollView>*/}
-                    <Dialog
-                        visible={this.state.showDialog}
-                        title="Ticket Details"
-                        onTouchOutside={() => this.openDialog(false)}
-                        contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
-                        animationType="fade">
-                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                            <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                               onPress={this.onTestNameShowpicker}>
-                                {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                <TextField label="Enter Test Type Here"
-                                           lineHeight={30}
-                                           value={this.state.picked2}
-                                           editable={false}
-                                           fontSize={16}
-                                    // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                            {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
+                                    {/*onPress={() => {(this.openDialog(true))}}>*/}
+                                {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
+                            {/*</TouchableOpacity>*/}
+                            <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
+                                    onPress={this.onplusButtonPress}>
+                                <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             </TouchableOpacity>
-                            <ModalFilterPicker
-                                visible={this.state.pickervisible2}
-                                onSelect={this.onTestNameSelectpicker}
-                                onCancel={this.onTestNameCancelpicker}
-                                options={options}
-                                optionTextStyle={style={fontSize:16}}
-                            />
-                            <View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>
-                                <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                    <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
-
-                                        <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                            <Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}
-                                            />
-                                        </TouchableOpacity>
-                                        <Text note style={{fontSize:18,color:'#000'}}
-                                              onPress={this._showDateTimePicker}> {
-                                            Moment(this.state.date).format('DD MMM YYYY')} </Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                    <DateTimePicker
-                                        isVisible={this.state.isDateTimePickerVisible}
-                                        mode={'date'}
-                                        minimumDate={Moment().toDate()}
-                                        onConfirm={this._handleDatePicked}
-                                        onCancel={this._hideDateTimePicker}
+                        </View>
+                    <DeckSwiper
+                        dataSource={testresults}
+                        renderItem={item =>
+                            <Card style={{ elevation: 3 }}>
+                                {/*<CardItem>*/}
+                                    {/*<Left>*/}
+                                        {/*<Text>{item.text}</Text>*/}
+                                        {/*<Body>*/}
+                                        {/*<Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 16/10/2018</Text>*/}
+                                        {/*</Body>*/}
+                                    {/*</Left>*/}
+                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
+                                    {/*<Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>*/}
+                                    {/*<Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}}*/}
+                                          {/*onPress={() => {(this.openDialog(true))}}> 16/10/2018</Text>*/}
+                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                                                       onPress={this.onTestNameShowpicker}>
+                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                        <TextField label="Search Test By Date"
+                                                   lineHeight={30}
+                                                   value={'16/10/2018'}
+                                                   editable={false}
+                                                   fontSize={16}
+                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                    </TouchableOpacity>
+                                    <ModalFilterPicker
+                                        visible={this.state.pickervisible2}
+                                        onSelect={this.onTestNameSelectpicker}
+                                        onCancel={this.onTestNameCancelpicker}
+                                        options={options}
+                                        optionTextStyle={style={fontSize:16}}
                                     />
 
+                                </View>
+                                {/*</CardItem>*/}
+                                {/*<CardItem >*/}
+                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
 
-                                </TouchableOpacity>
+                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {item.category[0].name}</Text>
 
-                                <TouchableOpacity
-                                    style={{
-                                        borderWidth:1,
-                                        borderColor:'rgba(0,0,0,0.2)',
-                                        alignItems:'center',
-                                        justifyContent:'center',
-                                        width:35,
-                                        height:35,
-                                        backgroundColor:'#071398',
-                                        borderRadius:100,
-                                    }}
-                                    onPress={() => {this.onsearchButtonPress(), (this.openDialog(false))}}
-                                >
-                                    {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*/}
-                                        {/*,textAlign:'center'}}>Edit</Text>*/}
-                                    <Icons type='FontAwesome' name='search' size={20} color="#FFFFFF"/>
-                                </TouchableOpacity>
-                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",marginTop:10}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[0].name} </Text>
 
-                        </View>
 
-                        <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
-                        }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
-                            <Text style={{fontWeight: "bold",fontSize:16,color:'#2eacde',flex:2
-                                ,textAlign:'center'}}>Close</Text>
-                        </Button>
-                    </Dialog>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[1].name} </Text>
+
+
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[0].value}  </Text>
+
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[1].value} </Text>
+                                                </View>
+                                            </View>
+
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                </View>
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                                    <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {item.category[0].type[0].normal.max}</Text>
+                                                    <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {item.category[0].type[1].normal.max}</Text>
+                                                </View>
+                                            </View>
+
+
+                                        </View>
+
+                                    </Card>
+
+
+                            {/*</CardItem>*/}
+                                {/*<CardItem>*/}
+                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {item.category[1].name}</Text>
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",marginTop:35}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
+
+
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
+
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
+
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
+
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
+                                                </View>
+
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                </View>
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 150</Text>
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 200</Text>
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 100</Text>
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (40-60)</Text>
+                                                </View>
+                                            </View>
+
+
+                                        </View>
+
+                                    </Card>
+
+                                {/*</CardItem>*/}
+                                {/*<CardItem >*/}
+                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",marginTop:10}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
+
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
+
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
+                                                </View>
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
+                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                </View>
+                                            </View>
+                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
+
+                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 50</Text>
+                                                </View>
+                                            </View>
+
+                                        </View>
+
+                                    </Card>
+
+                                {/*</CardItem>*/}
+                                {/*<CardItem>*/}
+                                    {/*/!*<Icon name="heart" style={{ color: '#ED4A6A' }} />*!/*/}
+                                    {/*<Text>{item.name}</Text>*/}
+                                {/*</CardItem>*/}
+                            </Card>
+                        }
+                    />
+
+
+
+
+                    {/*<Dialog*/}
+                        {/*visible={this.state.showDialog}*/}
+                        {/*title="Ticket Details"*/}
+                        {/*onTouchOutside={() => this.openDialog(false)}*/}
+                        {/*contentStyle={{ justifyContent: 'center', alignItems: 'center', }}*/}
+                        {/*animationType="fade">*/}
+                        {/*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}>*/}
+                            {/*<TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}*/}
+                                               {/*onPress={this.onTestNameShowpicker}>*/}
+                                {/*/!*<Text>Select Country: {this.state.picked}</Text>*!/*/}
+                                {/*<TextField label="Enter Test Type Here"*/}
+                                           {/*lineHeight={30}*/}
+                                           {/*value={this.state.picked2}*/}
+                                           {/*editable={false}*/}
+                                           {/*fontSize={16}*/}
+                                    {/*// onChangeText={(itemValue) => this.setState({selected2: itemValue})}*/}
+                                           {/*containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>*/}
+                            {/*</TouchableOpacity>*/}
+                            {/*<ModalFilterPicker*/}
+                                {/*visible={this.state.pickervisible2}*/}
+                                {/*onSelect={this.onTestNameSelectpicker}*/}
+                                {/*onCancel={this.onTestNameCancelpicker}*/}
+                                {/*options={options}*/}
+                                {/*optionTextStyle={style={fontSize:16}}*/}
+                            {/*/>*/}
+                            {/*<View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>*/}
+                                {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
+                                    {/*<View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>*/}
+
+                                        {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
+                                            {/*<Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}*/}
+                                            {/*/>*/}
+                                        {/*</TouchableOpacity>*/}
+                                        {/*<Text note style={{fontSize:18,color:'#000'}}*/}
+                                              {/*onPress={this._showDateTimePicker}> {*/}
+                                            {/*Moment(this.state.date).format('DD MMM YYYY')} </Text>*/}
+                                    {/*</View>*/}
+                                {/*</TouchableOpacity>*/}
+                                {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
+                                    {/*<DateTimePicker*/}
+                                        {/*isVisible={this.state.isDateTimePickerVisible}*/}
+                                        {/*mode={'date'}*/}
+                                        {/*minimumDate={Moment().toDate()}*/}
+                                        {/*onConfirm={this._handleDatePicked}*/}
+                                        {/*onCancel={this._hideDateTimePicker}*/}
+                                    {/*/>*/}
+
+
+                                {/*</TouchableOpacity>*/}
+
+                                {/*<TouchableOpacity*/}
+                                    {/*style={{*/}
+                                        {/*borderWidth:1,*/}
+                                        {/*borderColor:'rgba(0,0,0,0.2)',*/}
+                                        {/*alignItems:'center',*/}
+                                        {/*justifyContent:'center',*/}
+                                        {/*width:35,*/}
+                                        {/*height:35,*/}
+                                        {/*backgroundColor:'#071398',*/}
+                                        {/*borderRadius:100,*/}
+                                    {/*}}*/}
+                                    {/*onPress={() => {this.onsearchButtonPress(), (this.openDialog(false))}}*/}
+                                {/*>*/}
+                                    {/*/!*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*!/*/}
+                                        {/*/!*,textAlign:'center'}}>Edit</Text>*!/*/}
+                                    {/*<Icons type='MaterialCommunityIcons' name='search' size={20} color="#FFFFFF"/>*/}
+                                {/*</TouchableOpacity>*/}
+                            {/*</View>*/}
+
+                        {/*</View>*/}
+
+                        {/*<Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10*/}
+                        {/*}}*/}
+                                {/*onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >*/}
+                            {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#2eacde',flex:2*/}
+                                {/*,textAlign:'center'}}>Close</Text>*/}
+                        {/*</Button>*/}
+                    {/*</Dialog>*/}
 
                 </View>
 
 
-                <Fab
-                    // active={this.state.active}
-                    active={!this.state.active}
-                    direction="up"
-                    containerStyle={{position:'absolute',bottom:60}}
-                    style={{ backgroundColor: '#071398' }}
-                    position="bottomRight"
-                    // onPress={this.onButtonPress}
-                    onPress={() => this.setState({ active: !this.state.active })}
-                >
-                    {/*<Image  source={require('../Images/menu_symbol.png')} />*/}
-                    <Icons type='FontAwesome' name='hand-o-up' size={30} color="#FFFFFF"/>
-                    <Button style={{ backgroundColor: '#071398' }}
-                            onPress={() => {(this.openDialog(true))}}>
-                        <Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>
-                    </Button>
-                    <Button style={{ backgroundColor: '#071398' }}
-                            onPress={this.onplusButtonPress}>
-                        <Icons type='FontAwesome' name='plus' size={30} color="#FFFFFF"/>
-                    </Button>
-                    <Button disabled style={{ backgroundColor: '#071398' }}>
-                        <Icons type='FontAwesome' name='share-alt' size={30} color="#FFFFFF"/>
-                    </Button>
+                {/*<Fab*/}
+                    {/*// active={this.state.active}*/}
+                    {/*active={!this.state.active}*/}
+                    {/*direction="up"*/}
+                    {/*containerStyle={{position:'absolute',bottom:60}}*/}
+                    {/*style={{ backgroundColor: '#071398' }}*/}
+                    {/*position="bottomRight"*/}
+                    {/*// onPress={this.onButtonPress}*/}
+                    {/*onPress={() => this.setState({ active: !this.state.active })}*/}
+                {/*>*/}
+                    {/*/!*<Image  source={require('../Images/menu_symbol.png')} />*!/*/}
+                    {/*<Icons type='FontAwesome' name='hand-o-up' size={30} color="#FFFFFF"/>*/}
+                    {/*<Button style={{ backgroundColor: '#071398' }}*/}
+                            {/*onPress={() => {(this.openDialog(true))}}>*/}
+                        {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
+                    {/*</Button>*/}
+                    {/*<Button style={{ backgroundColor: '#071398' }}*/}
+                            {/*onPress={this.onplusButtonPress}>*/}
+                        {/*<Icons type='FontAwesome' name='plus' size={30} color="#FFFFFF"/>*/}
+                    {/*</Button>*/}
+                    {/*<Button disabled style={{ backgroundColor: '#071398' }}>*/}
+                        {/*<Icons type='FontAwesome' name='share-alt' size={30} color="#FFFFFF"/>*/}
+                    {/*</Button>*/}
 
-                </Fab>
+                {/*</Fab>*/}
                 {/*<View style={{flex:1, backgroundColor: '#f3f3f3'}}>*/}
                     {/* Rest of the app comes ABOVE the action button component !*/}
                     {/*<ActionButton buttonColor="rgba(231,76,60,1)" style={{position:'absolute',bottom:40}}>*/}
@@ -942,6 +1047,7 @@ const styles = StyleSheet.create({
         // borderColor:'#917cb7',
         position: 'absolute',
         backgroundColor: '#f1f1f1f1',
+        height:800,
         // paddingRight:15,
         // paddingLeft:15,
         // paddingTop:35,
