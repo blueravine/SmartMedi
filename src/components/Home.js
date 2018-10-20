@@ -6,7 +6,7 @@ import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,De
     Footer, FooterTab} from 'native-base';
 import Calendar from 'react-native-calendar-datepicker';
 import Moment from 'moment';
-import Swiper from 'react-native-deck-swiper'
+import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/FontAwesome';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,7 +17,11 @@ import BottomNavigation, {
     ShiftingTab
 } from 'react-native-material-bottom-navigation';
 
-
+var renderCategory=[];
+var renderCard=[];
+var rendertypelabel=[];
+var rendertypeactual=[];
+var rendertypenormal=[];
 const users = {
     name: 'John Doe',
     mobile: 9674892081
@@ -82,7 +86,7 @@ const testresults=[
                     name: 'HDL',
                     value: 23,
                     normal: {min: null,
-                        max: 40-60,
+                        max: 40 + ' - ' + 60,
                         comparator: 'between'
                     },
                     result: 'normal'
@@ -97,7 +101,7 @@ const testresults=[
                 name: 'TSH',
                 value: 3.51,
                 normal: {min: null,
-                    max: 0.27-4.2,
+                    max: 0.27 + ' - ' + 4.2,
                     comparator: 'between'
                 },
                 result: 'high'
@@ -662,6 +666,7 @@ export default class Home extends Component {
         //     value: 'Non A/C Buses',
         // }
         ];
+
         return (
 
             <View style={styles.container}>
@@ -686,21 +691,13 @@ export default class Home extends Component {
                                 <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             </TouchableOpacity>
                         </View>
-                    <DeckSwiper
-                        dataSource={testresults}
-                        renderItem={item =>
-                            <Card style={{ elevation: 3 }}>
-                                {/*<CardItem>*/}
-                                    {/*<Left>*/}
-                                        {/*<Text>{item.text}</Text>*/}
-                                        {/*<Body>*/}
-                                        {/*<Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}} > 16/10/2018</Text>*/}
-                                        {/*</Body>*/}
-                                    {/*</Left>*/}
+                    {/*showsButtons={true}*/}
+                    <Swiper  >
+                        <View style={styles.slide1}>
+                            {/*<Card style={{height:500}}>*/}
+                            {/*</Card>*/}
+                            <Card >
                                 <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                    {/*<Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#000'}} >  Test Date</Text>*/}
-                                    {/*<Text note style={{fontSize:16,textAlign:'right',marginTop:10,flex:2,color:'#000'}}*/}
-                                          {/*onPress={() => {(this.openDialog(true))}}> 16/10/2018</Text>*/}
                                     <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                        onPress={this.onTestNameShowpicker}>
                                         {/*<Text>Select Country: {this.state.picked}</Text>*/}
@@ -719,174 +716,429 @@ export default class Home extends Component {
                                         options={options}
                                         optionTextStyle={style={fontSize:16}}
                                     />
-
                                 </View>
-                                {/*</CardItem>*/}
-                                {/*<CardItem >*/}
-                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {item.category[0].name}</Text>
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",marginTop:10}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[0].name} </Text>
 
 
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[1].name} </Text>
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[0].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:10}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].name} </Text>
 
 
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[0].value}  </Text>
-
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {item.category[0].type[1].value} </Text>
-                                                </View>
-                                            </View>
-
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                </View>
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                    <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {item.category[0].type[0].normal.max}</Text>
-                                                    <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {item.category[0].type[1].normal.max}</Text>
-                                                </View>
-                                            </View>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].name} </Text>
 
 
-                                        </View>
-
-                                    </Card>
-
-
-                            {/*</CardItem>*/}
-                                {/*<CardItem>*/}
-                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {item.category[1].name}</Text>
 
                                         </View>
                                         <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",marginTop:35}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > Tri Glycer  </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > Cholestrol </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > LDL </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > HDL </Text>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].value}  </Text>
 
-
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].value} </Text>
                                             </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  277  </Text>
-
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  105 </Text>
-
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  27 </Text>
-
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  23 </Text>
-                                                </View>
-
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                </View>
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 150</Text>
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 200</Text>
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 100</Text>
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (40-60)</Text>
-                                                </View>
-                                            </View>
-
-
                                         </View>
 
-                                    </Card>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
 
-                                {/*</CardItem>*/}
-                                {/*<CardItem >*/}
-                                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
 
-                                        {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                        <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                            <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  Thyroid & Vitamin D Levels</Text>
+                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[0].normal.max}</Text>
+                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[1].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </Card>
+
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:35}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
+
 
                                         </View>
                                         <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",marginTop:10}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > TSH  </Text>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
 
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
 
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Vitamin D </Text>
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  3.51  </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
 
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  28.97 </Text>
-                                                </View>
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
-                                                    {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                </View>
-                                            </View>
-                                            <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                                <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                    <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  (0.27-4.2)</Text>
-
-                                                    <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; 50</Text>
-                                                </View>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
                                             </View>
 
                                         </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
 
-                                    </Card>
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
 
-                                {/*</CardItem>*/}
-                                {/*<CardItem>*/}
-                                    {/*/!*<Icon name="heart" style={{ color: '#ED4A6A' }} />*!/*/}
-                                    {/*<Text>{item.name}</Text>*/}
-                                {/*</CardItem>*/}
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </Card>
+
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[2].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:10}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[0].name}  </Text>
+
+
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[1].name} </Text>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].value}  </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[1].value}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].normal.max}</Text>
+
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[2].type[1].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+
+                                </Card>
                             </Card>
-                        }
-                    />
 
+
+                        </View>
+                        <View style={styles.slide2}>
+                            <Card >
+                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
+                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                                                       onPress={this.onTestNameShowpicker}>
+                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                        <TextField label="Search Test By Date"
+                                                   lineHeight={30}
+                                                   value={'14/09/2018'}
+                                                   editable={false}
+                                                   fontSize={16}
+                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                    </TouchableOpacity>
+                                    <ModalFilterPicker
+                                        visible={this.state.pickervisible2}
+                                        onSelect={this.onTestNameSelectpicker}
+                                        onCancel={this.onTestNameCancelpicker}
+                                        options={options}
+                                        optionTextStyle={style={fontSize:16}}
+                                    />
+                                </View>
+
+
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[0].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:10}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].name} </Text>
+
+
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].name} </Text>
+
+
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].value}  </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].value} </Text>
+                                            </View>
+                                        </View>
+
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[0].normal.max}</Text>
+                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[1].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </Card>
+
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:35}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
+
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
+                                            </View>
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </Card>
+                            </Card>
+
+                        </View>
+                        <View style={styles.slide3}>
+                            <Card >
+                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
+                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                                                       onPress={this.onTestNameShowpicker}>
+                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                        <TextField label="Search Test By Date"
+                                                   lineHeight={30}
+                                                   value={'12/07/2018'}
+                                                   editable={false}
+                                                   fontSize={16}
+                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                    </TouchableOpacity>
+                                    <ModalFilterPicker
+                                        visible={this.state.pickervisible2}
+                                        onSelect={this.onTestNameSelectpicker}
+                                        onCancel={this.onTestNameCancelpicker}
+                                        options={options}
+                                        optionTextStyle={style={fontSize:16}}
+                                    />
+                                </View>
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:35}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
+
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
+                                            </View>
+
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+
+                                    </View>
+
+                                </Card>
+
+
+                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
+                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
+                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[2].name}</Text>
+
+                                    </View>
+                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                        <View style={{flexDirection:"column",marginTop:10}}>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[0].name}  </Text>
+
+
+                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[1].name} </Text>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].value}  </Text>
+
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[1].value}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
+
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
+                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
+                                            </View>
+                                        </View>
+                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
+                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].normal.max}</Text>
+
+                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[2].type[1].normal.max}</Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+
+                                </Card>
+
+                            </Card>
+
+                        </View>
+                    </Swiper>
 
 
 
@@ -1135,5 +1387,32 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         color:'#000'
         //paddingHorizontal : 30
+    },
+
+    wrapper: {
+    },
+    slide1: {
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: '#f1f1f1f1',
+    },
+    slide2: {
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: '#f1f1f1f1',
+    },
+    slide3: {
+        flex: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        backgroundColor: '#f1f1f1f1',
+    },
+    text: {
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold',
     }
+
 });
