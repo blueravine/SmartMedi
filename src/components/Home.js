@@ -1,6 +1,6 @@
 import React, { Component,PropTypes } from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
-     UIManager, findNodeHandle,Alert,Keyboard,
+    UIManager, findNodeHandle,Alert,Keyboard,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,DeckSwiper, Text,Item,icon,Input,View,Fab, Button,  Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -29,100 +29,7 @@ const users = {
 const testresults=[
     {
         id: 7616,
-    testdate: 16102018,
-    category:[
-        {	id: 1142,
-        name: "Blood Test",
-        type:[{	id: 1267,
-            name: 'FBS',
-            value: 146,
-            normal: {min: null,
-                max: 100,
-                comparator: 'lessthan'
-            },
-            result: 'high'
-        },
-            { id: 1268,
-                name: 'PPBS',
-                value: 127,
-                normal: {min: null,
-                    max: 140,
-                    comparator: 'lessthan'
-                },
-                result: 'normal'
-            }
-        ]
-    },
-        {	id: 1142,
-            name: "Cholestrol Level",
-            type:[{	id: 1267,
-                name: 'Tri Glycer',
-                value: 277,
-                normal: {min: null,
-                    max: 150,
-                    comparator: 'lessthan'
-                },
-                result: 'high'
-            },
-                { id: 1268,
-                    name: 'Cholestrol',
-                    value: 105,
-                    normal: {min: null,
-                        max: 200,
-                        comparator: 'lessthan'
-                    },
-                    result: 'normal'
-                },
-                { id: 1268,
-                    name: 'LDL',
-                    value: 27,
-                    normal: {min: null,
-                        max: 100,
-                        comparator: 'lessthan'
-                    },
-                    result: 'normal'
-                },
-                { id: 1268,
-                    name: 'HDL',
-                    value: 23,
-                    normal: {min: null,
-                        max: 40 + ' - ' + 60,
-                        comparator: 'between'
-                    },
-                    result: 'normal'
-                }
-
-
-            ]
-        },
-        {	id: 1142,
-            name: "Thyroid & Vitamin D Level",
-            type:[{	id: 1267,
-                name: 'TSH',
-                value: 3.51,
-                normal: {min: null,
-                    max: 0.27 + ' - ' + 4.2,
-                    comparator: 'between'
-                },
-                result: 'high'
-            },
-                { id: 1268,
-                    name: 'Vitamin D',
-                    value: 28.97,
-                    normal: {min: null,
-                        max: 50,
-                        comparator: 'lessthan'
-                    },
-                    result: 'normal'
-                }
-            ]
-        },
-    ]
-},
-
-    {
-        id: 7616,
-        testdate: 14102018,
+        testdate: '16/10/2018',
         category:[
             {	id: 1142,
                 name: "Blood Test",
@@ -167,7 +74,7 @@ const testresults=[
                         result: 'normal'
                     },
                     { id: 1268,
-                        name: 'LDL',
+                        name: 'LDL       ',
                         value: 27,
                         normal: {min: null,
                             max: 100,
@@ -176,10 +83,103 @@ const testresults=[
                         result: 'normal'
                     },
                     { id: 1268,
-                        name: 'HDL',
+                        name: 'HDL       ',
                         value: 23,
                         normal: {min: null,
-                            max: 40-60,
+                            max: 40 + ' - ' +60,
+                            comparator: 'between'
+                        },
+                        result: 'normal'
+                    }
+
+
+                ]
+            },
+            {	id: 1142,
+                name: "Thyroid & Vitamin D Level",
+                type:[{	id: 1267,
+                    name: 'TSH',
+                    value: 3.51,
+                    normal: {min: null,
+                        max: 0.27 + ' - ' +4.2,
+                        comparator: 'between'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'Vitamin D',
+                        value: 28.97,
+                        normal: {min: null,
+                            max: 50,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    }
+                ]
+            },
+        ]
+    },
+
+    {
+        id: 7616,
+        testdate: '14/10/2018',
+        category:[
+            {	id: 1142,
+                name: "Blood Test",
+                type:[{	id: 1267,
+                    name: 'FBS',
+                    value: 146,
+                    normal: {min: null,
+                        max: 100,
+                        comparator: 'lessthan'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'PPBS',
+                        value: 127,
+                        normal: {min: null,
+                            max: 140,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    }
+                ]
+            },
+            {	id: 1142,
+                name: "Cholestrol Level",
+                type:[{	id: 1267,
+                    name: 'Tri Glycer',
+                    value: 277,
+                    normal: {min: null,
+                        max: 150,
+                        comparator: 'lessthan'
+                    },
+                    result: 'high'
+                },
+                    { id: 1268,
+                        name: 'Cholestrol',
+                        value: 105,
+                        normal: {min: null,
+                            max: 200,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'LDL       ',
+                        value: 27,
+                        normal: {min: null,
+                            max: 100,
+                            comparator: 'lessthan'
+                        },
+                        result: 'normal'
+                    },
+                    { id: 1268,
+                        name: 'HDL       ',
+                        value: 23,
+                        normal: {min: null,
+                            max: 40 + ' - ' +60,
                             comparator: 'between'
                         },
                         result: 'normal'
@@ -193,7 +193,7 @@ const testresults=[
 
     {
         id: 7616,
-        testdate: 12102018,
+        testdate: '12/10/2018',
         category:[
             {	id: 1142,
                 name: "Cholestrol Level",
@@ -216,7 +216,7 @@ const testresults=[
                         result: 'normal'
                     },
                     { id: 1268,
-                        name: 'LDL',
+                        name: 'LDL       ',
                         value: 27,
                         normal: {min: null,
                             max: 100,
@@ -225,10 +225,10 @@ const testresults=[
                         result: 'normal'
                     },
                     { id: 1268,
-                        name: 'HDL',
+                        name: 'HDL       ',
                         value: 23,
                         normal: {min: null,
-                            max: 40-60,
+                            max: 40 + ' - ' +60,
                             comparator: 'between'
                         },
                         result: 'normal'
@@ -243,7 +243,7 @@ const testresults=[
                     name: 'TSH',
                     value: 3.51,
                     normal: {min: null,
-                        max: 0.27-4.2,
+                        max: 0.27 +' - ' + 4.2,
                         comparator: 'between'
                     },
                     result: 'high'
@@ -263,7 +263,7 @@ const testresults=[
     },
 ];
 
-  const  testdata  = [
+const  testdata  = [
     {
         text: 'Test Date',
         name: 'One',
@@ -325,7 +325,7 @@ const search_magnifier_black = require('../Images/search_magnifier_black.png');
 const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
-var options = [
+var testdates = [
     {
         key: '16/10/2018 ',
         label: '16/10/2018',
@@ -337,11 +337,7 @@ var options = [
     {
         key: '12/08/2018',
         label: '12/08/2018',
-    },
-    {
-        key: '12/07/2018',
-        label: '12/07/2018',
-    },
+    }
 ];
 
 export default class Home extends Component {
@@ -366,12 +362,15 @@ export default class Home extends Component {
             picked2: '',
             date: new Date(),
             selected1: '',
-
+            currIndex: 0,
+            targetIndex: 0,
+            pressedType: ''
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
 
+    swiper:Object;
 
 
     tabs = [
@@ -546,11 +545,11 @@ export default class Home extends Component {
     ShowHideActivityIndicator = () =>{
 
         this.setState({loading: true});
-                setTimeout(() => {
+        setTimeout(() => {
             Actions.searchScreen(params);
-                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         }, 2000)
-            // this.setState({loading: false})
+        // this.setState({loading: false})
     };
     // _onButtonPressed() {
     //             setTimeout(() => {
@@ -594,14 +593,14 @@ export default class Home extends Component {
                 text: 'Cancel',
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
-    }, {
-            text: 'OK',
+            }, {
+                text: 'OK',
                 onPress: () => BackHandler.exitApp()
-        }, ]
-    , {
-            cancelable: false
-        }
-    );
+            }, ]
+            , {
+                cancelable: false
+            }
+        );
         return true;
     };
 
@@ -649,24 +648,100 @@ export default class Home extends Component {
         // }
     };
 
+    typeClick(selectedType) {
+        this.setState({pressedType: selectedType});
+        Snackbar.show({
+            title: 'Pressed type' +this.state.pressedType,
+            duration: Snackbar.LENGTH_SHORT,
+        });
+    }
 
     openDialog(show) {
         this.setState({ showDialog: show })
     };
 
+    renderType(currcat, categoryindex) {
+        var renderType = currcat.type.map( (currenttype, tindex) => {
+           return(
+               <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
+                   <TouchableOpacity onPress={this.typeClick(currenttype.name)}>
+                   <Text style={{textAlign:'center',marginLeft:8,}}>{currenttype.name}</Text>
+                   </TouchableOpacity>
+                   {/*<Text style={{textAlign:'center'}}>{currenttype.value}</Text>*/}
+                   {(currenttype.result==="high") &&
+                   <Text style={{textAlign:'center',color:'#F80617',flex:1}}>{currenttype.value}</Text>
+                   }
+                   {(currenttype.result==="normal") &&
+                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
+                   }
+                   {(currenttype.result==="between") &&
+                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
+                   }
+                   <Text style={{textAlign:'center',flex:1}}>{currenttype.normal.max}</Text>
+               </View>
+           );
+        });
+
+        return renderType;
+    }
+
+
+    renderCategory(currtest,testindex) {
+       var renderCat = currtest.category.map( (currentcat, cindex) => {
+            return(<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                borderTopLeftRadius:10,borderLeftWidth:10}}>
+                <Text style={{textAlign:'center',marginBottom:20}}>{currentcat.name}</Text>
+                <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
+                <Text style={{textAlign:'center'}}> </Text>
+                <Text style={{textAlign:'center'}}> </Text>
+                <Text style={{textAlign:'center'}}> </Text>
+                <Text style={{textAlign:'center',flex:2}}>   Actual </Text>
+                <Text style={{textAlign:'center',flex:1}}>   Normal </Text>
+                </View>
+                <View>{this.renderType(currentcat, cindex)}</View>
+
+            </Card>);
+        });
+
+        return(
+            renderCat);
+    }
+
+    // renderSwiper(){
+    //  return(
+    //      <Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>
+    //         {renderCard}
+    //     </Swiper>
+    // );
+    // }
 
     render() {
 
         let data = [{
             value: this.state.date,
         }
-        // , {
-        //     value: 'A/C Buses',
-        // }, {
-        //     value: 'Non A/C Buses',
-        // }
+            // , {
+            //     value: 'A/C Buses',
+            // }, {
+            //     value: 'Non A/C Buses',
+            // }
         ];
 
+
+
+        renderCard = testresults.map((currtestresult, testresultindex) => {
+
+            return(
+
+                    <Card>
+                        <Text style={{textAlign:'right'}}>{currtestresult.testdate}</Text>
+                    {this.renderCategory(currtestresult,testresultindex)}
+                    </Card>
+        );
+
+                // </Card>);
+
+        });
         return (
 
             <View style={styles.container}>
@@ -678,591 +753,49 @@ export default class Home extends Component {
 
                 <View style={[styles.headerview]}>
 
-                        <View style={{flexDirection:"row",paddingRight:10,
-                            paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                                <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
+                    <View style={{flexDirection:"row",paddingRight:10,
+                        paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
 
-                            {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
-                                    {/*onPress={() => {(this.openDialog(true))}}>*/}
-                                {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
-                            {/*</TouchableOpacity>*/}
-                            <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
-                                    onPress={this.onplusButtonPress}>
-                                <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
-                            </TouchableOpacity>
-                        </View>
+                        {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
+                        {/*onPress={() => {(this.openDialog(true))}}>*/}
+                        {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
+                        {/*</TouchableOpacity>*/}
+                        <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
+                                          onPress={this.onplusButtonPress}>
+                            <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
+                        </TouchableOpacity>
+                    </View>
                     {/*showsButtons={true}*/}
-                    <Swiper  >
-                        <View style={styles.slide1}>
-                            {/*<Card style={{height:500}}>*/}
-                            {/*</Card>*/}
-                            <Card >
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                       onPress={this.onTestNameShowpicker}>
-                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                        <TextField label="Search Test By Date"
-                                                   lineHeight={30}
-                                                   value={'16/10/2018'}
-                                                   editable={false}
-                                                   fontSize={16}
-                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                    </TouchableOpacity>
-                                    <ModalFilterPicker
-                                        visible={this.state.pickervisible2}
-                                        onSelect={this.onTestNameSelectpicker}
-                                        onCancel={this.onTestNameCancelpicker}
-                                        options={options}
-                                        optionTextStyle={style={fontSize:16}}
-                                    />
-                                </View>
-
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[0].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:10}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].name} </Text>
-
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].name} </Text>
-
-
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].value} </Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[0].normal.max}</Text>
-                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[1].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-
-                                    </View>
-
-                                </Card>
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:35}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
-
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
-                                            </View>
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-
-                                    </View>
-
-                                </Card>
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[2].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:10}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[0].name}  </Text>
-
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[1].name} </Text>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[1].value}</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].normal.max}</Text>
-
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[2].type[1].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-                                    </View>
-
-                                </Card>
-                            </Card>
-
-
-                        </View>
-                        <View style={styles.slide2}>
-                            <Card >
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                       onPress={this.onTestNameShowpicker}>
-                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                        <TextField label="Search Test By Date"
-                                                   lineHeight={30}
-                                                   value={'14/09/2018'}
-                                                   editable={false}
-                                                   fontSize={16}
-                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                    </TouchableOpacity>
-                                    <ModalFilterPicker
-                                        visible={this.state.pickervisible2}
-                                        onSelect={this.onTestNameSelectpicker}
-                                        onCancel={this.onTestNameCancelpicker}
-                                        options={options}
-                                        optionTextStyle={style={fontSize:16}}
-                                    />
-                                </View>
-
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[0].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:10}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].name} </Text>
-
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].name} </Text>
-
-
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[0].type[1].value} </Text>
-                                            </View>
-                                        </View>
-
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[0].normal.max}</Text>
-                                                <Text note style={{fontSize:12,textAlign:'left',color:'#000'}} > &#x0003C; {testresults[0].category[0].type[1].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-
-                                    </View>
-
-                                </Card>
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:35}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
-
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
-                                            </View>
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-
-                                    </View>
-
-                                </Card>
-                            </Card>
-
-                        </View>
-                        <View style={styles.slide3}>
-                            <Card >
-                                <View style={{flexDirection:"row",justifyContent:'space-evenly',backgroundColor:'#FFFFFF'}}>
-                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                       onPress={this.onTestNameShowpicker}>
-                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                        <TextField label="Search Test By Date"
-                                                   lineHeight={30}
-                                                   value={'12/07/2018'}
-                                                   editable={false}
-                                                   fontSize={16}
-                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                    </TouchableOpacity>
-                                    <ModalFilterPicker
-                                        visible={this.state.pickervisible2}
-                                        onSelect={this.onTestNameSelectpicker}
-                                        onCancel={this.onTestNameCancelpicker}
-                                        options={options}
-                                        optionTextStyle={style={fontSize:16}}
-                                    />
-                                </View>
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[1].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:35}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[0].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:8}} > {testresults[0].category[1].type[1].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000',marginBottom:5}} > {testresults[0].category[1].type[2].name} </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[1].type[3].name} </Text>
-
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                {/*<Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>*/}
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[1].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[2].value} </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].value} </Text>
-                                            </View>
-
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginBottom: 45 }}/>
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#F80617" style = {{marginTop: 25 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[0].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[1].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[1].type[2].normal.max}</Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[1].type[3].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-
-                                    </View>
-
-                                </Card>
-
-
-                                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                    borderTopLeftRadius:10,borderLeftWidth:10}}>
-
-                                    {/*<View style={{flexDirection:"row",marginTop:10}}>*/}
-                                    <View style={{justifyContent:'flex-start',marginBottom:20}}>
-                                        <Text note style={{fontSize:14,textAlign:'center',color:'#000'}} >  {testresults[0].category[2].name}</Text>
-
-                                    </View>
-                                    <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection:"column",marginTop:10}}>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  </Text>
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[0].name}  </Text>
-
-
-                                            <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > {testresults[0].category[2].type[1].name} </Text>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Actual </Text>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].value}  </Text>
-
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[1].value}</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Icons type='MaterialCommunityIcons' name='toggle-switch-off-outline' size={22} color="#F80617" style = {{marginTop: 0 }}/>
-
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 25 }}/>*/}
-                                                {/*<Iccon type='FontAwesome' name='flag-o' size={22} color="#16FF1C" style = {{marginTop: 5 }}/>*/}
-                                            </View>
-                                        </View>
-                                        <View style={{flexDirection:"row",justifyContent:'space-evenly'}}>
-                                            <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                                <Text note style={{fontSize:14,textAlign:'left',color:'#000'}} > Normal Range  </Text>
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  {testresults[0].category[2].type[0].normal.max}</Text>
-
-                                                <Text note style={{fontSize:10,textAlign:'left',color:'#000'}} >  &#x0003C; {testresults[0].category[2].type[1].normal.max}</Text>
-                                            </View>
-                                        </View>
-
-                                    </View>
-
-                                </Card>
-
-                            </Card>
-
-                        </View>
+                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                                       onPress={this.onTestNameShowpicker}>
+                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                        <TextField label="Search Test By Date"
+                                   lineHeight={30}
+                                   value={'16/10/2018'}
+                                   editable={false}
+                                   fontSize={16}
+                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
+                    </TouchableOpacity>
+                    <ModalFilterPicker
+                        visible={this.state.pickervisible2}
+                        onSelect={this.onTestNameSelectpicker}
+                        onCancel={this.onTestNameCancelpicker}
+                        options={testdates}
+                        optionTextStyle={style={fontSize:16}}
+                    />
+
+                    {/*<TouchableOpacity onPress={this.setState({'targetIndex': 2})} ><Text> Test</Text>*/}
+                    {/*</TouchableOpacity>*/}
+
+                    <Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>
+                        {renderCard}
                     </Swiper>
 
 
-
-                    {/*<Dialog*/}
-                        {/*visible={this.state.showDialog}*/}
-                        {/*title="Ticket Details"*/}
-                        {/*onTouchOutside={() => this.openDialog(false)}*/}
-                        {/*contentStyle={{ justifyContent: 'center', alignItems: 'center', }}*/}
-                        {/*animationType="fade">*/}
-                        {/*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}>*/}
-                            {/*<TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}*/}
-                                               {/*onPress={this.onTestNameShowpicker}>*/}
-                                {/*/!*<Text>Select Country: {this.state.picked}</Text>*!/*/}
-                                {/*<TextField label="Enter Test Type Here"*/}
-                                           {/*lineHeight={30}*/}
-                                           {/*value={this.state.picked2}*/}
-                                           {/*editable={false}*/}
-                                           {/*fontSize={16}*/}
-                                    {/*// onChangeText={(itemValue) => this.setState({selected2: itemValue})}*/}
-                                           {/*containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>*/}
-                            {/*</TouchableOpacity>*/}
-                            {/*<ModalFilterPicker*/}
-                                {/*visible={this.state.pickervisible2}*/}
-                                {/*onSelect={this.onTestNameSelectpicker}*/}
-                                {/*onCancel={this.onTestNameCancelpicker}*/}
-                                {/*options={options}*/}
-                                {/*optionTextStyle={style={fontSize:16}}*/}
-                            {/*/>*/}
-                            {/*<View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>*/}
-                                {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
-                                    {/*<View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>*/}
-
-                                        {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
-                                            {/*<Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}*/}
-                                            {/*/>*/}
-                                        {/*</TouchableOpacity>*/}
-                                        {/*<Text note style={{fontSize:18,color:'#000'}}*/}
-                                              {/*onPress={this._showDateTimePicker}> {*/}
-                                            {/*Moment(this.state.date).format('DD MMM YYYY')} </Text>*/}
-                                    {/*</View>*/}
-                                {/*</TouchableOpacity>*/}
-                                {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
-                                    {/*<DateTimePicker*/}
-                                        {/*isVisible={this.state.isDateTimePickerVisible}*/}
-                                        {/*mode={'date'}*/}
-                                        {/*minimumDate={Moment().toDate()}*/}
-                                        {/*onConfirm={this._handleDatePicked}*/}
-                                        {/*onCancel={this._hideDateTimePicker}*/}
-                                    {/*/>*/}
-
-
-                                {/*</TouchableOpacity>*/}
-
-                                {/*<TouchableOpacity*/}
-                                    {/*style={{*/}
-                                        {/*borderWidth:1,*/}
-                                        {/*borderColor:'rgba(0,0,0,0.2)',*/}
-                                        {/*alignItems:'center',*/}
-                                        {/*justifyContent:'center',*/}
-                                        {/*width:35,*/}
-                                        {/*height:35,*/}
-                                        {/*backgroundColor:'#071398',*/}
-                                        {/*borderRadius:100,*/}
-                                    {/*}}*/}
-                                    {/*onPress={() => {this.onsearchButtonPress(), (this.openDialog(false))}}*/}
-                                {/*>*/}
-                                    {/*/!*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*!/*/}
-                                        {/*/!*,textAlign:'center'}}>Edit</Text>*!/*/}
-                                    {/*<Icons type='MaterialCommunityIcons' name='search' size={20} color="#FFFFFF"/>*/}
-                                {/*</TouchableOpacity>*/}
-                            {/*</View>*/}
-
-                        {/*</View>*/}
-
-                        {/*<Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10*/}
-                        {/*}}*/}
-                                {/*onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >*/}
-                            {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#2eacde',flex:2*/}
-                                {/*,textAlign:'center'}}>Close</Text>*/}
-                        {/*</Button>*/}
-                    {/*</Dialog>*/}
-
                 </View>
 
-
-                {/*<Fab*/}
-                    {/*// active={this.state.active}*/}
-                    {/*active={!this.state.active}*/}
-                    {/*direction="up"*/}
-                    {/*containerStyle={{position:'absolute',bottom:60}}*/}
-                    {/*style={{ backgroundColor: '#071398' }}*/}
-                    {/*position="bottomRight"*/}
-                    {/*// onPress={this.onButtonPress}*/}
-                    {/*onPress={() => this.setState({ active: !this.state.active })}*/}
-                {/*>*/}
-                    {/*/!*<Image  source={require('../Images/menu_symbol.png')} />*!/*/}
-                    {/*<Icons type='FontAwesome' name='hand-o-up' size={30} color="#FFFFFF"/>*/}
-                    {/*<Button style={{ backgroundColor: '#071398' }}*/}
-                            {/*onPress={() => {(this.openDialog(true))}}>*/}
-                        {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
-                    {/*</Button>*/}
-                    {/*<Button style={{ backgroundColor: '#071398' }}*/}
-                            {/*onPress={this.onplusButtonPress}>*/}
-                        {/*<Icons type='FontAwesome' name='plus' size={30} color="#FFFFFF"/>*/}
-                    {/*</Button>*/}
-                    {/*<Button disabled style={{ backgroundColor: '#071398' }}>*/}
-                        {/*<Icons type='FontAwesome' name='share-alt' size={30} color="#FFFFFF"/>*/}
-                    {/*</Button>*/}
-
-                {/*</Fab>*/}
-                {/*<View style={{flex:1, backgroundColor: '#f3f3f3'}}>*/}
-                    {/* Rest of the app comes ABOVE the action button component !*/}
-                    {/*<ActionButton buttonColor="rgba(231,76,60,1)" style={{position:'absolute',bottom:40}}>*/}
-                        {/*<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>*/}
-                            {/*<Icon name="md-create" style={styles.actionButtonIcon} />*/}
-                        {/*</ActionButton.Item>*/}
-                        {/*<ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>*/}
-                            {/*<Icon name="md-notifications-off" style={styles.actionButtonIcon} />*/}
-                        {/*</ActionButton.Item>*/}
-                        {/*<ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>*/}
-                            {/*<Icon name="md-done-all" style={styles.actionButtonIcon} />*/}
-                        {/*</ActionButton.Item>*/}
-                    {/*</ActionButton>*/}
-                {/*</View>*/}
                 <View style={[styles.footer]}>
                     <BottomNavigation
                         tabs={this.tabs}
@@ -1399,14 +932,14 @@ const styles = StyleSheet.create({
     },
     slide2: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#f1f1f1f1',
     },
     slide3: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#f1f1f1f1',
     },
     text: {
