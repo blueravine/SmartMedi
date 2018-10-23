@@ -5,6 +5,7 @@ import SplashScreen from './SplashScreen';
 import Home from './Home';
 import UserProfile from './UserProfile';
 import AddTestData from './AddTestData';
+import TestDetails from './TestDetails';
 
 
 export default class Main extends Component {
@@ -39,6 +40,12 @@ export default class Main extends Component {
                      hideNavBar={true}
               />
 
+              <Scene key="testScreen"
+                     component={TestDetails}
+                     animation='fade'
+                     hideNavBar={true}
+                     initial={true}
+              />
 		  </Scene>
 
 

@@ -340,7 +340,7 @@ var testdates = [
     }
 ];
 
-export default class Home extends Component {
+export default class TestDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -628,8 +628,11 @@ export default class Home extends Component {
         // if(this.state.picked1===0){
         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
 
-        Actions.testScreen();
-
+        Actions.homeScreen();
+        Snackbar.show({
+            title: 'Searched Results!' +selectedType,
+            duration: Snackbar.LENGTH_SHORT,
+        });
         // }
         // else if(this.state.picked2===0){
         //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
@@ -660,24 +663,24 @@ export default class Home extends Component {
 
     renderType(currcat, categoryindex) {
         var renderType = currcat.type.map( (currenttype, tindex) => {
-           return(
-               <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
-                   <TouchableOpacity onPress={this.onsearchButtonPress(currenttype.name)}>
-                   <Text style={{textAlign:'center',marginLeft:8,}}>{currenttype.name}</Text>
-                   </TouchableOpacity>
-                   {/*<Text style={{textAlign:'center'}}>{currenttype.value}</Text>*/}
-                   {(currenttype.result==="high") &&
-                   <Text style={{textAlign:'center',color:'#F80617',flex:1}}>{currenttype.value}</Text>
-                   }
-                   {(currenttype.result==="normal") &&
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
-                   }
-                   {(currenttype.result==="between") &&
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
-                   }
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.normal.max}</Text>
-               </View>
-           );
+            return(
+                <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
+                    <TouchableOpacity onPress={this.onsearchButtonPress(currenttype.name)}>
+                        <Text style={{textAlign:'center',marginLeft:8,}}>{currenttype.name}</Text>
+                    </TouchableOpacity>
+                    {/*<Text style={{textAlign:'center'}}>{currenttype.value}</Text>*/}
+                    {(currenttype.result==="high") &&
+                    <Text style={{textAlign:'center',color:'#F80617',flex:1}}>{currenttype.value}</Text>
+                    }
+                    {(currenttype.result==="normal") &&
+                    <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
+                    }
+                    {(currenttype.result==="between") &&
+                    <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
+                    }
+                    <Text style={{textAlign:'center',flex:1}}>{currenttype.normal.max}</Text>
+                </View>
+            );
         });
 
         return renderType;
@@ -685,16 +688,16 @@ export default class Home extends Component {
 
 
     renderCategory(currtest,testindex) {
-       var renderCat = currtest.category.map( (currentcat, cindex) => {
+        var renderCat = currtest.category.map( (currentcat, cindex) => {
             return(<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                 borderTopLeftRadius:10,borderLeftWidth:10}}>
                 <Text style={{textAlign:'center',marginBottom:20}}>{currentcat.name}</Text>
                 <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center',flex:2}}>   Actual </Text>
-                <Text style={{textAlign:'center',flex:1}}>   Normal </Text>
+                    <Text style={{textAlign:'center'}}> </Text>
+                    <Text style={{textAlign:'center'}}> </Text>
+                    <Text style={{textAlign:'center'}}> </Text>
+                    <Text style={{textAlign:'center',flex:2}}>   Actual </Text>
+                    <Text style={{textAlign:'center',flex:1}}>   Normal </Text>
                 </View>
                 <View>{this.renderType(currentcat, cindex)}</View>
 
@@ -731,13 +734,13 @@ export default class Home extends Component {
 
             return(
 
-                    <Card>
-                        <Text style={{textAlign:'right'}}>{currtestresult.testdate}</Text>
+                <Card>
+                    <Text style={{textAlign:'right'}}>{currtestresult.testdate}</Text>
                     {this.renderCategory(currtestresult,testresultindex)}
-                    </Card>
-        );
+                </Card>
+            );
 
-                // </Card>);
+            // </Card>);
 
         });
         return (
