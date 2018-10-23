@@ -57,6 +57,7 @@
 		7BA3E824A31F47CAA8696A02 /* libRNSnackbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05441C8089984867AC063FD2 /* libRNSnackbar.a */; };
 		82145EFB10714118B32A58F3 /* libRCTAutoComplete.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D98E4BEBC474273A740BAAA /* libRCTAutoComplete.a */; };
 		F751A84674774FA1A1CFF6F1 /* libRNCardView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32B2FECBE93464E8FB07307 /* libRNCardView.a */; };
+		210A74CAE61746D8B198FC89 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7987A4C2C61441BEA8F6FC74 /* libRNBlur.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -388,6 +389,8 @@
 		6D98E4BEBC474273A740BAAA /* libRCTAutoComplete.a */ = {isa = PBXFileReference; name = "libRCTAutoComplete.a"; path = "libRCTAutoComplete.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		C4278C2BE50A4CA184309966 /* RNCardView.xcodeproj */ = {isa = PBXFileReference; name = "RNCardView.xcodeproj"; path = "../node_modules/react-native-cardview/ios/RNCardView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		B32B2FECBE93464E8FB07307 /* libRNCardView.a */ = {isa = PBXFileReference; name = "libRNCardView.a"; path = "libRNCardView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		68B9F581673344C588986A6B /* RNBlur.xcodeproj */ = {isa = PBXFileReference; name = "RNBlur.xcodeproj"; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7987A4C2C61441BEA8F6FC74 /* libRNBlur.a */ = {isa = PBXFileReference; name = "libRNBlur.a"; path = "libRNBlur.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +425,7 @@
 				7BA3E824A31F47CAA8696A02 /* libRNSnackbar.a in Frameworks */,
 				82145EFB10714118B32A58F3 /* libRCTAutoComplete.a in Frameworks */,
 				F751A84674774FA1A1CFF6F1 /* libRNCardView.a in Frameworks */,
+				210A74CAE61746D8B198FC89 /* libRNBlur.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +441,7 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
+				BCD8E3377B1C4F57BB000CD2 /* libRNSVG-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +619,7 @@
 				66FB0232BA764A929D3154AE /* RNSnackbar.xcodeproj */,
 				DDECA7519FAB48F7A9F635AE /* RCTAutoComplete.xcodeproj */,
 				C4278C2BE50A4CA184309966 /* RNCardView.xcodeproj */,
+				68B9F581673344C588986A6B /* RNBlur.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1277,8 +1283,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smartran.app/Smartran";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1288,6 +1292,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Debug;
@@ -1308,8 +1313,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smartran.app/Smartran";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1319,6 +1322,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Release;
@@ -1346,6 +1350,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Debug;
@@ -1372,6 +1377,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Release;
@@ -1401,8 +1407,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1412,6 +1416,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Debug;
@@ -1441,8 +1446,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1452,6 +1455,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Release;
@@ -1480,8 +1484,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1491,6 +1493,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Debug;
@@ -1519,8 +1522,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1530,6 +1531,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-snackbar\ios",
 					"$(SRCROOT)\..\node_modules\react-native-autocomplete/**",
 					"$(SRCROOT)\..\node_modules\react-native-cardview\ios",
+					"$(SRCROOT)\..\node_modules\react-native-blur\ios",
 				);
 			};
 			name = Release;
