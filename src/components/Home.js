@@ -77,7 +77,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
+                        name: 'LDL',
                         value: 27,
                         normal: {min: null,
                             max: 100,
@@ -89,7 +89,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
+                        name: 'HDL',
                         value: 23,
                         normal: {min: 40,
                             max: 60,
@@ -176,7 +176,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
+                        name: 'LDL',
                         value: 7,
                         normal: {min: null,
                             max: 100,
@@ -188,7 +188,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
+                        name: 'HDL',
                         value: 3,
                         normal: {min: 40,
                             max: 60,
@@ -224,7 +224,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
+                        name: 'LDL',
                         value: 17,
                         normal: {min: null,
                             max: 100,
@@ -236,7 +236,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
+                        name: 'HDL',
                         value: 13,
                         normal: {min: 40,
                             max: 60,
@@ -273,7 +273,7 @@ const testtypes=[
 
                     }
 ];
-
+var testdata=[];
 import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
 // import Spinner from 'react-native-spinkit';
@@ -298,12 +298,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
-const ac_icon_blue = require('../Images/ac_icon_blue.png');
-const ac_icon_grey = require('../Images/ac_icon_grey.png');
-const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
-const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
-const search_magnifier_black = require('../Images/search_magnifier_black.png');
-const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var testdates = [
@@ -349,6 +343,7 @@ export default class Home extends Component {
             filteredTestResult:[],
             selectedTestName:'',
             istestSorted: false,
+            result:[],
 
     };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -465,9 +460,23 @@ export default class Home extends Component {
     //                 this.setState({ loading: false });
     //     }, 3000)
     // };
-    async componentDidMount() {
+     componentDidMount() {
+        // await AsyncStorage.getItem('newtest')
+        //     .then((ntest) => {
+        //
+        //         testdata = ntest ? JSON.parse(ntest) : [];
+        //
+        //         testtypes.push(testdata);
+        //         // alert(JSON.stringify(testdata));
+        //
+        //         this.filterByTestDate(this.state.selectedDate);
+        //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        //
+        //     }).done();
         this.filterByTestDate(this.state.selectedDate);
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        // this.filterByTestDate(this.state.selectedDate);
+        // BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
         // await AsyncStorage.getItem('favs')
         //     .then((favs) => {
@@ -558,13 +567,7 @@ export default class Home extends Component {
             filteredTestResult: testtypes.filter((testresult) => {
                 return testresult.testdate === sDate
             }).sort(
-                (a, b) => {
-                    if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return 1;
-                    } else if (a.name.toLowerCase() < b.name.toLowerCase()) {
-                        return -1;
-                    }
-                    return 0;
+                (a, b) => {return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                 }
             ),
             istestSorted: true
@@ -574,13 +577,7 @@ export default class Home extends Component {
                 filteredTestResult: testtypes.filter((testresult) => {
                     return testresult.testdate === sDate
                 }).sort(
-                    (a, b) => {
-                        if (a.name.toLowerCase() < b.name.toLowerCase()) {
-                            return 1;
-                        } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                            return -1;
-                        }
-                        return 0;
+                        (a, b) => {return (-1) * (a.name.toLowerCase().localeCompare(b.name.toLowerCase()) );
                     }
                 ),
                 istestSorted: false
@@ -686,8 +683,11 @@ render() {
 
                         <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
                             <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
-                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Test Name</Text>
-                                <Icon type='MaterialIcons' name='sort-by-alpha' size={10} color="#000"/>
+                                <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
+                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
+                                Test Name</Text>
+                                <Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>
+                                </View>
                             </TouchableOpacity>
                             <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
                             <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>

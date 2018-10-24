@@ -43,30 +43,27 @@ const drawerStyles = {
     drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
     main: {paddingLeft: 3},
 };
-
+var temptests;
+var addtests;
 
 var options = [
     {
-        key: 'Thyroid Test Result ',
-        label: 'Thyroid Test Result',
+        key: 'Blood Test ',
+        label: 'Blood Test',
     },
     {
-        key: 'Cholestrol Test Result',
-        label: 'Cholestrol Test Result',
+        key: 'Cholestrol Level',
+        label: 'Cholestrol Level',
     },
     {
-        key: 'Blood Test Result',
-        label: 'Blood Test Result',
-    },
-    {
-        key: 'Body Mass Index Test Result',
-        label: 'Body Mass Index Test Result',
+        key: 'Thyroid & Vitamin D Level',
+        label: 'Thyroid & Vitamin D Level',
     },
 ];
 
 var optionsname = [
     {
-        key: 'FBS ',
+        key: 'FBS',
         label: 'FBS',
     },
     {
@@ -74,8 +71,28 @@ var optionsname = [
         label: 'PPBS',
     },
     {
-        key: 'FBC',
-        label: 'FBC',
+        key: 'Tri Glycer',
+        label: 'Tri Glycer',
+    },
+    {
+        key: 'Cholestrol',
+        label: 'Cholestrol',
+    },
+    {
+        key: 'LDL',
+        label: 'LDL',
+    },
+    {
+        key: 'HDL',
+        label: 'HDL',
+    },
+    {
+        key: 'TSH',
+        label: 'TSH',
+    },
+    {
+        key: 'Vitamin D',
+        label: 'Vitamin D',
     },
 ];
 
@@ -99,6 +116,9 @@ export default class AddTestData extends Component {
             pickervisible2: false,
             picked1: '',
             picked2: '',
+            testvalue:'',
+            rangevalue:'',
+            resultnotes:'',
             date: new Date(),
             selected1: '',
 
@@ -260,6 +280,8 @@ export default class AddTestData extends Component {
 
         this.setState({loading: true});
         setTimeout(() => {
+            // this.saveTestsData(temptests);
+            // alert("saved test data " +JSON.stringify(temptests));
             Actions.homeScreen();
             Snackbar.show({
                 title: 'Test details added succesfully',
@@ -322,9 +344,67 @@ export default class AddTestData extends Component {
         Actions.homeScreen();
     };
 
+    async saveTestsData(currenttests) {
+        try {
+
+           await AsyncStorage.getItem('newtest')
+                .then((tests) => {
+                    addtests = tests ? JSON.parse(tests) : [];
+                    // Toast.show("tickets " +c ,Toast.LONG);
+                    addtests.push(currenttests);
+                    AsyncStorage.setItem('newtest', JSON.stringify(addtests));
+
+                    // if(addtests.contain(this.state.date)){
+                    //     Alert.alert(
+                    //         'Date Already Exist',
+                    //         'Do you want update the details for '+ this.state.date , [{
+                    //             text: 'Cancel',
+                    //             onPress: () => {Snackbar.show({
+                    //                 title: 'Test details not added',
+                    //                 duration: Snackbar.LENGTH_SHORT,
+                    //             });
+                    //             }
+                    //         }, {
+                    //             text: 'OK',
+                    //             onPress: () =>{
+                    //                 addtests.update(currenttests);
+                    //                 AsyncStorage.setItem('tests', JSON.stringify(addtests));
+                    //             }
+                    //         }, ]
+                    //         , {
+                    //             cancelable: false
+                    //         }
+                    //     );
+                    // }
+                    // else{
+                    //     // addtests = tests ? JSON.parse(tests) : [];
+                    //     // Toast.show("tickets " +c ,Toast.LONG);
+                    //     addtests.push(currenttests);
+                    //     AsyncStorage.setItem('tests', JSON.stringify(addtests));
+                    // }
+                });
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }catch(error) {
+            alert(error)
+        }
+    }
 
     render() {
 
+        temptests =
+        {
+            id: 1267,
+                name: this.state.picked2,
+            value: this.state.testvalue,
+            normal: {min: null,
+            max: 100,
+            comparator: 'lessthan'
+        },
+            result: 'high',
+                testdate: parseInt(Moment(this.state.date).format('YYYYMMDD')),
+            catid: 1142,
+            catname: this.state.picked1,
+        };
 
         // fetch("http://35.240.147.215:3037/poi/name", { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         //     method: 'POST', // USE GET, POST, PUT,ETC
@@ -498,29 +578,31 @@ export default class AddTestData extends Component {
 
                                 <TextField label="Test Result Value"
                                            lineHeight={30}
-                                    // value={this.state.picked2}
+                                           value={this.state.testvalue}
                                            editable={true}
                                            fontSize={16}
-                                    // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                           keyboardType='phone-pad'
+                                            onChangeText={(itemValue) => this.setState({testvalue: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                                 <TextField label="Normal Range (Calculated)"
                                            lineHeight={30}
-                                    // value={this.state.picked2}
-                                           editable={false}
+                                           value={this.state.rangevalue}
+                                           editable={true}
+                                           keyboardType='phone-pad'
                                            fontSize={16}
-                                    // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                           onChangeText={(itemValue) => this.setState({rangevalue: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                 <TextField label="Notes and Comments"
                                            lineHeight={30}
-                                    // value={this.state.picked2}
+                                           value={this.state.resultnotes}
                                            editable={true}
                                            fontSize={16}
                                            multiline = {true}
                                            returnKeyType={"done"}
-                                    // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                           onChangeText={(itemValue) => this.setState({resultnotes: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                             </View>

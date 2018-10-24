@@ -48,8 +48,10 @@ const search_magnifier_black = require('../Images/search_magnifier_black.png');
 const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 var testdetail;
+var testData;
+var trendchartdata = [];
 // import Chart from 'react-native-simple-charts';
-// import { Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
+import PureChart from 'react-native-pure-chart';
 
 // import {LineChart} from 'react-native-charts-wrapper';
 const testtypes=[
@@ -103,7 +105,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'LDL       ',
+        name: 'LDL',
         value: 27,
         normal: {min: null,
             max: 100,
@@ -115,7 +117,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'HDL       ',
+        name: 'HDL',
         value: 23,
         normal: {min: null,
             max: 40 + ' - ' +60,
@@ -202,7 +204,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'LDL       ',
+        name: 'LDL',
         value: 7,
         normal: {min: null,
             max: 100,
@@ -214,7 +216,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'HDL       ',
+        name: 'HDL',
         value: 3,
         normal: {min: null,
             max: 40 + ' - ' +60,
@@ -250,7 +252,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'LDL       ',
+        name: 'LDL',
         value: 17,
         normal: {min: null,
             max: 100,
@@ -262,7 +264,7 @@ const testtypes=[
         catname: "Cholestrol Level",
     },
     { id: 1268,
-        name: 'HDL       ',
+        name: 'HDL',
         value: 13,
         normal: {min: null,
             max: 40 + ' - ' +60,
@@ -300,6 +302,40 @@ const testtypes=[
     }
 ];
 
+var trentestresultname = [
+    {
+        key: 'FBS',
+        label: 'FBS',
+    },
+    {
+        key: 'PPBS',
+        label: 'PPBS',
+    },
+    {
+        key: 'Tri Glycer',
+        label: 'Tri Glycer',
+    },
+    {
+        key: 'Cholestrol',
+        label: 'Cholestrol',
+    },
+    {
+        key: 'LDL',
+        label: 'LDL',
+    },
+    {
+        key: 'HDL',
+        label: 'HDL',
+    },
+    {
+        key: 'TSH',
+        label: 'TSH',
+    },
+    {
+        key: 'Vitamin D',
+        label: 'Vitamin D',
+    },
+];
 export default class TrendScreen extends Component {
 
     constructor(props) {
@@ -309,6 +345,8 @@ export default class TrendScreen extends Component {
             loading:false,
             activeTab: 'reports',
             active: 'false',
+            pickervisible1: false,
+            selectedtestname:'',
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
@@ -406,6 +444,7 @@ export default class TrendScreen extends Component {
 
 
     async componentDidMount() {
+        this.setState({selectedtestname: this.props.testname});
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         // Toast.show(" current result name" +testdetail.testname+ " " +testdetail.testdate,Toast.LONG);
 
@@ -421,19 +460,59 @@ export default class TrendScreen extends Component {
     };
 
 
+    onTrendTestNameShowpicker = () => {
+        this.setState({ pickervisible1: true });
+    };
+
+    onTrendTestNameSelectpicker = (picked) => {
+        this.setState({
+            selectedtestname: picked,
+            pickervisible1: false,
+        });
+        // this.filterByTestDate(picked);
+    };
+
+    onTrendTestNameCancelpicker = () => {
+        this.setState({
+            pickervisible1: false
+        });
+    };
 
     render() {
 
+
+
         testdetail = {};
         testdetail = {
-            testdate:this.props.testdate,
-            testname:this.props.testname
+            testdate:this.props.testdate.toString().substring(6, 8) + '/' + this.props.testdate.toString().substring(4, 6) + '/' + this.props.testdate.toString().substring(0, 4),
+            testname:this.state.selectedtestname
 
         };
 
-        var filteredTrendResult = testtypes.filter((trendresult) => {return trendresult.name === testdetail.testname});
+        var filteredTrendResult = testtypes.filter((trendresult) => {return trendresult.name === this.state.selectedtestname});
+
+        filteredTrendResult.sort((a,b) =>
+        {
+            if (a.testdate < b.testdate) {
+                return 1;
+            } else if (a.testdate > b.testdate) {
+                return -1;
+            }
+            return 0;
+        });
+
+
+        trendchartdata = [];
 
         var renderTrendCard = filteredTrendResult.map( (currentTrend, trendIndex) => {
+            testData =
+                {x: currentTrend.testdate.toString().substring(6, 8)
+                    + '/' + currentTrend.testdate.toString().substring(4, 6) + '/'
+                    + currentTrend.testdate.toString().substring(0, 4),
+                    y: currentTrend.value};
+
+            trendchartdata.push(testData);
+
             return(
                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:15}}>
                     <Text style={{marginBottom:5}} >{currentTrend.testdate.toString().substring(6, 8)
@@ -465,12 +544,30 @@ export default class TrendScreen extends Component {
 
                 <View style={[styles.headerview]}>
 
+                    <View style={{flexDirection:"row",paddingRight:10,
+                        paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
+                        <TouchableOpacity style={{marginTop:10}}
+                                          onPress={() => Actions.homeScreen()}>
+                            <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
+                        </TouchableOpacity>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Test Result Trend</Text>
+                    </View>
+
+
                     <Card >
                         <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
-
-                            <Text style={{marginBottom:5}}>{testdetail.testname}</Text>
+                            <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
+                            <Text style={{textAlign:'center'}}>{this.state.selectedtestname}</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={this.state.pickervisible1}
+                                onSelect={this.onTrendTestNameSelectpicker}
+                                onCancel={this.onTrendTestNameCancelpicker}
+                                options={trentestresultname}
+                                optionTextStyle={style={fontSize:16}}
+                            />
                         </View>
-                        <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
+                        <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
                             <Text style={{marginBottom:5,marginLeft:20}}>Test Date</Text>
                             <Text style={{marginBottom:5,marginLeft:20}}>Actual</Text>
                             <Text style={{marginBottom:5}}>Normal</Text>
@@ -478,6 +575,13 @@ export default class TrendScreen extends Component {
 
                         {renderTrendCard}
 
+                        <View style={{marginTop:50}}>
+                        <PureChart
+                            width={100}
+                            height={100}
+                            data={trendchartdata.reverse()}
+                            type='line' />
+                        </View>
                         {/*<LineChart style={styles.chart}*/}
                                    {/*data={{dataSets:[{label: "demo", values: [{y: 1}, {y: 2}, {y: 1}]}]}}*/}
                         {/*/>*/}
