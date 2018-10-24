@@ -317,6 +317,8 @@ var testdates = [
 // var filteredTestResult=[];
 var renderResultCard=[];
 var testtdetail;
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+
 export default class Home extends Component {
 
     constructor(props) {
@@ -344,6 +346,7 @@ export default class Home extends Component {
             selectedTestName:'',
             istestSorted: false,
             result:[],
+            gestureName: 'none',
 
     };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -586,7 +589,49 @@ export default class Home extends Component {
         // Toast.show(this.state.filteredTestResult[0].name,Toast.LONG);
     };
 
-render() {
+    onSwipeLeft(swipedLeftDate) {
+        let newdateindex=0;
+        let dateindex = testdates.findIndex(function(currentdate, idx){
+            return currentdate.key === swipedLeftDate;
+        });
+
+        if(dateindex === (testdates.length-1)){
+            newdateindex=0;
+        } else{
+            newdateindex = dateindex + 1;
+        }
+
+        this.setState({selectedDate: testdates[newdateindex].key});
+
+        // alert("Swiped left "+ testdates[newdateindex].key);
+        this.filterByTestDate(testdates[newdateindex].key);
+
+    }
+
+    onSwipeRight(swipedRightDate) {
+        let newdateindex=0;
+        let dateindex = testdates.findIndex(function(currentdate, idx){
+            return currentdate.key === swipedRightDate;
+        });
+
+        if(dateindex === 0){
+            newdateindex=(testdates.length-1);
+        } else{
+            newdateindex = dateindex - 1;
+        }
+
+        this.setState({selectedDate: testdates[newdateindex].key});
+
+
+        // alert("Swiped Right "+ testdates[newdateindex].key);
+        this.filterByTestDate(testdates[newdateindex].key);
+    }
+
+
+    render() {
+
+
+
         testtdetail = {};
         testtdetail = {
             testdate:this.state.selectedDate,
@@ -680,7 +725,11 @@ render() {
                                    fontSize={16}
                                    onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-
+                        <GestureRecognizer
+                            onSwipeLeft={() => this.onSwipeLeft(this.state.selectedDate)}
+                            onSwipeRight={() => this.onSwipeRight(this.state.selectedDate)}
+                        >
+                            <Card>
                         <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
                             <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
                                 <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
@@ -692,7 +741,10 @@ render() {
                             <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
                             <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
                         </View>
-                        {renderResultCard}
+
+                            {renderResultCard}
+</Card>
+                        </GestureRecognizer>
                     </Card>
                 </View>
 
