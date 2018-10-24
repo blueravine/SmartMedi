@@ -26,21 +26,19 @@ const users = {
     name: 'John Doe',
     mobile: 9674892081
 };
-const testresults=[
+const testtypes=[
     {
-        id: 7616,
-        testdate: '16/10/2018',
-        category:[
-            {	id: 1142,
-                name: "Blood Test",
-                type:[{	id: 1267,
+        	id: 1267,
                     name: 'FBS',
                     value: 146,
                     normal: {min: null,
                         max: 100,
                         comparator: 'lessthan'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20181016,
+                    catid: 1142,
+                    catname: "Blood Test",
                 },
                     { id: 1268,
                         name: 'PPBS',
@@ -49,20 +47,22 @@ const testresults=[
                             max: 140,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
-                    }
-                ]
-            },
-            {	id: 1142,
-                name: "Cholestrol Level",
-                type:[{	id: 1267,
+                        result: 'normal',
+                        testdate: 20181016,
+                        catid: 1142,
+                        catname: "Blood Test",
+                    },
+               {	id: 1267,
                     name: 'Tri Glycer',
                     value: 277,
                     normal: {min: null,
                         max: 150,
                         comparator: 'lessthan'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20181016,
+                    catid: 1143,
+                    catname: "Cholestrol Level",
                 },
                     { id: 1268,
                         name: 'Cholestrol',
@@ -71,40 +71,46 @@ const testresults=[
                             max: 200,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20181016,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
+                        name: 'LDL',
                         value: 27,
                         normal: {min: null,
                             max: 100,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20181016,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
+                        name: 'HDL',
                         value: 23,
-                        normal: {min: null,
-                            max: 40 + ' - ' +60,
+                        normal: {min: 40,
+                            max: 60,
                             comparator: 'between'
                         },
-                        result: 'normal'
-                    }
-
-
-                ]
-            },
-            {	id: 1142,
-                name: "Thyroid & Vitamin D Level",
-                type:[{	id: 1267,
+                        result: 'normal',
+                        testdate: 20181016,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
+                    },
+    {	id: 1267,
                     name: 'TSH',
                     value: 3.51,
-                    normal: {min: null,
-                        max: 0.27 + ' - ' +4.2,
+                    normal: {min: 0.27,
+                        max: 4.2,
                         comparator: 'between'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20181016,
+                    catid: 1144,
+                    catname: "Thyroid & Vitamin D Level",
                 },
                     { id: 1268,
                         name: 'Vitamin D',
@@ -113,186 +119,161 @@ const testresults=[
                             max: 50,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
-                    }
-                ]
-            },
-        ]
-    },
+                        result: 'normal',
+                        testdate: 20181016,
+                        catid: 1144,
+                        catname: "Thyroid & Vitamin D Level",
 
-    {
-        id: 7616,
-        testdate: '14/10/2018',
-        category:[
-            {	id: 1142,
-                name: "Blood Test",
-                type:[{	id: 1267,
+                    },
+    {	id: 1267,
                     name: 'FBS',
-                    value: 146,
+                    value: 126,
                     normal: {min: null,
                         max: 100,
                         comparator: 'lessthan'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20180814,
+                    catid: 1144,
+                    catname: "Blood Test",
+
                 },
                     { id: 1268,
                         name: 'PPBS',
-                        value: 127,
+                        value: 107,
                         normal: {min: null,
                             max: 140,
                             comparator: 'lessthan'
                         },
                         result: 'normal'
-                    }
-                ]
-            },
-            {	id: 1142,
-                name: "Cholestrol Level",
-                type:[{	id: 1267,
+                        ,
+                        testdate: 20180814,
+                        catid: 1144,
+                        catname: "Blood Test",
+                    },
+                    {	id: 1267,
                     name: 'Tri Glycer',
-                    value: 277,
+                    value: 257,
                     normal: {min: null,
                         max: 150,
                         comparator: 'lessthan'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20180814,
+                    catid: 1143,
+                    catname: "Cholestrol Level",
                 },
                     { id: 1268,
                         name: 'Cholestrol',
-                        value: 105,
+                        value: 85,
                         normal: {min: null,
                             max: 200,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20180814,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
-                        value: 27,
+                        name: 'LDL',
+                        value: 7,
                         normal: {min: null,
                             max: 100,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20180814,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
-                        value: 23,
-                        normal: {min: null,
-                            max: 40 + ' - ' +60,
+                        name: 'HDL',
+                        value: 3,
+                        normal: {min: 40,
+                            max: 60,
                             comparator: 'between'
                         },
-                        result: 'normal'
-                    }
-
-
-                ]
-            },
-        ]
-    },
-
-    {
-        id: 7616,
-        testdate: '12/10/2018',
-        category:[
-            {	id: 1142,
-                name: "Cholestrol Level",
-                type:[{	id: 1267,
+                        result: 'normal',
+                        testdate: 20180814,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
+                    },
+                    {	id: 1267,
                     name: 'Tri Glycer',
-                    value: 277,
+                    value: 267,
                     normal: {min: null,
                         max: 150,
                         comparator: 'lessthan'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20180612,
+                    catid: 1143,
+                    catname: "Cholestrol Level",
                 },
                     { id: 1268,
                         name: 'Cholestrol',
-                        value: 105,
+                        value: 95,
                         normal: {min: null,
                             max: 200,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20180612,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL       ',
-                        value: 27,
+                        name: 'LDL',
+                        value: 17,
                         normal: {min: null,
                             max: 100,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20180612,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL       ',
-                        value: 23,
-                        normal: {min: null,
-                            max: 40 + ' - ' +60,
+                        name: 'HDL',
+                        value: 13,
+                        normal: {min: 40,
+                            max: 60,
                             comparator: 'between'
                         },
-                        result: 'normal'
-                    }
-
-
-                ]
-            },
-            {	id: 1142,
-                name: "Thyroid & Vitamin D Level",
-                type:[{	id: 1267,
+                        result: 'normal',
+                        testdate: 20180612,
+                        catid: 1143,
+                        catname: "Cholestrol Level",
+                    },
+                    {	id: 1267,
                     name: 'TSH',
-                    value: 3.51,
-                    normal: {min: null,
-                        max: 0.27 +' - ' + 4.2,
+                    value: 3.31,
+                    normal: {min: 0.27,
+                        max:  4.2,
                         comparator: 'between'
                     },
-                    result: 'high'
+                    result: 'high',
+                    testdate: 20180612,
+                    catid: 1144,
+                    catname: "Thyroid & Vitamin D Level",
                 },
                     { id: 1268,
                         name: 'Vitamin D',
-                        value: 28.97,
+                        value: 26.87,
                         normal: {min: null,
                             max: 50,
                             comparator: 'lessthan'
                         },
-                        result: 'normal'
+                        result: 'normal',
+                        testdate: 20180612,
+                        catid: 1144,
+                        catname: "Thyroid & Vitamin D Level",
+
                     }
-                ]
-            },
-        ]
-    },
 ];
-
-const  testdata  = [
-    {
-        text: 'Test Date',
-        name: 'One',
-        testcategory:'Blood Sugar Level',
-        testtypeblood:'FBS',
-        testtypeblood1:'PPBS',
-        // image: require('./img/swiper-1.png'),
-    },
-
-    {
-        text1: 'Test Date',
-        name1: 'two',
-        testcategory1:'Cholestrol Level',
-        testtypecholestrol:'Tri Glycer',
-        testtypecholestrol1:'Cholestrol',
-        testtypecholestrol2:'LDL',
-        testtypecholestrol3:'HDL',
-        // image: require('./img/swiper-1.png'),
-    },
-
-    {
-        text2: 'Test Date',
-        name2: 'three',
-        testcategory2:'Thyroid & Vitamin-D Level',
-        testtypethroid:'TSH',
-        testtypevitamin:'Vitamin-D',
-        // image: require('./img/swiper-1.png'),
-    },
-];
+var testdata=[];
 import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
 // import Spinner from 'react-native-spinkit';
@@ -317,29 +298,25 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
-const ac_icon_blue = require('../Images/ac_icon_blue.png');
-const ac_icon_grey = require('../Images/ac_icon_grey.png');
-const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
-const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
-const search_magnifier_black = require('../Images/search_magnifier_black.png');
-const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var testdates = [
     {
-        key: '16/10/2018 ',
-        label: '16/10/2018',
+        key: 20181016,
+        label: '2018/10/16',
     },
     {
-        key: '14/09/2018',
-        label: '14/09/2018',
+        key: 20180814,
+        label: '2018/08/14',
     },
     {
-        key: '12/08/2018',
-        label: '12/08/2018',
+        key: 20180612,
+        label: '2018/06/12',
     }
 ];
-
+// var filteredTestResult=[];
+var renderResultCard=[];
+var testtdetail;
 export default class Home extends Component {
 
     constructor(props) {
@@ -358,14 +335,17 @@ export default class Home extends Component {
             },
             pickervisible1: false,
             pickervisible2: false,
-            picked1: '',
-            picked2: '',
             date: new Date(),
             selected1: '',
             currIndex: 0,
             targetIndex: 0,
-            pressedType: ''
-        };
+            selectedDate:20180814,
+            filteredTestResult:[],
+            selectedTestName:'',
+            istestSorted: false,
+            result:[],
+
+    };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
@@ -408,55 +388,6 @@ export default class Home extends Component {
         }
     ];
 
-    // renderBottomComponent(){
-    //
-    // if(this.state.viewSection) {
-    //         return (
-    //             <ScrollView
-    //                 style={styles.container1}
-    //                 ref={(scrollView) => { this.scrollView = scrollView; }}
-    //                 //pagingEnabled={true}
-    //                 horizontal= {true}
-    //                 decelerationRate={0}
-    //                 snapToInterval={width - 60}
-    //                 snapToAlignment={"center"}
-    //                 contentInset={{
-    //                     top:0,
-    //                     left: 30,
-    //                     bottom:0,
-    //                     right: 30,
-    //                 }}>
-    //                 <Card style={styles.view} >
-    //                     <Text style={{textAlign:'center'}}>
-    //                         Date:date
-    //                     </Text>
-    //                     <Text style={{textAlign:'center'}}>
-    //                         From:Location
-    //                     </Text>
-    //                     <Text style={{textAlign:'center'}}>
-    //                         To:Location
-    //                     </Text>
-    //                 </Card>
-    //                 <Card style={styles.view2} >
-    //                 </Card>
-    //                 <Card style={styles.view} >
-    //                 </Card>
-    //                 <Card style={styles.view2} >
-    //                 </Card>
-    //             </ScrollView>
-    //         );
-    //     }
-    // }
-    // buttonPress=()=>{
-    //     // this.scrollView.scrollTo({x: -30},1);
-    //     this.setState({viewSection:true})
-    //     // this.setState({viewSection: !this.state.viewSection})
-    // };
-
-
-    // state = {
-    //     activeTab: this.tabs[0].key
-    // }
     renderIcon = icon => ({ isActive }) => (
         <Icon size={24} color="gery" name={icon} />
 
@@ -495,20 +426,6 @@ export default class Home extends Component {
         this.setState({picked1: this.state.picked2, picked2:temploc});
     };
 
-
-    // sendSMSFunction() {
-    //     SendSMS.send(9885638104, "9885638104", "Hello.. Thank you for using SmarTran booking service ! \nYour ticket for Jedimetla to mehdipatnam for 18 Aug 2018\n" +
-    //         "at 5:30 have been generated open the link fro seeing th qr code for scanning\n" +
-    //         "  Have a nice day.",
-    //         (msg)=>{
-    //             Toast.show(msg, Toast.SHORT);
-    //         }
-    //     );
-    // Actions.ticketScreen();
-    // }
-    // setFromLoc(){
-    //     this.setState({selected1: ''});
-    // }
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'tests':
@@ -527,21 +444,6 @@ export default class Home extends Component {
     };
 
 
-    // favouritedata(recivedindex){
-    //     // this.setState({
-    //     //     picked1: favoriteticketdata.routes[recivedindex].from
-    //     // });
-    //     // this.setState({
-    //     //     picked2: favoriteticketdata.routes[recivedindex].to
-    //     // });
-    //     params.fromLoc= favoriteticketdata.routes[recivedindex].from;
-    //     params.toLoc= favoriteticketdata.routes[recivedindex].to;
-    //
-    //     alert("all tick"+recivedindex+"from"+params.fromLoc+"to"+params.toLoc+"date"+params.tripdte);
-    //
-    // };
-
-
     ShowHideActivityIndicator = () =>{
 
         this.setState({loading: true});
@@ -558,8 +460,24 @@ export default class Home extends Component {
     //                 this.setState({ loading: false });
     //     }, 3000)
     // };
-    async componentDidMount() {
+     componentDidMount() {
+        // await AsyncStorage.getItem('newtest')
+        //     .then((ntest) => {
+        //
+        //         testdata = ntest ? JSON.parse(ntest) : [];
+        //
+        //         testtypes.push(testdata);
+        //         // alert(JSON.stringify(testdata));
+        //
+        //         this.filterByTestDate(this.state.selectedDate);
+        //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        //
+        //     }).done();
+        this.filterByTestDate(this.state.selectedDate);
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        // this.filterByTestDate(this.state.selectedDate);
+        // BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
         // await AsyncStorage.getItem('favs')
         //     .then((favs) => {
         //         let tempfavticket = favoriteticketdata;
@@ -582,7 +500,6 @@ export default class Home extends Component {
     }
 
     componentWillUnmount() {
-        // AppState.removeEventListener('change',this.handleAppStateChange);
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -610,9 +527,10 @@ export default class Home extends Component {
 
     onTestNameSelectpicker = (picked) => {
         this.setState({
-            picked2: picked,
+            selectedDate: picked,
             pickervisible2: false,
         });
+        this.filterByTestDate(picked);
     };
 
     onTestNameCancelpicker = () => {
@@ -624,122 +542,83 @@ export default class Home extends Component {
     onplusButtonPress = () => {
         Actions.addtestScreen();
     };
-    onsearchButtonPress = () => {
-        // if(this.state.picked1===0){
-        // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
 
-        Actions.testScreen();
-
-        // }
-        // else if(this.state.picked2===0){
-        //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-        //     Snackbar.show({
-        //         title: 'TestType cannot be empty!',
-        //         duration: Snackbar.LENGTH_SHORT,
-        //     });
-        //     this.resetData();
-        // }
-        // else{
-        //     // Actions.searchScreen(params);
-        //     this.ShowHideActivityIndicator();
-        //     // this._onButtonPressed();
-        // }
+    displayTrend(msg) {
+        // Toast.show(" current result name" +msg,Toast.LONG)
+        testtdetail.testname=msg;
+        Actions.trendScreen(testtdetail);
     };
 
-    // typeClick(selectedType) {
-    //     this.setState({pressedType: selectedType});
-    //     Snackbar.show({
-    //         title: 'Pressed type' +this.state.pressedType,
-    //         duration: Snackbar.LENGTH_SHORT,
-    //     });
-    // }
+    filterByTestDate(newDate){
+        this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
+            {return testresult.testdate === newDate}) });
+        };
 
-    openDialog(show) {
-        this.setState({ showDialog: show })
+    filterByTestName(searchText, nDate){
+        this.setState({selectedTestName: searchText});
+
+        this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
+            {return testresult.name.toLowerCase().includes(searchText.toLowerCase()) && testresult.testdate === nDate}) });
     };
 
-    renderType(currcat, categoryindex) {
-        var renderType = currcat.type.map( (currenttype, tindex) => {
-           return(
-               <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
-                   <TouchableOpacity onPress={this.onsearchButtonPress(currenttype.name)}>
-                   <Text style={{textAlign:'center',marginLeft:8,}}>{currenttype.name}</Text>
-                   </TouchableOpacity>
-                   {/*<Text style={{textAlign:'center'}}>{currenttype.value}</Text>*/}
-                   {(currenttype.result==="high") &&
-                   <Text style={{textAlign:'center',color:'#F80617',flex:1}}>{currenttype.value}</Text>
-                   }
-                   {(currenttype.result==="normal") &&
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
-                   }
-                   {(currenttype.result==="between") &&
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.value}</Text>
-                   }
-                   <Text style={{textAlign:'center',flex:1}}>{currenttype.normal.max}</Text>
-               </View>
-           );
+    sortByTestName(sDate) {
+        if (this.state.istestSorted === false) {
+        this.setState({
+            filteredTestResult: testtypes.filter((testresult) => {
+                return testresult.testdate === sDate
+            }).sort(
+                (a, b) => {return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                }
+            ),
+            istestSorted: true
         });
-
-        return renderType;
-    }
-
-
-    renderCategory(currtest,testindex) {
-       var renderCat = currtest.category.map( (currentcat, cindex) => {
-            return(<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                borderTopLeftRadius:10,borderLeftWidth:10}}>
-                <Text style={{textAlign:'center',marginBottom:20}}>{currentcat.name}</Text>
-                <View style={{flexDirection: 'row', justifyContent:'space-evenly'}}>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center'}}> </Text>
-                <Text style={{textAlign:'center',flex:2}}>   Actual </Text>
-                <Text style={{textAlign:'center',flex:1}}>   Normal </Text>
-                </View>
-                <View>{this.renderType(currentcat, cindex)}</View>
-
-            </Card>);
-        });
-
-        return(
-            renderCat);
-    }
-
-    // renderSwiper(){
-    //  return(
-    //      <Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>
-    //         {renderCard}
-    //     </Swiper>
-    // );
-    // }
-
-    render() {
-
-        let data = [{
-            value: this.state.date,
+    } else {
+            this.setState({
+                filteredTestResult: testtypes.filter((testresult) => {
+                    return testresult.testdate === sDate
+                }).sort(
+                        (a, b) => {return (-1) * (a.name.toLowerCase().localeCompare(b.name.toLowerCase()) );
+                    }
+                ),
+                istestSorted: false
+            });
         }
-            // , {
-            //     value: 'A/C Buses',
-            // }, {
-            //     value: 'Non A/C Buses',
-            // }
-        ];
+        // Toast.show(this.state.filteredTestResult[0].name,Toast.LONG);
+    };
 
+render() {
+        testtdetail = {};
+        testtdetail = {
+            testdate:this.state.selectedDate,
+            testname:''
 
+        };
+        let localFilteredResult = this.state.filteredTestResult;
 
-        renderCard = testresults.map((currtestresult, testresultindex) => {
-
+        renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-
-                    <Card>
-                        <Text style={{textAlign:'right'}}>{currtestresult.testdate}</Text>
-                    {this.renderCategory(currtestresult,testresultindex)}
-                    </Card>
-        );
-
-                // </Card>);
-
+                <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
+                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.name)}}>
+                        <Text style={{marginBottom:5}}>{currentResult.name}</Text></TouchableOpacity>
+                    {(currentResult.result==="high") &&
+                    <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}> {currentResult.value}</Text>
+                    }
+                    {(currentResult.result==="normal") &&
+                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5}}> {currentResult.value}</Text>
+                    }
+                    {(currentResult.result==="between") &&
+                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5}}>{currentResult.value}</Text>
+                    }
+                    {/*<Text>{currentResult.value}</Text>*/}
+                    {(currentResult.normal.comparator === "lessthan") &&
+                    <Text style={{marginBottom: 5}}> &#x0003C; {currentResult.normal.max}</Text>
+                    }
+                    {(currentResult.normal.comparator === "between") &&
+                    <Text style={{marginBottom: 5}}> {currentResult.normal.min}-{currentResult.normal.max}</Text>
+                    }
+                </View>);
         });
+
         return (
 
             <View style={styles.container}>
@@ -762,6 +641,7 @@ export default class Home extends Component {
                         <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onplusButtonPress}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
+
                         </TouchableOpacity>
                     </View>
                     {/*showsButtons={true}*/}
@@ -770,10 +650,10 @@ export default class Home extends Component {
                         {/*<Text>Select Country: {this.state.picked}</Text>*/}
                         <TextField label="Search Test By Date"
                                    lineHeight={30}
-                                   value={'16/10/2018'}
+                                   value={this.state.selectedDate.toString().substring(6, 8) + '/' + this.state.selectedDate.toString().substring(4, 6) + '/' + this.state.selectedDate.toString().substring(0, 4)}
                                    editable={false}
                                    fontSize={16}
-                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                            // onChangeText={(itemValue) => {this.setState({selectedDate: itemValue}), }}
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
                     </TouchableOpacity>
                     <ModalFilterPicker
@@ -787,11 +667,33 @@ export default class Home extends Component {
                     {/*<TouchableOpacity onPress={this.setState({'targetIndex': 2})} ><Text> Test</Text>*/}
                     {/*</TouchableOpacity>*/}
 
-                    <Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>
-                        {renderCard}
-                    </Swiper>
+                    {/*<Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>*/}
+                        {/*{renderResultCard}*/}
+                        {/*</Swiper>*/}
 
+                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+                        <TextField label="Search Test By Name"
+                                   lineHeight={30}
+                                   value={this.state.selectedTestName}
+                                   editable={true}
+                                   fontSize={16}
+                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
+                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
 
+                        <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                            <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
+                                <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
+                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
+                                Test Name</Text>
+                                <Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
+                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
+                        </View>
+                        {renderResultCard}
+                    </Card>
                 </View>
 
                 <View style={[styles.footer]}>

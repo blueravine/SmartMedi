@@ -5,8 +5,7 @@ import SplashScreen from './SplashScreen';
 import Home from './Home';
 import UserProfile from './UserProfile';
 import AddTestData from './AddTestData';
-import TestDetails from './TestDetails';
-
+import TrendScreen from './TrendScreen';
 
 export default class Main extends Component {
   render() {
@@ -40,12 +39,12 @@ export default class Main extends Component {
                      hideNavBar={true}
               />
 
-              <Scene key="testScreen"
-                     component={TestDetails}
+              <Scene key="trendScreen"
+                     component={TrendScreen}
                      animation='fade'
                      hideNavBar={true}
-                     initial={true}
               />
+
 		  </Scene>
 
 
