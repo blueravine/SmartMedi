@@ -29,7 +29,7 @@ const users = {
 const testtypes=[
     {
         	id: 1267,
-                    name: 'FBS',
+                    testname: 'FBS',
                     value: 146,
                     normal: {min: null,
                         max: 100,
@@ -41,7 +41,7 @@ const testtypes=[
                     catname: "Blood Test",
                 },
                     { id: 1268,
-                        name: 'PPBS',
+                        testname: 'PPBS',
                         value: 127,
                         normal: {min: null,
                             max: 140,
@@ -53,7 +53,7 @@ const testtypes=[
                         catname: "Blood Test",
                     },
                {	id: 1267,
-                    name: 'Tri Glycer',
+                    testname: 'Tri Glycer',
                     value: 277,
                     normal: {min: null,
                         max: 150,
@@ -65,7 +65,7 @@ const testtypes=[
                     catname: "Cholestrol Level",
                 },
                     { id: 1268,
-                        name: 'Cholestrol',
+                        testname: 'Cholestrol',
                         value: 105,
                         normal: {min: null,
                             max: 200,
@@ -77,7 +77,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL',
+                        testname: 'LDL',
                         value: 27,
                         normal: {min: null,
                             max: 100,
@@ -89,7 +89,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL',
+                        testname: 'HDL',
                         value: 23,
                         normal: {min: 40,
                             max: 60,
@@ -101,7 +101,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
     {	id: 1267,
-                    name: 'TSH',
+                    testname: 'TSH',
                     value: 3.51,
                     normal: {min: 0.27,
                         max: 4.2,
@@ -113,7 +113,7 @@ const testtypes=[
                     catname: "Thyroid & Vitamin D Level",
                 },
                     { id: 1268,
-                        name: 'Vitamin D',
+                        testname: 'Vitamin D',
                         value: 28.97,
                         normal: {min: null,
                             max: 50,
@@ -126,7 +126,7 @@ const testtypes=[
 
                     },
     {	id: 1267,
-                    name: 'FBS',
+                    testname: 'FBS',
                     value: 126,
                     normal: {min: null,
                         max: 100,
@@ -139,7 +139,7 @@ const testtypes=[
 
                 },
                     { id: 1268,
-                        name: 'PPBS',
+                        testname: 'PPBS',
                         value: 107,
                         normal: {min: null,
                             max: 140,
@@ -152,7 +152,7 @@ const testtypes=[
                         catname: "Blood Test",
                     },
                     {	id: 1267,
-                    name: 'Tri Glycer',
+                    testname: 'Tri Glycer',
                     value: 257,
                     normal: {min: null,
                         max: 150,
@@ -164,7 +164,7 @@ const testtypes=[
                     catname: "Cholestrol Level",
                 },
                     { id: 1268,
-                        name: 'Cholestrol',
+                        testname: 'Cholestrol',
                         value: 85,
                         normal: {min: null,
                             max: 200,
@@ -176,7 +176,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL',
+                        testname: 'LDL',
                         value: 7,
                         normal: {min: null,
                             max: 100,
@@ -188,7 +188,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL',
+                        testname: 'HDL',
                         value: 3,
                         normal: {min: 40,
                             max: 60,
@@ -200,7 +200,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     {	id: 1267,
-                    name: 'Tri Glycer',
+                    testname: 'Tri Glycer',
                     value: 267,
                     normal: {min: null,
                         max: 150,
@@ -212,7 +212,7 @@ const testtypes=[
                     catname: "Cholestrol Level",
                 },
                     { id: 1268,
-                        name: 'Cholestrol',
+                        testname: 'Cholestrol',
                         value: 95,
                         normal: {min: null,
                             max: 200,
@@ -224,7 +224,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'LDL',
+                        testname: 'LDL',
                         value: 17,
                         normal: {min: null,
                             max: 100,
@@ -236,7 +236,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     { id: 1268,
-                        name: 'HDL',
+                        testname: 'HDL',
                         value: 13,
                         normal: {min: 40,
                             max: 60,
@@ -248,7 +248,7 @@ const testtypes=[
                         catname: "Cholestrol Level",
                     },
                     {	id: 1267,
-                    name: 'TSH',
+                    testname: 'TSH',
                     value: 3.31,
                     normal: {min: 0.27,
                         max:  4.2,
@@ -260,7 +260,7 @@ const testtypes=[
                     catname: "Thyroid & Vitamin D Level",
                 },
                     { id: 1268,
-                        name: 'Vitamin D',
+                        testname: 'Vitamin D',
                         value: 26.87,
                         normal: {min: null,
                             max: 50,
@@ -561,7 +561,7 @@ export default class Home extends Component {
         this.setState({selectedTestName: searchText});
 
         this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
-            {return testresult.name.toLowerCase().includes(searchText.toLowerCase()) && testresult.testdate === nDate}) });
+            {return testresult.testname.toLowerCase().includes(searchText.toLowerCase()) && testresult.testdate === nDate}) });
     };
 
     sortByTestName(sDate) {
@@ -570,7 +570,7 @@ export default class Home extends Component {
             filteredTestResult: testtypes.filter((testresult) => {
                 return testresult.testdate === sDate
             }).sort(
-                (a, b) => {return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                (a, b) => {return a.testname.toLowerCase().localeCompare(b.testname.toLowerCase());
                 }
             ),
             istestSorted: true
@@ -580,13 +580,13 @@ export default class Home extends Component {
                 filteredTestResult: testtypes.filter((testresult) => {
                     return testresult.testdate === sDate
                 }).sort(
-                        (a, b) => {return (-1) * (a.name.toLowerCase().localeCompare(b.name.toLowerCase()) );
+                        (a, b) => {return (-1) * (a.testname.toLowerCase().localeCompare(b.testname.toLowerCase()) );
                     }
                 ),
                 istestSorted: false
             });
         }
-        // Toast.show(this.state.filteredTestResult[0].name,Toast.LONG);
+        // Toast.show(this.state.filteredTestResult[0].testname,Toast.LONG);
     };
 
     onSwipeLeft(swipedLeftDate) {
@@ -643,8 +643,8 @@ export default class Home extends Component {
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
                 <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
-                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.name)}}>
-                        <Text style={{marginBottom:5}}>{currentResult.name}</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.testname)}}>
+                        <Text style={{marginBottom:5}}>{currentResult.testname}</Text></TouchableOpacity>
                     {(currentResult.result==="high") &&
                     <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}> {currentResult.value}</Text>
                     }
