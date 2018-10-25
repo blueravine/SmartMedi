@@ -9,7 +9,7 @@ import Moment from 'moment';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/FontAwesome';
-import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icons from 'react-native-vector-icons/SimpleLineIcons';
 import { Dropdown } from 'react-native-material-dropdown';
 import Iccons from 'react-native-vector-icons/FontAwesome'
 import { Dialog } from 'react-native-simple-dialogs';
@@ -36,6 +36,7 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 // import { BottomNavigation } from 'react-native-material-ui';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+
 // const card      = {card: {width: 300,height:500}};
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
@@ -52,17 +53,17 @@ var testData;
 var trendchartdata = [];
 // import Chart from 'react-native-simple-charts';
 import PureChart from 'react-native-pure-chart';
-
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 // import {LineChart} from 'react-native-charts-wrapper';
 const testtypes=[
     {
         id: 1267,
         testname: 'FBS',
         value: 146,
-        normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
         result: 'high',
         testdate: 20181016,
         catid: 1142,
@@ -71,10 +72,10 @@ const testtypes=[
     { id: 1268,
         testname: 'PPBS',
         value: 127,
-        normal: {min: null,
-            max: 140,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 140,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20181016,
         catid: 1142,
@@ -83,10 +84,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'Tri Glycer',
         value: 277,
-        normal: {min: null,
-            max: 150,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
         result: 'high',
         testdate: 20181016,
         catid: 1143,
@@ -95,10 +96,10 @@ const testtypes=[
     { id: 1268,
         testname: 'Cholestrol',
         value: 105,
-        normal: {min: null,
-            max: 200,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20181016,
         catid: 1143,
@@ -107,10 +108,10 @@ const testtypes=[
     { id: 1268,
         testname: 'LDL',
         value: 27,
-        normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20181016,
         catid: 1143,
@@ -119,10 +120,10 @@ const testtypes=[
     { id: 1268,
         testname: 'HDL',
         value: 23,
-        normal: {min: null,
-            max: 40 + ' - ' +60,
-            comparator: 'between'
-        },
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
         result: 'normal',
         testdate: 20181016,
         catid: 1143,
@@ -131,10 +132,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'TSH',
         value: 3.51,
-        normal: {min: null,
-            max: 0.27 + ' - ' +4.2,
-            comparator: 'between'
-        },
+        normalmin: 0.27,
+        normalmax: 4.2,
+        normalcomparator: 'between',
+
         result: 'high',
         testdate: 20181016,
         catid: 1144,
@@ -143,10 +144,10 @@ const testtypes=[
     { id: 1268,
         testname: 'Vitamin D',
         value: 28.97,
-        normal: {min: null,
-            max: 50,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 50,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20181016,
         catid: 1144,
@@ -156,10 +157,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'FBS',
         value: 126,
-        normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
         result: 'high',
         testdate: 20180814,
         catid: 1144,
@@ -169,10 +170,10 @@ const testtypes=[
     { id: 1268,
         testname: 'PPBS',
         value: 107,
-        normal: {min: null,
-            max: 140,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 140,
+        normalcomparator: 'lessthan',
+
         result: 'normal'
         ,
         testdate: 20180814,
@@ -182,10 +183,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'Tri Glycer',
         value: 257,
-        normal: {min: null,
-            max: 150,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
         result: 'high',
         testdate: 20180814,
         catid: 1143,
@@ -194,10 +195,10 @@ const testtypes=[
     { id: 1268,
         testname: 'Cholestrol',
         value: 85,
-        normal: {min: null,
-            max: 200,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20180814,
         catid: 1143,
@@ -206,10 +207,10 @@ const testtypes=[
     { id: 1268,
         testname: 'LDL',
         value: 7,
-        normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20180814,
         catid: 1143,
@@ -218,10 +219,10 @@ const testtypes=[
     { id: 1268,
         testname: 'HDL',
         value: 3,
-        normal: {min: null,
-            max: 40 + ' - ' +60,
-            comparator: 'between'
-        },
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
         result: 'normal',
         testdate: 20180814,
         catid: 1143,
@@ -230,10 +231,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'Tri Glycer',
         value: 267,
-        normal: {min: null,
-            max: 150,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
         result: 'high',
         testdate: 20180612,
         catid: 1143,
@@ -242,10 +243,10 @@ const testtypes=[
     { id: 1268,
         testname: 'Cholestrol',
         value: 95,
-        normal: {min: null,
-            max: 200,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20180612,
         catid: 1143,
@@ -254,10 +255,10 @@ const testtypes=[
     { id: 1268,
         testname: 'LDL',
         value: 17,
-        normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20180612,
         catid: 1143,
@@ -266,10 +267,10 @@ const testtypes=[
     { id: 1268,
         testname: 'HDL',
         value: 13,
-        normal: {min: null,
-            max: 40 + ' - ' +60,
-            comparator: 'between'
-        },
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
         result: 'normal',
         testdate: 20180612,
         catid: 1143,
@@ -278,10 +279,10 @@ const testtypes=[
     {	id: 1267,
         testname: 'TSH',
         value: 3.31,
-        normal: {min: null,
-            max: 0.27 +' - ' + 4.2,
-            comparator: 'between'
-        },
+        normalmin: 0.27,
+        normalmax:  4.2,
+        normalcomparator: 'between',
+
         result: 'high',
         testdate: 20180612,
         catid: 1144,
@@ -290,10 +291,10 @@ const testtypes=[
     { id: 1268,
         testname: 'Vitamin D',
         value: 26.87,
-        normal: {min: null,
-            max: 50,
-            comparator: 'lessthan'
-        },
+        normalmin: null,
+        normalmax: 50,
+        normalcomparator: 'lessthan',
+
         result: 'normal',
         testdate: 20180612,
         catid: 1144,
@@ -301,6 +302,7 @@ const testtypes=[
 
     }
 ];
+
 
 var trentestresultname = [
     {
@@ -428,11 +430,13 @@ export default class TrendScreen extends Component {
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'tests':
+                Actions.homeScreen();
                 break;
             case 'reports':
 
                 break;
             case 'alerts':
+                Actions.alertScreen();
                 break;
             case 'profile':
                 Actions.profileScreen();
@@ -478,6 +482,46 @@ export default class TrendScreen extends Component {
         });
     };
 
+    onSwipeLeft(swipedLeftName) {
+        let newnameindex=0;
+        let nameindex = trentestresultname.findIndex(function(currentname, idx){
+            return currentname.key === swipedLeftName;
+        });
+
+        if(nameindex === (trentestresultname.length-1)){
+            newnameindex=0;
+        } else{
+            newnameindex = nameindex + 1;
+        }
+
+        this.setState({selectedtestname: trentestresultname[newnameindex].key});
+
+        // alert("Swiped left "+ testdates[newdateindex].key);
+        // this.filterByTestDate(testdates[newdateindex].key);
+
+    }
+
+    onSwipeRight(swipedRightName) {
+        let newnameindex=0;
+        let nameindex = trentestresultname.findIndex(function(currentname, idx){
+            return currentname.key === swipedRightName;
+        });
+
+        if(nameindex === 0){
+            newnameindex=(trentestresultname.length-1);
+        } else{
+            newnameindex = nameindex - 1;
+        }
+
+        this.setState({selectedtestname: trentestresultname[newnameindex].key});
+
+
+        // alert("Swiped Right "+ testdates[newdateindex].key);
+        // this.filterByTestDate(testdates[newnameindex].key);
+    }
+
+
+
     render() {
 
 
@@ -522,12 +566,12 @@ export default class TrendScreen extends Component {
                     <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}>{currentTrend.value}</Text>
                     }
                     {(currentTrend.result === "normal") &&
-                    <Text style={{textAlign:'center',color:'#2CF815',marginBottom:5}}>{currentTrend.value}</Text>
+                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentTrend.value}</Text>
                     }
                     {(currentTrend.result === "between") &&
-                    <Text style={{textAlign:'center',color:'#2CF815',marginBottom:5}}>{currentTrend.value}</Text>
+                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentTrend.value}</Text>
                     }
-                    <Text>{currentTrend.normal.max}</Text>
+                    <Text>{currentTrend.normalmax}</Text>
                 </View>
 
             );
@@ -554,10 +598,24 @@ export default class TrendScreen extends Component {
                     </View>
 
 
-                    <Card >
-                        <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
+                    {/*<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,*/}
+                        {/*borderTopLeftRadius:10,borderLeftWidth:10}} >*/}
+                        <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                            <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeLeft(this.state.selectedtestname)}>
+                                <Icons type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
+                            </TouchableOpacity>
+                        <GestureRecognizer
+                            onSwipeLeft={() => this.onSwipeLeft(this.state.selectedtestname)}
+                            onSwipeRight={() => this.onSwipeRight(this.state.selectedtestname)}
+                        >
+
+                            <Card style={{width:300,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
+
                             <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
-                            <Text style={{textAlign:'center'}}>{this.state.selectedtestname}</Text>
+                            <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline'}}>{this.state.selectedtestname}</Text>
                             </TouchableOpacity>
                             <ModalFilterPicker
                                 visible={this.state.pickervisible1}
@@ -568,9 +626,15 @@ export default class TrendScreen extends Component {
                             />
                         </View>
                         <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
-                            <Text style={{marginBottom:5,marginLeft:20}}>Test Date</Text>
-                            <Text style={{marginBottom:5,marginLeft:20}}>Actual</Text>
-                            <Text style={{marginBottom:5}}>Normal</Text>
+
+
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Test Date</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
+
+
+
+
                         </View>
 
                         {renderTrendCard}
@@ -586,7 +650,15 @@ export default class TrendScreen extends Component {
                                    {/*data={{dataSets:[{label: "demo", values: [{y: 1}, {y: 2}, {y: 1}]}]}}*/}
                         {/*/>*/}
 
-                    </Card>
+                            </Card>
+
+                        </GestureRecognizer>
+                            <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeRight(this.state.selectedtestname)}>
+                                <Icons type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
+                            </TouchableOpacity>
+                        </View>
+
+                    {/*</Card>*/}
 
 
 

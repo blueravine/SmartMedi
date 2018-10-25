@@ -8,8 +8,10 @@ import Calendar from 'react-native-calendar-datepicker';
 import Moment from 'moment';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Iccon from 'react-native-vector-icons/FontAwesome';
+import Iccon from 'react-native-vector-icons/SimpleLineIcons';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Iconns from 'react-native-vector-icons/EvilIcons';
+import Icoons from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-material-dropdown';
 import Iccons from 'react-native-vector-icons/FontAwesome'
 import { Dialog } from 'react-native-simple-dialogs';
@@ -31,10 +33,10 @@ const testtypes=[
         	id: 1267,
                     testname: 'FBS',
                     value: 146,
-                    normal: {min: null,
-                        max: 100,
-                        comparator: 'lessthan'
-                    },
+                    normalmin: null,
+                    normalmax: 100,
+                    normalcomparator: 'lessthan',
+
                     result: 'high',
                     testdate: 20181016,
                     catid: 1142,
@@ -43,10 +45,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'PPBS',
                         value: 127,
-                        normal: {min: null,
-                            max: 140,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 140,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20181016,
                         catid: 1142,
@@ -55,10 +57,10 @@ const testtypes=[
                {	id: 1267,
                     testname: 'Tri Glycer',
                     value: 277,
-                    normal: {min: null,
-                        max: 150,
-                        comparator: 'lessthan'
-                    },
+                    normalmin: null,
+                   normalmax: 150,
+                   normalcomparator: 'lessthan',
+
                     result: 'high',
                     testdate: 20181016,
                     catid: 1143,
@@ -67,10 +69,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'Cholestrol',
                         value: 105,
-                        normal: {min: null,
-                            max: 200,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 200,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20181016,
                         catid: 1143,
@@ -79,10 +81,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'LDL',
                         value: 27,
-                        normal: {min: null,
-                            max: 100,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 100,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20181016,
                         catid: 1143,
@@ -91,10 +93,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'HDL',
                         value: 23,
-                        normal: {min: 40,
-                            max: 60,
-                            comparator: 'between'
-                        },
+                        normalmin: 40,
+                        normalmax: 60,
+                        normalcomparator: 'between',
+
                         result: 'normal',
                         testdate: 20181016,
                         catid: 1143,
@@ -103,10 +105,10 @@ const testtypes=[
     {	id: 1267,
                     testname: 'TSH',
                     value: 3.51,
-                    normal: {min: 0.27,
-                        max: 4.2,
-                        comparator: 'between'
-                    },
+                    normalmin: 0.27,
+                    normalmax: 4.2,
+                    normalcomparator: 'between',
+
                     result: 'high',
                     testdate: 20181016,
                     catid: 1144,
@@ -115,10 +117,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'Vitamin D',
                         value: 28.97,
-                        normal: {min: null,
-                            max: 50,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 50,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20181016,
                         catid: 1144,
@@ -128,10 +130,10 @@ const testtypes=[
     {	id: 1267,
                     testname: 'FBS',
                     value: 126,
-                    normal: {min: null,
-                        max: 100,
-                        comparator: 'lessthan'
-                    },
+                    normalmin: null,
+                    normalmax: 100,
+                    normalcomparator: 'lessthan',
+
                     result: 'high',
                     testdate: 20180814,
                     catid: 1144,
@@ -141,10 +143,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'PPBS',
                         value: 107,
-                        normal: {min: null,
-                            max: 140,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 140,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal'
                         ,
                         testdate: 20180814,
@@ -154,10 +156,10 @@ const testtypes=[
                     {	id: 1267,
                     testname: 'Tri Glycer',
                     value: 257,
-                    normal: {min: null,
-                        max: 150,
-                        comparator: 'lessthan'
-                    },
+                    normalmin: null,
+                        normalmax: 150,
+                        normalcomparator: 'lessthan',
+
                     result: 'high',
                     testdate: 20180814,
                     catid: 1143,
@@ -166,10 +168,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'Cholestrol',
                         value: 85,
-                        normal: {min: null,
-                            max: 200,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 200,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20180814,
                         catid: 1143,
@@ -178,10 +180,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'LDL',
                         value: 7,
-                        normal: {min: null,
-                            max: 100,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 100,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20180814,
                         catid: 1143,
@@ -190,10 +192,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'HDL',
                         value: 3,
-                        normal: {min: 40,
-                            max: 60,
-                            comparator: 'between'
-                        },
+                        normalmin: 40,
+                        normalmax: 60,
+                        normalcomparator: 'between',
+
                         result: 'normal',
                         testdate: 20180814,
                         catid: 1143,
@@ -202,10 +204,10 @@ const testtypes=[
                     {	id: 1267,
                     testname: 'Tri Glycer',
                     value: 267,
-                    normal: {min: null,
-                        max: 150,
-                        comparator: 'lessthan'
-                    },
+                    normalmin: null,
+                        normalmax: 150,
+                        normalcomparator: 'lessthan',
+
                     result: 'high',
                     testdate: 20180612,
                     catid: 1143,
@@ -214,10 +216,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'Cholestrol',
                         value: 95,
-                        normal: {min: null,
-                            max: 200,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 200,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20180612,
                         catid: 1143,
@@ -226,10 +228,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'LDL',
                         value: 17,
-                        normal: {min: null,
-                            max: 100,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 100,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20180612,
                         catid: 1143,
@@ -238,10 +240,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'HDL',
                         value: 13,
-                        normal: {min: 40,
-                            max: 60,
-                            comparator: 'between'
-                        },
+                        normalmin: 40,
+                        normalmax: 60,
+                        normalcomparator: 'between',
+
                         result: 'normal',
                         testdate: 20180612,
                         catid: 1143,
@@ -250,10 +252,10 @@ const testtypes=[
                     {	id: 1267,
                     testname: 'TSH',
                     value: 3.31,
-                    normal: {min: 0.27,
-                        max:  4.2,
-                        comparator: 'between'
-                    },
+                    normalmin: 0.27,
+                        normalmax:  4.2,
+                        normalcomparator: 'between',
+
                     result: 'high',
                     testdate: 20180612,
                     catid: 1144,
@@ -262,10 +264,10 @@ const testtypes=[
                     { id: 1268,
                         testname: 'Vitamin D',
                         value: 26.87,
-                        normal: {min: null,
-                            max: 50,
-                            comparator: 'lessthan'
-                        },
+                        normalmin: null,
+                        normalmax: 50,
+                        normalcomparator: 'lessthan',
+
                         result: 'normal',
                         testdate: 20180612,
                         catid: 1144,
@@ -298,7 +300,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
-import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var testdates = [
     {
@@ -434,9 +435,11 @@ export default class Home extends Component {
             case 'tests':
                 break;
             case 'reports':
-
+                this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
+                // Actions.trendScreen();
                 break;
             case 'alerts':
+                Actions.alertScreen();
                 break;
             case 'profile':
                 Actions.profileScreen();
@@ -546,9 +549,10 @@ export default class Home extends Component {
         Actions.addtestScreen();
     };
 
-    displayTrend(msg) {
+    displayTrend(treandtestname, trendtestdate) {
         // Toast.show(" current result name" +msg,Toast.LONG)
-        testtdetail.testname=msg;
+        testtdetail.testname=treandtestname;
+        testtdetail.testdate=trendtestdate;
         Actions.trendScreen(testtdetail);
     };
 
@@ -643,23 +647,24 @@ export default class Home extends Component {
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
                 <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
-                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.testname)}}>
+                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.testname, this.state.selectedDate)}}>
+                        {/*{(currentResult.testname.length!==15) &&*/}
                         <Text style={{marginBottom:5}}>{currentResult.testname}</Text></TouchableOpacity>
                     {(currentResult.result==="high") &&
                     <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="normal") &&
-                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5}}> {currentResult.value}</Text>
+                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="between") &&
-                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5}}>{currentResult.value}</Text>
+                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentResult.value}</Text>
                     }
                     {/*<Text>{currentResult.value}</Text>*/}
-                    {(currentResult.normal.comparator === "lessthan") &&
-                    <Text style={{marginBottom: 5}}> &#x0003C; {currentResult.normal.max}</Text>
+                    {(currentResult.normalcomparator === "lessthan") &&
+                    <Text style={{marginBottom: 5}}> &#x0003C; {currentResult.normalmax}</Text>
                     }
-                    {(currentResult.normal.comparator === "between") &&
-                    <Text style={{marginBottom: 5}}> {currentResult.normal.min}-{currentResult.normal.max}</Text>
+                    {(currentResult.normalcomparator === "between") &&
+                    <Text style={{marginBottom: 5}}> {currentResult.normalmin}-{currentResult.normalmax}</Text>
                     }
                 </View>);
         });
@@ -683,6 +688,17 @@ export default class Home extends Component {
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
+                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                                          onPress={this.onTestNameShowpicker}>
+                            <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
+                        </TouchableOpacity>
+                        <ModalFilterPicker
+                            visible={this.state.pickervisible2}
+                            onSelect={this.onTestNameSelectpicker}
+                            onCancel={this.onTestNameCancelpicker}
+                            options={testdates}
+                            optionTextStyle={style={fontSize:16}}
+                        />
                         <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onplusButtonPress}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
@@ -690,24 +706,31 @@ export default class Home extends Component {
                         </TouchableOpacity>
                     </View>
                     {/*showsButtons={true}*/}
-                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                       onPress={this.onTestNameShowpicker}>
-                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                        <TextField label="Search Test By Date"
-                                   lineHeight={30}
-                                   value={this.state.selectedDate.toString().substring(6, 8) + '/' + this.state.selectedDate.toString().substring(4, 6) + '/' + this.state.selectedDate.toString().substring(0, 4)}
-                                   editable={false}
-                                   fontSize={16}
-                            // onChangeText={(itemValue) => {this.setState({selectedDate: itemValue}), }}
-                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-                    </TouchableOpacity>
-                    <ModalFilterPicker
-                        visible={this.state.pickervisible2}
-                        onSelect={this.onTestNameSelectpicker}
-                        onCancel={this.onTestNameCancelpicker}
-                        options={testdates}
-                        optionTextStyle={style={fontSize:16}}
-                    />
+                    {/*<TextField label="Search Test By Name"*/}
+                               {/*lineHeight={30}*/}
+                               {/*value={this.state.selectedTestName}*/}
+                               {/*editable={true}*/}
+                               {/*fontSize={16}*/}
+                               {/*onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }*/}
+                               {/*containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>*/}
+                    {/*<TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}*/}
+                                       {/*onPress={this.onTestNameShowpicker}>*/}
+                        {/*/!*<Text>Select Country: {this.state.picked}</Text>*!/*/}
+                        {/*<TextField label="Search Test By Date"*/}
+                                   {/*lineHeight={30}*/}
+                                   {/*value={this.state.selectedDate.toString().substring(6, 8) + '/' + this.state.selectedDate.toString().substring(4, 6) + '/' + this.state.selectedDate.toString().substring(0, 4)}*/}
+                                   {/*editable={false}*/}
+                                   {/*fontSize={16}*/}
+                            {/*// onChangeText={(itemValue) => {this.setState({selectedDate: itemValue}), }}*/}
+                                   {/*containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>*/}
+                    {/*</TouchableOpacity>*/}
+                    {/*<ModalFilterPicker*/}
+                        {/*visible={this.state.pickervisible2}*/}
+                        {/*onSelect={this.onTestNameSelectpicker}*/}
+                        {/*onCancel={this.onTestNameCancelpicker}*/}
+                        {/*options={testdates}*/}
+                        {/*optionTextStyle={style={fontSize:16}}*/}
+                    {/*/>*/}
 
                     {/*<TouchableOpacity onPress={this.setState({'targetIndex': 2})} ><Text> Test</Text>*/}
                     {/*</TouchableOpacity>*/}
@@ -716,36 +739,68 @@ export default class Home extends Component {
                         {/*{renderResultCard}*/}
                         {/*</Swiper>*/}
 
-                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                        borderTopLeftRadius:10,borderLeftWidth:10}}>
-                        <TextField label="Search Test By Name"
-                                   lineHeight={30}
-                                   value={this.state.selectedTestName}
-                                   editable={true}
-                                   fontSize={16}
-                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
-                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-                        <GestureRecognizer
+                    {/*<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,*/}
+                        {/*borderTopLeftRadius:10,borderLeftWidth:10}}>*/}
+                        {/*<TextField label="Search Test By Name"*/}
+                                   {/*lineHeight={30}*/}
+                                   {/*value={this.state.selectedTestName}*/}
+                                   {/*editable={true}*/}
+                                   {/*fontSize={16}*/}
+                                   {/*onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }*/}
+                                   {/*containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>*/}
+                    <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                    <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>
+                        <Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
+                    </TouchableOpacity>
+
+                    <GestureRecognizer
                             onSwipeLeft={() => this.onSwipeLeft(this.state.selectedDate)}
                             onSwipeRight={() => this.onSwipeRight(this.state.selectedDate)}
                         >
-                            <Card>
-                        <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                            <Card style={{width:300,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                                borderTopLeftRadius:10,borderLeftWidth:10}}>
+
+                                <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
+                                    Test Result for {this.state.selectedDate.toString().substring(6, 8)
+                                + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
+                                + this.state.selectedDate.toString().substring(0, 4)}</Text>
+
+                                <TextField label="Search Test By Name"
+                                           lineHeight={30}
+                                           value={this.state.selectedTestName}
+                                           editable={true}
+                                           fontSize={16}
+                                           onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:20,marginRight:5,justifyContent:'flex-end'}}/>
+
+                                <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                            {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>*/}
+                            {/*<Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>*/}
+                            {/*</TouchableOpacity>*/}
                             <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
                                 <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>
                                 Test Name</Text>
-                                <Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>
+                                <Icoons type='FontAwesome' name='sort' size={18} color="#000"/>
                                 </View>
                             </TouchableOpacity>
-                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
-                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
+                            {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>*/}
+                            {/*<Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>*/}
+                            {/*</TouchableOpacity>*/}
                         </View>
 
                             {renderResultCard}
+
 </Card>
                         </GestureRecognizer>
-                    </Card>
+                        <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>
+                            <Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/*</Card>*/}
                 </View>
 
                 <View style={[styles.footer]}>
