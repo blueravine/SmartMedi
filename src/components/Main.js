@@ -6,6 +6,8 @@ import Home from './Home';
 import UserProfile from './UserProfile';
 import AddTestData from './AddTestData';
 import TrendScreen from './TrendScreen';
+import AlertScreen from './AlertScreen';
+import AddEventScreen from './AddEventScreen';
 
 export default class Main extends Component {
   render() {
@@ -41,6 +43,17 @@ export default class Main extends Component {
 
               <Scene key="trendScreen"
                      component={TrendScreen}
+                     animation='fade'
+                     hideNavBar={true}
+              />
+
+              <Scene key="alertScreen"
+                     component={AlertScreen}
+                     animation='fade'
+                     hideNavBar={true}
+              />
+              <Scene key="addeventScreen"
+                     component={AddEventScreen}
                      animation='fade'
                      hideNavBar={true}
               />

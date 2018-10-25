@@ -108,9 +108,10 @@ export default class UserProfile extends Component {
                 Actions.homeScreen();
                 break;
             case 'reports':
-
+                Actions.trendScreen();
                 break;
             case 'alerts':
+                Actions.alertScreen();
                 break;
             case 'profile':
                 // Actions.profileScreen();
