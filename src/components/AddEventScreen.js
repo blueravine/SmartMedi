@@ -63,38 +63,17 @@ var options = [
 
 var optionsname = [
     {
-        key: 'FBS',
-        label: 'FBS',
+        key: 'Daily',
+        label: 'Daily',
     },
     {
-        key: 'PPBS',
-        label: 'PPBS',
+        key: 'Weekly',
+        label: 'Weekly',
     },
     {
-        key: 'Tri Glycer',
-        label: 'Tri Glycer',
-    },
-    {
-        key: 'Cholestrol',
-        label: 'Cholestrol',
-    },
-    {
-        key: 'LDL',
-        label: 'LDL',
-    },
-    {
-        key: 'HDL',
-        label: 'HDL',
-    },
-    {
-        key: 'TSH',
-        label: 'TSH',
-    },
-    {
-        key: 'Vitamin D',
-        label: 'Vitamin D',
-    },
-];
+        key: 'Monthly',
+        label: 'Monthly',
+    }];
 
 var optionsmedicinetype = [
     {
@@ -130,6 +109,7 @@ var optionsmedicinetype = [
         label: 'Vitamin D',
     },
 ];
+import { Dropdown } from 'react-native-material-dropdown';
 export default class AddEventScreen extends Component {
 
     constructor(props) {
@@ -150,15 +130,21 @@ export default class AddEventScreen extends Component {
             pickervisible2: false,
             pickervisible3: false,
             picked1: '',
-            picked2: '',
+            picked2: 'Daily',
             picked3:'',
             testvalue:'',
             rangevalue:'',
             resultnotes:'',
             date: new Date(),
+            datepicked1: new Date(),
+            datepicked2: new Date(),
             selected1: '',
+            weektype:'Monday'
 
         };
+        this.onChangeTextPress=this.onChangeTextPress.bind(this);
+        this.onChangeFrequecyTextPress=this.onChangeFrequecyTextPress.bind(this);
+
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
@@ -214,7 +200,45 @@ export default class AddEventScreen extends Component {
             renderIcon={this.renderIcon(tab.icon)}
         />
     );
+    onChangeFrequecyTextPress(value){
 
+        // this.setState({selectedvalue: value});
+        this.setState({picked2: value});
+        // switch(value) {
+        //     case 'All Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     case 'A/C Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     case 'Non A/C Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     default:
+        //         this.setState({bustype: value});
+        //         break;
+        // }
+    }
+
+    onChangeTextPress(value){
+
+        // this.setState({selectedvalue: value});
+        this.setState({weektype: value});
+        // switch(value) {
+        //     case 'All Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     case 'A/C Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     case 'Non A/C Buses':
+        //         this.setState({bustype: value});
+        //         break;
+        //     default:
+        //         this.setState({bustype: value});
+        //         break;
+        // }
+    }
     onValueChange (value: string) {
         this.setState({
             selected1 : value
@@ -232,7 +256,9 @@ export default class AddEventScreen extends Component {
 
     _handleDatePicked = (date) => {
         this.setState({
-            date :  date
+            date :  date,
+            datepicked1:date,
+            datepicked2:date
         });
         this._hideDateTimePicker();
     };
@@ -296,12 +322,12 @@ export default class AddEventScreen extends Component {
         });
         // Keyboard.dismiss();
     };
-    onTestNameSelectpicker = (picked) => {
-        this.setState({
-            picked2: picked,
-            pickervisible2: false,
-        });
-    };
+    // onTestNameSelectpicker = (picked) => {
+    //     this.setState({
+    //         picked2: picked,
+    //         pickervisible2: false,
+    //     });
+    // };
 
     onTestMedicineNameSelectpicker = (picked) => {
         this.setState({
@@ -335,7 +361,7 @@ export default class AddEventScreen extends Component {
             // alert("saved test data " +JSON.stringify(temptests));
             Actions.alertScreen();
             Snackbar.show({
-                title: 'Test details added succesfully',
+                title: 'Medicine details added succesfully',
                 duration: Snackbar.LENGTH_SHORT,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -364,11 +390,11 @@ export default class AddEventScreen extends Component {
         return true;
     };
 
-    resetData(){
-        this.setState({
-            picked2 : ''
-        });
-    };
+    // resetData(){
+    //     this.setState({
+    //         picked2 : ''
+    //     });
+    // };
     // onAddButtonPress = () => {
     //     if(this.state.picked1===0){
     //         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
@@ -457,6 +483,29 @@ export default class AddEventScreen extends Component {
                 catname: this.state.picked1,
             };
 
+        let data = [{
+            value: 'Monday',
+        }, {
+            value: 'Tuesday',
+        }, {
+            value: 'Wednesday',
+        }, {
+            value: 'Thursday',
+        }, {
+            value: 'Friday',
+        }, {
+            value: 'Saturday',
+        }, {
+            value: 'Sunday',
+        },
+        ];
+        let freqdata = [{
+            value: 'Daily',
+        }, {
+            value: 'Weekly',
+        }, {
+            value: 'Monthly',
+        }];
 
         return (
 
@@ -478,71 +527,51 @@ export default class AddEventScreen extends Component {
 
                             <Card style={{ height:500,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                                 borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                                <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                    <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
+                                {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
+                                    <View style={{flexDirection:"row",marginTop:10}}>
 
-                                        <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                            <Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}
-                                            />
+                                        <TouchableOpacity onPress={this._showDateTimePicker} style={{justifyContent:'flex-start'}}>
+                                            {/*<Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}*/}
+                                            {/*/>*/}
+                                            <TextField  label="Start Date"
+                                                        lineHeight={30}
+                                                        value={Moment(this.state.datepicked1).format('DD MMM YYYY')}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({datepicked1: itemValue})}
+                                                        containerStyle={{width:90,marginLeft:20}}/>
+
                                         </TouchableOpacity>
-                                        <Text note style={{fontSize:20,color:'#000'}}
-                                              onPress={this._showDateTimePicker}> {
-                                            Moment(this.state.date).format('DD MMM YYYY')} </Text>
+
+                                        <TouchableOpacity onPress={this._showDateTimePicker} style={{justifyContent:'flex-end',marginLeft:80}}>
+                                            {/*<Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}*/}
+                                            {/*/>*/}
+                                            <TextField  label="End Date"
+                                                        lineHeight={30}
+                                                        value={Moment(this.state.datepicked2).format('DD MMM YYYY')}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({datepicked2: itemValue})}
+                                                        containerStyle={{width:90,marginLeft:20}}/>
+
+                                        </TouchableOpacity>
                                     </View>
-                                </TouchableOpacity>
-                                <View style={{flexDirection:"row",justifyContent:'flex-start'}}>
-                                    <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                        <DateTimePicker
-                                            isVisible={this.state.isDateTimePickerVisible}
-                                            mode={'date'}
-                                            minimumDate={Moment().toDate()}
-                                            onConfirm={this._handleDatePicked}
-                                            onCancel={this._hideDateTimePicker}
-                                        />
-
-
-                                    </TouchableOpacity>
-
-
-
-                                </View>
-
+                                {/*</TouchableOpacity>*/}
+                                <DateTimePicker
+                                    isVisible={this.state.isDateTimePickerVisible}
+                                    mode={'date'}
+                                    minimumDate={Moment().date()}
+                                    onConfirm={this._handleDatePicked}
+                                    onCancel={this._hideDateTimePicker}
+                                />
                                 <View style={{flexDirection:"row",marginTop:10}}>
-                                    {/*<View style={{flexDirection:"column",justifyContent:'space-evenly',marginLeft: 15}}>*/}
-                                    {/*/!*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}>*!/*/}
-                                    {/*<Image source={require('../Images/from_icon.png')}*/}
-                                    {/*style={{width: 25, height: 35, paddingLeft: 5}}/>*/}
-                                    {/*<Image source={require('../Images/to_icon.png')}*/}
-                                    {/*style={{width: 25, height: 35, paddingLeft: 5}}/>*/}
 
-                                    {/*</View>*/}
                                     <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                        <View style={{flexDirection: 'row', alignItems: 'center',marginBottom:20}}>
 
-                                            <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
-                                                              onPress={this.onTestTypeShowpicker}>
-                                                {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                                <TextField label="Select Test Category"
-                                                           lineHeight={30}
-                                                           value={this.state.picked1}
-                                                           fontSize={16}
-                                                           editable={false}
-                                                    // onChangeText={(itemValue) => {this.setState({selected1: this.findPOI(itemValue)})}}
-                                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}
-                                                />
-                                            </TouchableOpacity>
-                                            <ModalFilterPicker
-                                                visible={this.state.pickervisible1}
-                                                onSelect={this.onTestTypeSelectpicker}
-                                                onCancel={this.onTestTypeCancelpicker}
-                                                options={options}
-                                                optionTextStyle={style={fontSize:16}}
-                                            />
-                                        </View>
                                         <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                            onPress={this.onTestMedicineNameShowpicker}>
                                             {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                            <TextField label="Select Medicine Type"
+                                            <TextField label="Enter Medicine Name"
                                                        lineHeight={30}
                                                        value={this.state.picked3}
                                                        editable={false}
@@ -558,34 +587,83 @@ export default class AddEventScreen extends Component {
                                             optionTextStyle={style={fontSize:16}}
                                         />
 
-                                        {/*<TouchableOpacity  style={{marginTop:20}} onPress={this._SwapPickerText.bind(this)}>*/}
-                                            {/*<Icon type='MaterialIcons' name='swap-vertical-circle' size={35} color="#2eacde"/>*/}
-                                            {/*</TouchableOpacity>*/}
-                                            {/*<View style={{*/}
-                                            {/*flex: 1,*/}
-                                            {/*borderBottomColor: 'black',*/}
-                                            {/*borderBottomWidth: 1,*/}
-                                            {/*width: width - 10,}}>*/}
-                                            {/*</View>*/}
-                                        {/*</View>*/}
-                                        <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                           onPress={this.onTestNameShowpicker}>
-                                            {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                            <TextField label="Select name"
-                                                       lineHeight={30}
-                                                       value={this.state.picked2}
-                                                       editable={false}
-                                                       fontSize={16}
-                                                // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                                       containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                        </TouchableOpacity>
-                                        <ModalFilterPicker
-                                            visible={this.state.pickervisible2}
-                                            onSelect={this.onTestNameSelectpicker}
-                                            onCancel={this.onTestNameCancelpicker}
-                                            options={optionsname}
-                                            optionTextStyle={style={fontSize:16}}
+                                        <Dropdown
+                                            value={'Daily'}
+                                            baseColor={'#000'}
+                                            textColor={'#000'}
+                                            selectedItemColor={'#000'}
+                                            itemColor={'#000'}
+                                            fontSize={13}
+                                            itemPadding={8}
+                                            dropdownPosition={0}
+                                            // pickerStyle={{paddingLeft:200}}
+                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,paddingLeft:width*0.04}}
+                                            rippleCentered={true}
+                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:250}}
+                                            inputContainerStyle={{ borderBottomColor: 'transparent' }}
+                                            dropdownOffset={top= 0}
+                                            data={freqdata}
+                                            // valueExtractor={({value})=> value}
+                                            onChangeText={(value)=>{this.onChangeFrequecyTextPress(value)}}
                                         />
+                                        {(this.state.picked2==="Daily") &&
+                                        <View style={{flexDirection: "row", width:200}}>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={'8 AM'}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        containerStyle={{width:60,marginLeft:20}}/>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={"11 AM"}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        containerStyle={{width:60,marginLeft:20}}/>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={"4 PM"}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        containerStyle={{width:60,marginLeft:20}}/>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={"10 PM"}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        containerStyle={{width:60,marginLeft:20}}/>
+                                        </View>
+                                        }
+
+                                        {(this.state.picked2==="Weekly") &&
+                                        <Dropdown
+                                            value={'Monday'}
+                                            baseColor={'#000'}
+                                            textColor={'#000'}
+                                            selectedItemColor={'#000'}
+                                            itemColor={'#000'}
+                                            fontSize={13}
+                                            itemPadding={8}
+                                            dropdownPosition={0}
+                                            // pickerStyle={{paddingLeft:200}}
+                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,paddingLeft:width*0.04}}
+                                            rippleCentered={true}
+                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:350}}
+                                            inputContainerStyle={{ borderBottomColor: 'transparent' }}
+                                            dropdownOffset={top= 0}
+                                            data={data}
+                                            // valueExtractor={({value})=> value}
+                                            onChangeText={(value)=>{this.onChangeTextPress(value)}}
+                                        />
+                                        }
+                                        {(this.state.picked2==="Monthly") &&
+                                        <TextField  label="Monthly"
+                                                    lineHeight={30}
+                                                    value={"10th"}
+                                                    editable={false}
+                                                    fontSize={16}
+                                                    containerStyle={{width:80,marginLeft:20}}/>
+                                        }
 
                                     </View>
                                 </View>
@@ -599,14 +677,14 @@ export default class AddEventScreen extends Component {
                                     onPress={() => {        if(this.state.picked1===''){
                                         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                         Snackbar.show({
-                                            title: 'Test Category cannot be empty!',
+                                            title: 'Enter Medicine name it  cannot be empty!',
                                             duration: Snackbar.LENGTH_SHORT,
                                         });
                                     }
                                     else if(this.state.picked2===''){
                                         // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                         Snackbar.show({
-                                            title: 'Test Type cannot be empty!',
+                                            title: 'Select Frequency type!',
                                             duration: Snackbar.LENGTH_SHORT,
                                         });
                                         // this.resetData();
