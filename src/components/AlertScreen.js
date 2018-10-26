@@ -9,6 +9,7 @@ import Moment from 'moment';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/SimpleLineIcons';
+import Iconns from 'react-native-vector-icons/EvilIcons';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Dropdown } from 'react-native-material-dropdown';
 import Iccons from 'react-native-vector-icons/FontAwesome'
@@ -30,99 +31,450 @@ const medicinetypes=[
     {
         id: 1267,
         medicinename: 'Insulin',
-        frequency:'Daily',
-        repeat: '8AM',
-        repeat1: '11AM',
-        repeat2: '4PM',
-        repeat3: '10PM',
+        medfrequency:'Daily',
+        repeat1: '8AM',
+        repeat2: '11AM',
+        repeat3: '4PM',
+        repeat4: '10PM',
         weekday:null,
-        meddate: 20181016,
+        meddate: null,
+        startdate:20181016,
+        enddate:20181123,
     },
     { id: 1268,
         medicinename: 'losar',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10PM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20181016,
+        meddate: null,
     },
     {	id: 1267,
         medicinename: 'Atorvastatin',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10PM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20181016,
+        meddate: null,
+        startdate:20181016,
+        enddate:20181123,
     },
     {	id: 1267,
         medicinename: 'Thironum',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10AM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20181016,
+        meddate: null,
+        startdate:20181016,
+        enddate:20181123,
     },
     { id: 1268,
         medicinename: 'uprise d3',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10PM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20181016,
+        meddate: null,
+        startdate:20181016,
+        enddate:20181123,
+
+    },
+    { id: 1268,
+        medicinename: 'Insulin',
+        medfrequency:'Monthly',
+        weekday:null,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: 8,
+        startdate:20181016,
+        enddate:20181123,
 
     },
     {
         id: 1267,
         medicinename: 'Insulin',
-        frequency:'Weekly',
+        medfrequency:'Weekly',
         weekday:'Monday',
-        weekday1:'Tuesday',
-        weekday2:'Wednesday',
-        meddate: 20180814,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: null,
+        startdate:20180814,
+        enddate:201810914,
     },
     { id: 1268,
         medicinename: 'losar',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10PM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20180814,
+        meddate: null,
+        startdate:20180814,
+        enddate:201810914,
     },
     {	id: 1267,
         medicinename: 'Atorvastatin',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10PM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20180814,
+        meddate: null,
+        startdate:20180814,
+        enddate:201810914,
+    },
+    { id: 1267,
+        medicinename: 'uprise d3',
+        medfrequency:'Monthly',
+        weekday:null,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: 10,
+        startdate:20180814,
+        enddate:201810914,
+
     },
 
     {	id: 1267,
         medicinename: 'Atorvastatin',
-        frequency:'Weekly',
+        medfrequency:'Weekly',
         weekday:'Monday',
-        weekday1:'Tuesday',
-        weekday2:'Wednesday',
-        meddate: 20180612,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: null,
+        startdate:20180612,
+        enddate:20180714,
     },
     {	id: 1267,
         medicinename: 'Thironum',
-        frequency:'Daily',
+        medfrequency:'Daily',
         repeat1: '8AM',
         repeat2: '10AM',
+        repeat3: null,
+        repeat4: null,
         weekday:null,
-        meddate: 20180612,
+        meddate: null,
+        startdate:20180612,
+        enddate:20180714,
     },
     { id: 1268,
         medicinename: 'uprise d3',
-        frequency:'Weekly',
+        medfrequency:'Weekly',
         weekday:'Monday',
-        weekday1:'Tuesday',
-        weekday2:'Wednesday',
-        meddate: 20180612,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: null,
+        startdate:20180612,
+        enddate:20180714,
+
+    },
+
+    { id: 1268,
+        medicinename: 'uprise d3',
+        medfrequency:'Monthly',
+        weekday:null,
+        repeat1: null,
+        repeat2: null,
+        repeat3: null,
+        repeat4: null,
+        meddate: 12,
+        startdate:20180612,
+        enddate:20180714,
 
     },
 ];
+
+
+const testtypes=[
+    {
+        id: 1267,
+        testname: 'FBS',
+        value: 146,
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
+        result: 'high',
+        testdate: 20181016,
+        catid: 1142,
+        catname: "Blood Test",
+        testunit:"mg/dl",
+
+    },
+    { id: 1268,
+        testname: 'PPBS',
+        value: 127,
+        normalmin: null,
+        normalmax: 140,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20181016,
+        catid: 1142,
+        catname: "Blood Test",
+        testunit:"mg/dl",
+    },
+    {	id: 1267,
+        testname: 'Tri Glycer',
+        value: 277,
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
+        result: 'high',
+        testdate: 20181016,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'Cholestrol',
+        value: 105,
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20181016,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'LDL',
+        value: 27,
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20181016,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    { id: 1268,
+        testname: 'HDL',
+        value: 23,
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
+        result: 'normal',
+        testdate: 20181016,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    {	id: 1267,
+        testname: 'TSH',
+        value: 3.51,
+        normalmin: 0.27,
+        normalmax: 4.2,
+        normalcomparator: 'between',
+
+        result: 'high',
+        testdate: 20181016,
+        catid: 1144,
+        catname: "Thyroid & Vitamin D Level",
+        testunit:"U/ml",
+    },
+    { id: 1268,
+        testname: 'Vitamin D',
+        value: 28.97,
+        normalmin: null,
+        normalmax: 50,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20181016,
+        catid: 1144,
+        catname: "Thyroid & Vitamin D Level",
+        testunit:"ng/dl",
+
+    },
+    {	id: 1267,
+        testname: 'FBS',
+        value: 126,
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
+        result: 'high',
+        testdate: 20180814,
+        catid: 1144,
+        catname: "Blood Test",
+        testunit:"mg/dl",
+
+    },
+    { id: 1268,
+        testname: 'PPBS',
+        value: 107,
+        normalmin: null,
+        normalmax: 140,
+        normalcomparator: 'lessthan',
+
+        result: 'normal'
+        ,
+        testdate: 20180814,
+        catid: 1144,
+        catname: "Blood Test",
+        testunit:"mg/dl",
+    },
+    {	id: 1267,
+        testname: 'Tri Glycer',
+        value: 257,
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
+        result: 'high',
+        testdate: 20180814,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'Cholestrol',
+        value: 85,
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20180814,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'LDL',
+        value: 7,
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20180814,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    { id: 1268,
+        testname: 'HDL',
+        value: 3,
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
+        result: 'normal',
+        testdate: 20180814,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    {	id: 1267,
+        testname: 'Tri Glycer',
+        value: 267,
+        normalmin: null,
+        normalmax: 150,
+        normalcomparator: 'lessthan',
+
+        result: 'high',
+        testdate: 20180612,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'Cholestrol',
+        value: 95,
+        normalmin: null,
+        normalmax: 200,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20180612,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:"mg/dl",
+    },
+    { id: 1268,
+        testname: 'LDL',
+        value: 17,
+        normalmin: null,
+        normalmax: 100,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20180612,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    { id: 1268,
+        testname: 'HDL',
+        value: 13,
+        normalmin: 40,
+        normalmax: 60,
+        normalcomparator: 'between',
+
+        result: 'normal',
+        testdate: 20180612,
+        catid: 1143,
+        catname: "Cholestrol Level",
+        testunit:" mEq/dl",
+    },
+    {	id: 1267,
+        testname: 'TSH',
+        value: 3.31,
+        normalmin: 0.27,
+        normalmax:  4.2,
+        normalcomparator: 'between',
+
+        result: 'high',
+        testdate: 20180612,
+        catid: 1144,
+        catname: "Thyroid & Vitamin D Level",
+        testunit:"U/ml",
+    },
+    { id: 1268,
+        testname: 'Vitamin D',
+        value: 26.87,
+        normalmin: null,
+        normalmax: 50,
+        normalcomparator: 'lessthan',
+
+        result: 'normal',
+        testdate: 20180612,
+        catid: 1144,
+        catname: "Thyroid & Vitamin D Level",
+        testunit:"ng/dl",
+
+    }
+];
+
 var testdata=[];
 import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
@@ -150,24 +502,26 @@ const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
-var testdates = [
+var medsfrequecy = [
     {
-        key: 20181016,
-        label: '2018/10/16',
+        key: 'Daily',
+        label: 'Daily',
     },
     {
-        key: 20180814,
-        label: '2018/08/14',
+        key: 'Weekly',
+        label: 'Weekly',
     },
     {
-        key: 20180612,
-        label: '2018/06/12',
+        key: 'Monthly',
+        label: 'Monthly',
     }
 ];
 // var filteredTestResult=[];
 var renderResultCard=[];
 var testtdetail;
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import DropdownAlert from 'react-native-dropdownalert';
+
 export default class AlertScreen extends Component{
 
     constructor(props) {
@@ -190,15 +544,19 @@ export default class AlertScreen extends Component{
             selected1: '',
             currIndex: 0,
             targetIndex: 0,
+            selectedmedicineDate:20180814,
+            selectedmedicinefrequency:'Daily',
             selectedDate:20180814,
             filteredTestResult:[],
             selectedTestName:'',
             istestSorted: false,
             result:[],
             gestureName: 'none',
+            timer:500,
+
 
         };
-
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 
 
@@ -281,7 +639,8 @@ export default class AlertScreen extends Component{
                 Actions.homeScreen();
                 break;
             case 'reports':
-                Actions.trendScreen();
+                this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
+                // Actions.trendScreen(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
                 break;
             case 'alerts':
                 break;
@@ -293,7 +652,12 @@ export default class AlertScreen extends Component{
         }
     };
 
-
+    displayTrend(treandtestname, trendtestdate) {
+        // Toast.show(" current result name" +msg,Toast.LONG)
+        testtdetail.testname=treandtestname;
+        testtdetail.testdate=trendtestdate;
+        Actions.trendScreen(testtdetail);
+    };
 
     componentDidMount() {
         // await AsyncStorage.getItem('newtest')
@@ -304,13 +668,18 @@ export default class AlertScreen extends Component{
         //         medicinetypes.push(testdata);
         //         // alert(JSON.stringify(testdata));
         //
-        //         this.filterByTestDate(this.state.selectedDate);
+        //         this.filterByTestDate(this.state.selectedmedicinefrequency);
         //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         //
         //     }).done();
-        this.filterByTestDate(this.state.selectedDate);
+        this.filterByTestDate(this.state.selectedmedicinefrequency);
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        // this.filterByTestDate(this.state.selectedDate);
+        AppState.addEventListener('change', this.handleAppStateChange);
+        this.timer = setInterval(()=> this.fetchData(), 500)
+        // setTimeout(() => {
+        //     this.fetchData();
+        // }, 500)
+        // this.filterByTestDate(this.state.selectedmedicinefrequency);
         // BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
         // await AsyncStorage.getItem('favs')
@@ -333,9 +702,23 @@ export default class AlertScreen extends Component{
         //     }).done();
         // AppState.addEventListener('change',this.handleAppStateChange);
     }
-
+    // fetchData = async () => {
+    //     try {
+    //         await fetch('https://mywebsite.com/endpoint/');
+    //     } catch (error) {
+    //         this.dropdown.alertWithType('error', 'Error', error.message);
+    //     }
+    // };
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+    handleAppStateChange(appState) {
+        // (seconds) => this.setState({ seconds })
+        // this.setState({ seconds: true });
+        if (appState === 'background') {
+            this.timer = setInterval(()=> this.fetchData(), 500);
+        }
     }
     handleBackButton = () => {
         Actions.homeScreen();
@@ -348,7 +731,7 @@ export default class AlertScreen extends Component{
 
     onTestNameSelectpicker = (picked) => {
         this.setState({
-            selectedDate: picked,
+            selectedmedicinefrequency: picked,
             pickervisible2: false,
         });
         this.filterByTestDate(picked);
@@ -367,26 +750,26 @@ export default class AlertScreen extends Component{
     displayAlert(msg) {
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.medicinename=msg;
-        Actions.trendScreen(testtdetail);
+        // Actions.trendScreen(testtdetail);
     };
 
-    filterByTestDate(newDate){
+    filterByTestDate(newfrequency){
         this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
-            {return testresult.meddate === newDate}) });
+            {return testresult.medfrequency === newfrequency}) });
     };
 
     filterByTestName(searchText, nDate){
         this.setState({selectedTestName: searchText});
 
         this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
-            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase()) && testresult.meddate === nDate}) });
+            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase()) && testresult.startdate === nDate}) });
     };
 
     sortByTestName(sDate) {
         if (this.state.istestSorted === false) {
             this.setState({
                 filteredTestResult: medicinetypes.filter((testresult) => {
-                    return testresult.meddate === sDate
+                    return testresult.startdate === sDate
                 }).sort(
                     (a, b) => {return a.medicinename.toLowerCase().localeCompare(b.medicinename.toLowerCase());
                     }
@@ -396,7 +779,7 @@ export default class AlertScreen extends Component{
         } else {
             this.setState({
                 filteredTestResult: medicinetypes.filter((testresult) => {
-                    return testresult.meddate === sDate
+                    return testresult.startdate === sDate
                 }).sort(
                     (a, b) => {return (-1) * (a.medicinename.toLowerCase().localeCompare(b.medicinename.toLowerCase()) );
                     }
@@ -419,7 +802,7 @@ export default class AlertScreen extends Component{
             newdateindex = dateindex + 1;
         }
 
-        this.setState({selectedDate: testdates[newdateindex].key});
+        this.setState({selectedmedicinefrequency: testdates[newdateindex].key});
 
         // alert("Swiped left "+ testdates[newdateindex].key);
         this.filterByTestDate(testdates[newdateindex].key);
@@ -438,37 +821,65 @@ export default class AlertScreen extends Component{
             newdateindex = dateindex - 1;
         }
 
-        this.setState({selectedDate: testdates[newdateindex].key});
+        this.setState({selectedmedicinefrequency: testdates[newdateindex].key});
 
 
         // alert("Swiped Right "+ testdates[newdateindex].key);
         this.filterByTestDate(testdates[newdateindex].key);
     }
 
-
+    fetchData = async () => {
+        try {
+            await fetch('http://35.240.169.126:3057/testresult/mobile');
+        } catch (error) {
+            this.dropdown.alertWithType('error', 'Error', error.message);
+        }
+    };
     render() {
 
 
 
         testtdetail = {};
         testtdetail = {
-            meddate:this.state.selectedDate,
-            medicinename:''
+            medfrequency:this.state.selectedmedicinefrequency,
+            startdate:this.state.selectedmedicineDate,
+            medicinename:'',
+            testdate:this.state.selectedDate,
+            testname:''
 
         };
         let localFilteredResult = this.state.filteredTestResult;
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
-                    <TouchableOpacity onPress={() => {this.displayAlert(currentResult.medicinename)}}>
-                        <Text style={{marginBottom:5}}>{currentResult.medicinename}</Text>
-                </TouchableOpacity>
-                    <Text style={{textAlign:'center',marginBottom:5}}> {currentResult.frequency}</Text>
+                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+                <View style={{flexDirection:'row' ,marginBottom:25}}>
+                        <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
+                            <Text style={{marginBottom:5}}>Medicine</Text>
+                            <Text style={{marginBottom:5}}>Frequency</Text>
+                            <Text style={{marginBottom:5}}>Repeat</Text>
+                        </View>
 
-                    <Text style={{textAlign:'center',marginBottom:5}}> {currentResult.repeat}</Text>
+                        <View style={{flexDirection:"column",justifyContent:'flex-start',flex:3}}>
+                            <TouchableOpacity onPress={() => {this.displayAlert(currentResult.medicinename)}}>
+                                <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medicinename}</Text>
+                            </TouchableOpacity>
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medfrequency}</Text>
+                            {(currentResult.medfrequency==="Daily") &&
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {currentResult.repeat4}</Text>
+                            }
+                            {(currentResult.medfrequency==="Weekly") &&
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.weekday}</Text>
+                            }
+                            {(currentResult.medfrequency==="Monthly") &&
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.meddate}th of every month</Text>
+                            }
 
-                </View>);
+                         </View>
+                </View>
+                </Card>
+                    );
         });
 
         return (
@@ -481,7 +892,10 @@ export default class AlertScreen extends Component{
                 </View>
 
                 <View style={[styles.headerview]}>
-
+                    <View>
+                        <DropdownAlert ref={ref => this.dropdown = ref} />
+                    </View>
+                    <ScrollView>
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
@@ -490,78 +904,64 @@ export default class AlertScreen extends Component{
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
+                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                                          onPress={this.onTestNameShowpicker} >
+
+                            <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
+                        </TouchableOpacity>
+                        <ModalFilterPicker
+                            visible={this.state.pickervisible2}
+                            onSelect={this.onTestNameSelectpicker}
+                            onCancel={this.onTestNameCancelpicker}
+                            options={medsfrequecy}
+                            optionTextStyle={style={fontSize:16}}
+                        />
                         <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onplusButtonPress}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
 
                         </TouchableOpacity>
                     </View>
-                    {/*showsButtons={true}*/}
-                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                       onPress={this.onTestNameShowpicker}>
-                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                        <TextField label="Search Medicine By Date"
-                                   lineHeight={30}
-                                   value={this.state.selectedDate.toString().substring(6, 8) + '/' + this.state.selectedDate.toString().substring(4, 6) + '/' + this.state.selectedDate.toString().substring(0, 4)}
-                                   editable={false}
-                                   fontSize={16}
-                            // onChangeText={(itemValue) => {this.setState({selectedDate: itemValue}), }}
-                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-                    </TouchableOpacity>
-                    <ModalFilterPicker
-                        visible={this.state.pickervisible2}
-                        onSelect={this.onTestNameSelectpicker}
-                        onCancel={this.onTestNameCancelpicker}
-                        options={testdates}
-                        optionTextStyle={style={fontSize:16}}
-                    />
 
-                    {/*<TouchableOpacity onPress={this.setState({'targetIndex': 2})} ><Text> Test</Text>*/}
-                    {/*</TouchableOpacity>*/}
-
-                    {/*<Swiper index={this.state.targetIndex} onIndexChanged={(index) => this.setState({'currIndex': index})}>*/}
-                    {/*{renderResultCard}*/}
-                    {/*</Swiper>*/}
-
-                    <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                        borderTopLeftRadius:10,borderLeftWidth:10}}>
+                    <View >
                         <TextField label="Search Medicine By Name"
                                    lineHeight={30}
                                    value={this.state.selectedTestName}
                                    editable={true}
                                    fontSize={16}
-                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
+                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedmedicineDate)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-                        <GestureRecognizer
-                            onSwipeLeft={() => this.onSwipeLeft(this.state.selectedDate)}
-                            onSwipeRight={() => this.onSwipeRight(this.state.selectedDate)}
-                        >
-                            <Card>
+                        {/*<GestureRecognizer*/}
+                            {/*onSwipeLeft={() => this.onSwipeLeft(this.state.selectedmedicineDate)}*/}
+                            {/*onSwipeRight={() => this.onSwipeRight(this.state.selectedmedicineDate)}*/}
+                        {/*>*/}
+                            {/*<Card>*/}
 
-                                <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
-                                    <TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>
-                                        <Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
-                                        <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-                                            <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
-                                                Medicine Name</Text>
-                                            <Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Frequency</Text>
-                                    <Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Repeat</Text>
-                                    <TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>
-                                        <Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
-                                    </TouchableOpacity>
-                                </View>
+                                {/*<View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>*/}
+                                    {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedmedicineDate)}>*/}
+                                        {/*<Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>*/}
+                                    {/*</TouchableOpacity>*/}
+                                    {/*<TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedmedicineDate)}>*/}
+                                        {/*<View style={{flexDirection:'row',justifyContent:'space-evenly'}}>*/}
+                                            {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>*/}
+                                                {/*Medicine Name</Text>*/}
+                                            {/*<Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>*/}
+                                        {/*</View>*/}
+                                    {/*</TouchableOpacity>*/}
+                                    {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Frequency</Text>*/}
+                                    {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Repeat</Text>*/}
+                                    {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedmedicineDate)}>*/}
+                                        {/*<Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>*/}
+                                    {/*</TouchableOpacity>*/}
+                                {/*</View>*/}
 
                                 {renderResultCard}
 
-                            </Card>
-                        </GestureRecognizer>
+                            {/*</Card>*/}
+                        {/*</GestureRecognizer>*/}
 
-                    </Card>
+                    </View>
+                    </ScrollView>
                 </View>
 
                 <View style={[styles.footer]}>

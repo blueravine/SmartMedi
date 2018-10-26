@@ -68,6 +68,8 @@ const testtypes=[
         testdate: 20181016,
         catid: 1142,
         catname: "Blood Test",
+        testunit:"mg/dl",
+
     },
     { id: 1268,
         testname: 'PPBS',
@@ -80,6 +82,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1142,
         catname: "Blood Test",
+        testunit:"mg/dl",
     },
     {	id: 1267,
         testname: 'Tri Glycer',
@@ -92,6 +95,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'Cholestrol',
@@ -104,6 +108,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'LDL',
@@ -116,6 +121,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     { id: 1268,
         testname: 'HDL',
@@ -128,6 +134,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     {	id: 1267,
         testname: 'TSH',
@@ -140,6 +147,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1144,
         catname: "Thyroid & Vitamin D Level",
+        testunit:"U/ml",
     },
     { id: 1268,
         testname: 'Vitamin D',
@@ -152,6 +160,7 @@ const testtypes=[
         testdate: 20181016,
         catid: 1144,
         catname: "Thyroid & Vitamin D Level",
+        testunit:"ng/dl",
 
     },
     {	id: 1267,
@@ -165,6 +174,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1144,
         catname: "Blood Test",
+        testunit:"mg/dl",
 
     },
     { id: 1268,
@@ -179,6 +189,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1144,
         catname: "Blood Test",
+        testunit:"mg/dl",
     },
     {	id: 1267,
         testname: 'Tri Glycer',
@@ -191,6 +202,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'Cholestrol',
@@ -203,6 +215,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'LDL',
@@ -215,6 +228,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     { id: 1268,
         testname: 'HDL',
@@ -227,6 +241,7 @@ const testtypes=[
         testdate: 20180814,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     {	id: 1267,
         testname: 'Tri Glycer',
@@ -239,6 +254,7 @@ const testtypes=[
         testdate: 20180612,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'Cholestrol',
@@ -251,6 +267,7 @@ const testtypes=[
         testdate: 20180612,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:"mg/dl",
     },
     { id: 1268,
         testname: 'LDL',
@@ -263,6 +280,7 @@ const testtypes=[
         testdate: 20180612,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     { id: 1268,
         testname: 'HDL',
@@ -275,6 +293,7 @@ const testtypes=[
         testdate: 20180612,
         catid: 1143,
         catname: "Cholestrol Level",
+        testunit:" mEq/dl",
     },
     {	id: 1267,
         testname: 'TSH',
@@ -287,6 +306,7 @@ const testtypes=[
         testdate: 20180612,
         catid: 1144,
         catname: "Thyroid & Vitamin D Level",
+        testunit:"U/ml",
     },
     { id: 1268,
         testname: 'Vitamin D',
@@ -299,10 +319,10 @@ const testtypes=[
         testdate: 20180612,
         catid: 1144,
         catname: "Thyroid & Vitamin D Level",
+        testunit:"ng/dl",
 
     }
 ];
-
 
 var trentestresultname = [
     {
@@ -615,7 +635,7 @@ export default class TrendScreen extends Component {
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
 
                             <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
-                            <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline'}}>{this.state.selectedtestname}</Text>
+                            <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>{this.state.selectedtestname}</Text>
                             </TouchableOpacity>
                             <ModalFilterPicker
                                 visible={this.state.pickervisible1}
@@ -628,9 +648,9 @@ export default class TrendScreen extends Component {
                         <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
 
 
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Test Date</Text>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Actual</Text>
-                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',fontStyle:'italic'}}>Normal</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text>
 
 
 
