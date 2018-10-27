@@ -204,40 +204,12 @@ export default class AddEventScreen extends Component {
 
         // this.setState({selectedvalue: value});
         this.setState({picked2: value});
-        // switch(value) {
-        //     case 'All Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     case 'A/C Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     case 'Non A/C Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     default:
-        //         this.setState({bustype: value});
-        //         break;
-        // }
     }
 
     onChangeTextPress(value){
 
         // this.setState({selectedvalue: value});
         this.setState({weektype: value});
-        // switch(value) {
-        //     case 'All Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     case 'A/C Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     case 'Non A/C Buses':
-        //         this.setState({bustype: value});
-        //         break;
-        //     default:
-        //         this.setState({bustype: value});
-        //         break;
-        // }
     }
     onValueChange (value: string) {
         this.setState({
@@ -607,7 +579,7 @@ export default class AddEventScreen extends Component {
                                             onChangeText={(value)=>{this.onChangeFrequecyTextPress(value)}}
                                         />
                                         {(this.state.picked2==="Daily") &&
-                                        <View style={{flexDirection: "row", width:200}}>
+                                        <View style={{flexDirection: "row", width:200,marginTop:10}}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         value={'8 AM'}
@@ -646,9 +618,9 @@ export default class AddEventScreen extends Component {
                                             itemPadding={8}
                                             dropdownPosition={0}
                                             // pickerStyle={{paddingLeft:200}}
-                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,paddingLeft:width*0.04}}
+                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,marginTop:10,paddingLeft:width*0.04}}
                                             rippleCentered={true}
-                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:350}}
+                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:290}}
                                             inputContainerStyle={{ borderBottomColor: 'transparent' }}
                                             dropdownOffset={top= 0}
                                             data={data}
@@ -662,7 +634,7 @@ export default class AddEventScreen extends Component {
                                                     value={"10th"}
                                                     editable={false}
                                                     fontSize={16}
-                                                    containerStyle={{width:80,marginLeft:20}}/>
+                                                    containerStyle={{width:80,marginLeft:20,marginTop:10}}/>
                                         }
 
                                     </View>
