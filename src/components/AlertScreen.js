@@ -521,7 +521,9 @@ var renderResultCard=[];
 var testtdetail;
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import DropdownAlert from 'react-native-dropdownalert';
-
+import RNCalendarEvents from 'react-native-calendar-events';
+import RNAlarmClock from 'react-native-alarm-clock';
+import Notification from 'react-native-system-notification';
 export default class AlertScreen extends Component{
 
     constructor(props) {
@@ -553,7 +555,7 @@ export default class AlertScreen extends Component{
             result:[],
             gestureName: 'none',
             timer:500,
-
+            cal_auth: ''
 
         };
         this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -675,9 +677,21 @@ export default class AlertScreen extends Component{
         this.filterByTestDate(this.state.selectedmedicinefrequency);
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         AppState.addEventListener('change', this.handleAppStateChange);
-        this.timer = setInterval(()=> this.fetchData(), 500)
+        // this.fetchData();
+        // Scheduled notifications
+Notification.create({
+    subject: 'Scheduled Notification',
+    message: 'This notification will show on every Friday morning at 8:30 AM, starts at 2015/9/9 and end after 10 times.',
+    sendAt: new Date(2018, 10, 27, 17, 59),
+    repeatEvery: 'week',
+    count: 10
+  });
+
+        // this.timer = setInterval(()=> this.fetchData(), 500)
         // setTimeout(() => {
-        //     this.fetchData();
+           // Android
+    
+            
         // }, 500)
         // this.filterByTestDate(this.state.selectedmedicinefrequency);
         // BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -717,7 +731,7 @@ export default class AlertScreen extends Component{
         // (seconds) => this.setState({ seconds })
         // this.setState({ seconds: true });
         if (appState === 'background') {
-            this.timer = setInterval(()=> this.fetchData(), 500);
+            // this.timer = setInterval(()=> this.fetchData(), 500);
         }
     }
     handleBackButton = () => {
@@ -828,13 +842,11 @@ export default class AlertScreen extends Component{
         this.filterByTestDate(testdates[newdateindex].key);
     }
 
-    fetchData = async () => {
-        try {
-            await fetch('http://35.240.169.126:3057/testresult/mobile');
-        } catch (error) {
-            this.dropdown.alertWithType('error', 'Error', error.message);
-        }
-    };
+    // fetchData = async () => {
+    //    // Creates an alarm with the TAG iDream at 17:30 hrs.
+    //     RNAlarm.createAlarm('iDream', 17, 30);          
+       
+    // };
     render() {
 
 
@@ -892,9 +904,9 @@ export default class AlertScreen extends Component{
                 </View>
 
                 <View style={[styles.headerview]}>
-                    <View>
+                    {/* <View>
                         <DropdownAlert ref={ref => this.dropdown = ref} />
-                    </View>
+                    </View> */}
                     <ScrollView>
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
