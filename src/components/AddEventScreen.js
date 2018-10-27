@@ -120,6 +120,7 @@ export default class AddEventScreen extends Component {
             favticket:[],
             activeTab: 'tests',
             isDateTimePickerVisible: false,
+            isDateTimePickerVisible2: false,
             selectedItem: undefined,
             selected2: '',
             viewSection :false,
@@ -230,11 +231,24 @@ export default class AddEventScreen extends Component {
         this.setState({
             date :  date,
             datepicked1:date,
-            datepicked2:date
+            // datepicked2:date
         });
         this._hideDateTimePicker();
     };
 
+    _showDateTimePicker2 = () => this.setState({ isDateTimePickerVisible2: true });
+
+
+    _hideDateTimePicker2 = () => {this.setState({ isDateTimePickerVisible: false })};
+
+    _handleDatePicked2 = (date) => {
+        this.setState({
+            date :  date,
+            // datepicked1:date,
+            datepicked2:date
+        });
+        this._hideDateTimePicker2();
+    };
     handleChange(value: string) {
         this.setState({
             selected: value
@@ -515,7 +529,7 @@ export default class AddEventScreen extends Component {
 
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity onPress={this._showDateTimePicker} style={{justifyContent:'flex-end',marginLeft:80}}>
+                                        <TouchableOpacity onPress={this._showDateTimePicker2} style={{justifyContent:'flex-end',marginLeft:80}}>
                                             {/*<Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}*/}
                                             {/*/>*/}
                                             <TextField  label="End Date"
@@ -536,28 +550,36 @@ export default class AddEventScreen extends Component {
                                     onConfirm={this._handleDatePicked}
                                     onCancel={this._hideDateTimePicker}
                                 />
+
+                                <DateTimePicker
+                                    isVisible={this.state.isDateTimePickerVisible2}
+                                    mode={'date'}
+                                    minimumDate={Moment().date()}
+                                    onConfirm={this._handleDatePicked2}
+                                    onCancel={this._hideDateTimePicker2}
+                                />
                                 <View style={{flexDirection:"row",marginTop:10}}>
 
                                     <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
 
-                                        <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                           onPress={this.onTestMedicineNameShowpicker}>
+                                        {/*<TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}*/}
+                                                           {/*onPress={this.onTestMedicineNameShowpicker}>*/}
                                             {/*<Text>Select Country: {this.state.picked}</Text>*/}
                                             <TextField label="Enter Medicine Name"
                                                        lineHeight={30}
                                                        value={this.state.picked3}
-                                                       editable={false}
+                                                       editable={true}
                                                        fontSize={16}
                                                 // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                        containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                        </TouchableOpacity>
-                                        <ModalFilterPicker
-                                            visible={this.state.pickervisible3}
-                                            onSelect={this.onTestMedicineNameSelectpicker}
-                                            onCancel={this.onTestMedicineNameCancelpicker}
-                                            options={optionsmedicinetype}
-                                            optionTextStyle={style={fontSize:16}}
-                                        />
+                                        {/*</TouchableOpacity>*/}
+                                        {/*<ModalFilterPicker*/}
+                                            {/*visible={this.state.pickervisible3}*/}
+                                            {/*onSelect={this.onTestMedicineNameSelectpicker}*/}
+                                            {/*onCancel={this.onTestMedicineNameCancelpicker}*/}
+                                            {/*options={optionsmedicinetype}*/}
+                                            {/*optionTextStyle={style={fontSize:16}}*/}
+                                        {/*/>*/}
 
                                         <Dropdown
                                             value={'Daily'}
@@ -583,25 +605,29 @@ export default class AddEventScreen extends Component {
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         value={'8 AM'}
-                                                        editable={false}
+                                                        editable={true}
+                                                        keyboardType='phone-pad'
                                                         fontSize={16}
                                                         containerStyle={{width:60,marginLeft:20}}/>
                                             <TextField  label="Time"
                                                         lineHeight={30}
+                                                        keyboardType='phone-pad'
                                                         value={"11 AM"}
-                                                        editable={false}
+                                                        editable={true}
                                                         fontSize={16}
                                                         containerStyle={{width:60,marginLeft:20}}/>
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         value={"4 PM"}
-                                                        editable={false}
+                                                        keyboardType='phone-pad'
+                                                        editable={true}
                                                         fontSize={16}
                                                         containerStyle={{width:60,marginLeft:20}}/>
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         value={"10 PM"}
-                                                        editable={false}
+                                                        editable={true}
+                                                        keyboardType='phone-pad'
                                                         fontSize={16}
                                                         containerStyle={{width:60,marginLeft:20}}/>
                                         </View>
@@ -632,7 +658,8 @@ export default class AddEventScreen extends Component {
                                         <TextField  label="Monthly"
                                                     lineHeight={30}
                                                     value={"10th"}
-                                                    editable={false}
+                                                    editable={true}
+                                                    keyboardType='phone-pad'
                                                     fontSize={16}
                                                     containerStyle={{width:80,marginLeft:20,marginTop:10}}/>
                                         }

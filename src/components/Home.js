@@ -782,7 +782,7 @@ export default class Home extends Component {
                                 borderTopLeftRadius:10,borderLeftWidth:10}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
-                                <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>
+                                <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>
                                     Test Result {"\n"} {this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
                                 + this.state.selectedDate.toString().substring(0, 4)}</Text>
