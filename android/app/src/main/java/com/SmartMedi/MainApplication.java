@@ -14,6 +14,7 @@ import com.facebook.soloader.SoLoader;
 import com.imagepicker.ImagePickerPackage;
 import java.util.Arrays;
 import java.util.List;
+import io.neson.react.notification.NotificationPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new NotificationPackage(),
             new SnackbarPackage(),
             new SendSMSPackage(),
             new VectorIconsPackage(),

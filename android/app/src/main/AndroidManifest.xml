@@ -15,7 +15,11 @@
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />
    
- 
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     
     <application
       android:name=".MainApplication"
@@ -36,7 +40,14 @@
         <!--<meta-data-->
                 <!--android:name="com.google.android.geo.API_KEY"-->
                 <!--android:value="AIzaSyD3a7smG62nUL0Wp4jsP4Iv3rNg763HFyQ"/>-->
-
+ <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+      <receiver android:name="io.neson.react.notification.NotificationEventReceiver" />   <!-- <- Add this line -->
+      <receiver android:name="io.neson.react.notification.NotificationPublisher" />       <!-- <- Add this line -->
+      <receiver android:name="io.neson.react.notification.SystemBootEventReceiver">       <!-- <- Add this line -->
+        <intent-filter>                                                                   <!-- <- Add this line -->
+          <action android:name="android.intent.action.BOOT_COMPLETED"></action>           <!-- <- Add this line -->
+        </intent-filter>                                                                  <!-- <- Add this line -->
+      </receiver>    
     
     </application>
 
