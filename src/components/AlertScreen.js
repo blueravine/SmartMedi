@@ -523,7 +523,7 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import DropdownAlert from 'react-native-dropdownalert';
 import RNCalendarEvents from 'react-native-calendar-events';
 import RNAlarmClock from 'react-native-alarm-clock';
-import Notification from 'react-native-system-notification';
+// import Notification from 'react-native-system-notification';
 export default class AlertScreen extends Component{
 
     constructor(props) {
@@ -678,14 +678,7 @@ export default class AlertScreen extends Component{
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         AppState.addEventListener('change', this.handleAppStateChange);
         // this.fetchData();
-        // Scheduled notifications
-Notification.create({
-    subject: 'Scheduled Notification',
-    message: 'This notification will show on every Friday morning at 8:30 AM, starts at 2015/9/9 and end after 10 times.',
-    sendAt: new Date(2018, 10, 27, 17, 59),
-    repeatEvery: 'week',
-    count: 10
-  });
+     
 
         // this.timer = setInterval(()=> this.fetchData(), 500)
         // setTimeout(() => {
