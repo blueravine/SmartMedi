@@ -1,7 +1,7 @@
 package com.SmartMedi;
 
 import com.facebook.react.ReactActivity;
-
+import com.calendarevents.CalendarEventsPackage;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -12,4 +12,10 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "SmartMedi";
     }
+    @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+      CalendarEventsPackage.onRequestPermissionsResult(requestCode, permissions, grantResults);
+      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  }
+
 }

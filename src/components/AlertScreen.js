@@ -678,7 +678,13 @@ export default class AlertScreen extends Component{
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         AppState.addEventListener('change', this.handleAppStateChange);
         // this.fetchData();
-     
+        RNCalendarEvents.saveEvent('Title of event', {
+            startDate: '2018-10-30T16:28:00+05:30',
+            endDate: '2018-10-30T16:28:00+05:30',
+            alarms: [{
+              date: '2018-10-30T16:28:00+05:30'
+            }]
+          })
 
         // this.timer = setInterval(()=> this.fetchData(), 500)
         // setTimeout(() => {
