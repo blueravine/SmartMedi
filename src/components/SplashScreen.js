@@ -4,7 +4,7 @@ import { Platform, StyleSheet,Dimensions, View, Text, Image,AsyncStorage, Toucha
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Moment from "moment/moment";
 // import Registration from "./Registration"; // 4.0.0-beta.31
-// var mobiledata={mobile: null};
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 // var paramsmobile ;
 export default class SplashScreen extends Component {
     constructor(props) {
@@ -16,26 +16,65 @@ export default class SplashScreen extends Component {
     componentDidMount() {
 
         setTimeout(() => {
-             // AsyncStorage.getItem('mobileno')
-             //    .then((mobileno) => {
-             //        // let tempfavticket = favoriteticketdata;
-             //        // alert("all tick"+favs+"favticket");
-             //        mobiledata.mobile = mobileno;
-             //        // this.setState({favticket: favoriteticketdata});
-             //        // AsyncStorage.setItem('number', (favoriteticketdata.mobile));
-             //        // alert("all tick"+(mobiledata.mobile) + 'varvalue' + mobileno);
-             //    }).done(() => {
-             //     if(!(mobiledata.mobile)) {
-             //         Actions.registerScreen();
-             //         // alert("b4reg"+(mobiledata.mobile));
-             //     }
-             //     else{
-             //         Actions.homeScreen();
-             //         // alert("b4home"+(mobiledata.mobile));
-             //     }
-             //
-             // });
-            Actions.homeScreen();
+             AsyncStorage.getItem('userInfo')
+                .then((userInfo) => {
+                    // alert(JSON.stringify(userInfo));
+                    let tempuserdata = userdata;
+                   let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+                  
+                    userdata.mobile = jsonuserinfo.mobile;
+                    userdata.jwt = jsonuserinfo.jwt;
+                    userdata.countrycode = jsonuserinfo.countrycode;
+                    // alert((userdata.mobile)+(userdata.jwt))
+                    
+                }).done(() => {
+                 if(!(userdata.mobile)) {
+                     Actions.registerScreen();
+                     // alert("b4reg"+(mobiledata.mobile));
+                 }
+                 else if(!(userdata.jwt)){
+                     Actions.loginScreen();
+                     // alert("b4home"+(mobiledata.mobile));
+                 }
+                 else{
+                    fetch('https://smartmedi.blueravine.in/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    method: 'POST', // USE GET, POST, PUT,ETC
+                    headers: { //MODIFY HEADERS
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization':'Bearer '+userdata.jwt,
+                        'mobile':userdata.mobile,
+                        'countrycode':userdata.countrycode,
+                        'jwtaudience':'SmartMedi'
+                        //    application/x-www-form-urlencoded
+                    },
+                    // body: JSON.stringify({mobile:userdata.mobile,
+                    //     jwtaudience:'SmarTran'  })
+                })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+
+                        if (responseJson.messagecode===1006) {
+                            // Actions.loginScreen({phone:this.props.phone});
+                            Actions.homeScreen();
+                            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                        }
+                        else
+                        {
+                            Actions.loginScreen();
+                            // alert("user creation failed");
+                        }
+
+
+                    }).catch((error) => {
+                    alert(error);
+                });
+                 }
+             
+             });
+            // Actions.homeScreen();
+            // Actions.registerScreen();
+
         }, 5000)
 
     }

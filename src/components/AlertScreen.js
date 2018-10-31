@@ -28,454 +28,188 @@ const users = {
     mobile: 9674892081
 };
 const medicinetypes=[
-    {
-        id: 1267,
-        medicinename: 'Insulin',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '11AM',
-        repeat3: '4PM',
-        repeat4: '10PM',
-        weekday:null,
-        meddate: null,
-        startdate:20181016,
-        enddate:20181123,
-    },
-    { id: 1268,
-        medicinename: 'losar',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10PM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-    },
-    {	id: 1267,
-        medicinename: 'Atorvastatin',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10PM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20181016,
-        enddate:20181123,
-    },
-    {	id: 1267,
-        medicinename: 'Thironum',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10AM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20181016,
-        enddate:20181123,
-    },
-    { id: 1268,
-        medicinename: 'uprise d3',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10PM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20181016,
-        enddate:20181123,
+    // {
+    //     id: 1267,
+    //     medicinename: 'Insulin',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '11AM',
+    //     repeat3: '4PM',
+    //     repeat4: '10PM',
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20181016,
+    //     enddate:20181123,
+    // },
+    // { id: 1268,
+    //     medicinename: 'losar',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10PM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    // },
+    // {	id: 1267,
+    //     medicinename: 'Atorvastatin',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10PM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20181016,
+    //     enddate:20181123,
+    // },
+    // {	id: 1267,
+    //     medicinename: 'Thironum',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10AM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20181016,
+    //     enddate:20181123,
+    // },
+    // { id: 1268,
+    //     medicinename: 'uprise d3',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10PM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20181016,
+    //     enddate:20181123,
 
-    },
-    { id: 1268,
-        medicinename: 'Insulin',
-        medfrequency:'Monthly',
-        weekday:null,
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: 8,
-        startdate:20181016,
-        enddate:20181123,
+    // },
+    // { id: 1268,
+    //     medicinename: 'Insulin',
+    //     medfrequency:'Monthly',
+    //     weekday:null,
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: 8,
+    //     startdate:20181016,
+    //     enddate:20181123,
 
-    },
-    {
-        id: 1267,
-        medicinename: 'Insulin',
-        medfrequency:'Weekly',
-        weekday:'Monday',
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: null,
-        startdate:20180814,
-        enddate:201810914,
-    },
-    { id: 1268,
-        medicinename: 'losar',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10PM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20180814,
-        enddate:201810914,
-    },
-    {	id: 1267,
-        medicinename: 'Atorvastatin',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10PM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20180814,
-        enddate:201810914,
-    },
-    { id: 1267,
-        medicinename: 'uprise d3',
-        medfrequency:'Monthly',
-        weekday:null,
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: 10,
-        startdate:20180814,
-        enddate:201810914,
+    // },
+    // {
+    //     id: 1267,
+    //     medicinename: 'Insulin',
+    //     medfrequency:'Weekly',
+    //     weekday:'Monday',
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: null,
+    //     startdate:20180814,
+    //     enddate:201810914,
+    // },
+    // { id: 1268,
+    //     medicinename: 'losar',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10PM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20180814,
+    //     enddate:201810914,
+    // },
+    // {	id: 1267,
+    //     medicinename: 'Atorvastatin',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10PM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20180814,
+    //     enddate:201810914,
+    // },
+    // { id: 1267,
+    //     medicinename: 'uprise d3',
+    //     medfrequency:'Monthly',
+    //     weekday:null,
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: 10,
+    //     startdate:20180814,
+    //     enddate:201810914,
 
-    },
+    // },
 
-    {	id: 1267,
-        medicinename: 'Atorvastatin',
-        medfrequency:'Weekly',
-        weekday:'Monday',
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: null,
-        startdate:20180612,
-        enddate:20180714,
-    },
-    {	id: 1267,
-        medicinename: 'Thironum',
-        medfrequency:'Daily',
-        repeat1: '8AM',
-        repeat2: '10AM',
-        repeat3: null,
-        repeat4: null,
-        weekday:null,
-        meddate: null,
-        startdate:20180612,
-        enddate:20180714,
-    },
-    { id: 1268,
-        medicinename: 'uprise d3',
-        medfrequency:'Weekly',
-        weekday:'Monday',
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: null,
-        startdate:20180612,
-        enddate:20180714,
+    // {	id: 1267,
+    //     medicinename: 'Atorvastatin',
+    //     medfrequency:'Weekly',
+    //     weekday:'Monday',
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: null,
+    //     startdate:20180612,
+    //     enddate:20180714,
+    // },
+    // {	id: 1267,
+    //     medicinename: 'Thironum',
+    //     medfrequency:'Daily',
+    //     repeat1: '8AM',
+    //     repeat2: '10AM',
+    //     repeat3: null,
+    //     repeat4: null,
+    //     weekday:null,
+    //     meddate: null,
+    //     startdate:20180612,
+    //     enddate:20180714,
+    // },
+    // { id: 1268,
+    //     medicinename: 'uprise d3',
+    //     medfrequency:'Weekly',
+    //     weekday:'Monday',
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: null,
+    //     startdate:20180612,
+    //     enddate:20180714,
 
-    },
+    // },
 
-    { id: 1268,
-        medicinename: 'uprise d3',
-        medfrequency:'Monthly',
-        weekday:null,
-        repeat1: null,
-        repeat2: null,
-        repeat3: null,
-        repeat4: null,
-        meddate: 12,
-        startdate:20180612,
-        enddate:20180714,
+    // { id: 1268,
+    //     medicinename: 'uprise d3',
+    //     medfrequency:'Monthly',
+    //     weekday:null,
+    //     repeat1: null,
+    //     repeat2: null,
+    //     repeat3: null,
+    //     repeat4: null,
+    //     meddate: 12,
+    //     startdate:20180612,
+    //     enddate:20180714,
 
-    },
+    // },
 ];
 
-
-const testtypes=[
-    {
-        id: 1267,
-        testname: 'FBS',
-        value: 146,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
-
-        result: 'high',
-        testdate: 20181016,
-        catid: 1142,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-
-    },
-    { id: 1268,
-        testname: 'PPBS',
-        value: 127,
-        normalmin: null,
-        normalmax: 140,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1142,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 277,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
-
-        result: 'high',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 105,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 27,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 23,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
-
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'TSH',
-        value: 3.51,
-        normalmin: 0.27,
-        normalmax: 4.2,
-        normalcomparator: 'between',
-
-        result: 'high',
-        testdate: 20181016,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"U/ml",
-    },
-    { id: 1268,
-        testname: 'Vitamin D',
-        value: 28.97,
-        normalmin: null,
-        normalmax: 50,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"ng/dl",
-
-    },
-    {	id: 1267,
-        testname: 'FBS',
-        value: 126,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
-
-        result: 'high',
-        testdate: 20180814,
-        catid: 1144,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-
-    },
-    { id: 1268,
-        testname: 'PPBS',
-        value: 107,
-        normalmin: null,
-        normalmax: 140,
-        normalcomparator: 'lessthan',
-
-        result: 'normal'
-        ,
-        testdate: 20180814,
-        catid: 1144,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 257,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
-
-        result: 'high',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 85,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 7,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 3,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
-
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 267,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
-
-        result: 'high',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 95,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 17,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 13,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
-
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'TSH',
-        value: 3.31,
-        normalmin: 0.27,
-        normalmax:  4.2,
-        normalcomparator: 'between',
-
-        result: 'high',
-        testdate: 20180612,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"U/ml",
-    },
-    { id: 1268,
-        testname: 'Vitamin D',
-        value: 26.87,
-        normalmin: null,
-        normalmax: 50,
-        normalcomparator: 'lessthan',
-
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"ng/dl",
-
-    }
-];
-
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 var testdata=[];
+const testtypes=[
+
+];
 import ActionButton from 'react-native-action-button';
 var PushNotification = require('react-native-push-notification');
 // import Spinner from 'react-native-spinkit';
@@ -503,18 +237,18 @@ const { height } = Dimensions.get('window');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var medsfrequecy = [
-    {
-        key: 'Daily',
-        label: 'Daily',
-    },
-    {
-        key: 'Weekly',
-        label: 'Weekly',
-    },
-    {
-        key: 'Monthly',
-        label: 'Monthly',
-    }
+    // {
+    //     key: 'Daily',
+    //     label: 'Daily',
+    // },
+    // {
+    //     key: 'Weekly',
+    //     label: 'Weekly',
+    // },
+    // {
+    //     key: 'Monthly',
+    //     label: 'Monthly',
+    // }
 ];
 // var filteredTestResult=[];
 var renderResultCard=[];
@@ -547,7 +281,7 @@ export default class AlertScreen extends Component{
             currIndex: 0,
             targetIndex: 0,
             selectedmedicineDate:20180814,
-            selectedmedicinefrequency:'Daily',
+            selectedmedicinefrequency:'',
             selectedDate:20180814,
             filteredTestResult:[],
             selectedTestName:'',
@@ -624,7 +358,7 @@ export default class AlertScreen extends Component{
         this._hideDateTimePicker();
     };
 
-    handleChange(value: string) {
+    handleChange(value) {
         this.setState({
             selected: value
         });
@@ -641,8 +375,8 @@ export default class AlertScreen extends Component{
                 Actions.homeScreen();
                 break;
             case 'reports':
-                this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
-                // Actions.trendScreen(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
+                // this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
+                Actions.trendScreen();
                 break;
             case 'alerts':
                 break;
@@ -661,61 +395,128 @@ export default class AlertScreen extends Component{
         Actions.trendScreen(testtdetail);
     };
 
-    componentDidMount() {
-        // await AsyncStorage.getItem('newtest')
-        //     .then((ntest) => {
-        //
-        //         testdata = ntest ? JSON.parse(ntest) : [];
-        //
-        //         medicinetypes.push(testdata);
-        //         // alert(JSON.stringify(testdata));
-        //
-        //         this.filterByTestDate(this.state.selectedmedicinefrequency);
-        //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        //
-        //     }).done();
-        this.filterByTestDate(this.state.selectedmedicinefrequency);
+   async componentDidMount() {
+      //#####
+      await  AsyncStorage.getItem('userInfo')
+      .then((userInfo) => {
+          // alert(JSON.stringify(userInfo));
+          let tempuserdata = userdata;
+      let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+      
+      userdata.name = jsonuserinfo.name;
+          userdata.mobile = jsonuserinfo.mobile;
+          userdata.jwt = jsonuserinfo.jwt;
+          userdata.countrycode = jsonuserinfo.countrycode;
+          userdata.email = jsonuserinfo.email;
+          userdata.username = jsonuserinfo.username;
+          userdata.age = jsonuserinfo.age;
+          userdata.gender = jsonuserinfo.gender;
+          // alert((userdata.mobile)+(userdata.jwt))
+          
+      }).done();
+
+      await AsyncStorage.getItem('useralertInfo')
+      .then((useralertInfo) => {
+      // alert(JSON.stringify(userInfo));
+      let tempuseralertdata = testdata;
+      testdata = useralertInfo ? JSON.parse(useralertInfo) : tempuseralertdata;
+
+
+      // alert("initial fetch " +JSON.stringify(testdata));
+
+      }).done(() => {
+      if(!(testdata.length)) {
+        fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+    // body: JSON.stringify({mobile:userdata.mobile,
+    //     jwtaudience:'SmarTran'  })
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===4002) {
+            testdata = responseJson.Alert.slice();
+            AsyncStorage.setItem('useralertInfo',JSON.stringify(testdata))
+                .then((useralertInfo) => {
+                    
+                }).done(() =>{
+                    medicinetypes = testdata.slice();
+
+                    let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+                    for( i=0; i<l; i++) {
+                        if( tfrequency[testdata[i].medfrequency]) continue;
+                        tfrequency[testdata[i].medfrequency] = true;
+                        outfrequencies.push(testdata[i].medfrequency);
+                    }
+                
+                    medsfrequecy = [];
+                    outfrequencies.forEach((currfreq, dateidx) => {
+                        let eachfreq = 
+                            {label:currfreq,key: currfreq};
+                
+                            medsfrequecy.push(eachfreq);
+                    }); //forEach
+                    // this.setState({selectedmedicinefrequency: medsfrequecy.length ? medsfrequecy[0].key : ''});
+               
+                    // if(medsfrequecy.length){ this.filterByMedfreq(medsfrequecy[0].key)}
+                
+                                    }); //done
+        }
+        else {
+            //###Need to handle error in retrieving test results from server
+        }
+    }).catch((error) => {
+            alert(error);
+        });
+      } //if no test results in Async Storage
+      else {
+        medicinetypes = testdata.slice();
+
+        let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+        for( i=0; i<l; i++) {
+            if( tfrequency[testdata[i].medfrequency]) continue;
+            tfrequency[testdata[i].medfrequency] = true;
+            outfrequencies.push(testdata[i].medfrequency);
+        }
+    
+        medsfrequecy = [];
+        outfrequencies.forEach((currfreq, dateidx) => {
+            let eachfreq = 
+                {label:currfreq,key: currfreq};
+    
+                medsfrequecy.push(eachfreq);
+        }); //forEach
+        // this.setState({selectedmedicinefrequency: medsfrequecy.length ? medsfrequecy[0].key : ''});
+   
+        // if(medsfrequecy.length){ this.filterByMedfreq(medsfrequecy[0].key)}
+    
+          }
+
+      });
+//#####
+        this.filterByMedfreq(this.state.selectedmedicinefrequency);
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         AppState.addEventListener('change', this.handleAppStateChange);
         // this.fetchData();
-     
+        RNCalendarEvents.saveEvent('Title of event', {
+            startDate: '2018-10-30T16:28:00+05:30',
+            endDate: '2018-10-30T16:28:00+05:30',
+            alarms: [{
+              date: '2018-10-30T16:28:00+05:30'
+            }]
+          })
 
-        // this.timer = setInterval(()=> this.fetchData(), 500)
-        // setTimeout(() => {
-           // Android
-    
-            
-        // }, 500)
-        // this.filterByTestDate(this.state.selectedmedicinefrequency);
-        // BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-
-        // await AsyncStorage.getItem('favs')
-        //     .then((favs) => {
-        //         let tempfavticket = favoriteticketdata;
-        //         // alert("all tick"+favs+"favticket");
-        //         favoriteticketdata = favs ? JSON.parse(favs) : tempfavticket;
-        //         // this.setState({favticket: favoriteticketdata});
-        //         // alert("all tick"+JSON.stringify(favoriteticketdata.routes));
-        //     }).done();
-        // await AsyncStorage.getItem('mobileno')
-        //     .then((mobileno) => {
-        //         // let tempfavticket = favoriteticketdata;
-        //         // alert("all tick"+favs+"favticket");
-        //         favoriteticketdata.mobile = mobileno;
-        //         // this.setState({favticket: favoriteticketdata});
-        //         // AsyncStorage.setItem('number', (favoriteticketdata.mobile));
-        //         // alert("all tick"+(favoriteticketdata.mobile));
-        //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        //     }).done();
-        // AppState.addEventListener('change',this.handleAppStateChange);
     }
-    // fetchData = async () => {
-    //     try {
-    //         await fetch('https://mywebsite.com/endpoint/');
-    //     } catch (error) {
-    //         this.dropdown.alertWithType('error', 'Error', error.message);
-    //     }
-    // };
+   
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         AppState.removeEventListener('change', this.handleAppStateChange);
@@ -741,7 +542,7 @@ export default class AlertScreen extends Component{
             selectedmedicinefrequency: picked,
             pickervisible2: false,
         });
-        this.filterByTestDate(picked);
+        this.filterByMedfreq(picked);
     };
 
     onTestNameCancelpicker = () => {
@@ -760,9 +561,14 @@ export default class AlertScreen extends Component{
         // Actions.trendScreen(testtdetail);
     };
 
-    filterByTestDate(newfrequency){
-        this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
-            {return testresult.medfrequency === newfrequency}) });
+    filterByMedfreq(newfrequency){
+        if(!this.state.selectedmedicinefrequency){
+            this.setState( {filteredTestResult: medicinetypes.slice() });
+        }
+        else {
+            this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
+                {return testresult.medfrequency === newfrequency}) });
+        }
     };
 
     filterByTestName(searchText, nDate){
@@ -812,7 +618,7 @@ export default class AlertScreen extends Component{
         this.setState({selectedmedicinefrequency: testdates[newdateindex].key});
 
         // alert("Swiped left "+ testdates[newdateindex].key);
-        this.filterByTestDate(testdates[newdateindex].key);
+        this.filterByMedfreq(testdates[newdateindex].key);
 
     }
 
@@ -832,7 +638,7 @@ export default class AlertScreen extends Component{
 
 
         // alert("Swiped Right "+ testdates[newdateindex].key);
-        this.filterByTestDate(testdates[newdateindex].key);
+        this.filterByMedfreq(testdates[newdateindex].key);
     }
 
     // fetchData = async () => {

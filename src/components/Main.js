@@ -8,20 +8,36 @@ import AddTestData from './AddTestData';
 import TrendScreen from './TrendScreen';
 import AlertScreen from './AlertScreen';
 import AddEventScreen from './AddEventScreen';
-
+import Registration from './Registration';
+import OTPScreen from './OTPScreen';
+import Login from './Login';
 export default class Main extends Component {
   render() {
 	  return (
 	    <Router>
 	      <Scene key="root">
 
-              <Scene key="splshScreen"
+              <Scene key="splashScreen"
                      component={SplashScreen}
                      animation='fade'
                      hideNavBar={true}
                      initial={true}
               />
-
+	<Scene key="registerScreen"
+				 component={Registration}
+				 animation='fade'
+				 hideNavBar={true}
+			/>
+      	 <Scene key="otpScreen"
+				 component={OTPScreen}
+				 animation='fade'
+				 hideNavBar={true}
+			/>
+      	<Scene key="loginScreen"
+				 component={Login}
+				 animation='fade'
+				 hideNavBar={true}
+			/> 
 
 			<Scene key="homeScreen"
 				 component={Home}

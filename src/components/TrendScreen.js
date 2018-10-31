@@ -51,313 +51,316 @@ import Icoons from 'react-native-vector-icons/FontAwesome';
 var testdetail;
 var testData;
 var trendchartdata = [];
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var testdata=[];
 // import Chart from 'react-native-simple-charts';
 import PureChart from 'react-native-pure-chart';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 // import {LineChart} from 'react-native-charts-wrapper';
 const testtypes=[
-    {
-        id: 1267,
-        testname: 'FBS',
-        value: 146,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
+    // {
+    //     id: 1267,
+    //     testname: 'FBS',
+    //     value: 146,
+    //     normalmin: null,
+    //     normalmax: 100,
+    //     normalcomparator: 'lessthan',
 
-        result: 'high',
-        testdate: 20181016,
-        catid: 1142,
-        catname: "Blood Test",
-        testunit:"mg/dl",
+    //     result: 'high',
+    //     testdate: 20181016,
+    //     catid: 1142,
+    //     catname: "Blood Test",
+    //     testunit:"mg/dl",
 
-    },
-    { id: 1268,
-        testname: 'PPBS',
-        value: 127,
-        normalmin: null,
-        normalmax: 140,
-        normalcomparator: 'lessthan',
+    // },
+    // { id: 1268,
+    //     testname: 'PPBS',
+    //     value: 127,
+    //     normalmin: null,
+    //     normalmax: 140,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1142,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 277,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
+    //     result: 'normal',
+    //     testdate: 20181016,
+    //     catid: 1142,
+    //     catname: "Blood Test",
+    //     testunit:"mg/dl",
+    // },
+    // {	id: 1267,
+    //     testname: 'Tri Glycer',
+    //     value: 277,
+    //     normalmin: null,
+    //     normalmax: 150,
+    //     normalcomparator: 'lessthan',
 
-        result: 'high',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 105,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
+    //     result: 'high',
+    //     testdate: 20181016,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'Cholestrol',
+    //     value: 105,
+    //     normalmin: null,
+    //     normalmax: 200,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 27,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
+    //     result: 'normal',
+    //     testdate: 20181016,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'LDL',
+    //     value: 27,
+    //     normalmin: null,
+    //     normalmax: 100,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 23,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
+    //     result: 'normal',
+    //     testdate: 20181016,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'HDL',
+    //     value: 23,
+    //     normalmin: 40,
+    //     normalmax: 60,
+    //     normalcomparator: 'between',
 
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'TSH',
-        value: 3.51,
-        normalmin: 0.27,
-        normalmax: 4.2,
-        normalcomparator: 'between',
+    //     result: 'normal',
+    //     testdate: 20181016,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // {	id: 1267,
+    //     testname: 'TSH',
+    //     value: 3.51,
+    //     normalmin: 0.27,
+    //     normalmax: 4.2,
+    //     normalcomparator: 'between',
 
-        result: 'high',
-        testdate: 20181016,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"U/ml",
-    },
-    { id: 1268,
-        testname: 'Vitamin D',
-        value: 28.97,
-        normalmin: null,
-        normalmax: 50,
-        normalcomparator: 'lessthan',
+    //     result: 'high',
+    //     testdate: 20181016,
+    //     catid: 1144,
+    //     catname: "Thyroid & Vitamin D Level",
+    //     testunit:"U/ml",
+    // },
+    // { id: 1268,
+    //     testname: 'Vitamin D',
+    //     value: 28.97,
+    //     normalmin: null,
+    //     normalmax: 50,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20181016,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"ng/dl",
+    //     result: 'normal',
+    //     testdate: 20181016,
+    //     catid: 1144,
+    //     catname: "Thyroid & Vitamin D Level",
+    //     testunit:"ng/dl",
 
-    },
-    {	id: 1267,
-        testname: 'FBS',
-        value: 126,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
+    // },
+    // {	id: 1267,
+    //     testname: 'FBS',
+    //     value: 126,
+    //     normalmin: null,
+    //     normalmax: 100,
+    //     normalcomparator: 'lessthan',
 
-        result: 'high',
-        testdate: 20180814,
-        catid: 1144,
-        catname: "Blood Test",
-        testunit:"mg/dl",
+    //     result: 'high',
+    //     testdate: 20180814,
+    //     catid: 1144,
+    //     catname: "Blood Test",
+    //     testunit:"mg/dl",
 
-    },
-    { id: 1268,
-        testname: 'PPBS',
-        value: 107,
-        normalmin: null,
-        normalmax: 140,
-        normalcomparator: 'lessthan',
+    // },
+    // { id: 1268,
+    //     testname: 'PPBS',
+    //     value: 107,
+    //     normalmin: null,
+    //     normalmax: 140,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal'
-        ,
-        testdate: 20180814,
-        catid: 1144,
-        catname: "Blood Test",
-        testunit:"mg/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 257,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
+    //     result: 'normal'
+    //     ,
+    //     testdate: 20180814,
+    //     catid: 1144,
+    //     catname: "Blood Test",
+    //     testunit:"mg/dl",
+    // },
+    // {	id: 1267,
+    //     testname: 'Tri Glycer',
+    //     value: 257,
+    //     normalmin: null,
+    //     normalmax: 150,
+    //     normalcomparator: 'lessthan',
 
-        result: 'high',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 85,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
+    //     result: 'high',
+    //     testdate: 20180814,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'Cholestrol',
+    //     value: 85,
+    //     normalmin: null,
+    //     normalmax: 200,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 7,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
+    //     result: 'normal',
+    //     testdate: 20180814,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'LDL',
+    //     value: 7,
+    //     normalmin: null,
+    //     normalmax: 100,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 3,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
+    //     result: 'normal',
+    //     testdate: 20180814,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'HDL',
+    //     value: 3,
+    //     normalmin: 40,
+    //     normalmax: 60,
+    //     normalcomparator: 'between',
 
-        result: 'normal',
-        testdate: 20180814,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'Tri Glycer',
-        value: 267,
-        normalmin: null,
-        normalmax: 150,
-        normalcomparator: 'lessthan',
+    //     result: 'normal',
+    //     testdate: 20180814,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // {	id: 1267,
+    //     testname: 'Tri Glycer',
+    //     value: 267,
+    //     normalmin: null,
+    //     normalmax: 150,
+    //     normalcomparator: 'lessthan',
 
-        result: 'high',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'Cholestrol',
-        value: 95,
-        normalmin: null,
-        normalmax: 200,
-        normalcomparator: 'lessthan',
+    //     result: 'high',
+    //     testdate: 20180612,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'Cholestrol',
+    //     value: 95,
+    //     normalmin: null,
+    //     normalmax: 200,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:"mg/dl",
-    },
-    { id: 1268,
-        testname: 'LDL',
-        value: 17,
-        normalmin: null,
-        normalmax: 100,
-        normalcomparator: 'lessthan',
+    //     result: 'normal',
+    //     testdate: 20180612,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:"mg/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'LDL',
+    //     value: 17,
+    //     normalmin: null,
+    //     normalmax: 100,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    { id: 1268,
-        testname: 'HDL',
-        value: 13,
-        normalmin: 40,
-        normalmax: 60,
-        normalcomparator: 'between',
+    //     result: 'normal',
+    //     testdate: 20180612,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // { id: 1268,
+    //     testname: 'HDL',
+    //     value: 13,
+    //     normalmin: 40,
+    //     normalmax: 60,
+    //     normalcomparator: 'between',
 
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1143,
-        catname: "Cholestrol Level",
-        testunit:" mEq/dl",
-    },
-    {	id: 1267,
-        testname: 'TSH',
-        value: 3.31,
-        normalmin: 0.27,
-        normalmax:  4.2,
-        normalcomparator: 'between',
+    //     result: 'normal',
+    //     testdate: 20180612,
+    //     catid: 1143,
+    //     catname: "Cholestrol Level",
+    //     testunit:" mEq/dl",
+    // },
+    // {	id: 1267,
+    //     testname: 'TSH',
+    //     value: 3.31,
+    //     normalmin: 0.27,
+    //     normalmax:  4.2,
+    //     normalcomparator: 'between',
 
-        result: 'high',
-        testdate: 20180612,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"U/ml",
-    },
-    { id: 1268,
-        testname: 'Vitamin D',
-        value: 26.87,
-        normalmin: null,
-        normalmax: 50,
-        normalcomparator: 'lessthan',
+    //     result: 'high',
+    //     testdate: 20180612,
+    //     catid: 1144,
+    //     catname: "Thyroid & Vitamin D Level",
+    //     testunit:"U/ml",
+    // },
+    // { id: 1268,
+    //     testname: 'Vitamin D',
+    //     value: 26.87,
+    //     normalmin: null,
+    //     normalmax: 50,
+    //     normalcomparator: 'lessthan',
 
-        result: 'normal',
-        testdate: 20180612,
-        catid: 1144,
-        catname: "Thyroid & Vitamin D Level",
-        testunit:"ng/dl",
+    //     result: 'normal',
+    //     testdate: 20180612,
+    //     catid: 1144,
+    //     catname: "Thyroid & Vitamin D Level",
+    //     testunit:"ng/dl",
 
-    }
+    // }
 ];
 
 var trentestresultname = [
-    {
-        key: 'FBS',
-        label: 'FBS',
-    },
-    {
-        key: 'PPBS',
-        label: 'PPBS',
-    },
-    {
-        key: 'Tri Glycer',
-        label: 'Tri Glycer',
-    },
-    {
-        key: 'Cholestrol',
-        label: 'Cholestrol',
-    },
-    {
-        key: 'LDL',
-        label: 'LDL',
-    },
-    {
-        key: 'HDL',
-        label: 'HDL',
-    },
-    {
-        key: 'TSH',
-        label: 'TSH',
-    },
-    {
-        key: 'Vitamin D',
-        label: 'Vitamin D',
-    },
+    // {
+    //     key: 'FBS',
+    //     label: 'FBS',
+    // },
+    // {
+    //     key: 'PPBS',
+    //     label: 'PPBS',
+    // },
+    // {
+    //     key: 'Tri Glycer',
+    //     label: 'Tri Glycer',
+    // },
+    // {
+    //     key: 'Cholestrol',
+    //     label: 'Cholestrol',
+    // },
+    // {
+    //     key: 'LDL',
+    //     label: 'LDL',
+    // },
+    // {
+    //     key: 'HDL',
+    //     label: 'HDL',
+    // },
+    // {
+    //     key: 'TSH',
+    //     label: 'TSH',
+    // },
+    // {
+    //     key: 'Vitamin D',
+    //     label: 'Vitamin D',
+    // },
 ];
+var filteredTrendResult=[];
 export default class TrendScreen extends Component {
 
     constructor(props) {
@@ -369,6 +372,7 @@ export default class TrendScreen extends Component {
             active: 'false',
             pickervisible1: false,
             selectedtestname:'',
+            testrange:'',
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
@@ -436,7 +440,7 @@ export default class TrendScreen extends Component {
         this._hideDateTimePicker();
     };
 
-    handleChange(value: string) {
+    handleChange(value) {
         this.setState({
             selected: value
         });
@@ -468,7 +472,63 @@ export default class TrendScreen extends Component {
 
 
     async componentDidMount() {
-        this.setState({selectedtestname: this.props.testname});
+//#####
+        await  AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            // alert(JSON.stringify(userInfo));
+            let tempuserdata = userdata;
+        let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+        
+        userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            userdata.jwt = jsonuserinfo.jwt;
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            // alert((userdata.mobile)+(userdata.jwt))
+            
+        }).done();
+
+        await AsyncStorage.getItem('usertestInfo')
+        .then((usertestInfo) => {
+        // alert(JSON.stringify(userInfo));
+        let tempusertestdata = testdata;
+        testdata = usertestInfo ? JSON.parse(usertestInfo) : tempusertestdata;
+
+
+        // alert("initial fetch " +JSON.stringify(testdata));
+
+        }).done(() => {
+        if(!(testdata.length)) {
+            Actions.homeScreen();
+        } //if no test results in Async Storage
+        else {
+                testtypes = testdata.slice();
+
+                let tnames = [], outnames = [], l = testdata.length, i;
+                for( i=0; i<l; i++) {
+                    if( tnames[testdata[i].testname]) continue;
+                    tnames[testdata[i].testname] = true;
+                    outnames.push(testdata[i].testname);
+                }
+
+                trentestresultname = [];
+                outnames.forEach((currname, dateidx) => {
+                let eachname = {label: currname, key: currname};
+
+                trentestresultname.push(eachname);
+                }); //forEach
+                this.setState({selectedtestname: this.props.testname ? this.props.testname
+                                                                     : (trentestresultname.length ? trentestresultname[0].key : '')
+                              });
+
+            }
+
+        });
+//#####
+        // this.setState({selectedtestname: this.props.testname});
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         // Toast.show(" current result name" +testdetail.testname+ " " +testdetail.testdate,Toast.LONG);
 
@@ -548,12 +608,13 @@ export default class TrendScreen extends Component {
 
         testdetail = {};
         testdetail = {
-            testdate:this.props.testdate.toString().substring(6, 8) + '/' + this.props.testdate.toString().substring(4, 6) + '/' + this.props.testdate.toString().substring(0, 4),
-            testname:this.state.selectedtestname
+            // testdate:this.props.testdate.toString().substring(6, 8) + '/' + this.props.testdate.toString().substring(4, 6) + '/' + this.props.testdate.toString().substring(0, 4),
+            testname:this.state.selectedtestname,
+            // testrange:this.state.testrange
 
         };
 
-        var filteredTrendResult = testtypes.filter((trendresult) => {return trendresult.testname === this.state.selectedtestname});
+         filteredTrendResult = testtypes.filter((trendresult) => {return trendresult.testname === this.state.selectedtestname});
 
         filteredTrendResult.sort((a,b) =>
         {
@@ -591,11 +652,13 @@ export default class TrendScreen extends Component {
                     {(currentTrend.result === "between") &&
                     <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentTrend.value}</Text>
                     }
-                    <Text>{currentTrend.normalmax}</Text>
+                    {/* <Text>{currentTrend.normalmax}</Text> */}
                 </View>
 
             );
         });
+
+
 
         return (
 
@@ -634,9 +697,9 @@ export default class TrendScreen extends Component {
 
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
 
-                            <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
+                            {/* <TouchableOpacity onPress={this.onTrendTestNameShowpicker}> */}
                             <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>{this.state.selectedtestname}</Text>
-                            </TouchableOpacity>
+                            {/* </TouchableOpacity> */}
                             <ModalFilterPicker
                                 visible={this.state.pickervisible1}
                                 onSelect={this.onTrendTestNameSelectpicker}
@@ -650,7 +713,7 @@ export default class TrendScreen extends Component {
 
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
-                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text>
+                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
 
 
 
@@ -658,7 +721,14 @@ export default class TrendScreen extends Component {
                         </View>
 
                         {renderTrendCard}
-
+                        
+                        <View style={{marginTop:20,flexDirection:'row'}}>
+                        <Text style={{textAlign:'center'}}>Click </Text>
+                        <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
+                            <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>here</Text>
+                            </TouchableOpacity>
+                            <Text style={{textAlign:'center'}}> to search by test name</Text>
+                        </View>
                         <View style={{marginTop:50}}>
                         <PureChart
                             width={100}
