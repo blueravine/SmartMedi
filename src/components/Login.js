@@ -19,18 +19,80 @@ const MARGIN = 40;
 global.sessionid ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
-var paramshome;
-var tempnumber;
-var addnumber;
-var paramsmobile={tempnumber:'',jwttoken:null};
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
+    countrycode:null};
 export default class Login extends Component {
     // public static var=sessionid;
     constructor(props) {
         super(props);
-        this.state = {
-            mobiles: ''
+         this.state = {
+            password: '',
+            phone:'',
         };
+this._onVerifyPassword = this._onVerifyPassword.bind(this);
+    }
 
+    _onVerifyPassword(){
+       fetch('https://smartmedi.blueravine.in/user/login', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+    method: 'POST', // USE GET, POST, PUT,ETC
+    headers: { //MODIFY HEADERS
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        //    application/x-www-form-urlencoded
+    },
+    body: JSON.stringify({mobile:userdata.mobile,
+                          countrycode:userdata.countrycode,  
+                          password: userdata.password,
+                          jwtaudience:'SmartMedi'})
+})
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===1003) {
+            userdata.jwt = responseJson.token;
+            AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                .then((userInfo) => {
+                    
+                }).done(() =>{
+                    Actions.homeScreen();
+                });
+        // Actions.homeScreen();
+        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        
+    }
+        else if(responseJson.messagecode===1004)
+        {
+            alert(responseJson.message);
+        }
+        else 
+        {
+            alert("An error occurred while authenticating user! Please try again..");
+        }
+
+    }).catch((error) => {
+    alert(error);
+});
+
+    }
+    async componentDidMount(){
+        await AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            let tempuserdata = userdata;
+            let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+            userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            this.setState({phone : jsonuserinfo.mobile});
+            this.setState({countrycode : jsonuserinfo.countrycode});
+            // this.setState({username : jsonuserinfo.username});
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            userdata.jwt = jsonuserinfo.jwt;
+        }).done(() => {
+            // alert((this.state.phone));
+        });
     }
     render() {
      
@@ -45,7 +107,33 @@ export default class Login extends Component {
                 </View>
                 <View style={[styles.headerviewhome]}>
             
-                    
+                <View style={styles.inputContainer}>
+        <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+          {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
+          <TextInput style={styles.inputs}
+              placeholder="Phone No"
+              keyboardType="phone-pad"
+              returnKeyType={"next"}
+              editable={false}
+              value={"+"+this.state.countrycode+this.state.phone}
+              underlineColorAndroid='transparent'
+              >
+              
+              </TextInput>
+        </View>
+        <View style={styles.inputContainer}>
+<Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry={true}
+              returnKeyType={"done"}
+              underlineColorAndroid='transparent'
+              onChangeText={(password) => this.setState({password})}/>
+        </View>
+
+<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this._onVerifyPassword}>
+          <Text style={styles.signUpText}>Login</Text>
+        </TouchableHighlight>
 
 
 
@@ -58,20 +146,7 @@ export default class Login extends Component {
         );
 
     }
-
-    _onPressButton = function(value){
-        Alert.alert(
-            'Alert',
-            value,
-            [
-                {text: 'OK', onPress: () => console.log('OK Pressed!')},
-            ]
-        )
-    }
-
 }
-
-
 const styles = StyleSheet.create(
     {
         MainContainer:
@@ -83,7 +158,59 @@ const styles = StyleSheet.create(
                 backgroundColor: '#4d6bcb',
                 // paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
             },
-
+            inputContainer: {
+                borderBottomColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
+                borderRadius:30,
+                borderBottomWidth: 1,
+                width:250,
+                height:45,
+                marginBottom:20,
+                marginLeft:50,
+                flexDirection: 'row',
+                justifyContent:"space-evenly",
+                alignItems:'center'
+            },
+            inputs:{
+                height:45,
+                marginLeft:16,
+                borderBottomColor: '#FFFFFF',
+                flex:1,
+                justifyContent:"space-evenly",
+                alignItems:"center"
+            },
+            inputscountry:{
+                height:45,
+                // marginLeft:16,
+                borderBottomColor: '#FFFFFF',
+                // flex:1,
+                justifyContent:"space-evenly",
+                alignItems:"center"
+            },
+            inputIcon:{
+              width:30,
+              height:30,
+              marginLeft:15,
+              justifyContent: 'center'
+            },
+            buttonContainer: {
+              height:45,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom:20,
+              width:250,
+              marginLeft:50,
+              borderRadius:30,
+            },
+            signupButton: {
+              backgroundColor: "#4d6bcb",
+              marginLeft:50,
+              justifyContent:"space-evenly",
+            },
+            signUpText: {
+              color: 'white',
+            },
         headerviewhome: {
             // height: 250,
             //borderRadius:25,

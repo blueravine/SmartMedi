@@ -10,7 +10,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icoon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Foundation';
 import PhoneInput from 'react-native-phone-input';
-import CountryPicker from 'react-native-country-picker-modal';
+import CountryPicker, {
+    getAllCountries
+  } from 'react-native-country-picker-modal';
 import Toast from 'react-native-simple-toast';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -25,7 +27,21 @@ var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:nu
 export default class Registration extends Component {
     // public static var=sessionid;
     constructor(props) {
-        super(props);
+        // super(props);
+        super(props)
+        // let userLocaleCountryCode = DeviceInfo.getDeviceCountry()
+        const userCountryData = getAllCountries()
+        //   .filter(country => NORTH_AMERICA.includes(country.cca2))
+        //   .filter(country => country.cca2 === userLocaleCountryCode)
+        //   .pop()
+        let callingCode = null
+        let cca2 = null
+        if (!cca2 || !userCountryData) {
+          cca2 = 'US'
+          callingCode = '1'
+        } else {
+          callingCode = userCountryData.callingCode
+        }
         this.state = {
             // mobiles: null,
             name: null,
@@ -34,39 +50,39 @@ export default class Registration extends Component {
             age:null,
             phone:null,
             username:null,
-            countrycode:null
-            // cca2: "In",
+            countrycode:null,
+            cca2,
+            callingCode
+            // cca2: "IN",
               
         };
         this._onPress = this._onPress.bind(this);
-        this.onPressFlag = this.onPressFlag.bind(this);
-        // this.selectCountry = this.selectCountry.bind(this);
     }
 
     _onPress(){
-            try {
-                AsyncStorage.setItem('userInfo')
-                .then((userInfo) => {
-                    userInfo.name = this.state.name;
-                    userInfo.mobile = this.state.phone;
-                    userInfo.countrycode = this.state.countrycode;
-                    userInfo.email = this.state.email;
-                    userInfo.username = this.state.username;
-                    userInfo.age = this.state.age;
-                    userInfo.gender = this.state.gender;
-                    userInfo.jwt = null;
+            // try {
+            //     AsyncStorage.setItem('userInfo')
+            //     .then((userInfo) => {
+            //         userInfo.name = this.state.name;
+            //         userInfo.mobile = this.state.phone;
+            //         userInfo.countrycode = this.state.callingCode;
+            //         userInfo.email = this.state.email;
+            //         userInfo.username = this.state.username;
+            //         userInfo.age = this.state.age;
+            //         userInfo.gender = this.state.gender;
+            //         userInfo.jwt = null;
                     
-                }).done(() =>{
-                    alert("calling inside fetch user");
-                });
-            }
-            catch(error)
-            {
-                alert(error);
-            }
+            //     }).done(() =>{
+            //         alert("calling inside fetch user");
+            //     });
+            // }
+            // catch(error)
+            // {
+            //     alert(error);
+            // }
         
     
-                fetch('http://35.240.245.221:49199/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                fetch('https://smartmedi.blueravine.in/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                     method: 'POST', // USE GET, POST, PUT,ETC
                     headers: { //MODIFY HEADERS
                         'Accept': 'application/json',
@@ -74,7 +90,7 @@ export default class Registration extends Component {
                         //    application/x-www-form-urlencoded
                     },
                     body: JSON.stringify({mobile:this.state.phone,
-                                          countrycode:this.state.countrycode })
+                                          countrycode:this.state.callingCode })
                 })
                     .then((response) => response.json())
                     .then((responseJson) => {
@@ -96,11 +112,31 @@ export default class Registration extends Component {
                                 .then((response) => response.json())
                                 .then((responseJson) => {
                                     if (responseJson.Status === "Success") {
+                                        userdata.name = this.state.name;
+                                        userdata.mobile = this.state.phone;
+                                        userdata.countrycode = this.state.callingCode;
+                                        userdata.email = this.state.email;
+                                        userdata.username = this.state.username;
+                                        userdata.age = this.state.age;
+                                        userdata.gender = this.state.gender;
+                                        userdata.jwt = null;
+                                        AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                                        .then((userInfo) => {
+                                           
+                                            
+                                        }).done(() =>{
+                                            // alert("calling inside fetch user");
+                                            sessionid = responseJson.Details;
     
-                                        sessionid = responseJson.Details;
-    
-                                        
+                                            // alert(this.state.callingCode);
                                         Actions.otpScreen();
+                                        
+                                        });
+    
+                                        // sessionid = responseJson.Details;
+    
+                                       
+                                        // Actions.otpScreen();
                                         // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     
                                     }
@@ -116,16 +152,18 @@ export default class Registration extends Component {
                             
                         }
                         else  if(responseJson.messagecode===1007) {
-                            AsyncStorage.setItem('userInfo')
+
+                            userdata.name = responseJson.User.name;
+                                    userdata.mobile = responseJson.User.mobile;
+                                    userdata.countrycode = responseJson.User.countrycode;
+                                    userdata.email = responseJson.User.email;
+                                    userdata.username = responseJson.User.username;
+                                    userdata.age = responseJson.User.age;
+                                    userdata.gender = responseJson.User.gender;
+                                    userdata.jwt = null;
+                            AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                                 .then((userInfo) => {
-                                    userInfo.name = responseJson.User.name;
-                                    userInfo.mobile = responseJson.User.mobile;
-                                    userInfo.countrycode = responseJson.User.countrycode;
-                                    userInfo.email = responseJson.User.email;
-                                    userInfo.username = responseJson.User.username;
-                                    userInfo.age = responseJson.User.age;
-                                    userInfo.gender = responseJson.User.gender;
-                                    userInfo.jwt = null;
+                                    
                                 }).done(() =>{
                                
                                     Actions.loginScreen();
@@ -142,20 +180,6 @@ export default class Registration extends Component {
                     
     
     }
-    componentDidMount() {
-        this.setState({
-          pickerData: this.phone.getPickerData(),
-        });
-      }
-    
-      onPressFlag() {
-        this.countryPicker.openModal();
-      }
-    
-    //   selectCountry(country) {
-    //     this.phone.selectCountry(country.cca2.toLowerCase());
-    //     this.setState({ cca2: country.cca2 });
-    //   }
     render() {
      
         return(
@@ -194,22 +218,15 @@ export default class Registration extends Component {
               onChangeText={(username) => this.setState({username})}/>
         </View>
         {/* <View  style={styles.inputContainercountry}>
-        <PhoneInput style={styles.inputscountry}
-          ref={(ref) => {
-            this.phone = ref;
+        <CountryPicker
+        //   countryList={NORTH_AMERICA}
+          onChange={value => {
+            this.setState({ cca2: value.cca2, callingCode: value.callingCode })
           }}
-          onPressFlag={this.onPressFlag}
-        />
-         <CountryPicker 
-          ref={(ref) => {
-            this.countryPicker = ref;
-          }}
-          onChange={value => this.selectCountry(value)}
-          translation="eng"
           cca2={this.state.cca2}
-        >
-        <View />
-        </CountryPicker></View> */}
+          translation="eng"
+        />
+       </View> */}
  <View style={styles.inputContainer}>
  {/* <TextInput style={styles.inputscountry}
              placeholder="+91" 
@@ -221,22 +238,15 @@ export default class Registration extends Component {
         <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
       
         <View  style={styles.inputContainercountry}>
-        <PhoneInput style={styles.inputscountry}
-          ref={(ref) => {
-            this.phone = ref;
+        <CountryPicker
+        //   countryList={NORTH_AMERICA}
+          onChange={value => {
+            this.setState({ cca2: value.cca2, callingCode: value.callingCode })
           }}
-          onPressFlag={this.onPressFlag}
-        />
-         <CountryPicker 
-          ref={(ref) => {
-            this.countryPicker = ref;
-          }}
-          onChange={(countrycode) => this.setState({countrycode:Number(countrycode)})}
+          cca2={this.state.cca2}
           translation="eng"
-        //   cca2={this.state.cca2}
-        >
-        <View />
-        </CountryPicker></View>
+        />
+       </View>
           <TextInput style={styles.inputs}
               placeholder="Phone No"
               keyboardType="phone-pad"
@@ -323,7 +333,7 @@ const styles = StyleSheet.create(
                 alignItems:'center'
             },
             inputContainercountry: {
-                width:70,
+                width:20,
                 marginLeft:20,
                 justifyContent:"space-evenly",
                 alignItems:'center'

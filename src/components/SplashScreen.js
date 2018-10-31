@@ -4,8 +4,7 @@ import { Platform, StyleSheet,Dimensions, View, Text, Image,AsyncStorage, Toucha
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Moment from "moment/moment";
 // import Registration from "./Registration"; // 4.0.0-beta.31
-var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null};
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 // var paramsmobile ;
 export default class SplashScreen extends Component {
     constructor(props) {
@@ -19,13 +18,15 @@ export default class SplashScreen extends Component {
         setTimeout(() => {
              AsyncStorage.getItem('userInfo')
                 .then((userInfo) => {
+                    // alert(JSON.stringify(userInfo));
                     let tempuserdata = userdata;
                    let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
-                    if(!jsonuserinfo){
+                  
                     userdata.mobile = jsonuserinfo.mobile;
                     userdata.jwt = jsonuserinfo.jwt;
                     userdata.countrycode = jsonuserinfo.countrycode;
-                    }
+                    // alert((userdata.mobile)+(userdata.jwt))
+                    
                 }).done(() => {
                  if(!(userdata.mobile)) {
                      Actions.registerScreen();
@@ -36,7 +37,7 @@ export default class SplashScreen extends Component {
                      // alert("b4home"+(mobiledata.mobile));
                  }
                  else{
-                    fetch('http://35.240.245.221:49199/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    fetch('https://smartmedi.blueravine.in/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                     method: 'POST', // USE GET, POST, PUT,ETC
                     headers: { //MODIFY HEADERS
                         'Accept': 'application/json',
@@ -44,7 +45,7 @@ export default class SplashScreen extends Component {
                         'Authorization':'Bearer '+userdata.jwt,
                         'mobile':userdata.mobile,
                         'countrycode':userdata.countrycode,
-                        'jwtaudience':'SmarMedi'
+                        'jwtaudience':'SmartMedi'
                         //    application/x-www-form-urlencoded
                     },
                     // body: JSON.stringify({mobile:userdata.mobile,

@@ -29,6 +29,7 @@ export default class OTPScreen extends Component {
         this.state = {
             password: '',
             phone:'',
+            countrycode:null,
             username:'',
             otp:'',
               
@@ -37,17 +38,7 @@ export default class OTPScreen extends Component {
 
     }
     _onVerify(){
-        try {
-        AsyncStorage.setItem('userInfo')
-        .then((userInfo) => {
-            userInfo.jwt = responseJson.token;
-        }).done(() =>{
-        });
-    }
-    catch(error)
-            {
-                alert(error);
-            }
+       
     fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/VERIFY/'+sessionid+'/'+this.state.otp, { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'GET', // USE GET, POST, PUT,ETC
     headers: { //MODIFY HEADERS
@@ -59,7 +50,7 @@ export default class OTPScreen extends Component {
     .then((responseJson) => {
         if((responseJson.Status==="Success") && (responseJson.Details==="OTP Matched")){
 
-            fetch('http://35.240.245.221:49199/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://smartmedi.blueravine.in/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
                     'Accept': 'application/json',
@@ -80,7 +71,7 @@ export default class OTPScreen extends Component {
 
                     if (responseJson.messagecode===1002) {
                         // Actions.loginScreen({phone:this.props.phone});
-                        fetch('http://35.240.245.221:49199/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                        fetch('https://smartmedi.blueravine.in/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                             method: 'POST', // USE GET, POST, PUT,ETC
                             headers: { //MODIFY HEADERS
                                 'Accept': 'application/json',
@@ -96,10 +87,16 @@ export default class OTPScreen extends Component {
                             .then((responseJson) => {
 
                                 if (responseJson.messagecode===1003) {
-                                   
-                                   
-                                Actions.homeScreen();
-                                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                                    userdata.jwt = responseJson.token;
+                                    AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                                        .then((userInfo) => {
+                                            
+                                        }).done(() =>{
+                                            Actions.homeScreen();
+                                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                                        });
+                                // Actions.homeScreen();
+                                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                                 
                             }
                                 else if(responseJson.messagecode===1004)
@@ -150,13 +147,17 @@ export default class OTPScreen extends Component {
     });
         // Actions.homeScreen();
     }
-    async componentDidMount(){
+     async componentDidMount(){
+    
         await AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             let tempuserdata = userdata;
             let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
             userdata.name = jsonuserinfo.name;
             userdata.mobile = jsonuserinfo.mobile;
+            this.setState({phone : jsonuserinfo.mobile});
+            this.setState({countrycode : jsonuserinfo.countrycode});
+            this.setState({username : jsonuserinfo.username});
             userdata.countrycode = jsonuserinfo.countrycode;
             userdata.email = jsonuserinfo.email;
             userdata.username = jsonuserinfo.username;
@@ -164,8 +165,9 @@ export default class OTPScreen extends Component {
             userdata.gender = jsonuserinfo.gender;
             userdata.jwt = jsonuserinfo.jwt;
         }).done(() => {
-            // alert(JSON.stringify(userdata.username));
+            // alert((this.state.phone));
         });
+    
     }
     render() {
      
@@ -188,10 +190,10 @@ export default class OTPScreen extends Component {
               keyboardType="email-address"
               returnKeyType={"next"}
               editable={false}
-            //   value={userdata.username}
+              value={this.state.username}
               underlineColorAndroid='transparent'
              >
-             {userdata.username}
+             {/* {userdata.username} */}
              </TextInput>
         </View>
 
@@ -203,10 +205,10 @@ export default class OTPScreen extends Component {
               keyboardType="phone-pad"
               returnKeyType={"next"}
               editable={false}
-            //   value={userdata.mobile}
+              value={"+"+this.state.countrycode+this.state.phone}
               underlineColorAndroid='transparent'
               >
-              {userdata.mobile}
+              {/* {userdata.mobile} */}
               </TextInput>
         </View>
         <View style={styles.inputContainer}>

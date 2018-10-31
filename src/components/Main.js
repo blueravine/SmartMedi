@@ -33,11 +33,11 @@ export default class Main extends Component {
 				 animation='fade'
 				 hideNavBar={true}
 			/>
-      	{/* <Scene key="loginScreen"
+      	<Scene key="loginScreen"
 				 component={Login}
 				 animation='fade'
 				 hideNavBar={true}
-			/>  */}
+			/> 
 
 			<Scene key="homeScreen"
 				 component={Home}
