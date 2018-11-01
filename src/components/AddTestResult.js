@@ -45,55 +45,57 @@ const drawerStyles = {
 };
 var temptests;
 var addtests;
-
-var options = [
-    {
-        key: 'Blood Test ',
-        label: 'Blood Test',
-    },
-    {
-        key: 'Cholestrol Level',
-        label: 'Cholestrol Level',
-    },
-    {
-        key: 'Thyroid & Vitamin D Level',
-        label: 'Thyroid & Vitamin D Level',
-    },
+var testarray=[];
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var testdata=[];
+var tests = [
+    // {
+    //     key: 'Blood Test ',
+    //     label: 'Blood Test',
+    // },
+    // {
+    //     key: 'Cholestrol Level',
+    //     label: 'Cholestrol Level',
+    // },
+    // {
+    //     key: 'Thyroid & Vitamin D Level',
+    //     label: 'Thyroid & Vitamin D Level',
+    // },
 ];
-
-var optionsname = [
-    {
-        key: 'FBS',
-        label: 'FBS',
-    },
-    {
-        key: 'PPBS',
-        label: 'PPBS',
-    },
-    {
-        key: 'Tri Glycer',
-        label: 'Tri Glycer',
-    },
-    {
-        key: 'Cholestrol',
-        label: 'Cholestrol',
-    },
-    {
-        key: 'LDL',
-        label: 'LDL',
-    },
-    {
-        key: 'HDL',
-        label: 'HDL',
-    },
-    {
-        key: 'TSH',
-        label: 'TSH',
-    },
-    {
-        key: 'Vitamin D',
-        label: 'Vitamin D',
-    },
+const testtypes=[];
+var testsname = [
+    // {
+    //     key: 'FBS',
+    //     label: 'FBS',
+    // },
+    // {
+    //     key: 'PPBS',
+    //     label: 'PPBS',
+    // },
+    // {
+    //     key: 'Tri Glycer',
+    //     label: 'Tri Glycer',
+    // },
+    // {
+    //     key: 'Cholestrol',
+    //     label: 'Cholestrol',
+    // },
+    // {
+    //     key: 'LDL',
+    //     label: 'LDL',
+    // },
+    // {
+    //     key: 'HDL',
+    //     label: 'HDL',
+    // },
+    // {
+    //     key: 'TSH',
+    //     label: 'TSH',
+    // },
+    // {
+    //     key: 'Vitamin D',
+    //     label: 'Vitamin D',
+    // },
 ];
 
 export default class AddTestData extends Component {
@@ -119,12 +121,13 @@ export default class AddTestData extends Component {
             testvalue:'',
             rangevalue:'',
             resultnotes:'',
+            age:'',
             date: new Date(),
             selected1: '',
+            selectedtestname:'',
 
         };
-        // this.handleAppStateChange = this.handleAppStateChange.bind(this);
-        // this._onButtonPressed = this._onButtonPressed.bind(this);
+        
     }
 
 
@@ -179,12 +182,12 @@ export default class AddTestData extends Component {
         />
     );
 
-    onValueChange (value: string) {
+    onValueChange (value) {
         this.setState({
             selected1 : value
         });
     }
-    onChangeValue (value: string) {
+    onChangeValue (value) {
         this.setState({
             selected2 : value
         });
@@ -201,31 +204,12 @@ export default class AddTestData extends Component {
         this._hideDateTimePicker();
     };
 
-    handleChange(value: string) {
+    handleChange(value) {
         this.setState({
             selected: value
         });
     };
 
-    // _SwapPickerText(){
-    //     let temploc=this.state.picked1;
-    //     this.setState({picked1: this.state.picked2, picked2:temploc});
-    // };
-
-
-    // sendSMSFunction() {
-    //     SendSMS.send(9885638104, "9885638104", "Hello.. Thank you for using SmarTran booking service ! \nYour ticket for Jedimetla to mehdipatnam for 18 Aug 2018\n" +
-    //         "at 5:30 have been generated open the link fro seeing th qr code for scanning\n" +
-    //         "  Have a nice day.",
-    //         (msg)=>{
-    //             Toast.show(msg, Toast.SHORT);
-    //         }
-    //     );
-    // Actions.ticketScreen();
-    // }
-    // setFromLoc(){
-    //     this.setState({selected1: ''});
-    // }
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'tests':
@@ -280,8 +264,7 @@ export default class AddTestData extends Component {
 
         this.setState({loading: true});
         setTimeout(() => {
-            // this.saveTestsData(temptests);
-            // alert("saved test data " +JSON.stringify(temptests));
+            this.saveTestsData();
             Actions.homeScreen();
             Snackbar.show({
                 title: 'Test details added succesfully',
@@ -291,14 +274,57 @@ export default class AddTestData extends Component {
         }, 2000)
         // this.setState({loading: false})
     };
-    // _onButtonPressed() {
-    //             setTimeout(() => {
-    //         this.setState({ loading: true });
-    //         Actions.searchScreen(params);
-    //                 this.setState({ loading: false });
-    //     }, 3000)
-    // };
+   
     async componentDidMount() {
+        //#####
+        await  AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            // alert(JSON.stringify(userInfo));
+            let tempuserdata = userdata;
+        let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+        
+        userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            userdata.jwt = jsonuserinfo.jwt;
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            // alert((userdata.mobile)+(userdata.jwt))
+            
+        }).done( () => {
+
+      AsyncStorage.getItem('testInfo')
+        .then((testInfo) => {
+
+        let temptestarray = testarray;
+        let  jsontestInfo = testInfo ? JSON.parse(testInfo) : temptestarray;
+
+        testarray = jsontestInfo.slice();
+            
+        }).done(() =>{
+        
+            let tnames = [], outnames = [], l = testarray.length, i;
+            for( i=0; i<l; i++) {
+                if( tnames[testarray[i].testname]) continue;
+                tnames[testarray[i].testname] = true;
+                outnames.push(testarray[i].testname);
+            }
+            // testsname
+            testsname = [];
+            outnames.sort().forEach((currtestname, dateidx) => {
+                let eachname = 
+                    {label: currtestname,
+                        key: currtestname};
+        
+                        testsname.push(eachname);
+            }); //forEach
+
+        });
+
+    });
+//#####
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -307,7 +333,12 @@ export default class AddTestData extends Component {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
 
+    filterByTestName(searchText, nDate){
+        this.setState({selectedTestName: searchText});
 
+        this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
+            {return (testresult.testname.toLowerCase().includes(searchText.toLowerCase()) || testresult.category.toLowerCase().includes(searchText.toLowerCase())) && testresult.testdate === nDate}) });
+    };
     handleBackButton = () => {
         Actions.homeScreen();
         return true;
@@ -318,155 +349,99 @@ export default class AddTestData extends Component {
             picked2 : ''
         });
     };
-    // onAddButtonPress = () => {
-    //     if(this.state.picked1===0){
-    //         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
-    //         Snackbar.show({
-    //             title: 'TestType cannot be empty!',
-    //             duration: Snackbar.LENGTH_SHORT,
-    //         });
-    //     }
-    //     else if(this.state.picked2===0){
-    //         // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-    //         Snackbar.show({
-    //             title: 'TestType cannot be empty!',
-    //             duration: Snackbar.LENGTH_SHORT,
-    //         });
-    //         this.resetData();
-    //     }
-    //     else{
-    //         // Actions.searchScreen(params);
-    //         this.ShowHideActivityIndicator();
-    //         // this._onButtonPressed();
-    //     }    };
-
     onCancelButtonPress = () => {
         Actions.homeScreen();
     };
 
-    async saveTestsData(currenttests) {
-        try {
+    async saveTestsData() {
 
-           await AsyncStorage.getItem('newtest')
-                .then((tests) => {
-                    addtests = tests ? JSON.parse(tests) : [];
-                    // Toast.show("tickets " +c ,Toast.LONG);
-                    addtests.push(currenttests);
-                    AsyncStorage.setItem('newtest', JSON.stringify(addtests));
+        this.setState({date: Moment(this.state.date).format('YYYYMMDD')});
 
-                    // if(addtests.contain(this.state.date)){
-                    //     Alert.alert(
-                    //         'Date Already Exist',
-                    //         'Do you want update the details for '+ this.state.date , [{
-                    //             text: 'Cancel',
-                    //             onPress: () => {Snackbar.show({
-                    //                 title: 'Test details not added',
-                    //                 duration: Snackbar.LENGTH_SHORT,
-                    //             });
-                    //             }
-                    //         }, {
-                    //             text: 'OK',
-                    //             onPress: () =>{
-                    //                 addtests.update(currenttests);
-                    //                 AsyncStorage.setItem('tests', JSON.stringify(addtests));
-                    //             }
-                    //         }, ]
-                    //         , {
-                    //             cancelable: false
-                    //         }
-                    //     );
-                    // }
-                    // else{
-                    //     // addtests = tests ? JSON.parse(tests) : [];
-                    //     // Toast.show("tickets " +c ,Toast.LONG);
-                    //     addtests.push(currenttests);
-                    //     AsyncStorage.setItem('tests', JSON.stringify(addtests));
-                    // }
+        fetch('https://smartmedi.blueravine.in/testresult/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+        body: JSON.stringify([{"testdate":this.state.date,
+                                "testname":this.state.picked2,
+                                "mobile":userdata.mobile,
+                                "countrycode":userdata.countrycode,
+                                "age":this.state.age,
+                                "value":this.state.testvalue,
+                                "notes":this.state.resultnotes
+                                }])
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            if (responseJson.messagecode === 2003) {
+                fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                method: 'POST', // USE GET, POST, PUT,ETC
+                headers: { //MODIFY HEADERS
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization':'Bearer '+userdata.jwt,
+                    'mobile':userdata.mobile,
+                    'countrycode':userdata.countrycode,
+                    'jwtaudience':'SmartMedi'
+                    //    application/x-www-form-urlencoded
+                },
+            // body: JSON.stringify({mobile:userdata.mobile,
+            //     jwtaudience:'SmarTran'  })
+            }) //fetch
+            .then((response) => response.json())
+            .then((responseJson) => {
+        
+                if (responseJson.messagecode===2004) {
+                    testdata = responseJson.TestResult.slice();
+                    AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
+                        .then((usertestInfo) => {
+                            alert(usertestInfo);                            
+                        }).done(() =>{
+
+                            }); //done close
+                }
+                else {
+                    //###Need to handle error in retrieving test results from server
+                }
+            }).catch((error) => {
+                    alert(error);
                 });
+            }//if condition close
+            else {
+                //alert(responseJson.message);
+
+            }
+                //second then end after fetch
+        })
+        .catch((error) => {
+            console.error(error);
+        });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }catch(error) {
-            alert(error)
-        }
+      
     }
 
     render() {
 
-        temptests =
-        {
-            id: 1267,
-                name: this.state.picked2,
-            value: this.state.testvalue,
-            normal: {min: null,
-            max: 100,
-            comparator: 'lessthan'
-        },
-            result: 'high',
-                testdate: parseInt(Moment(this.state.date).format('YYYYMMDD')),
-            catid: 1142,
-            catname: this.state.picked1,
-        };
-
-        // fetch("http://35.240.147.215:3037/poi/name", { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-        //     method: 'POST', // USE GET, POST, PUT,ETC
-        //     headers: { //MODIFY HEADERS
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //         //    application/x-www-form-urlencoded
-        //     },
-        //     body: 'name='
-        // })
-        //     .then((response) => response.json())
-        //     .then((responseJson) => {
-        //         // alert(responseJson.message);
-        //         // if (responseJson.message==="poi found"){
-        //
-        //         poiarray=responseJson.POI;
-        //         options = poiarray.map( (currentpoi) => {
-        //             return{
-        //                 key: currentpoi.name,
-        //                 label: currentpoi.name,
-        //             };
-        //         });
-        //
-        //         // }
-        //
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
-
-        // favcardListArr = favoriteticketdata.routes.map((AllfavTicket,index)=> {
-        //     // favticketkeys = Object.keys(AllfavTicket);
-        //     // let favcardlistlen = favoritedata.length;
-        //     // alert("all tick" + AllfavTicket.from);
-        //
-        //     // if(this.state.viewSection===true) {
-        //     return (
-        //
-        //         <Card style={styles.view}>
-        //             <TouchableOpacity  onPress={ () => {
-        //                 params.fromLoc= favoriteticketdata.routes[index].from;
-        //                 params.toLoc= favoriteticketdata.routes[index].to;
-        //
-        //                 // alert("all tick "+index+" from"+params.fromLoc+"to"+params.toLoc+"date"+params.tripdte);
-        //                 Actions.searchScreen(params);
-        //             }}>
-        //                 <View style={{flexDirection:'column'}}>
-        //                     <Text style={{textAlign: 'center',marginTop: 5, fontSize: 14, color: '#000'}}>
-        //                         {AllfavTicket.from}
-        //                     </Text>
-        //                     <Text  style={{textAlign:'center',fontSize:16,color:'#000',marginTop:10}} > To
-        //                     </Text>
-        //                     <Text style={{textAlign: 'center',marginTop: 5, fontSize: 14, color: '#000'}}>
-        //                         {AllfavTicket.to}
-        //                     </Text>
-        //                 </View>
-        //             </TouchableOpacity>
-        //         </Card>
-        //
-        //     );
-        //     // }
-        // });
+        // temptests =
+        // {
+        //     id: 1267,
+        //         name: this.state.picked2,
+        //     value: this.state.testvalue,
+        //     normal: {min: null,
+        //     max: 100,
+        //     comparator: 'lessthan'
+        // },
+        //     result: 'high',
+        //         testdate: parseInt(Moment(this.state.date).format('YYYYMMDD')),
+        //     catid: 1142,
+        //     catname: this.state.picked1,
+        // };
         return (
 
             <View style={styles.container}>
@@ -528,15 +503,15 @@ export default class AddTestData extends Component {
                             <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
                                 <View style={{flexDirection: 'row', alignItems: 'center',marginBottom:20}}>
 
-                                    <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
+                                    {/* <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
                                                       onPress={this.onTestTypeShowpicker}>
-                                        {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                    
                                         <TextField label="Select Test Category"
                                                    lineHeight={30}
                                                    value={this.state.picked1}
                                                    fontSize={16}
                                                    editable={false}
-                                            // onChangeText={(itemValue) => {this.setState({selected1: this.findPOI(itemValue)})}}
+                                           
                                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}
                                         />
                                     </TouchableOpacity>
@@ -544,18 +519,10 @@ export default class AddTestData extends Component {
                                         visible={this.state.pickervisible1}
                                         onSelect={this.onTestTypeSelectpicker}
                                         onCancel={this.onTestTypeCancelpicker}
-                                        options={options}
+                                        options={tests}
                                         optionTextStyle={style={fontSize:16}}
-                                    />
-                                    {/*<TouchableOpacity  style={{marginTop:20}} onPress={this._SwapPickerText.bind(this)}>*/}
-                                        {/*<Icon type='MaterialIcons' name='swap-vertical-circle' size={35} color="#2eacde"/>*/}
-                                    {/*</TouchableOpacity>*/}
-                                    {/*<View style={{*/}
-                                    {/*flex: 1,*/}
-                                    {/*borderBottomColor: 'black',*/}
-                                    {/*borderBottomWidth: 1,*/}
-                                    {/*width: width - 10,}}>*/}
-                                    {/*</View>*/}
+                                    /> */}
+
                                 </View>
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                    onPress={this.onTestNameShowpicker}>
@@ -572,7 +539,7 @@ export default class AddTestData extends Component {
                                     visible={this.state.pickervisible2}
                                     onSelect={this.onTestNameSelectpicker}
                                     onCancel={this.onTestNameCancelpicker}
-                                    options={optionsname}
+                                    options={testsname}
                                     optionTextStyle={style={fontSize:16}}
                                 />
 
@@ -585,13 +552,13 @@ export default class AddTestData extends Component {
                                             onChangeText={(itemValue) => this.setState({testvalue: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                <TextField label="Normal Range (Calculated)"
+                                <TextField label="Age at the time of Test"
                                            lineHeight={30}
-                                           value={this.state.rangevalue}
+                                           value={this.state.age}
                                            editable={true}
                                            keyboardType='phone-pad'
                                            fontSize={16}
-                                           onChangeText={(itemValue) => this.setState({rangevalue: itemValue})}
+                                           onChangeText={(itemValue) => this.setState({age: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
@@ -600,7 +567,7 @@ export default class AddTestData extends Component {
                                            value={this.state.resultnotes}
                                            editable={true}
                                            fontSize={16}
-                                           multiline = {true}
+                                        //    multiline = {true}
                                            returnKeyType={"done"}
                                            onChangeText={(itemValue) => this.setState({resultnotes: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
@@ -614,17 +581,25 @@ export default class AddTestData extends Component {
                             containerStyle={{position:'absolute'}}
                             style={{ backgroundColor: '#071398' }}
                             position="bottomRight"
-                            onPress={() => {        if(this.state.picked1===''){
+                            onPress={() => {        if(this.state.picked2===''){
                                 // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                 Snackbar.show({
-                                    title: 'Test Category cannot be empty!',
+                                    title: 'Test Type field cannot be empty!',
                                     duration: Snackbar.LENGTH_SHORT,
                                 });
                             }
-                            else if(this.state.picked2===''){
+                            else if(this.state.testvalue===''){
                                 // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                 Snackbar.show({
-                                    title: 'Test Type cannot be empty!',
+                                    title: 'Test value field cannot be empty!',
+                                    duration: Snackbar.LENGTH_SHORT,
+                                });
+                                // this.resetData();
+                            }
+                            else if(this.state.age===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'age field cannot be empty!',
                                     duration: Snackbar.LENGTH_SHORT,
                                 });
                                 // this.resetData();
@@ -632,6 +607,7 @@ export default class AddTestData extends Component {
                             else{
                                 // Actions.searchScreen(params);
                                 this.ShowHideActivityIndicator();
+                                // this.saveTestsData();
                                 // this._onButtonPressed();
                             }}}>
                             <Icon type='MaterialIcons' name='done' size={30} color="#FFFFFF"/>

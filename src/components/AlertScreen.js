@@ -509,9 +509,12 @@ export default class AlertScreen extends Component{
         // this.fetchData();
         RNCalendarEvents.saveEvent('Title of event', {
             startDate: '2018-10-30T16:28:00+05:30',
-            endDate: '2018-10-30T16:28:00+05:30',
+            endDate: '2018-11-01T10:02:00+05:30',
             alarms: [{
-              date: '2018-10-30T16:28:00+05:30'
+              date: '2018-11-01T11:10:00+05:30'
+            //   Number:userdata.mobile
+            //   '919885638104'
+
             }]
           })
 

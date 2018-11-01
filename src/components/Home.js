@@ -340,6 +340,8 @@ var testdates = [
 var renderResultCard=[];
 var testtdetail;
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var testarray=[];
+// var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 export default class Home extends Component {
@@ -457,8 +459,8 @@ export default class Home extends Component {
             case 'tests':
                 break;
             case 'reports':
-                this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
-                // Actions.trendScreen();
+                // this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
+                Actions.trendScreen();
                 break;
             case 'alerts':
                 Actions.alertScreen();
@@ -481,37 +483,72 @@ export default class Home extends Component {
         }, 2000)
         // this.setState({loading: false})
     };
-   async  componentDidMount() {
-      await  AsyncStorage.getItem('userInfo')
-                .then((userInfo) => {
-                    // alert(JSON.stringify(userInfo));
-                    let tempuserdata = userdata;
-                   let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
-                  
-                   userdata.name = jsonuserinfo.name;
-                    userdata.mobile = jsonuserinfo.mobile;
-                    userdata.jwt = jsonuserinfo.jwt;
-                    userdata.countrycode = jsonuserinfo.countrycode;
-                    userdata.email = jsonuserinfo.email;
-                    userdata.username = jsonuserinfo.username;
-                    userdata.age = jsonuserinfo.age;
-                    userdata.gender = jsonuserinfo.gender;
-                    // alert((userdata.mobile)+(userdata.jwt))
-                    
-                }).done();
 
-await AsyncStorage.getItem('usertestInfo')
-.then((usertestInfo) => {
-    // alert(JSON.stringify(userInfo));
-    let tempusertestdata = testdata;
+    async getusertestdata(){
+        await  AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            // alert(JSON.stringify(userInfo));
+            let tempuserdata = userdata;
+           let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+          
+           userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            userdata.jwt = jsonuserinfo.jwt;
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            // alert((userdata.mobile)+(userdata.jwt))
+            
+        }).done(() => {
+
+       fetch('https://smartmedi.blueravine.in/test', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            //    application/x-www-form-urlencoded
+        },
+        body: JSON.stringify({countrycode:userdata.countrycode,  
+                             gender:userdata.gender,
+                              age:userdata.age})
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+
+            if (responseJson.messagecode===3006) {
+                testarray = responseJson.Test.slice();
+                AsyncStorage.setItem('testInfo',JSON.stringify(testarray))
+                    .then((testInfo) => {
+                        
+                    }).done();
+            // Actions.homeScreen();
+            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            
+        }
+            else 
+            {
+                alert("An error occurred while getting all tests! Please try again..");
+            }
+        
+            }).catch((error) => {
+            alert(error);
+        });
+    } );
+
+        await AsyncStorage.getItem('usertestInfo')
+        .then((usertestInfo) => {
+        // alert(JSON.stringify(userInfo));
+        let tempusertestdata = testdata;
         testdata = usertestInfo ? JSON.parse(usertestInfo) : tempusertestdata;
-    
 
-    // alert("initial fetch " +JSON.stringify(testdata));
-    
-}).done(() => {
-    if(!(testdata.length)) {
-    fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+
+        // alert("initial fetch " +JSON.stringify(testdata));
+
+        }).done(() => {
+        if(!(testdata.length)) {
+        fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -522,11 +559,11 @@ await AsyncStorage.getItem('usertestInfo')
             'jwtaudience':'SmartMedi'
             //    application/x-www-form-urlencoded
         },
-    // body: JSON.stringify({mobile:userdata.mobile,
-    //     jwtaudience:'SmarTran'  })
-    }) //fetch
-    .then((response) => response.json())
-    .then((responseJson) => {
+        // body: JSON.stringify({mobile:userdata.mobile,
+        //     jwtaudience:'SmarTran'  })
+        }) //fetch
+        .then((response) => response.json())
+        .then((responseJson) => {
 
         if (responseJson.messagecode===2004) {
             testdata = responseJson.TestResult.slice();
@@ -544,7 +581,7 @@ await AsyncStorage.getItem('usertestInfo')
                     }
                 
                     testdates = [];
-                    outdates.forEach((currdate, dateidx) => {
+                    outdates.sort().reverse().forEach((currdate, dateidx) => {
                         let eachdata = 
                             {label: currdate.toString().substring(6, 8)
                                 + '/' + currdate.toString().substring(4, 6) + '/'
@@ -554,7 +591,7 @@ await AsyncStorage.getItem('usertestInfo')
                         testdates.push(eachdata);
                     }); //forEach
                     this.setState({selectedDate: testdates.length ? testdates[0].key : ''});
-               
+            
                     if(testdates.length){ this.filterByTestDate(testdates[0].key)}
                 
                                     }); //done
@@ -562,11 +599,11 @@ await AsyncStorage.getItem('usertestInfo')
         else {
             //###Need to handle error in retrieving test results from server
         }
-    }).catch((error) => {
+        }).catch((error) => {
             alert(error);
         });
-    } //if no test results in Async Storage
-    else {
+        } //if no test results in Async Storage
+        else {
         testtypes = testdata.slice();
 
         let tdates = [], outdates = [], l = testdata.length, i;
@@ -575,25 +612,30 @@ await AsyncStorage.getItem('usertestInfo')
             tdates[testdata[i].testdate] = true;
             outdates.push(testdata[i].testdate);
         }
-    
+
         testdates = [];
-        outdates.forEach((currdate, dateidx) => {
+        outdates.sort().reverse().forEach((currdate, dateidx) => {
             let eachdata = 
                 {label: currdate.toString().substring(6, 8)
                     + '/' + currdate.toString().substring(4, 6) + '/'
                     + currdate.toString().substring(0, 4),
                     key: currdate};
-    
+
             testdates.push(eachdata);
         }); //forEach
         this.setState({selectedDate: testdates.length ? testdates[0].key : ''});
-               
-    if(testdates.length){ this.filterByTestDate(testdates[0].key)}
+            
+        if(testdates.length){ this.filterByTestDate(testdates[0].key)}
 
 
+        }
+
+        });
     }
 
-});
+    componentDidMount() {
+        
+        this.getusertestdata();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -643,7 +685,7 @@ await AsyncStorage.getItem('usertestInfo')
     displayTrend(treandtestname, trendtestdate) {
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.testname=treandtestname;
-        testtdetail.testdate=trendtestdate;
+        // testtdetail.testdate=trendtestdate;
         Actions.trendScreen(testtdetail);
     };
 
@@ -656,7 +698,7 @@ await AsyncStorage.getItem('usertestInfo')
         this.setState({selectedTestName: searchText});
 
         this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
-            {return testresult.testname.toLowerCase().includes(searchText.toLowerCase()) && testresult.testdate === nDate}) });
+            {return (testresult.testname.toLowerCase().includes(searchText.toLowerCase()) || testresult.category.toLowerCase().includes(searchText.toLowerCase())) && testresult.testdate === nDate}) });
     };
 
     sortByTestName(sDate) {
@@ -737,7 +779,7 @@ await AsyncStorage.getItem('usertestInfo')
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
                 <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
-                    <TouchableOpacity onPress={() => {this.displayTrend(currentResult.testname, this.state.selectedDate)}}>
+                    <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
                         <Text style={{marginBottom:5,textAlign:'left'}}>{currentResult.testname}</Text></TouchableOpacity>
                     {(currentResult.result==="high") &&
@@ -772,7 +814,7 @@ await AsyncStorage.getItem('usertestInfo')
 
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome {userdata.name}</Text>
 
                         
                         <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}

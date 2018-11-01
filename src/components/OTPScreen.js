@@ -27,6 +27,7 @@ export default class OTPScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading:false,
             password: '',
             phone:'',
             countrycode:null,
@@ -37,6 +38,15 @@ export default class OTPScreen extends Component {
         this._onVerify = this._onVerify.bind(this);
 
     }
+    ShowHideActivityIndicator = () =>{
+
+        this.setState({loading: true});
+        setTimeout(() => {
+            this._onVerify()
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 2000)
+        // this.setState({loading: false})
+    };
     _onVerify(){
        
     fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/VERIFY/'+sessionid+'/'+this.state.otp, { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -231,7 +241,10 @@ export default class OTPScreen extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this._onVerify}>
+<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={
+    this._onVerify
+    // this.ShowHideActivityIndicator
+    }>
           <Text style={styles.signUpText}>Verify</Text>
         </TouchableHighlight>
 

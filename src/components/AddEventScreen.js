@@ -45,69 +45,65 @@ const drawerStyles = {
 };
 var temptests;
 var addtests;
-
-var options = [
-    {
-        key: 'Blood Test ',
-        label: 'Blood Test',
-    },
-    {
-        key: 'Cholestrol Level',
-        label: 'Cholestrol Level',
-    },
-    {
-        key: 'Thyroid & Vitamin D Level',
-        label: 'Thyroid & Vitamin D Level',
-    },
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var testdata=[];
+var weeklydata = [{
+    value: 'Monday',
+}, {
+    value: 'Tuesday',
+}, {
+    value: 'Wednesday',
+}, {
+    value: 'Thursday',
+}, {
+    value: 'Friday',
+}, {
+    value: 'Saturday',
+}, {
+    value: 'Sunday',
+},
 ];
+var freqdata = [{
+    value: 'Daily',
+}, {
+    value: 'Weekly',
+}, {
+    value: 'Monthly',
+}];
 
-var optionsname = [
-    {
-        key: 'Daily',
-        label: 'Daily',
-    },
-    {
-        key: 'Weekly',
-        label: 'Weekly',
-    },
-    {
-        key: 'Monthly',
-        label: 'Monthly',
-    }];
-
-var optionsmedicinetype = [
-    {
-        key: 'FBS',
-        label: 'FBS',
-    },
-    {
-        key: 'PPBS',
-        label: 'PPBS',
-    },
-    {
-        key: 'Tri Glycer',
-        label: 'Tri Glycer',
-    },
-    {
-        key: 'Cholestrol',
-        label: 'Cholestrol',
-    },
-    {
-        key: 'LDL',
-        label: 'LDL',
-    },
-    {
-        key: 'HDL',
-        label: 'HDL',
-    },
-    {
-        key: 'TSH',
-        label: 'TSH',
-    },
-    {
-        key: 'Vitamin D',
-        label: 'Vitamin D',
-    },
+var medicinetype = [
+    // {
+    //     key: 'FBS',
+    //     label: 'FBS',
+    // },
+    // {
+    //     key: 'PPBS',
+    //     label: 'PPBS',
+    // },
+    // {
+    //     key: 'Tri Glycer',
+    //     label: 'Tri Glycer',
+    // },
+    // {
+    //     key: 'Cholestrol',
+    //     label: 'Cholestrol',
+    // },
+    // {
+    //     key: 'LDL',
+    //     label: 'LDL',
+    // },
+    // {
+    //     key: 'HDL',
+    //     label: 'HDL',
+    // },
+    // {
+    //     key: 'TSH',
+    //     label: 'TSH',
+    // },
+    // {
+    //     key: 'Vitamin D',
+    //     label: 'Vitamin D',
+    // },
 ];
 import { Dropdown } from 'react-native-material-dropdown';
 export default class AddEventScreen extends Component {
@@ -121,6 +117,10 @@ export default class AddEventScreen extends Component {
             activeTab: 'tests',
             isDateTimePickerVisible: false,
             isDateTimePickerVisible2: false,
+            isTimePickerVisible: false,
+            isTimePickerVisible1: false,
+            isTimePickerVisible2: false,
+            isTimePickerVisible3: false,
             selectedItem: undefined,
             selected2: '',
             viewSection :false,
@@ -137,7 +137,12 @@ export default class AddEventScreen extends Component {
             rangevalue:'',
             resultnotes:'',
             date: new Date(),
+            time:'',
             datepicked1: new Date(),
+            timepicked:'8 AM',
+            timepicked1:'11 AM',
+            timepicked2:'4 PM',
+            timepicked3:'10 PM',
             datepicked2: new Date(),
             selected1: '',
             weektype:'Monday'
@@ -212,12 +217,12 @@ export default class AddEventScreen extends Component {
         // this.setState({selectedvalue: value});
         this.setState({weektype: value});
     }
-    onValueChange (value: string) {
+    onValueChange (value) {
         this.setState({
             selected1 : value
         });
     }
-    onChangeValue (value: string) {
+    onChangeValue (value) {
         this.setState({
             selected2 : value
         });
@@ -249,31 +254,62 @@ export default class AddEventScreen extends Component {
         });
         this._hideDateTimePicker2();
     };
-    handleChange(value: string) {
+    handleChange(value) {
         this.setState({
             selected: value
         });
     };
 
-    // _SwapPickerText(){
-    //     let temploc=this.state.picked1;
-    //     this.setState({picked1: this.state.picked2, picked2:temploc});
-    // };
+    _showTimePicker = () => this.setState({ isTimePickerVisible: true });
 
+  _hideTimePicker = () => this.setState({ isTimePickerVisible: false });
 
-    // sendSMSFunction() {
-    //     SendSMS.send(9885638104, "9885638104", "Hello.. Thank you for using SmarTran booking service ! \nYour ticket for Jedimetla to mehdipatnam for 18 Aug 2018\n" +
-    //         "at 5:30 have been generated open the link fro seeing th qr code for scanning\n" +
-    //         "  Have a nice day.",
-    //         (msg)=>{
-    //             Toast.show(msg, Toast.SHORT);
-    //         }
-    //     );
-    // Actions.ticketScreen();
-    // }
-    // setFromLoc(){
-    //     this.setState({selected1: ''});
-    // }
+  _handleTimePicked = (time) => {
+    this.setState({
+        time :  time,
+        // datepicked1:date,
+        timepicked:time
+    });
+  };
+  _showTimePicker1 = () => this.setState({ isTimePickerVisible1: true });
+
+  _hideTimePicker1 = () => this.setState({ isTimePickerVisible1: false });
+
+  _handleTimePicked1 = (time) => {
+    this.setState({
+        time :  time,
+        // datepicked1:date,
+        timepicked1:time
+    });
+    console.log('A date has been picked: ', date);
+  this._hideTimePicker();
+};
+    _showTimePicker2 = () => this.setState({ isTimePickerVisible2: true });
+
+    _hideTimePicker2 = () => this.setState({ isTimePickerVisible2: false });
+  
+    _handleTimePicked2 = (time) => {
+      this.setState({
+          time :  time,
+          // datepicked1:date,
+          timepicked2:time
+      });
+      console.log('A date has been picked: ', date);
+  this._hideTimePicker();
+    };
+      _showTimePicker3 = () => this.setState({ isTimePickerVisible3: true });
+
+      _hideTimePicker3 = () => this.setState({ isTimePickerVisible3: false });
+    
+      _handleTimePicked3 = (time) => {
+        this.setState({
+            time :  time,
+            // datepicked1:date,
+            timepicked3:time
+        });
+  console.log('A date has been picked: ', date);
+  this._hideTimePicker();
+};
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'tests':
@@ -308,13 +344,6 @@ export default class AddEventScreen extends Component {
         });
         // Keyboard.dismiss();
     };
-    // onTestNameSelectpicker = (picked) => {
-    //     this.setState({
-    //         picked2: picked,
-    //         pickervisible2: false,
-    //     });
-    // };
-
     onTestMedicineNameSelectpicker = (picked) => {
         this.setState({
             picked3: picked,
@@ -354,13 +383,7 @@ export default class AddEventScreen extends Component {
         }, 2000)
         // this.setState({loading: false})
     };
-    // _onButtonPressed() {
-    //             setTimeout(() => {
-    //         this.setState({ loading: true });
-    //         Actions.searchScreen(params);
-    //                 this.setState({ loading: false });
-    //     }, 3000)
-    // };
+  
     async componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
@@ -376,34 +399,7 @@ export default class AddEventScreen extends Component {
         return true;
     };
 
-    // resetData(){
-    //     this.setState({
-    //         picked2 : ''
-    //     });
-    // };
-    // onAddButtonPress = () => {
-    //     if(this.state.picked1===0){
-    //         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
-    //         Snackbar.show({
-    //             title: 'TestType cannot be empty!',
-    //             duration: Snackbar.LENGTH_SHORT,
-    //         });
-    //     }
-    //     else if(this.state.picked2===0){
-    //         // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-    //         Snackbar.show({
-    //             title: 'TestType cannot be empty!',
-    //             duration: Snackbar.LENGTH_SHORT,
-    //         });
-    //         this.resetData();
-    //     }
-    //     else{
-    //         // Actions.searchScreen(params);
-    //         this.ShowHideActivityIndicator();
-    //         // this._onButtonPressed();
-    //     }    };
-
-    onCancelButtonPress = () => {
+      onCancelButtonPress = () => {
         Actions.alertScreen();
     };
 
@@ -416,35 +412,6 @@ export default class AddEventScreen extends Component {
                     // Toast.show("tickets " +c ,Toast.LONG);
                     addtests.push(currenttests);
                     AsyncStorage.setItem('newtest', JSON.stringify(addtests));
-
-                    // if(addtests.contain(this.state.date)){
-                    //     Alert.alert(
-                    //         'Date Already Exist',
-                    //         'Do you want update the details for '+ this.state.date , [{
-                    //             text: 'Cancel',
-                    //             onPress: () => {Snackbar.show({
-                    //                 title: 'Test details not added',
-                    //                 duration: Snackbar.LENGTH_SHORT,
-                    //             });
-                    //             }
-                    //         }, {
-                    //             text: 'OK',
-                    //             onPress: () =>{
-                    //                 addtests.update(currenttests);
-                    //                 AsyncStorage.setItem('tests', JSON.stringify(addtests));
-                    //             }
-                    //         }, ]
-                    //         , {
-                    //             cancelable: false
-                    //         }
-                    //     );
-                    // }
-                    // else{
-                    //     // addtests = tests ? JSON.parse(tests) : [];
-                    //     // Toast.show("tickets " +c ,Toast.LONG);
-                    //     addtests.push(currenttests);
-                    //     AsyncStorage.setItem('tests', JSON.stringify(addtests));
-                    // }
                 });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         }catch(error) {
@@ -468,30 +435,6 @@ export default class AddEventScreen extends Component {
                 catid: 1142,
                 catname: this.state.picked1,
             };
-
-        let data = [{
-            value: 'Monday',
-        }, {
-            value: 'Tuesday',
-        }, {
-            value: 'Wednesday',
-        }, {
-            value: 'Thursday',
-        }, {
-            value: 'Friday',
-        }, {
-            value: 'Saturday',
-        }, {
-            value: 'Sunday',
-        },
-        ];
-        let freqdata = [{
-            value: 'Daily',
-        }, {
-            value: 'Weekly',
-        }, {
-            value: 'Monthly',
-        }];
 
         return (
 
@@ -577,7 +520,7 @@ export default class AddEventScreen extends Component {
                                             {/*visible={this.state.pickervisible3}*/}
                                             {/*onSelect={this.onTestMedicineNameSelectpicker}*/}
                                             {/*onCancel={this.onTestMedicineNameCancelpicker}*/}
-                                            {/*options={optionsmedicinetype}*/}
+                                            {/*options={medicinetype}*/}
                                             {/*optionTextStyle={style={fontSize:16}}*/}
                                         {/*/>*/}
 
@@ -602,34 +545,68 @@ export default class AddEventScreen extends Component {
                                         />
                                         {(this.state.picked2==="Daily") &&
                                         <View style={{flexDirection: "row", width:200,marginTop:10}}>
+                                        <TouchableOpacity onPress={this._showTimePicker}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
-                                                        value={'8 AM'}
-                                                        editable={true}
-                                                        keyboardType='phone-pad'
+                                                        editable={false}
+                                                        value={this.state.timepicked}
+                                                        editable={false}
                                                         fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked: itemValue})}fontSize={16}
                                                         containerStyle={{width:60,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                         <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible}
+                                                            onConfirm={this._handleTimePicked}
+                                                            mode={'time'}
+                                                            onCancel={this._hideTimePicker}
+                                                            />
+                                            <TouchableOpacity onPress={this._showTimePicker1}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         keyboardType='phone-pad'
-                                                        value={"11 AM"}
-                                                        editable={true}
+                                                        value={this.state.timepicked1}
+                                                        editable={false}
                                                         fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked1: itemValue})}
                                                         containerStyle={{width:60,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                         <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible1}
+                                                            onConfirm={this._handleTimePicked1}
+                                                            mode={'time'}
+                                                            onCancel={this._hideTimePicker1}
+                                                            />
+                                            <TouchableOpacity onPress={this._showTimePicker2}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
-                                                        value={"4 PM"}
-                                                        keyboardType='phone-pad'
-                                                        editable={true}
+                                                        value={this.state.timepicked2}
+                                                        editable={false}
                                                         fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked2: itemValue})}
                                                         containerStyle={{width:60,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                         <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible2}
+                                                            onConfirm={this._handleTimePicked2}
+                                                            mode={'time'}
+                                                            onCancel={this._hideTimePicker2}
+                                                            />
+                                            <TouchableOpacity onPress={this._showTimePicker3}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
-                                                        value={"10 PM"}
-                                                        editable={true}
-                                                        keyboardType='phone-pad'
+                                                        value={this.state.timepicked3}
+                                                        editable={false}
                                                         fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked3: itemValue})}
                                                         containerStyle={{width:60,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                         <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible3}
+                                                            onConfirm={this._handleTimePicked3}
+                                                            mode={'time'}
+                                                            onCancel={this._hideTimePicker3}
+                                                            />
                                         </View>
                                         }
 
@@ -649,7 +626,7 @@ export default class AddEventScreen extends Component {
                                             overlayStyle={{position:'absolute',marginRight:220,marginTop:290}}
                                             inputContainerStyle={{ borderBottomColor: 'transparent' }}
                                             dropdownOffset={top= 0}
-                                            data={data}
+                                            data={weeklydata}
                                             // valueExtractor={({value})=> value}
                                             onChangeText={(value)=>{this.onChangeTextPress(value)}}
                                         />
