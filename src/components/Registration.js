@@ -51,6 +51,7 @@ export default class Registration extends Component {
             phone:null,
             username:null,
             countrycode:null,
+            usereditableflag:false,
             cca2,
             callingCode
             // cca2: "IN",
@@ -59,127 +60,97 @@ export default class Registration extends Component {
         this._onPress = this._onPress.bind(this);
     }
 
-    _onPress(){
-            // try {
-            //     AsyncStorage.setItem('userInfo')
-            //     .then((userInfo) => {
-            //         userInfo.name = this.state.name;
-            //         userInfo.mobile = this.state.phone;
-            //         userInfo.countrycode = this.state.callingCode;
-            //         userInfo.email = this.state.email;
-            //         userInfo.username = this.state.username;
-            //         userInfo.age = this.state.age;
-            //         userInfo.gender = this.state.gender;
-            //         userInfo.jwt = null;
-                    
-            //     }).done(() =>{
-            //         alert("calling inside fetch user");
-            //     });
-            // }
-            // catch(error)
-            // {
-            //     alert(error);
-            // }
-        
-    
-                fetch('https://smartmedi.blueravine.in/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-                    method: 'POST', // USE GET, POST, PUT,ETC
-                    headers: { //MODIFY HEADERS
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        //    application/x-www-form-urlencoded
-                    },
-                    body: JSON.stringify({mobile:this.state.phone,
-                                          countrycode:this.state.callingCode })
-                })
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        // alert(responseJson.message);
-                        
-                        if (responseJson.messagecode===1005){
-                            
-                          
-    
-                            fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/'+this.state.phone+'/AUTOGEN/Registration', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-                                method: 'GET', // USE GET, POST, PUT,ETC
-                                headers: { //MODIFY HEADERS
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json',
-                                    //    application/x-www-form-urlencoded
-                                },
-                                // body: JSON.stringify({mobile:this.state.phone})
-                            })
-                                .then((response) => response.json())
-                                .then((responseJson) => {
-                                    if (responseJson.Status === "Success") {
-                                        userdata.name = this.state.name;
-                                        userdata.mobile = this.state.phone;
-                                        userdata.countrycode = this.state.callingCode;
-                                        userdata.email = this.state.email;
-                                        userdata.username = this.state.username;
-                                        userdata.age = this.state.age;
-                                        userdata.gender = this.state.gender;
-                                        userdata.jwt = null;
-                                        AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
-                                        .then((userInfo) => {
-                                           
-                                            
-                                        }).done(() =>{
-                                            // alert("calling inside fetch user");
-                                            sessionid = responseJson.Details;
-    
-                                            // alert(this.state.callingCode);
-                                        Actions.otpScreen();
-                                        
-                                        });
-    
-                                        // sessionid = responseJson.Details;
-    
-                                       
-                                        // Actions.otpScreen();
-                                        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-    
-                                    }
-                                    else {
-                                        alert(responseJson.message);
-    
-                                    }
-    
-                                })
-                                .catch((error) => {
-                                    console.error(error);
-                                });
-                            
-                        }
-                        else  if(responseJson.messagecode===1007) {
 
-                            userdata.name = responseJson.User.name;
-                                    userdata.mobile = responseJson.User.mobile;
-                                    userdata.countrycode = responseJson.User.countrycode;
-                                    userdata.email = responseJson.User.email;
-                                    userdata.username = responseJson.User.username;
-                                    userdata.age = responseJson.User.age;
-                                    userdata.gender = responseJson.User.gender;
-                                    userdata.jwt = null;
-                            AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
-                                .then((userInfo) => {
-                                    
-                                }).done(() =>{
-                               
-                                    Actions.loginScreen();
-                                
-    
-                            });
-    
-                        }
-    
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-                    
-    
+    _onPress(){
+
+        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/'+this.state.phone+'/AUTOGEN/Registration', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'GET', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            // body: JSON.stringify({mobile:this.state.phone})
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.Status === "Success") {
+                    userdata.name = this.state.name;
+                    userdata.mobile = this.state.phone;
+                    userdata.countrycode = this.state.callingCode;
+                    userdata.email = this.state.email;
+                    userdata.username = this.state.username;
+                    userdata.age = this.state.age;
+                    userdata.gender = this.state.gender;
+                    userdata.jwt = null;
+            AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                    .then((userInfo) => {
+                        //do nothing
+                    }).done(() =>{
+                        // alert("calling inside fetch user");
+                        sessionid = responseJson.Details;
+                        Actions.otpScreen();
+                });
+            }
+            else {
+                alert(responseJson.message);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
+
+    _onPhoneEntered(){
+        fetch('https://smartmedi.blueravine.in/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({mobile:this.state.phone,
+                                  countrycode:this.state.callingCode })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                // alert(responseJson.message);
+                
+                if (responseJson.messagecode===1005){
+                    this.setState({usereditableflag: true});
+  
+                }
+                else  if(responseJson.messagecode===1007) {
+
+                    userdata.name = responseJson.User.name;
+                            userdata.mobile = responseJson.User.mobile;
+                            userdata.countrycode = responseJson.User.countrycode;
+                            userdata.email = responseJson.User.email;
+                            userdata.username = responseJson.User.username;
+                            userdata.age = responseJson.User.age;
+                            userdata.gender = responseJson.User.gender;
+                            userdata.jwt = null;
+                    AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                        .then((userInfo) => {
+                            
+                        }).done(() =>{
+                       
+                            Actions.loginScreen();
+                        
+
+                    });
+
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+            
+
+}
+
+
     render() {
      
         return(
@@ -193,12 +164,36 @@ export default class Registration extends Component {
                 </View>
                 <View style={[styles.headerviewhome]}>
             
-                    
+                <View style={styles.inputContainer}>
+            
+            <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+          
+            <View  style={styles.inputContainercountry}>
+            <CountryPicker
+            //   countryList={NORTH_AMERICA}
+              onChange={value => {
+                this.setState({ cca2: value.cca2, callingCode: value.callingCode })
+              }}
+              cca2={this.state.cca2}
+              translation="eng"
+            />
+           </View>
+              <TextInput style={styles.inputs}
+                  placeholder="Phone No"
+                  keyboardType="phone-pad"
+                  maxLength={10}
+                  onBlur={() => {this._onPhoneEntered()}}
+                  returnKeyType={"next"}
+                  value={this.state.phone}
+                  underlineColorAndroid='transparent'
+                  onChangeText={(phone) => this.setState({phone})}/>
+            </View> 
                 <View style={styles.inputContainer}>
                 <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Full Name"
+              editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.name}
@@ -211,58 +206,20 @@ export default class Registration extends Component {
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Username"
+              editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.username}
               underlineColorAndroid='transparent'
               onChangeText={(username) => this.setState({username})}/>
         </View>
-        {/* <View  style={styles.inputContainercountry}>
-        <CountryPicker
-        //   countryList={NORTH_AMERICA}
-          onChange={value => {
-            this.setState({ cca2: value.cca2, callingCode: value.callingCode })
-          }}
-          cca2={this.state.cca2}
-          translation="eng"
-        />
-       </View> */}
- <View style={styles.inputContainer}>
- {/* <TextInput style={styles.inputscountry}
-             placeholder="+91" 
-             editable={false}
-             selectTextOnFocus={false}
-              underlineColorAndroid='transparent'
-              /> */}
-            
-        <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
-      
-        <View  style={styles.inputContainercountry}>
-        <CountryPicker
-        //   countryList={NORTH_AMERICA}
-          onChange={value => {
-            this.setState({ cca2: value.cca2, callingCode: value.callingCode })
-          }}
-          cca2={this.state.cca2}
-          translation="eng"
-        />
-       </View>
-          <TextInput style={styles.inputs}
-              placeholder="Phone No"
-              keyboardType="phone-pad"
-              maxLength={10}
-              returnKeyType={"next"}
-              value={this.state.phone}
-              underlineColorAndroid='transparent'
-              onChangeText={(phone) => this.setState({phone})}/>
-        </View>
-
         <View style={styles.inputContainer}>
         <Icoon type='MaterialCommunityIcons' name='email-outline' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Email(optional)"
               keyboardType="email-address"
+              editable={this.state.usereditableflag}
               returnKeyType={"next"}
               value={this.state.email}
               underlineColorAndroid='transparent'
@@ -274,6 +231,7 @@ export default class Registration extends Component {
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Gender"
+              editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.gender}
@@ -286,6 +244,7 @@ export default class Registration extends Component {
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Age"
+              editable={this.state.usereditableflag}
               keyboardType="phone-pad"
               returnKeyType={"done"}
               value={this.state.age}

@@ -371,7 +371,7 @@ export default class TrendScreen extends Component {
             activeTab: 'reports',
             active: 'false',
             pickervisible1: false,
-            selectedtestname:'',
+            selectedtestname:this.props.testname?this.props.testname:'',
             testrange:'',
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -520,9 +520,11 @@ export default class TrendScreen extends Component {
 
                 trentestresultname.push(eachname);
                 }); //forEach
-                this.setState({selectedtestname: this.props.testname ? this.props.testname
-                                                                     : (trentestresultname.length ? trentestresultname[0].key : '')
-                              });
+
+                if(trentestresultname.length){
+                this.setState({selectedtestname: trentestresultname[0].key});
+                }
+                              
 
             }
 
@@ -695,7 +697,7 @@ export default class TrendScreen extends Component {
                             <Card style={{width:300,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                                 borderTopLeftRadius:10,borderLeftWidth:10}}>
 
-                                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:15}}>
+                                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:10}}>
 
                             {/* <TouchableOpacity onPress={this.onTrendTestNameShowpicker}> */}
                             <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>{this.state.selectedtestname}</Text>
@@ -709,30 +711,24 @@ export default class TrendScreen extends Component {
                             />
                         </View>
                         <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
-
-
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
                             {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
-
-
-
-
                         </View>
 
                         {renderTrendCard}
                         
-                        <View style={{marginTop:20,flexDirection:'row'}}>
+                        <View style={{marginTop:2,flexDirection:'row'}}>
                         <Text style={{textAlign:'center'}}>Click </Text>
                         <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
                             <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>here</Text>
                             </TouchableOpacity>
                             <Text style={{textAlign:'center'}}> to search by test name</Text>
                         </View>
-                        <View style={{marginTop:50}}>
+                        <View >
                         <PureChart
                             width={100}
-                            height={100}
+                            height={80}
                             data={trendchartdata.reverse()}
                             type='line' />
                         </View>

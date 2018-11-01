@@ -26,12 +26,21 @@ export default class Login extends Component {
     constructor(props) {
         super(props);
          this.state = {
+             loading:false,
             password: '',
             phone:'',
         };
 this._onVerifyPassword = this._onVerifyPassword.bind(this);
     }
+    ShowHideActivityIndicator = () =>{
 
+        this.setState({loading: true});
+        setTimeout(() => {
+            this._onVerifyPassword()
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 2000)
+        // this.setState({loading: false})
+    };
     _onVerifyPassword(){
        fetch('https://smartmedi.blueravine.in/user/login', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'POST', // USE GET, POST, PUT,ETC
@@ -42,7 +51,7 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
     },
     body: JSON.stringify({mobile:userdata.mobile,
                           countrycode:userdata.countrycode,  
-                          password: userdata.password,
+                          password: this.state.password,
                           jwtaudience:'SmartMedi'})
 })
     .then((response) => response.json())
@@ -131,7 +140,10 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this._onVerifyPassword}>
+<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={
+    this._onVerifyPassword
+    // this.ShowHideActivityIndicator
+}>
           <Text style={styles.signUpText}>Login</Text>
         </TouchableHighlight>
 
