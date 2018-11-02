@@ -672,7 +672,7 @@ export default class TrendScreen extends Component {
                 </View>
 
                 <View style={[styles.headerview]}>
-
+                <ScrollView ref={ (c) => {this.scroll = c}} >
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <TouchableOpacity style={{marginTop:10}}
@@ -689,14 +689,16 @@ export default class TrendScreen extends Component {
                             <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeLeft(this.state.selectedtestname)}>
                                 <Icons type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
                             </TouchableOpacity>
-                        <GestureRecognizer
+                        {/* <GestureRecognizer
                             onSwipeLeft={() => this.onSwipeLeft(this.state.selectedtestname)}
                             onSwipeRight={() => this.onSwipeRight(this.state.selectedtestname)}
-                        >
+                        > */}
 
-                            <Card style={{width:300,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
-
+                            <View style={{width:300}}>
+                            <GestureRecognizer
+                            onSwipeLeft={() => this.onSwipeLeft(this.state.selectedtestname)}
+                            onSwipeRight={() => this.onSwipeRight(this.state.selectedtestname)}>
+                            <Card>
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:10}}>
 
                             {/* <TouchableOpacity onPress={this.onTrendTestNameShowpicker}> */}
@@ -717,28 +719,28 @@ export default class TrendScreen extends Component {
                         </View>
 
                         {renderTrendCard}
-                        
-                        <View style={{marginTop:2,flexDirection:'row'}}>
+                        </Card>
+                        </GestureRecognizer>
+                        <View style={{marginTop:2,flexDirection:'row',justifyContent:'center'}}>
                         <Text style={{textAlign:'center'}}>Click </Text>
                         <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
                             <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>here</Text>
                             </TouchableOpacity>
                             <Text style={{textAlign:'center'}}> to search by test name</Text>
                         </View>
-                        <View >
+                       
+                        <Card style={{marginBottom:90}}>
                         <PureChart
                             width={100}
                             height={80}
                             data={trendchartdata.reverse()}
                             type='line' />
-                        </View>
-                        {/*<LineChart style={styles.chart}*/}
-                                   {/*data={{dataSets:[{label: "demo", values: [{y: 1}, {y: 2}, {y: 1}]}]}}*/}
-                        {/*/>*/}
-
                             </Card>
+                      
 
-                        </GestureRecognizer>
+                            </View>
+
+                        {/* </GestureRecognizer> */}
                             <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeRight(this.state.selectedtestname)}>
                                 <Icons type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
                             </TouchableOpacity>
@@ -746,7 +748,7 @@ export default class TrendScreen extends Component {
 
                     {/*</Card>*/}
 
-
+</ScrollView>
 
 
                 </View>
