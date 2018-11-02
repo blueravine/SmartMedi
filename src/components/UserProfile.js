@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image,StyleSheet,TouchableHighlight,TouchableOpacity,ImageBackground,BackHandler,TextInput,PixelRatio,
+import { Image,StyleSheet,TouchableHighlight,TouchableOpacity,ImageBackground,AsyncStorage,BackHandler,TextInput,PixelRatio,
     Dimensions,ScrollView,Alert} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail,Picker,DeckSwiper, Text,Item,Input,View,Fab, Button, Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -17,6 +17,7 @@ import BottomNavigation, {
 import { TextField } from 'react-native-material-textfield';
 import ImagePicker from 'react-native-image-picker';
 var params;
+import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/Entypo';
 import Icoons from 'react-native-vector-icons/SimpleLineIcons';
@@ -26,6 +27,9 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 const MARGIN = 40;
+var testtdetail;
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var testarray=[];
 // import { BottomNavigation } from 'react-native-material-ui';
 // var Accordion = require('react-native-accordion');
 const card      = {card: {width: 100,height:300,borderWidth: 3,
@@ -49,16 +53,18 @@ export default class UserProfile extends Component {
 
         this.state= {
             activeTab: 'profile',
-            avatarSource: null
+            avatarSource: null,
+            name: '',
+            email   : '',
+            gender: '',
+            phone:'',
+            username:'',
+            countrycode:'',
+            headername:' User Profile',
+            ageofuser:''
         };
 
-        // this._renderHeader = this._renderHeader.bind(this);
-        // this._renderContent=this._renderContent.bind(this)
     }
-
-    // state = {
-    //     activeTab: 'home'
-    // };
 
     tabs = [
         {
@@ -119,7 +125,9 @@ export default class UserProfile extends Component {
             default:
 
         }
-    };
+    }
+
+
     renderTab = ({ tab, isActive }) => (
         <ShiftingTab
             isActive={isActive}
@@ -129,150 +137,152 @@ export default class UserProfile extends Component {
         />
     )
 
-    // _renderHeader(section) {
-    //     return (
-    //         <View style={styles.headermoretitle}>
-    //
-    //             {(section.title === 'Profile') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5,marginBottom:10}}>
-    //                 <View style={{marginLeft:10}}>
-    //                     <Iccons type='FontAwesome' name={'user-circle'} size={20} color={'#2eacde'}/>
-    //                 </View>
-    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
-    //             </View>
-    //             }
-    //             {(section.title === 'Settings (App Version 0.01)') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
-    //                 <View style={{marginLeft:10}}>
-    //                     <Icoons type='SimpleLineIcons' name={'settings'} size={20} color={'#2eacde'} />
-    //                 </View>
-    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
-    //             </View>
-    //             }
-    //
-    //             {(section.title === 'Help and Feedback') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start',marginTop:5,marginBottom:10}}>
-    //                 <View style={{marginLeft:10}}>
-    //                     <Icon type='MaterialIcons' name={'help-outline'} size={20} color={'#2eacde'} />
-    //                 </View>
-    //                 <Text style={{marginLeft:10}}>{section.title}</Text>
-    //             </View>
-    //             }
-    //
-    //         </View>
-    //     );
-    // }
+   async _EditUserInformation() {
 
-    // _renderContent(section) {
-    //     return (
-    //         <View style={styles.contentmore}>
-    //
-    //             {(section.title === 'Profile') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start', marginTop:5}}>
-    //                 <Text>{section.content}</Text>
-    //
-    //             </View>
-    //             }
-    //             {(section.title === 'Settings (App Version 0.01)') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
-    //                 <Text>{section.content}</Text>
-    //             </View>
-    //             }
-    //
-    //             {(section.title === 'Help and Feedback') &&
-    //             <View style={{flexDirection: "row", justifyContent: 'flex-start'}}>
-    //                 <Text>{section.content}</Text>
-    //             </View>
-    //             }
-    //
-    //         </View>
-    //     );
-    // }
+    // alert('testing...');
+    fetch('https://smartmedi.blueravine.in/user/update/mobile',
+     { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+    method: 'POST', // USE GET, POST, PUT,ETC
+    headers: { //MODIFY HEADERS
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization':'Bearer '+userdata.jwt,
+        'mobile':userdata.mobile,
+        'countrycode':userdata.countrycode,
+        'jwtaudience':'SmartMedi'
+        //    application/x-www-form-urlencoded
+    },
+    body: JSON.stringify({  "name": this.state.name,
+                            "mobile": this.state.phone,
+                            "countrycode": this.state.countrycode,
+                            "email": this.state.email,
+                            "username": this.state.username,
+                            "age": this.state.ageofuser,
+                            "gender": this.state.gender })
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
 
-    componentDidMount() {
+    if (responseJson.messagecode===1008) {
+        userdata.name = responseJson.User.name;
+        userdata.age = responseJson.User.age;
+        userdata.email = responseJson.User.email;
+        userdata.gender = responseJson.User.gender;
+        alert(JSON.stringify(userdata));
+        AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+            .then((userInfo) => {
+                //do nothing
+            }).done(); //done
+    }
+    else {
+        //###Need to handle error in retrieving test results from server
+    }
+    }).catch((error) => {
+        alert(error);
+    });
+   }
+
+   async componentDidMount() {
+    await AsyncStorage.getItem('userInfo')
+    .then((userInfo) => {
+        // alert(userInfo);
+        let tempuserdata = userdata;
+        let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+        userdata.name = jsonuserinfo.name;
+        userdata.mobile = jsonuserinfo.mobile;
+        this.setState({phone : jsonuserinfo.mobile,
+            username : jsonuserinfo.username,
+            name : jsonuserinfo.name,
+            countrycode : jsonuserinfo.countrycode,
+            ageofuser : jsonuserinfo.age,
+            gender : jsonuserinfo.gender,
+            email : jsonuserinfo.email});
+        userdata.countrycode = jsonuserinfo.countrycode;
+        userdata.email = jsonuserinfo.email;
+        userdata.username = jsonuserinfo.username;
+        userdata.age = jsonuserinfo.age;
+        userdata.gender = jsonuserinfo.gender;
+        userdata.jwt = jsonuserinfo.jwt;
+    }).done(() => {
+        // alert(JSON.stringify(userdata.jwt));
+    });
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
+
     handleBackButton = () => {
-        Actions.homeScreen(params);
-        // Alert.alert(
-        //     'Exit App',
-        //     'Exiting the application?', [{
-        //         text: 'Cancel',
-        //         onPress: () => console.log('Cancel Pressed'),
-        //         style: 'cancel'
-        //     }, {
-        //         text: 'OK',
-        //         onPress: () => BackHandler.exitApp()
-        //     }, ]
-        //     , {
-        //         cancelable: false
-        //     }
-        // );
+        Actions.homeScreen();
         return true;
-    };
+    }
+    
+    _validateemail = (emailtext) => {
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
 
-    // selectPhotoTapped() {
-    //     const options = {
-    //         quality: 1.0,
-    //         maxWidth: 500,
-    //         maxHeight: 500,
-    //         storageOptions: {
-    //             skipBackup: true
-    //         }
-    //     };
-    //
-    //     ImagePicker.showImagePicker(options, (response) => {
-    //         console.log('Response = ', response);
-    //
-    //         if (response.didCancel) {
-    //             console.log('User cancelled photo picker');
-    //         }
-    //         else if (response.error) {
-    //             console.log('ImagePicker Error: ', response.error);
-    //         }
-    //         else if (response.customButton) {
-    //             console.log('User tapped custom button: ', response.customButton);
-    //         }
-    //         else {
-    //             let source = { uri: response.uri };
-    //
-    //             // You can also display the image using data:
-    //             // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-    //
-    //             this.setState({
-    //                 avatarSource: source
-    //             });
-    //         }
-    //     });
-    // }
+        if(reg.test(emailtext) === false)
+        {
+            alert("Please enter a valid email.");
+            this.setState({email:emailtext})
+            return false;
+         }
+        else {
+            this.setState({email:emailtext})
+        }
+    }
 
-    onAddButtonPress = () => {
-        // if(this.state.picked1===0){
-            // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+
+    ShowHideActivityIndicator = () =>{
+
+        this.setState({loading: true});
+        setTimeout(() => {
+            this._EditUserInformation();
+            Actions.homeScreen();
             Snackbar.show({
-                title: 'User profile Updated',
+                title: 'User Updated  succesfully',
                 duration: Snackbar.LENGTH_SHORT,
             });
-            Actions.profileScreen();
-        // }
-        // else if(this.state.picked2===0){
-        //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-        //     Snackbar.show({
-        //         title: 'TestType cannot be empty!',
-        //         duration: Snackbar.LENGTH_SHORT,
-        //     });
-        //     this.resetData();
-        // }
-        // else{
-        //     // Actions.searchScreen(params);
-        //     this.ShowHideActivityIndicator();
-        //     // this._onButtonPressed();
-        // }
-         };
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 2000)
+        // this.setState({loading: false})
+    };
+
+//    async onAddButtonPress(){
+//         fetch('https://smartmedi.blueravine.in/user/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+//         method: 'POST', // USE GET, POST, PUT,ETC
+//         headers: { //MODIFY HEADERS
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json',
+//             'Authorization':'Bearer '+userdata.jwt,
+//             'mobile':userdata.mobile,
+//             'countrycode':userdata.countrycode,
+//             'jwtaudience':'SmartMedi'
+//             //    application/x-www-form-urlencoded
+//         },
+//         // body: JSON.stringify({mobile:userdata.mobile,
+//         //     jwtaudience:'SmarTran'  })
+//         }) //fetch
+//         .then((response) => response.json())
+//         .then((responseJson) => {
+
+//         if (responseJson.messagecode===1008) {
+//             userdata = responseJson.User;
+//             AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+//                 .then((userInfo) => {
+                    
+//                 }).done(() =>{
+//                 alert('user update invoked');
+//                                     }); //done
+//         }
+//         else {
+//             //###Need to handle error in retrieving test results from server
+//         }
+//         }).catch((error) => {
+//             alert(error);
+//         });
+        
+//          };
 
     render() {
 
@@ -285,13 +295,13 @@ export default class UserProfile extends Component {
                     <ScrollView ref={ (c) => {this.scroll = c}} >
                         {/*<Container style={[styles.headerview]}>*/}
                         {/*<Content>*/}
-                        <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
-                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add User Info</Text>
-
+                        <View style={{flexDirection:"row",justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
+                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  {this.state.headername}</Text>
+                            
                         </View>
-
+                            {/* onPress={this.onAddButtonPress()} */}
                         {/*<Card style={{height:500}}>*/}
-                        <Card style={{height:400, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                        <Card style={{height:500, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
                             {/*<View style={[styles.halfHeight,{paddingLeft:25,paddingRight:25}]} >*/}
                                 {/*<View style={[{backgroundColor: '#FFFFFF',flex:1}]}>*/}
@@ -300,6 +310,15 @@ export default class UserProfile extends Component {
                             <View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>
                                 <Iconns type='FontAwesome' name='user-circle' size={30} color="grey"/>
                                 <Text note style={{fontSize:18,textAlign:'left',color:'#000'}} > User Information  </Text>
+                                <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            onPress={this.ShowHideActivityIndicator}>
+                            {/* <Icon type='MaterialIcons' name='done' size={25} color="#de68cd"/> */}
+                            <Text>ADD</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}>
+                            {/* <Icon type='MaterialIcons' name='edit' size={25} color="#de68cd"/> */}
+                            <Text>EDIT</Text>
+                            </TouchableOpacity>
                                 {/*<Button  style={{height: 25,width:width-280,backgroundColor: '#FFFFFF',marginTop:10,borderColor:'#f1f1f1f1', borderRadius:20,*/}
                                     {/*borderWidth:1}}>*/}
                                     {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*/}
@@ -319,8 +338,8 @@ export default class UserProfile extends Component {
                                     <TextField label="Phone No"
                                                lineHeight={30}
                                                keyboardType='phone-pad'
-                                        // value={this.state.picked2}
-                                               editable={true}
+                                               value={"+"+this.state.countrycode+this.state.phone}
+                                               editable={false}
                                                fontSize={16}
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
@@ -328,47 +347,62 @@ export default class UserProfile extends Component {
 
                                     <TextField label="Name"
                                                lineHeight={30}
-                                        // value={this.state.picked2}
+                                        value={this.state.name}
                                                editable={true}
                                                fontSize={16}
-                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                        onChangeText={(itemValue) => this.setState({name: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                 {/*</View>*/}
+                                <TextField label="Email"
+                                               lineHeight={30}
+                                        value={this.state.email}
+                                               editable={true}
+                                               fontSize={16}
+                                        onChangeText={(itemValue) => this.setState({email: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
+                                    <TextField label="Username"
+                                               lineHeight={30}
+                                        value={this.state.username}
+                                               editable={false}
+                                               fontSize={16}
+                                        onChangeText={(itemValue) => this.setState({username: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                         <TextField label="Age"
                                                    lineHeight={30}
-                                            // value={this.state.picked2}
+                                            value={this.state.ageofuser.toString()}
                                                    editable={true}
+                                                   keyboardType='phone-pad'
                                                    fontSize={16}
-                                            // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                            onChangeText={(itemValue) => this.setState({ageofuser: itemValue})}
                                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
 
                                     <TextField label="Gender"
                                                lineHeight={30}
-                                        // value={this.state.picked2}
+                                        value={this.state.gender}
                                                editable={true}
                                                fontSize={16}
                                                returnKeyType={"done"}
-                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                        onChangeText={(itemValue) => this.setState({gender: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                             </View>
 
-                            <Fab
+                            {/* <Fab
                                 // active={this.state.active}
                                 // active={!this.state.active}
                                 direction="up"
                                 containerStyle={{position:'absolute'}}
                                 style={{ backgroundColor: '#071398' }}
-                                position="bottomRight"
-                                onPress={this.onAddButtonPress}>
-                                <Icon type='MaterialIcons' name='done' size={30} color="#FFFFFF"/>
+                                position="topRight"
+                                onPress={this.onAddButtonPress()}>
+                                <Icon type='MaterialIcons' name='done' size={15} color="#FFFFFF"/>
                             </Fab>
 
                             <Fab
@@ -377,10 +411,10 @@ export default class UserProfile extends Component {
                                 direction="up"
                                 containerStyle={{position:'absolute',marginLeft:150}}
                                 style={{ backgroundColor: '#ff0f20' }}
-                                position="bottomLeft"
+                                position="topLeft"
                                 onPress={this.onCancelButtonPress}>
-                                <Icon type='MaterialIcons' name='edit' size={30} color="#FFFFFF"/>
-                            </Fab>
+                                <Icon type='MaterialIcons' name='edit' size={15} color="#FFFFFF"/>
+                            </Fab> */}
                         </Card>
                         {/*</Card>*/}
 

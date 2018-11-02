@@ -778,25 +778,25 @@ export default class Home extends Component {
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <View style={{flexDirection:'row' ,justifyContent:'space-evenly',marginBottom:15}}>
+                <View style={{flexDirection:'row',marginBottom:15}}>
                     <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
-                        <Text style={{marginBottom:5,textAlign:'left'}}>{currentResult.testname}</Text></TouchableOpacity>
+                        <Text style={{marginBottom:5,textAlign:'left',marginLeft:5, justifyContent:'flex-start',flex:2,paddingRight:60}}>{currentResult.testname}</Text></TouchableOpacity>
                     {(currentResult.result==="high") &&
-                    <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}> {currentResult.value}</Text>
+                    <Text style={{textAlign:'center',color:'#F80617',marginBottom:5,justifyContent:'center',flex:1}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="normal") &&
-                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}> {currentResult.value}</Text>
+                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold',justifyContent:'center',flex:1}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="between") &&
-                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentResult.value}</Text>
+                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5,fontWeight:'bold',justifyContent:'center',flex:1}}>{currentResult.value}</Text>
                     }
                     {/*<Text>{currentResult.value}</Text>*/}
                     {(currentResult.normalcomparator === "lessthan") &&
-                    <Text style={{marginBottom: 5,textAlign:'right'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
+                    <Text style={{marginBottom: 5,textAlign:'right',marginRight:5,justifyContent:'flex-start',flex:3}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
                     }
                     {(currentResult.normalcomparator === "between") &&
-                    <Text style={{marginBottom: 5,textAlign:'right'}}> {currentResult.normalmin}-{currentResult.normalmax} </Text>
+                    <Text style={{marginBottom: 5,textAlign:'right',marginRight:5,justifyContent:'flex-start',flex:3}}> {currentResult.normalmin}-{currentResult.normalmax} </Text>
                     }
                 </View>);
         });
@@ -816,6 +816,10 @@ export default class Home extends Component {
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome {userdata.name}</Text>
 
+                        {/* <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                                         onPress={this.getusertestdata()}>
+                            <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
+                        </TouchableOpacity> */}
                         
                         <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onTestNameShowpicker}>
@@ -844,8 +848,7 @@ export default class Home extends Component {
                             onSwipeLeft={() => this.onSwipeLeft(this.state.selectedDate)}
                             onSwipeRight={() => this.onSwipeRight(this.state.selectedDate)}
                         >
-                            <Card style={{width:300,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                                borderTopLeftRadius:10,borderLeftWidth:10}}>
+                            <Card style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
                                 <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>

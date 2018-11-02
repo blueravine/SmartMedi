@@ -401,7 +401,7 @@ export default class AddTestData extends Component {
                     testdata = responseJson.TestResult.slice();
                     AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
                         .then((usertestInfo) => {
-                            alert(usertestInfo);                            
+                            // alert(usertestInfo);                            
                         }).done(() =>{
 
                             }); //done close

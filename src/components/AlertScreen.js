@@ -465,11 +465,8 @@ export default class AlertScreen extends Component{
                 
                             medsfrequecy.push(eachfreq);
                     }); //forEach
-                    // this.setState({selectedmedicinefrequency: medsfrequecy.length ? medsfrequecy[0].key : ''});
-               
-                    // if(medsfrequecy.length){ this.filterByMedfreq(medsfrequecy[0].key)}
                 
-                                    }); //done
+                }); //done
         }
         else {
             //###Need to handle error in retrieving test results from server
@@ -495,9 +492,6 @@ export default class AlertScreen extends Component{
     
                 medsfrequecy.push(eachfreq);
         }); //forEach
-        // this.setState({selectedmedicinefrequency: medsfrequecy.length ? medsfrequecy[0].key : ''});
-   
-        // if(medsfrequecy.length){ this.filterByMedfreq(medsfrequecy[0].key)}
     
           }
 
@@ -565,10 +559,12 @@ export default class AlertScreen extends Component{
     };
 
     filterByMedfreq(newfrequency){
-        if(!this.state.selectedmedicinefrequency){
+        if(!newfrequency){
+            this.setState({selectedmedicinefrequency: newfrequency});
             this.setState( {filteredTestResult: medicinetypes.slice() });
         }
         else {
+            this.setState({selectedmedicinefrequency: newfrequency});
             this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
                 {return testresult.medfrequency === newfrequency}) });
         }
@@ -651,7 +647,7 @@ export default class AlertScreen extends Component{
     // };
     render() {
 
-
+        // this.filterByMedfreq(this.state.selectedmedicinefrequency);
 
         testtdetail = {};
         testtdetail = {
@@ -712,7 +708,7 @@ export default class AlertScreen extends Component{
                     <ScrollView>
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome James</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Alerts</Text>
 
                         {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
