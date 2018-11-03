@@ -701,9 +701,9 @@ export default class TrendScreen extends Component {
                             <Card>
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:10}}>
 
-                            {/* <TouchableOpacity onPress={this.onTrendTestNameShowpicker}> */}
-                            <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>{this.state.selectedtestname}</Text>
-                            {/* </TouchableOpacity> */}
+                            <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
+                            <Text style={{textAlign:'center',color:'#000',textsize:12,paddingLeft:5,paddingRight:5, borderRadius:30,borderColor:'#0A68FF',borderWidth:1}}>{this.state.selectedtestname.toString().toUpperCase()}</Text>
+                            </TouchableOpacity>
                             <ModalFilterPicker
                                 visible={this.state.pickervisible1}
                                 onSelect={this.onTrendTestNameSelectpicker}
@@ -713,8 +713,8 @@ export default class TrendScreen extends Component {
                             />
                         </View>
                         <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Test Date</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Actual</Text>
                             {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
                         </View>
 

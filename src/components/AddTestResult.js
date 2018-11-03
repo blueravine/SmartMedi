@@ -462,18 +462,6 @@ export default class AddTestData extends Component {
 
                     <Card style={{ height:500,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                         borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                        <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                        <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
-
-                            <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                <Image source={require('../Images/calendar_icon.png')} style={{height: 25, width: 25,marginLeft:18}}
-                                />
-                            </TouchableOpacity>
-                            <Text note style={{fontSize:20,color:'#000'}}
-                                  onPress={this._showDateTimePicker}> {
-                                Moment(this.state.date).format('DD MMM YYYY')} </Text>
-                        </View>
-                        </TouchableOpacity>
                         <View style={{flexDirection:"row",justifyContent:'flex-start'}}>
                             <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
                                 <DateTimePicker
@@ -492,38 +480,19 @@ export default class AddTestData extends Component {
                         </View>
 
                         <View style={{flexDirection:"row",marginTop:10}}>
-                            {/*<View style={{flexDirection:"column",justifyContent:'space-evenly',marginLeft: 15}}>*/}
-                                {/*/!*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}>*!/*/}
-                                {/*<Image source={require('../Images/from_icon.png')}*/}
-                                       {/*style={{width: 25, height: 35, paddingLeft: 5}}/>*/}
-                                {/*<Image source={require('../Images/to_icon.png')}*/}
-                                       {/*style={{width: 25, height: 35, paddingLeft: 5}}/>*/}
-
-                            {/*</View>*/}
+                          
                             <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-                                <View style={{flexDirection: 'row', alignItems: 'center',marginBottom:20}}>
+                            <TouchableOpacity onPress={this._showDateTimePicker} style={{width:280,justifyContent:'flex-end'}}>
+                               
+                               <TextField  label="Test taken Date"
+                                                       lineHeight={30}
+                                                       value={Moment(this.state.date).format('DD MMM YYYY')}
+                                                       editable={false}
+                                                       fontSize={16}
+                                                       onChangeText={(itemValue) => this.setState({date: itemValue})}
+                                                       containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                    {/* <TouchableOpacity style={{width:280,justifyContent:'flex-end',flex:8}}
-                                                      onPress={this.onTestTypeShowpicker}>
-                                    
-                                        <TextField label="Select Test Category"
-                                                   lineHeight={30}
-                                                   value={this.state.picked1}
-                                                   fontSize={16}
-                                                   editable={false}
-                                           
-                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}
-                                        />
-                                    </TouchableOpacity>
-                                    <ModalFilterPicker
-                                        visible={this.state.pickervisible1}
-                                        onSelect={this.onTestTypeSelectpicker}
-                                        onCancel={this.onTestTypeCancelpicker}
-                                        options={tests}
-                                        optionTextStyle={style={fontSize:16}}
-                                    /> */}
-
-                                </View>
+                           </TouchableOpacity>
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                    onPress={this.onTestNameShowpicker}>
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
@@ -624,99 +593,14 @@ export default class AddTestData extends Component {
                             <Iccon type='Entypo' name='cross' size={30} color="#FFFFFF"/>
                         </Fab>
 
-                        {/*<TouchableOpacity onPress={this._showDateTimePicker}>*/}
-                            {/*<View style={{flexDirection:"row",justifyContent:'space-evenly'}}*/}
-                                  {/*onPress={this._showDateTimePicker}>*/}
-
-                                {/*<Text note style={{fontSize:25,color:'#000',marginLeft:15}} onPress={this._showDateTimePicker}> {*/}
-                                    {/*Moment(this.state.date).format('DD')} </Text>*/}
-
-                                {/*<View style={{flexDirection:"column",justifyContent:'space-evenly'}}*/}
-                                      {/*onPress={this._showDateTimePicker}>*/}
-                                    {/*/!*<Text note style={{fontSize:10,color:'#000'}}*!/*/}
-                                    {/*/!*onPress={this._showDateTimePicker}> {*!/*/}
-                                    {/*/!*Moment(this.state.date).format('ddd')} </Text>*!/*/}
-                                    {/*<Text note style={{fontSize:25,color:'#000'}}*/}
-                                          {/*onPress={this._showDateTimePicker}> {*/}
-                                        {/*Moment(this.state.date).format('MMM')} </Text>*/}
-                                {/*</View>*/}
-                                {/*/!*<Text note style={{fontSize:16,color:'#2eacde',textAlign:'center',fontWeight:'bold'}} > {*!/*/}
-                                {/*/!*Moment(this.state.date).format('h:mm A')} </Text>*!/*/}
-                                {/*<Text note style={{fontSize:25,color:'#000',marginLeft:98,justifyContent: 'flex-end'}}*/}
-                                      {/*onPress={this._showDateTimePicker}> {*/}
-                                    {/*Moment(this.state.date).format('dddd')} </Text>*/}
-                            {/*</View>*/}
-                        {/*</TouchableOpacity>*/}
-
-
-
-
-                        {/*<Button  rounded={} style={{height:60,width:width-10,backgroundColor: '#4d6bcb',*/}
-                            {/*marginTop:10,justifyContent:'space-evenly'}}*/}
-                                {/*onPress={() => {*/}
-                                    {/*if(this.state.picked1===0){*/}
-                                        {/*// Toast.show(" From or To Location cannot be empty! ",Toast.LONG);*/}
-                                        {/*Snackbar.show({*/}
-                                            {/*title: 'TestType cannot be empty!',*/}
-                                            {/*duration: Snackbar.LENGTH_SHORT,*/}
-                                        {/*});*/}
-                                    {/*}*/}
-                                    {/*else if(this.state.picked2===0){*/}
-                                        {/*// Toast.show(" From and To Location cannot be same! ",Toast.LONG);*/}
-                                        {/*Snackbar.show({*/}
-                                            {/*title: 'TestType cannot be empty!',*/}
-                                            {/*duration: Snackbar.LENGTH_SHORT,*/}
-                                        {/*});*/}
-                                        {/*this.resetData();*/}
-                                    {/*}*/}
-                                    {/*else{*/}
-                                        {/*// Actions.searchScreen(params);*/}
-                                        {/*this.ShowHideActivityIndicator();*/}
-                                        {/*// this._onButtonPressed();*/}
-                                    {/*}}}>*/}
-                            {/*<View style={{flexDirection:"row",justifyContent:'space-evenly'}}>*/}
-                                {/*<Image source={require('../Images/search_magnifie.png')} style = {{ width: 20,*/}
-                                    {/*height: 20,alignItems:'center'}}/>*/}
-                                {/*<Text style={{fontSize:20,color:'#FFFFFF'*/}
-                                    {/*,textAlign:'center',paddingLeft:10}}>Search</Text>*/}
-                            {/*</View>*/}
-                        {/*</Button>*/}
-
+                 
                     </Card>
                     </Card>
                     </ScrollView>
-                    {/*{*/}
-                        {/*// Here the ? Question Mark represent the ternary operator.*/}
-                        {/*//style={{backgroundColor:'#FFFFFF',width:width-220}}*/}
-                        {/*this.state.loading ?  <ActivityIndicator color = '#2eacde'*/}
-                                                                 {/*size = "large" style={{padding: 20}} /> : null*/}
-                    {/*}*/}
-
-
+                   
                 </View>
-                {/*<Fab*/}
-                    {/*// active={this.state.active}*/}
-                    {/*// active={!this.state.active}*/}
-                    {/*direction="bottom"*/}
-                    {/*containerStyle={{position:'absolute',bottom:60}}*/}
-                    {/*style={{ backgroundColor: '#071398' }}*/}
-                    {/*position="bottomRight"*/}
-                    {/*onPress={this.onAddButtonPress}>*/}
-                    {/*<Icon type='MaterialIcons' name='done' size={30} color="#FFFFFF"/>*/}
-                {/*</Fab>*/}
-
-                {/*<Fab*/}
-                    {/*// active={this.state.active}*/}
-                    {/*// active={!this.state.active}*/}
-                    {/*direction="up"*/}
-                    {/*containerStyle={{position:'absolute',bottom:60,marginLeft:50}}*/}
-                    {/*style={{ backgroundColor: '#ff0f20' }}*/}
-                    {/*position="bottomLeft"*/}
-                    {/*onPress={this.onCancelButtonPress}>*/}
-                    {/*<Iccon type='Entypo' name='cross' size={30} color="#FFFFFF"/>*/}
-                {/*</Fab>*/}
-
-                <View style={[styles.footer]}>
+               
+                {/* <View style={[styles.footer]}>
                     <BottomNavigation
                         tabs={this.tabs}
                         activeTab={this.state.activeTab}
@@ -725,7 +609,7 @@ export default class AddTestData extends Component {
                         // useLayoutAnimation
                     />
 
-                </View>
+                </View> */}
             </View>
 
         );

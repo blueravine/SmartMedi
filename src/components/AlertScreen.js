@@ -705,7 +705,7 @@ export default class AlertScreen extends Component{
                     {/* <View>
                         <DropdownAlert ref={ref => this.dropdown = ref} />
                     </View> */}
-                    <ScrollView>
+                    <ScrollView ref={ (c) => {this.scroll = c}}>
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Alerts</Text>
