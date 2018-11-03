@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Navigator,
-    Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, Alert,AsyncStorage,
+    Platform, StyleSheet, View, Text,text,TextInput, Image,ActivityIndicator, TouchableOpacity, Alert,AsyncStorage,
     AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,
     Easing,BackHandler,
 } from 'react-native';
@@ -52,6 +52,7 @@ export default class Registration extends Component {
             username:null,
             countrycode:null,
             usereditableflag:false,
+            uservisibiltyflag:false,
             cca2,
             callingCode
             // cca2: "IN",
@@ -60,6 +61,15 @@ export default class Registration extends Component {
         this._onPress = this._onPress.bind(this);
     }
 
+    ShowHideActivityIndicator = () =>{
+
+        this.setState({loading: true});
+                setTimeout(() => {
+            this._onPress();
+                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 2000)
+            // this.setState({loading: false})
+    };
 
     _onPress(){
 
@@ -117,7 +127,7 @@ export default class Registration extends Component {
                 // alert(responseJson.message);
                 
                 if (responseJson.messagecode===1005){
-                    this.setState({usereditableflag: true});
+                    this.setState({uservisibiltyflag: true});
   
                 }
                 else  if(responseJson.messagecode===1007) {
@@ -163,8 +173,10 @@ export default class Registration extends Component {
                         backgroundColor='#f1f1f1f1'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
-            
-                <View style={styles.inputContainer}>
+
+                <Text style={{marginBottom:5,color:'#4d6bcb','textAlign':'center'}}>Please select Country and enter Mobile Number</Text>
+     
+             <View style={styles.inputContainer}>
             
             <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           
@@ -178,6 +190,7 @@ export default class Registration extends Component {
               translation="eng"
             />
            </View>
+           
               <TextInput style={styles.inputs}
                   placeholder="Phone No"
                   keyboardType="phone-pad"
@@ -188,12 +201,14 @@ export default class Registration extends Component {
                   underlineColorAndroid='transparent'
                   onChangeText={(phone) => this.setState({phone})}/>
             </View> 
+            {(this.state.uservisibiltyflag===true) &&
+            <View>
                 <View style={styles.inputContainer}>
                 <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Full Name"
-              editable={this.state.usereditableflag}
+            //   editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.name}
@@ -206,7 +221,7 @@ export default class Registration extends Component {
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Username"
-              editable={this.state.usereditableflag}
+            //   editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.username}
@@ -219,19 +234,24 @@ export default class Registration extends Component {
           <TextInput style={styles.inputs}
               placeholder="Email(optional)"
               keyboardType="email-address"
-              editable={this.state.usereditableflag}
+            //   editable={this.state.usereditableflag}
               returnKeyType={"next"}
               value={this.state.email}
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
         </View>
-        
+        {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
         <View style={styles.inputContainer}>
         <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Gender"
-              editable={this.state.usereditableflag}
+            //   editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.gender}
@@ -244,18 +264,20 @@ export default class Registration extends Component {
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="Age"
-              editable={this.state.usereditableflag}
+            //   editable={this.state.usereditableflag}
               keyboardType="phone-pad"
               returnKeyType={"done"}
               value={this.state.age}
               underlineColorAndroid='transparent'
               onChangeText={(age) => this.setState({age})}/>
         </View>
-
-        <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this._onPress}>
+     
+        <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this.ShowHideActivityIndicator}>
           <Text style={styles.signUpText}>Register</Text>
         </TouchableHighlight>
-
+        </View>
+    }
+   
                 </View>
 
             </View>
