@@ -346,10 +346,11 @@ export default class AddEventScreen extends Component {
 
   _handleTimePicked = (time) => {
     this.setState({
-        // time :  time,
+        time :  time,
         // datepicked1:date,
         timepicked:time
     });
+    this._hideTimePicker();
   };
   _showTimePicker1 = () => this.setState({ isTimePickerVisible1: true });
 
@@ -357,11 +358,11 @@ export default class AddEventScreen extends Component {
 
   _handleTimePicked1 = (time) => {
     this.setState({
-        // time :  time,
+        time :  time,
         // datepicked1:date,
         timepicked1:time
     });
-    console.log('A date has been picked: ', date);
+    // console.log('A date has been picked: ', date);
   this._hideTimePicker1();
 };
     _showTimePicker2 = () => this.setState({ isTimePickerVisible2: true });
@@ -370,11 +371,11 @@ export default class AddEventScreen extends Component {
   
     _handleTimePicked2 = (time) => {
       this.setState({
-        //   time :  time,
+          time :  time,
           // datepicked1:date,
           timepicked2:time
       });
-      console.log('A date has been picked: ', date);
+    //   console.log('A date has been picked: ', date);
   this._hideTimePicker2();
     };
       _showTimePicker3 = () => this.setState({ isTimePickerVisible3: true });
@@ -383,41 +384,15 @@ export default class AddEventScreen extends Component {
     
       _handleTimePicked3 = (time) => {
         this.setState({
-            // time :  time,
+            time :  time,
             // datepicked1:date,
             timepicked3:time
         });
-  console.log('A date has been picked: ', date);
+//   console.log('A date has been picked: ', date);
   this._hideTimePicker3();
 };
 
-_showTimePicker4 = () => this.setState({ isTimePickerVisible4: true });
 
-_hideTimePicker4 = () => this.setState({ isTimePickerVisible4: false });
-
-_handleTimePicked4 = (time) => {
-  this.setState({
-    //   time :  time,
-      // datepicked1:date,
-      timepicked4:time
-  });
-  console.log('A date has been picked: ', date);
-this._hideTimePicker4();
-};
-
-_showTimePicker5 = () => this.setState({ isTimePickerVisible5: true });
-
-_hideTimePicker5 = () => this.setState({ isTimePickerVisible5: false });
-
-_handleTimePicked5 = (time) => {
-  this.setState({
-    //   time :  time,
-      // datepicked1:date,
-      timepicked5:time
-  });
-  console.log('A date has been picked: ', date);
-this._hideTimePicker5();
-};
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'tests':
@@ -488,7 +463,7 @@ this._hideTimePicker5();
                 duration: Snackbar.LENGTH_SHORT,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
         // this.setState({loading: false})
     };
   
@@ -714,7 +689,7 @@ this._hideTimePicker5();
                                             {/*options={medicinetype}*/}
                                             {/*optionTextStyle={style={fontSize:16}}*/}
                                         {/*/>*/}
-
+                                <View style={{flexDirection:'row'}}>
                                         <Dropdown
                                             value={'Daily'}
                                             baseColor={'#000'}
@@ -734,75 +709,8 @@ this._hideTimePicker5();
                                             // valueExtractor={({value})=> value}
                                             onChangeText={(value)=>{this.onChangeFrequecyTextPress(value)}}
                                         />
-                                        {(this.state.picked2==="Daily") &&
-                                        <View style={{flexDirection: "row", width:200,marginTop:10}}>
-                                        <TouchableOpacity onPress={this._showTimePicker}>
-                                            <TextField  label="Time"
-                                                        lineHeight={30}
-                                                        editable={false}
-                                                        value={this.state.timepicked ? Moment(this.state.timepicked).format('hh:mm a') : this.state.timepicked}
-                                                        editable={false}
-                                                        fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked: itemValue})}
-                                                        containerStyle={{width:65,marginLeft:20}}/>
-                                                        </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible}
-                                                            onConfirm={this._handleTimePicked}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker}
-                                                            />
-                                            <TouchableOpacity onPress={this._showTimePicker1}>
-                                            <TextField  label="Time"
-                                                        lineHeight={30}
-                                                        keyboardType='phone-pad'
-                                                        value={this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mm a') : this.state.timepicked1}
-                                                        editable={false}
-                                                        fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked1: itemValue})}
-                                                        containerStyle={{width:65,marginLeft:20}}/>
-                                                        </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible1}
-                                                            onConfirm={this._handleTimePicked1}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker1}
-                                                            />
-                                            <TouchableOpacity onPress={this._showTimePicker2}>
-                                            <TextField  label="Time"
-                                                        lineHeight={30}
-                                                        value={this.state.timepicked2 ? Moment(this.state.timepicked2).format('hh:mm a') : this.state.timepicked2}
-                                                        editable={false}
-                                                        fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked2: itemValue})}
-                                                        containerStyle={{width:65,marginLeft:20}}/>
-                                                        </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible2}
-                                                            onConfirm={this._handleTimePicked2}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker2}
-                                                            />
-                                            <TouchableOpacity onPress={this._showTimePicker3}>
-                                            <TextField  label="Time"
-                                                        lineHeight={30}
-                                                        value={this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mm a') : this.state.timepicked3}
-                                                        editable={false}
-                                                        fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked3: itemValue})}
-                                                        containerStyle={{width:65,marginLeft:20}}/>
-                                                        </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible3}
-                                                            onConfirm={this._handleTimePicked3}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker3}
-                                                            />
-                                        </View>
-                                        }
 
                                         {(this.state.picked2==="Weekly") &&
-                                        <View style={{flexDirection: "row", width:200,marginTop:10,justifyContent:'space-evenly'}}>
                                         <Dropdown
                                             value={'Monday'}
                                             baseColor={'#000'}
@@ -813,35 +721,17 @@ this._hideTimePicker5();
                                             itemPadding={8}
                                             dropdownPosition={0}
                                             // pickerStyle={{paddingLeft:200}}
-                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,marginTop:10,paddingLeft:width*0.04}}
+                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,marginTop:5,marginLeft:10,paddingLeft:width*0.04}}
                                             rippleCentered={true}
-                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:290}}
+                                            overlayStyle={{position:'absolute',width:130,marginLeft:150,marginTop:250}}
                                             inputContainerStyle={{ borderBottomColor: 'transparent' }}
                                             dropdownOffset={top= 0}
                                             data={weeklydata}
                                             // valueExtractor={({value})=> value}
                                             onChangeText={(value)=>{this.onChangeTextPress(value)}}
                                         />
-                                        <TouchableOpacity onPress={this._showTimePicker4}>
-                                            <TextField  label="Time"
-                                                        lineHeight={30}
-                                                        editable={false}
-                                                        value={this.state.timepicked4 ? Moment(this.state.timepicked4).format('hh:mm a') : this.state.timepicked4}
-                                                        editable={false}
-                                                        fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked4: itemValue})}fontSize={16}
-                                                        containerStyle={{width:65,marginLeft:20}}/>
-                                                        </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible4}
-                                                            onConfirm={this._handleTimePicked4}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker4}
-                                                            />
-                                                            </View>
                                         }
                                         {(this.state.picked2==="Monthly") &&
-                                        <View style={{flexDirection: "row", width:200,marginTop:10,justifyContent:'space-evenly'}}>
                                         <Dropdown
                                             value={'1'}
                                             baseColor={'#000'}
@@ -852,34 +742,102 @@ this._hideTimePicker5();
                                             itemPadding={8}
                                             dropdownPosition={0}
                                             // pickerStyle={{paddingLeft:200}}
-                                            containerStyle={{borderWidth:1, borderColor:'#000', width:130,height:30,borderRadius:20,paddingTop:2,marginTop:10,paddingLeft:width*0.04}}
+                                            containerStyle={{borderWidth:1, borderColor:'#000', width:55,height:30,borderRadius:20,paddingTop:2,marginTop:5,marginLeft:10,paddingLeft:width*0.04}}
                                             rippleCentered={true}
-                                            overlayStyle={{position:'absolute',marginRight:220,marginTop:290}}
+                                            overlayStyle={{position:'absolute',width:55,marginLeft:150,marginTop:250}}
                                             inputContainerStyle={{ borderBottomColor: 'transparent' }}
                                             dropdownOffset={top= 0}
                                             data={monthlymeddate}
                                             // valueExtractor={({value})=> value}
                                             onChangeText={(value)=>{this.onChangemonthlymeddate(value)}}
                                         />
-                    
-                                             <TouchableOpacity onPress={this._showTimePicker5}>
-                                                     <TextField  label="Time"
+                                        }
+
+
+                                        </View>
+                                         <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible}
+                                                            onConfirm={this._handleTimePicked}
+                                                            mode={'time'}
+                                                            is24Hour={false}
+                                                            minimumDate={Moment().date()}
+                                                            onCancel={this._hideTimePicker}
+                                                            />
+
+                                        <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible1}
+                                                            onConfirm={this._handleTimePicked1}
+                                                            mode={'time'}
+                                                            is24Hour={false}
+                                                            minimumDate={Moment().date()}
+                                                            onCancel={this._hideTimePicker1}
+                                                            />
+                                                             <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible2}
+                                                            onConfirm={this._handleTimePicked2}
+                                                            mode={'time'}
+                                                            is24Hour={false}
+                                                            minimumDate={Moment().date()}
+                                                            onCancel={this._hideTimePicker2}
+                                                            />
+                                                             <DateTimePicker
+                                                            isVisible={this.state.isTimePickerVisible3}
+                                                            onConfirm={this._handleTimePicked3}
+                                                            mode={'time'}
+                                                            is24Hour={false}
+                                                            minimumDate={Moment().date()}
+                                                            onCancel={this._hideTimePicker3}
+                                                            />
+                                                        
+                                        
+                                        <View style={{flexDirection: "row", width:200,marginTop:5}}>
+                                        <TouchableOpacity onPress={this._showTimePicker}>
+                                            <TextField  label="Time"
                                                         lineHeight={30}
                                                         editable={false}
-                                                        value={this.state.timepicked5 ? Moment(this.state.timepicked5).format('hh:mm a') : this.state.timepicked5}
+                                                        value={this.state.timepicked ? Moment(this.state.timepicked).format('hh:mma') : this.state.timepicked}
                                                         editable={false}
                                                         fontSize={16}
-                                                        onChangeText={(itemValue) => this.setState({timepicked5: itemValue})}fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked: itemValue})}
                                                         containerStyle={{width:65,marginLeft:20}}/>
                                                         </TouchableOpacity>
-                                                         <DateTimePicker
-                                                            isVisible={this.state.isTimePickerVisible5}
-                                                            onConfirm={this._handleTimePicked5}
-                                                            mode={'time'}
-                                                            onCancel={this._hideTimePicker5}
-                                                            />
-                                                     </View>
-                                        }
+                                                        {(this.state.picked2==="Daily") &&
+                                                        <View style={{flexDirection: "row", width:135}}>
+                                            <TouchableOpacity onPress={this._showTimePicker1}>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        keyboardType='phone-pad'
+                                                        value={this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mma') : this.state.timepicked1}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked1: itemValue})}
+                                                        containerStyle={{width:65,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                         
+                                            <TouchableOpacity onPress={this._showTimePicker2}>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={this.state.timepicked2 ? Moment(this.state.timepicked2).format('hh:mma') : this.state.timepicked2}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked2: itemValue})}
+                                                        containerStyle={{width:65,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                        
+                                            <TouchableOpacity onPress={this._showTimePicker3}>
+                                            <TextField  label="Time"
+                                                        lineHeight={30}
+                                                        value={this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mma') : this.state.timepicked3}
+                                                        editable={false}
+                                                        fontSize={16}
+                                                        onChangeText={(itemValue) => this.setState({timepicked3: itemValue})}
+                                                        containerStyle={{width:65,marginLeft:20}}/>
+                                                        </TouchableOpacity>
+                                                        </View>
+                                               
+                                        }         
+                                        </View>
+
                                         <TextField label="Notes and Comments"
                                            lineHeight={30}
                                            value={this.state.resultnotes}
@@ -941,7 +899,7 @@ this._hideTimePicker5();
 
                 </View>
 
-                <View style={[styles.footer]}>
+                {/* <View style={[styles.footer]}>
                     <BottomNavigation
                         tabs={this.tabs}
                         activeTab={this.state.activeTab}
@@ -950,7 +908,7 @@ this._hideTimePicker5();
                         // useLayoutAnimation
                     />
 
-                </View>
+                </View> */}
             </View>
 
         );

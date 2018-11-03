@@ -61,9 +61,11 @@ export default class UserProfile extends Component {
             username:'',
             countrycode:'',
             headername:' User Profile',
-            ageofuser:''
+            ageofuser:'',
+            usereditableflag:false,
+            invalidemail:''
         };
-
+        this._validateemail = this._validateemail.bind(this);
     }
 
     tabs = [
@@ -137,6 +139,11 @@ export default class UserProfile extends Component {
         />
     )
 
+    _onPressediticon(){
+        this.setState({usereditableflag: true,
+            headername:'Edit User'});
+    }
+
    async _EditUserInformation() {
 
     // alert('testing...');
@@ -168,7 +175,7 @@ export default class UserProfile extends Component {
         userdata.age = responseJson.User.age;
         userdata.email = responseJson.User.email;
         userdata.gender = responseJson.User.gender;
-        alert(JSON.stringify(userdata));
+        // alert(JSON.stringify(userdata));
         AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
             .then((userInfo) => {
                 //do nothing
@@ -218,17 +225,19 @@ export default class UserProfile extends Component {
         return true;
     }
     
-    _validateemail = (emailtext) => {
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-
+    _validateemail(emailtext){
+        let reg = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ;
+        
         if(reg.test(emailtext) === false)
         {
-            alert("Please enter a valid email.");
-            this.setState({email:emailtext})
+            // alert("Please enter a valid email.");
+            this.setState({email:emailtext,
+                            invalidemail:'Please enter a valid email.'})
             return false;
          }
         else {
-            this.setState({email:emailtext})
+            this.setState({email:emailtext,
+                invalidemail:''})
         }
     }
 
@@ -238,7 +247,10 @@ export default class UserProfile extends Component {
         this.setState({loading: true});
         setTimeout(() => {
             this._EditUserInformation();
-            Actions.homeScreen();
+            // Actions.homeScreen();
+            this.setState({usereditableflag: false,
+                            headername:'User Profile',
+                            invalidemail:''});
             Snackbar.show({
                 title: 'User Updated  succesfully',
                 duration: Snackbar.LENGTH_SHORT,
@@ -248,41 +260,6 @@ export default class UserProfile extends Component {
         // this.setState({loading: false})
     };
 
-//    async onAddButtonPress(){
-//         fetch('https://smartmedi.blueravine.in/user/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-//         method: 'POST', // USE GET, POST, PUT,ETC
-//         headers: { //MODIFY HEADERS
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json',
-//             'Authorization':'Bearer '+userdata.jwt,
-//             'mobile':userdata.mobile,
-//             'countrycode':userdata.countrycode,
-//             'jwtaudience':'SmartMedi'
-//             //    application/x-www-form-urlencoded
-//         },
-//         // body: JSON.stringify({mobile:userdata.mobile,
-//         //     jwtaudience:'SmarTran'  })
-//         }) //fetch
-//         .then((response) => response.json())
-//         .then((responseJson) => {
-
-//         if (responseJson.messagecode===1008) {
-//             userdata = responseJson.User;
-//             AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
-//                 .then((userInfo) => {
-                    
-//                 }).done(() =>{
-//                 alert('user update invoked');
-//                                     }); //done
-//         }
-//         else {
-//             //###Need to handle error in retrieving test results from server
-//         }
-//         }).catch((error) => {
-//             alert(error);
-//         });
-        
-//          };
 
     render() {
 
@@ -298,40 +275,33 @@ export default class UserProfile extends Component {
                         <View style={{flexDirection:"row",justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
                             <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  {this.state.headername}</Text>
                             
+                            {(this.state.usereditableflag) &&
+                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            onPress={this.ShowHideActivityIndicator}>
+                            <Icon type='MaterialIcons' name='done' size={25} color="#FFFFFF"/>
+                            
+                            {/* <Text>ADD</Text> */}
+                            </TouchableOpacity>
+                            }
+                            {/* {this._onPressediticon} */}
+                            {(!this.state.usereditableflag) &&
+                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            onPress={() => {this._onPressediticon()}}>
+                            <Icon type='MaterialIcons' name='edit' size={25} color="#FFFFFF"/>
+                            {/* <Text>EDIT</Text> */}
+                            </TouchableOpacity>
+                            }
                         </View>
                             {/* onPress={this.onAddButtonPress()} */}
                         {/*<Card style={{height:500}}>*/}
                         <Card style={{height:500, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                            {/*<View style={[styles.halfHeight,{paddingLeft:25,paddingRight:25}]} >*/}
-                                {/*<View style={[{backgroundColor: '#FFFFFF',flex:1}]}>*/}
-                                {/*<Image source = {require('../Images/smartranlogo.png')} style={styles.ImageStyle} />*/}
-                                {/*</View>*/}
+                           
                             <View style={{flexDirection:'row',justifyContent:'space-evenly',height:50}}>
                                 <Iconns type='FontAwesome' name='user-circle' size={30} color="grey"/>
                                 <Text note style={{fontSize:18,textAlign:'left',color:'#000'}} > User Information  </Text>
-                                <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
-                            onPress={this.ShowHideActivityIndicator}>
-                            {/* <Icon type='MaterialIcons' name='done' size={25} color="#de68cd"/> */}
-                            <Text>ADD</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}>
-                            {/* <Icon type='MaterialIcons' name='edit' size={25} color="#de68cd"/> */}
-                            <Text>EDIT</Text>
-                            </TouchableOpacity>
-                                {/*<Button  style={{height: 25,width:width-280,backgroundColor: '#FFFFFF',marginTop:10,borderColor:'#f1f1f1f1', borderRadius:20,*/}
-                                    {/*borderWidth:1}}>*/}
-                                    {/*<Text style={{fontWeight: "bold",fontSize:16,color:'#de68cd',flex:2*/}
-                                        {/*,textAlign:'center'}}>Edit</Text>*/}
-                                {/*</Button>*/}
+                               
                             </View>
-                                {/*<TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>*/}
-                                    {/*<View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>*/}
-                                        {/*{ this.state.avatarSource === null ? <Text>Select a Photo</Text> :*/}
-                                            {/*<Image style={styles.avatar} source={this.state.avatarSource} />*/}
-                                        {/*}*/}
-                                    {/*</View>*/}
-                                {/*</TouchableOpacity>*/}
                                 <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
                                     {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
                                     {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
@@ -348,21 +318,23 @@ export default class UserProfile extends Component {
                                     <TextField label="Name"
                                                lineHeight={30}
                                         value={this.state.name}
-                                               editable={true}
+                                               editable={this.state.usereditableflag}
                                                fontSize={16}
                                         onChangeText={(itemValue) => this.setState({name: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                 {/*</View>*/}
+                                {/* onChangeText={(itemValue) => this.setState({email: itemValue})} */}
                                 <TextField label="Email"
                                                lineHeight={30}
                                         value={this.state.email}
-                                               editable={true}
+                                        editable={this.state.usereditableflag}
                                                fontSize={16}
-                                        onChangeText={(itemValue) => this.setState({email: itemValue})}
+                                               onChangeText={this._validateemail}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
+                                    <Text note style={{fontSize:10,textAlign:'left',color:'#F80617'}} >
+                                    {this.state.invalidemail}  </Text>
                                     <TextField label="Username"
                                                lineHeight={30}
                                         value={this.state.username}
@@ -375,7 +347,7 @@ export default class UserProfile extends Component {
                                         <TextField label="Age"
                                                    lineHeight={30}
                                             value={this.state.ageofuser.toString()}
-                                                   editable={true}
+                                            editable={this.state.usereditableflag}
                                                    keyboardType='phone-pad'
                                                    fontSize={16}
                                             onChangeText={(itemValue) => this.setState({ageofuser: itemValue})}
@@ -386,7 +358,7 @@ export default class UserProfile extends Component {
                                     <TextField label="Gender"
                                                lineHeight={30}
                                         value={this.state.gender}
-                                               editable={true}
+                                        editable={this.state.usereditableflag}
                                                fontSize={16}
                                                returnKeyType={"done"}
                                         onChangeText={(itemValue) => this.setState({gender: itemValue})}

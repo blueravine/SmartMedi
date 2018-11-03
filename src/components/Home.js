@@ -338,6 +338,9 @@ var testdates = [
 ];
 // var filteredTestResult=[];
 var renderResultCard=[];
+var renderResultName=[];
+var renderResultValue=[];
+var renderResultNormal=[];
 var testtdetail;
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 var testarray=[];
@@ -374,6 +377,8 @@ export default class Home extends Component {
             gestureName: 'none',
 
     };
+    this.getusertestdata = this.getusertestdata.bind(this);
+    this.refreshtestresults = this.refreshtestresults.bind(this);
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
@@ -491,14 +496,15 @@ export default class Home extends Component {
             let tempuserdata = userdata;
            let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
           
-           userdata.name = jsonuserinfo.name;
-            userdata.mobile = jsonuserinfo.mobile;
-            userdata.jwt = jsonuserinfo.jwt;
-            userdata.countrycode = jsonuserinfo.countrycode;
-            userdata.email = jsonuserinfo.email;
-            userdata.username = jsonuserinfo.username;
-            userdata.age = jsonuserinfo.age;
-            userdata.gender = jsonuserinfo.gender;
+           userdata =jsonuserinfo;
+        //    userdata.name = jsonuserinfo.name;
+        //     userdata.mobile = jsonuserinfo.mobile;
+        //     userdata.jwt = jsonuserinfo.jwt;
+        //     userdata.countrycode = jsonuserinfo.countrycode;
+        //     userdata.email = jsonuserinfo.email;
+        //     userdata.username = jsonuserinfo.username;
+        //     userdata.age = jsonuserinfo.age;
+        //     userdata.gender = jsonuserinfo.gender;
             // alert((userdata.mobile)+(userdata.jwt))
             
         }).done(() => {
@@ -630,6 +636,64 @@ export default class Home extends Component {
 
         }
 
+        });
+    }
+
+    async refreshtestresults(){
+        
+        fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+        // body: JSON.stringify({mobile:userdata.mobile,
+        //     jwtaudience:'SmarTran'  })
+        }) //fetch
+        .then((response) => response.json())
+        .then((responseJson) => {
+
+        if (responseJson.messagecode===2004) {
+            testdata = responseJson.TestResult.slice();
+            AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
+                .then((usertestInfo) => {
+                    
+                }).done(() =>{
+                    testtypes = testdata.slice();
+
+                    let tdates = [], outdates = [], l = testdata.length, i;
+                    for( i=0; i<l; i++) {
+                        if( tdates[testdata[i].testdate]) continue;
+                        tdates[testdata[i].testdate] = true;
+                        outdates.push(testdata[i].testdate);
+                    }
+                
+                    testdates = [];
+                    outdates.sort().reverse().forEach((currdate, dateidx) => {
+                        let eachdata = 
+                            {label: currdate.toString().substring(6, 8)
+                                + '/' + currdate.toString().substring(4, 6) + '/'
+                                + currdate.toString().substring(0, 4),
+                                key: currdate};
+                
+                        testdates.push(eachdata);
+                    }); //forEach
+                    this.setState({selectedDate: testdates.length ? testdates[0].key : ''});
+            
+                    if(testdates.length){ this.filterByTestDate(testdates[0].key)}
+                
+                                    }); //done
+        }
+        else {
+            //###Need to handle error in retrieving test results from server
+        }
+        }).catch((error) => {
+            alert(error);
         });
     }
 
@@ -776,31 +840,44 @@ export default class Home extends Component {
         };
         let localFilteredResult = this.state.filteredTestResult;
 
-        renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
+        renderResultName = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <View style={{flexDirection:'row',marginBottom:15}}>
                     <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
-                        <Text style={{marginBottom:5,textAlign:'left',marginLeft:5, justifyContent:'flex-start',flex:2,paddingRight:60}}>{currentResult.testname}</Text></TouchableOpacity>
+                        <Text style={{marginBottom:5,justifyContent:'flex-start'}}>{currentResult.testname}</Text>
+                    </TouchableOpacity>
+                    
+                    );
+        });
+
+        renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
+            return(<View>
                     {(currentResult.result==="high") &&
-                    <Text style={{textAlign:'center',color:'#F80617',marginBottom:5,justifyContent:'center',flex:1}}> {currentResult.value}</Text>
+                    <Text style={{color:'#F80617',marginBottom:5, textAlign:'center'}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="normal") &&
-                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold',justifyContent:'center',flex:1}}> {currentResult.value}</Text>
+                    <Text style={{color:'#0db75a',marginBottom:5,textAlign:'center'}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="between") &&
-                    <Text style={{textAlign:'center',flex:1, color:'#0db75a',marginBottom:5,fontWeight:'bold',justifyContent:'center',flex:1}}>{currentResult.value}</Text>
+                    <Text style={{color:'#0db75a',marginBottom:5,textAlign:'center'}}>{currentResult.value}</Text>
                     }
-                    {/*<Text>{currentResult.value}</Text>*/}
+                    </View>
+                    );
+        });
+
+        renderResultNormal = localFilteredResult.map( (currentResult, resultIndex) => {
+            return(
+                <View>
                     {(currentResult.normalcomparator === "lessthan") &&
-                    <Text style={{marginBottom: 5,textAlign:'right',marginRight:5,justifyContent:'flex-start',flex:3}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
+                    <Text style={{marginBottom:5,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
                     }
                     {(currentResult.normalcomparator === "between") &&
-                    <Text style={{marginBottom: 5,textAlign:'right',marginRight:5,justifyContent:'flex-start',flex:3}}> {currentResult.normalmin}-{currentResult.normalmax} </Text>
+                    <Text style={{marginBottom:5,justifyContent:'flex-end'}}> {currentResult.normalmin}-{currentResult.normalmax} {currentResult.testunit} </Text>
                     }
                 </View>);
         });
 
+      
         return (
 
             <View style={styles.container}>
@@ -816,10 +893,10 @@ export default class Home extends Component {
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome {userdata.name}</Text>
 
-                        {/* <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
-                                         onPress={this.getusertestdata()}>
+                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                                         onPress={this.refreshtestresults}>
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         
                         <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onTestNameShowpicker}>
@@ -852,7 +929,7 @@ export default class Home extends Component {
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
                                 <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>
-                                    Test Result {"\n"} {this.state.selectedDate.toString().substring(6, 8)
+                                    Date of Test{"\n"}{this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
                                 + this.state.selectedDate.toString().substring(0, 4)}</Text>
 
@@ -865,25 +942,44 @@ export default class Home extends Component {
                                            onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:20,marginRight:5,justifyContent:'flex-end'}}/>
 
-                                <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                                <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:10, marginLeft:5, marginRight:5}}>
                             {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>*/}
                             {/*<Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>*/}
                             {/*</TouchableOpacity>*/}
-                            <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
+                            {/* <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
                                 <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
                             <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>
                                 Test Name</Text>
                                 <Icoons type='FontAwesome' name='sort' size={18} color="#000"/>
                                 </View>
-                            </TouchableOpacity>
-                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
-                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text>
+                            </TouchableOpacity> */}
+                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text> */}
+                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
                             {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>*/}
                             {/*<Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>*/}
                             {/*</TouchableOpacity>*/}
                         </View>
+                        <View style={{flexDirection:'row',justifyContent:'space-between', marginLeft:5, marginRight:5}}>
+                        <View style={{flexDirection:'column'}}>
+                        <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
+                                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Test Name</Text>
+                                <Icoons type='FontAwesome' name='sort' size={18} color="#000"/>
+                                </View>
+                            </TouchableOpacity>
 
-                            {renderResultCard}
+                             {renderResultName}
+                            {/* {renderResultCard} */}
+                            </View>
+                            <View style={{flexDirection:'column'}}>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',textAlign:'center'}}>Actual</Text>
+                             {renderResultValue}
+                            </View>
+                            <View style={{flexDirection:'column'}}>
+                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold',textAlign:'center'}}>Normal</Text>
+                             {renderResultNormal}
+                            </View>
+                        </View>
 
 </Card>
                         </GestureRecognizer>
