@@ -566,7 +566,7 @@ export default class Home extends Component {
             //    application/x-www-form-urlencoded
         },
         // body: JSON.stringify({mobile:userdata.mobile,
-        //     jwtaudience:'SmarTran'  })
+        //     jwtaudience:'SmartMedi'  })
         }) //fetch
         .then((response) => response.json())
         .then((responseJson) => {
@@ -653,7 +653,7 @@ export default class Home extends Component {
             //    application/x-www-form-urlencoded
         },
         // body: JSON.stringify({mobile:userdata.mobile,
-        //     jwtaudience:'SmarTran'  })
+        //     jwtaudience:'SmartMedi'  })
         }) //fetch
         .then((response) => response.json())
         .then((responseJson) => {

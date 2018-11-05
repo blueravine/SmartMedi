@@ -5,7 +5,7 @@ import App from './src/components/Main';
 //Registration,Main,SearchScreen
 
 import {name as appName} from './app.json';
-type Props = {};
+// type Props = {};
 
 console.disableYellowBox = true;
 

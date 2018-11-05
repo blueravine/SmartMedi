@@ -49,7 +49,7 @@ export default class SplashScreen extends Component {
                         //    application/x-www-form-urlencoded
                     },
                     // body: JSON.stringify({mobile:userdata.mobile,
-                    //     jwtaudience:'SmarTran'  })
+                    //     jwtaudience:'SmartMedi'  })
                 })
                     .then((response) => response.json())
                     .then((responseJson) => {
@@ -97,7 +97,7 @@ export default class SplashScreen extends Component {
 
                 {/* Put all your components Image and Text here inside Child view which you want to show in Splash Screen. */}
 
-                {/*<Image source={require('../Images/SmarTran_newlogo.png')}*/}
+                {/*<Image source={require('../Images/SmartMedi_newlogo.png')}*/}
                        {/*style={{justifyContent: 'space-between',*/}
                            {/*alignItems: 'center',}} />*/}
                 <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>

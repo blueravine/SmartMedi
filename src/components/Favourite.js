@@ -21,7 +21,7 @@ export default class Favourite extends Component {
                         <Card>
                             <CardItem>
                                 <Left>
-                                    {/*<Thumbnail source={require('../Images/smartranlogo.png')} />*/}
+                                    {/*<Thumbnail source={require('../Images/SmartMedilogo.png')} />*/}
                                     <Body>
                                     {/*<Text>NativeBase</Text>*/}
                                     <Left>
@@ -32,7 +32,7 @@ export default class Favourite extends Component {
                             </CardItem>
                             <CardItem cardBody>
                                 <View style={{flexDirection:"row"}}>
-                                    {/*<Image source={require('../Images/smartranlogo.png')} style={{height: 200, width: null, flex: 1}}/>*/}
+                                    {/*<Image source={require('../Images/SmartMedilogo.png')} style={{height: 200, width: null, flex: 1}}/>*/}
                                     <Text note style={{fontSize:16,width: 300,
                                         borderWidth: 0.5,
                                         borderRadius:15,
