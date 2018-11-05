@@ -7,6 +7,7 @@ import App from './src/components/Main';
 import {name as appName} from './app.json';
 // type Props = {};
 
+
 console.disableYellowBox = true;
 
 AppRegistry.registerComponent(appName, () => App);
