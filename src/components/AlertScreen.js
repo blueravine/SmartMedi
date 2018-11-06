@@ -502,10 +502,10 @@ export default class AlertScreen extends Component{
         AppState.addEventListener('change', this.handleAppStateChange);
         // this.fetchData();
         RNCalendarEvents.saveEvent('Title of event', {
-            startDate: '2018-10-30T16:28:00+05:30',
-            endDate: '2018-11-01T10:02:00+05:30',
+            startDate: moment().format(),
+            endDate: moment().format(),
             alarms: [{
-              date: '2018-11-01T11:10:00+05:30'
+              date: moment().format()
             //   Number:userdata.mobile
             //   '919885638104'
 
