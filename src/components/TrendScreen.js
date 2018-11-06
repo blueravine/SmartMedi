@@ -729,7 +729,7 @@ export default class TrendScreen extends Component {
                             <Text style={{textAlign:'center'}}> to search by test name</Text>
                         </View>
                        
-                        <Card style={{marginBottom:90}}>
+                        <Card style={{marginBottom:90,paddingBottom:15}}>
                         <PureChart
                             width={100}
                             height={80}

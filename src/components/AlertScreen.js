@@ -501,16 +501,20 @@ export default class AlertScreen extends Component{
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         AppState.addEventListener('change', this.handleAppStateChange);
         // this.fetchData();
+//           const calendars = await RNCalendarEvents.findCalendars();
+// const primaryCalendar = calendars.find(c => c.isPrimary && c.allowsModifications);
+//         if (!primaryCalendar) { return;}
+//         else{
+       // Creates an alarm with the TAG iDream at 17:30 hrs.
         RNCalendarEvents.saveEvent('Title of event', {
-            startDate: moment().format(),
-            endDate: moment().format(),
+            // calendarId: primaryCalendar.id,
+            startDate: '2018-10-30T16:28:00+05:30',
+            endDate: '2018-11-06T15:02:00+05:30',
             alarms: [{
-              date: moment().format()
-            //   Number:userdata.mobile
-            //   '919885638104'
-
+              date: '2018-11-06T15:02:00+05:30'
             }]
           })
+    // }
 
     }
    
