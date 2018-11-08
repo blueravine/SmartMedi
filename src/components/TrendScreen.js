@@ -641,7 +641,7 @@ export default class TrendScreen extends Component {
             trendchartdata.push(testData);
 
             return(
-                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:15}}>
+                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:5}}>
                     <Text style={{marginBottom:5}} >{currentTrend.testdate.toString().substring(6, 8)
                     + '/' + currentTrend.testdate.toString().substring(4, 6) + '/'
                     + currentTrend.testdate.toString().substring(0, 4)}</Text>
@@ -668,11 +668,10 @@ export default class TrendScreen extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
 
                 <View style={[styles.headerview]}>
-                <ScrollView ref={ (c) => {this.scroll = c}} >
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <TouchableOpacity style={{marginTop:10}}
@@ -681,11 +680,11 @@ export default class TrendScreen extends Component {
                         </TouchableOpacity>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Test Result Trend</Text>
                     </View>
-
+        <ScrollView><View style={{marginBottom:200}}>
 
                     {/*<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,*/}
                         {/*borderTopLeftRadius:10,borderLeftWidth:10}} >*/}
-                        <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                        <Card style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
                             <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeLeft(this.state.selectedtestname)}>
                                 <Icons type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
                             </TouchableOpacity>
@@ -695,10 +694,10 @@ export default class TrendScreen extends Component {
                         > */}
 
                             <View style={{width:300}}>
-                            <GestureRecognizer
+                            {/* <GestureRecognizer
                             onSwipeLeft={() => this.onSwipeLeft(this.state.selectedtestname)}
-                            onSwipeRight={() => this.onSwipeRight(this.state.selectedtestname)}>
-                            <Card>
+                            onSwipeRight={() => this.onSwipeRight(this.state.selectedtestname)}> */}
+                            <View>
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:10}}>
 
                             <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
@@ -719,8 +718,8 @@ export default class TrendScreen extends Component {
                         </View>
 
                         {renderTrendCard}
-                        </Card>
-                        </GestureRecognizer>
+                        </View>
+                        {/* </GestureRecognizer> */}
                         <View style={{marginTop:2,flexDirection:'row',justifyContent:'center'}}>
                         <Text style={{textAlign:'center'}}>Click </Text>
                         <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
@@ -729,14 +728,17 @@ export default class TrendScreen extends Component {
                             <Text style={{textAlign:'center'}}> to search by test name</Text>
                         </View>
                        
-                        <Card style={{marginBottom:90,paddingBottom:15}}>
+                        <Card style={{marginBottom:90}}>
                         <PureChart
                             width={100}
-                            height={80}
+                            height={100}
                             data={trendchartdata.reverse()}
                             type='line' />
                             </Card>
                       
+                      <View>
+
+                      </View>
 
                             </View>
 
@@ -744,11 +746,11 @@ export default class TrendScreen extends Component {
                             <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeRight(this.state.selectedtestname)}>
                                 <Icons type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
                             </TouchableOpacity>
+                        </Card>
                         </View>
-
+</ScrollView>
                     {/*</Card>*/}
 
-</ScrollView>
 
 
                 </View>

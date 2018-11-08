@@ -844,7 +844,7 @@ export default class Home extends Component {
             return(
                     <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
-                        <Text style={{marginBottom:5,justifyContent:'flex-start'}}>{currentResult.testname}</Text>
+                        <Text style={{marginBottom:10,justifyContent:'flex-start'}}>{currentResult.testname}</Text>
                     </TouchableOpacity>
                     
                     );
@@ -853,13 +853,13 @@ export default class Home extends Component {
         renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
             return(<View>
                     {(currentResult.result==="high") &&
-                    <Text style={{color:'#F80617',marginBottom:5, textAlign:'center'}}> {currentResult.value}</Text>
+                    <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="normal") &&
-                    <Text style={{color:'#0db75a',marginBottom:5,textAlign:'center'}}> {currentResult.value}</Text>
+                    <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}> {currentResult.value}</Text>
                     }
                     {(currentResult.result==="between") &&
-                    <Text style={{color:'#0db75a',marginBottom:5,textAlign:'center'}}>{currentResult.value}</Text>
+                    <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
                     }
                     </View>
                     );
@@ -869,10 +869,10 @@ export default class Home extends Component {
             return(
                 <View>
                     {(currentResult.normalcomparator === "lessthan") &&
-                    <Text style={{marginBottom:5,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
+                    <Text style={{marginBottom:10,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
                     }
                     {(currentResult.normalcomparator === "between") &&
-                    <Text style={{marginBottom:5,justifyContent:'flex-end'}}> {currentResult.normalmin}-{currentResult.normalmax} {currentResult.testunit} </Text>
+                    <Text style={{marginBottom:10,justifyContent:'flex-end'}}> {currentResult.normalmin}-{currentResult.normalmax} {currentResult.testunit} </Text>
                     }
                 </View>);
         });
@@ -884,14 +884,14 @@ export default class Home extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
 
                 <View style={[styles.headerview]}>
 
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Welcome {userdata.name}</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
 
                         <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
                                          onPress={this.refreshtestresults}>
@@ -916,7 +916,7 @@ export default class Home extends Component {
                         </TouchableOpacity>
                     </View>
                   
-                    <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>
+                    <Card style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
                     <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>
                         <Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>
                     </TouchableOpacity>
@@ -925,7 +925,7 @@ export default class Home extends Component {
                             onSwipeLeft={() => this.onSwipeLeft(this.state.selectedDate)}
                             onSwipeRight={() => this.onSwipeRight(this.state.selectedDate)}
                         >
-                            <Card style={{width:300}}>
+                            <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
                                 <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>
@@ -940,31 +940,14 @@ export default class Home extends Component {
                                            editable={true}
                                            fontSize={16}
                                            onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
-                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:20,marginRight:5,justifyContent:'flex-end'}}/>
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:20,marginRight:5,justifyContent:'flex-end'}}/>
 
-                                <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:10, marginLeft:5, marginRight:5}}>
-                            {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedDate)}>*/}
-                            {/*<Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>*/}
-                            {/*</TouchableOpacity>*/}
-                            {/* <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
-                                <View style={{flexDirection:'row',justifyContent:'space-evenly'}}>
-                            <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>
-                                Test Name</Text>
-                                <Icoons type='FontAwesome' name='sort' size={18} color="#000"/>
-                                </View>
-                            </TouchableOpacity> */}
-                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text> */}
-                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
-                            {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>*/}
-                            {/*<Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>*/}
-                            {/*</TouchableOpacity>*/}
-                        </View>
                         <View style={{flexDirection:'row',justifyContent:'space-between', marginLeft:5, marginRight:5}}>
                         <View style={{flexDirection:'column'}}>
                         <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
-                                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                             <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Test Name</Text>
-                                <Icoons type='FontAwesome' name='sort' size={18} color="#000"/>
+                                <Icoons type='FontAwesome' name='sort' size={18} color="#000" style={{marginLeft:5}}/>
                                 </View>
                             </TouchableOpacity>
 
@@ -981,12 +964,12 @@ export default class Home extends Component {
                             </View>
                         </View>
 
-</Card>
+</View>
                         </GestureRecognizer>
                         <TouchableOpacity style={{alignItems:'center',marginTop:180}} onPress={() => this.onSwipeRight(this.state.selectedDate)}>
                             <Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>
                         </TouchableOpacity>
-                    </View>
+                    </Card>
 
                     {/*</Card>*/}
                 </View>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Navigator,
     Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, Alert,AsyncStorage,
-    AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,
+    AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,Keyboard,
     Easing,BackHandler,
 } from 'react-native';
 import {Card,icon} from 'native-base';
@@ -48,7 +48,7 @@ export default class OTPScreen extends Component {
         // this.setState({loading: false})
     };
     _onVerify(){
-       
+        Keyboard.dismiss();
     fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/VERIFY/'+sessionid+'/'+this.state.otp, { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'GET', // USE GET, POST, PUT,ETC
     headers: { //MODIFY HEADERS

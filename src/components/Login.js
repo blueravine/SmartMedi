@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Navigator,
     Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, Alert,AsyncStorage,
-    AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,
+    AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,Keyboard,
     Easing,BackHandler,
 } from 'react-native';
 import {Card,icon} from 'native-base';
@@ -42,6 +42,7 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
         // this.setState({loading: false})
     };
     _onVerifyPassword(){
+        Keyboard.dismiss();
        fetch('https://smartmedi.blueravine.in/user/login', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'POST', // USE GET, POST, PUT,ETC
     headers: { //MODIFY HEADERS
@@ -103,6 +104,9 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
             // alert((this.state.phone));
         });
     }
+    _onPresstext(){
+       Actions.registerScreen();
+    }
     render() {
      
         return(
@@ -116,7 +120,7 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
                 </View>
                 <View style={[styles.headerviewhome]}>
             
-                <View style={styles.inputContainer}>
+                <View style={styles.inputContainerphone}>
         <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
@@ -129,7 +133,15 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
               >
               
               </TextInput>
+             
         </View>
+
+        <TouchableOpacity style={{marginBottom:10,marginLeft:20}}
+              onPress={() => {this._onPresstext()}}>
+              <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
+                                    Click to change Mobile Number  </Text>
+                                    </TouchableOpacity>
+                                    
         <View style={styles.inputContainer}>
 <Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           <TextInput style={styles.inputs}
@@ -169,6 +181,19 @@ const styles = StyleSheet.create(
                 flexDirection: 'column',
                 backgroundColor: '#4d6bcb',
                 // paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
+            },
+            inputContainerphone:{
+                borderBottomColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
+                borderRadius:30,
+                borderBottomWidth: 1,
+                width:250,
+                height:45,
+                marginBottom:5,
+                marginLeft:50,
+                flexDirection: 'row',
+                justifyContent:"space-evenly",
+                alignItems:'center'
             },
             inputContainer: {
                 borderBottomColor: '#FFFFFF',

@@ -237,18 +237,22 @@ const { height } = Dimensions.get('window');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 
 var medsfrequecy = [
-    // {
-    //     key: 'Daily',
-    //     label: 'Daily',
-    // },
-    // {
-    //     key: 'Weekly',
-    //     label: 'Weekly',
-    // },
-    // {
-    //     key: 'Monthly',
-    //     label: 'Monthly',
-    // }
+    {
+        key: 'All',
+        label: 'All',
+    },
+    {
+        key: 'Daily',
+        label: 'Daily',
+    },
+    {
+        key: 'Weekly',
+        label: 'Weekly',
+    },
+    {
+        key: 'Monthly',
+        label: 'Monthly',
+    }
 ];
 // var filteredTestResult=[];
 var renderResultCard=[];
@@ -281,7 +285,7 @@ export default class AlertScreen extends Component{
             currIndex: 0,
             targetIndex: 0,
             selectedmedicineDate:20180814,
-            selectedmedicinefrequency:'',
+            selectedmedicinefrequency:'All',
             selectedDate:20180814,
             filteredTestResult:[],
             selectedTestName:'',
@@ -417,7 +421,7 @@ export default class AlertScreen extends Component{
 
       await AsyncStorage.getItem('useralertInfo')
       .then((useralertInfo) => {
-      // alert(JSON.stringify(userInfo));
+    //   alert(JSON.stringify(useralertInfo));
       let tempuseralertdata = testdata;
       testdata = useralertInfo ? JSON.parse(useralertInfo) : tempuseralertdata;
 
@@ -451,20 +455,20 @@ export default class AlertScreen extends Component{
                 }).done(() =>{
                     medicinetypes = testdata.slice();
 
-                    let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-                    for( i=0; i<l; i++) {
-                        if( tfrequency[testdata[i].medfrequency]) continue;
-                        tfrequency[testdata[i].medfrequency] = true;
-                        outfrequencies.push(testdata[i].medfrequency);
-                    }
+                    // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+                    // for( i=0; i<l; i++) {
+                    //     if( tfrequency[testdata[i].medfrequency]) continue;
+                    //     tfrequency[testdata[i].medfrequency] = true;
+                    //     outfrequencies.push(testdata[i].medfrequency);
+                    // }
                 
-                    medsfrequecy = [];
-                    outfrequencies.forEach((currfreq, dateidx) => {
-                        let eachfreq = 
-                            {label:currfreq,key: currfreq};
+                    // medsfrequecy = [];
+                    // outfrequencies.forEach((currfreq, dateidx) => {
+                    //     let eachfreq = 
+                    //         {label:currfreq,key: currfreq};
                 
-                            medsfrequecy.push(eachfreq);
-                    }); //forEach
+                    //         medsfrequecy.push(eachfreq);
+                    // }); //forEach
                 
                 }); //done
         }
@@ -474,24 +478,25 @@ export default class AlertScreen extends Component{
     }).catch((error) => {
             alert(error);
         });
-      } //if no test results in Async Storage
+      } //end of if no test results in Async Storage
       else {
         medicinetypes = testdata.slice();
+        // alert('medicinetypes '+JSON.stringify(medicinetypes) + ' testdata: ' + JSON.stringify(testdata));
 
-        let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-        for( i=0; i<l; i++) {
-            if( tfrequency[testdata[i].medfrequency]) continue;
-            tfrequency[testdata[i].medfrequency] = true;
-            outfrequencies.push(testdata[i].medfrequency);
-        }
+        // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+        // for( i=0; i<l; i++) {
+        //     if( tfrequency[testdata[i].medfrequency]) continue;
+        //     tfrequency[testdata[i].medfrequency] = true;
+        //     outfrequencies.push(testdata[i].medfrequency);
+        // }
     
-        medsfrequecy = [];
-        outfrequencies.forEach((currfreq, dateidx) => {
-            let eachfreq = 
-                {label:currfreq,key: currfreq};
+        // medsfrequecy = [];
+        // outfrequencies.forEach((currfreq, dateidx) => {
+        //     let eachfreq = 
+        //         {label:currfreq,key: currfreq};
     
-                medsfrequecy.push(eachfreq);
-        }); //forEach
+        //         medsfrequecy.push(eachfreq);
+        // }); //forEach
     
           }
 
@@ -506,14 +511,44 @@ export default class AlertScreen extends Component{
 //         if (!primaryCalendar) { return;}
 //         else{
        // Creates an alarm with the TAG iDream at 17:30 hrs.
+
+       //^^^^^^^
+       RNCalendarEvents.authorizationStatus()
+      .then(status => {
+        // alert(status);
+        this.setState({ cal_auth: status });
+        if(status === 'undetermined') {
+            RNCalendarEvents.authorizeEventStore()
+            .then((out) => {
+              if(out == 'authorized') {
+                // set the new status to the auth state
+                this.setState({ cal_auth: out })
+              }
+            })
+            .catch(error => console.warn('Auth Error: ', error));
+          }
+        
+      })
+      .catch(error => {
+       alert(error)
+      });
+      //^^^^^^^
         RNCalendarEvents.saveEvent('Title of event', {
-            // calendarId: primaryCalendar.id,
-            startDate: '2018-10-30T16:28:00+05:30',
-            endDate: '2018-11-06T15:02:00+05:30',
-            alarms: [{
-              date: '2018-11-06T15:02:00+05:30'
+            // id: 'SmartMedi100',
+            startDate: '2018-11-08T09:50:00.000Z',
+            endDate: '2018-12-08T09:50:00.000Z',
+            alarm: [{
+              date: -2
             }]
-          })
+          });
+
+          RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
+          .then((thisevent) => {
+        //   if(thisevent.id.toString().includes('SmartMedi')){
+          alert(JSON.stringify(thisevent))
+        // }
+    })
+          .catch(error => { alert(error)});
     // }
 
     }
@@ -563,21 +598,21 @@ export default class AlertScreen extends Component{
     };
 
     filterByMedfreq(newfrequency){
-        if(!newfrequency){
-            this.setState({selectedmedicinefrequency: newfrequency});
-            this.setState( {filteredTestResult: medicinetypes.slice() });
+        if(!newfrequency || newfrequency === 'All'){
+            this.setState({selectedmedicinefrequency: newfrequency,
+            filteredTestResult: medicinetypes.slice() });
+
+            // alert('='+newfrequency+'='+'medicinetypes: '+JSON.stringify(medicinetypes));
         }
         else {
-            this.setState({selectedmedicinefrequency: newfrequency});
             this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
                 {return testresult.medfrequency === newfrequency}) });
         }
     };
 
     filterByTestName(searchText, nDate){
-        this.setState({selectedTestName: searchText});
-
-        this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
+        this.setState({selectedTestName: searchText,
+            filteredTestResult: medicinetypes.filter( (testresult) =>
             {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase()) && testresult.startdate === nDate}) });
     };
 
@@ -745,34 +780,8 @@ export default class AlertScreen extends Component{
                                    fontSize={16}
                                    onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedmedicineDate)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
-                        {/*<GestureRecognizer*/}
-                            {/*onSwipeLeft={() => this.onSwipeLeft(this.state.selectedmedicineDate)}*/}
-                            {/*onSwipeRight={() => this.onSwipeRight(this.state.selectedmedicineDate)}*/}
-                        {/*>*/}
-                            {/*<Card>*/}
-
-                                {/*<View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:15}}>*/}
-                                    {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeLeft(this.state.selectedmedicineDate)}>*/}
-                                        {/*<Iccon type='SimpleLineIcons' name='arrow-left' size={18} color="#000"/>*/}
-                                    {/*</TouchableOpacity>*/}
-                                    {/*<TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedmedicineDate)}>*/}
-                                        {/*<View style={{flexDirection:'row',justifyContent:'space-evenly'}}>*/}
-                                            {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>*/}
-                                                {/*Medicine Name</Text>*/}
-                                            {/*<Icon type='MaterialIcons' name='sort-by-alpha' size={18} color="#000"/>*/}
-                                        {/*</View>*/}
-                                    {/*</TouchableOpacity>*/}
-                                    {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Frequency</Text>*/}
-                                    {/*<Text style={{marginBottom:5,textDecoration:'underline',fontWeight:'bold',fontStyle:'italic'}}>Repeat</Text>*/}
-                                    {/*<TouchableOpacity style={{alignItems:'center'}} onPress={() => this.onSwipeRight(this.state.selectedmedicineDate)}>*/}
-                                        {/*<Iccon type='SimpleLineIcons' name='arrow-right' size={18} color="#000"/>*/}
-                                    {/*</TouchableOpacity>*/}
-                                {/*</View>*/}
-
+                      
                                 {renderResultCard}
-
-                            {/*</Card>*/}
-                        {/*</GestureRecognizer>*/}
 
                     </View>
                     </ScrollView>

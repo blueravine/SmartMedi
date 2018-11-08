@@ -22,8 +22,16 @@ const MARGIN = 40;
 global.sessionid ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
+import { Dropdown } from 'react-native-material-dropdown';
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
     countrycode:null};
+var genderselect = [
+    {
+    value: 'MALE',
+}, {
+    value: 'FEMALE',
+}
+];    
 export default class Registration extends Component {
     // public static var=sessionid;
     constructor(props) {
@@ -59,6 +67,13 @@ export default class Registration extends Component {
               
         };
         this._onPress = this._onPress.bind(this);
+        this.onChangegenderTextPress=this.onChangegenderTextPress.bind(this);
+    }
+
+    onChangegenderTextPress(value){
+
+        // this.setState({selectedvalue: value});
+        this.setState({gender: value});
     }
 
     ShowHideActivityIndicator = () =>{
@@ -173,6 +188,7 @@ export default class Registration extends Component {
                         backgroundColor='#f1f1f1f1'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
+                <ScrollView>
 
                 <Text style={{marginBottom:5,color:'#4d6bcb','textAlign':'center'}}>Please select Country and enter Mobile Number</Text>
      
@@ -201,7 +217,7 @@ export default class Registration extends Component {
                   underlineColorAndroid='transparent'
                   onChangeText={(phone) => this.setState({phone})}/>
             </View> 
-            {(this.state.uservisibiltyflag===true) &&
+            {(this.state.uservisibiltyflag) &&
             <View>
                 <View style={styles.inputContainer}>
                 <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
@@ -247,16 +263,36 @@ export default class Registration extends Component {
                                                                  size = "large" style={{padding: 20}} /> : null
                     }
         <View style={styles.inputContainer}>
-        <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+        <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:55}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
-          <TextInput style={styles.inputs}
+          {/* <TextInput style={styles.inputs}
               placeholder="Gender"
             //   editable={this.state.usereditableflag}
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.gender}
               underlineColorAndroid='transparent'
-              onChangeText={(gender) => this.setState({gender})}/>
+              onChangeText={(gender) => this.setState({gender})}/> */}
+              <Dropdown
+              placeholder='Please select gender'
+                                            // value={'Please select gender'}
+                                            baseColor={'#000'}
+                                            textColor={'#000'}
+                                            selectedItemColor={'#000'}
+                                            itemColor={'#000'}
+                                            fontSize={13}
+                                            itemPadding={8}
+                                            dropdownPosition={0}
+                                            // pickerStyle={{paddingLeft:200}}
+                                            containerStyle={{width:250,height:45,marginTop:15,marginLeft:50,borderRadius:20,paddingTop:2,paddingBottom:5,paddingLeft:width*0.04}}
+                                            rippleCentered={true}
+                                            overlayStyle={{position:'absolute',width:250,marginLeft:60,marginTop:390}}
+                                            inputContainerStyle={{ borderBottomColor: 'transparent' }}
+                                            dropdownOffset={top= 0}
+                                            data={genderselect}
+                                            // valueExtractor={({value})=> value}
+                                            onChangeText={(value)=>{this.onChangegenderTextPress(value)}}
+                                        />
         </View>
 
         <View style={styles.inputContainer}>
@@ -277,6 +313,7 @@ export default class Registration extends Component {
         </TouchableHighlight>
         </View>
     }
+    </ScrollView>
    
                 </View>
 

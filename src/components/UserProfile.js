@@ -259,7 +259,9 @@ export default class UserProfile extends Component {
         }, 2000)
         // this.setState({loading: false})
     };
-
+    _onPresstext(){
+        Actions.registerScreen();
+     }
 
     render() {
 
@@ -302,7 +304,13 @@ export default class UserProfile extends Component {
                                 <Text note style={{fontSize:18,textAlign:'left',color:'#000'}} > User Information  </Text>
                                
                             </View>
+                            <TouchableOpacity style={{marginLeft:20}}
+                                onPress={() => {this._onPresstext()}}>
+                                <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
+                                                        Click to change Mobile Number  </Text>
+                                                        </TouchableOpacity>
                                 <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
+                              
                                     {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
                                     {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
                                     <TextField label="Phone No"
@@ -312,7 +320,7 @@ export default class UserProfile extends Component {
                                                editable={false}
                                                fontSize={16}
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                     <TextField label="Name"
@@ -321,7 +329,7 @@ export default class UserProfile extends Component {
                                                editable={this.state.usereditableflag}
                                                fontSize={16}
                                         onChangeText={(itemValue) => this.setState({name: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                 {/*</View>*/}
@@ -332,16 +340,18 @@ export default class UserProfile extends Component {
                                         editable={this.state.usereditableflag}
                                                fontSize={16}
                                                onChangeText={this._validateemail}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                   {(this.state.usereditableflag) &&
                                     <Text note style={{fontSize:10,textAlign:'left',color:'#F80617'}} >
                                     {this.state.invalidemail}  </Text>
+                                   }
                                     <TextField label="Username"
                                                lineHeight={30}
                                         value={this.state.username}
                                                editable={false}
                                                fontSize={16}
                                         onChangeText={(itemValue) => this.setState({username: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
                                         <TextField label="Age"
@@ -351,7 +361,7 @@ export default class UserProfile extends Component {
                                                    keyboardType='phone-pad'
                                                    fontSize={16}
                                             onChangeText={(itemValue) => this.setState({ageofuser: itemValue})}
-                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                                   containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
 
@@ -362,7 +372,7 @@ export default class UserProfile extends Component {
                                                fontSize={16}
                                                returnKeyType={"done"}
                                         onChangeText={(itemValue) => this.setState({gender: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                             </View>
 
