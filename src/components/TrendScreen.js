@@ -680,7 +680,7 @@ export default class TrendScreen extends Component {
                         </TouchableOpacity>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Test Result Trend</Text>
                     </View>
-        <ScrollView><View style={{marginBottom:200}}>
+                 <ScrollView><View style={{marginBottom:200}}>
 
                     {/*<Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,*/}
                         {/*borderTopLeftRadius:10,borderLeftWidth:10}} >*/}

@@ -452,35 +452,18 @@ export default class AddTestData extends Component {
                 </View>
 
                 <View style={[styles.headerview]}>
-                    <ScrollView ref={ (c) => {this.scroll = c}} >
+                    
                     <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Test Result</Text>
 
                     </View>
 
-                    <Card style={{height:500}}>
-
-                    <Card style={{ height:500,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
+                    {/* <Card style={{height:500}}> */}
+                    <ScrollView>
+                    <View style={{marginBottom:300}}>
+                    <Card style={{ height:450,borderRightWidth:10,marginTop:15,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                         borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                        <View style={{flexDirection:"row",justifyContent:'flex-start'}}>
-                            <TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>
-                                <DateTimePicker
-                                    isVisible={this.state.isDateTimePickerVisible}
-                                    mode={'date'}
-                                    minimumDate={Moment().toDate()}
-                                    onConfirm={this._handleDatePicked}
-                                    onCancel={this._hideDateTimePicker}
-                                />
-
-
-                            </TouchableOpacity>
-
-
-
-                        </View>
-
-                        <View style={{flexDirection:"row",marginTop:10}}>
-                          
+                    
                             <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
                             <TouchableOpacity onPress={this._showDateTimePicker} style={{width:280,justifyContent:'flex-end'}}>
                                
@@ -493,6 +476,13 @@ export default class AddTestData extends Component {
                                                        containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                            </TouchableOpacity>
+                           <DateTimePicker
+                                    isVisible={this.state.isDateTimePickerVisible}
+                                    mode={'date'}
+                                    minimumDate={Moment().toDate()}
+                                    onConfirm={this._handleDatePicked}
+                                    onCancel={this._hideDateTimePicker}
+                                />
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                    onPress={this.onTestNameShowpicker}>
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
@@ -542,7 +532,7 @@ export default class AddTestData extends Component {
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
                             </View>
-                        </View>
+                        
 
                         {
                         // Here the ? Question Mark represent the ternary operator.
@@ -602,8 +592,9 @@ export default class AddTestData extends Component {
 
                  
                     </Card>
-                    </Card>
-                    </ScrollView>
+                    {/* </Card> */}
+                    </View>
+</ScrollView>
                    
                 </View>
                

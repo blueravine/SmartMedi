@@ -896,7 +896,7 @@ export default class Home extends Component {
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <TouchableOpacity style={{marginTop:10}}
                                          onPress={this.onNametextPress}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginRight:10,marginRight:100,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,marginRight:100,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{marginTop:10}}
                                          onPress={this.refreshtestresults}>

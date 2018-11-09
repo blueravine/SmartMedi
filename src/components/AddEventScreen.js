@@ -613,14 +613,14 @@ export default class AddEventScreen extends Component {
                 </View>
 
                 <View style={[styles.headerview]}>
-                    <ScrollView ref={ (c) => {this.scroll = c}} >
+                
                         <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
                             <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Alert</Text>
 
                         </View>
 
-                        <Card style={{height:500}}>
-
+                        {/* <Card style={{height:500}}> */}
+                        <ScrollView><View style={{marginBottom:300}}>
                             <Card style={{ height:500,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                                 borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
                                 {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
@@ -900,8 +900,9 @@ export default class AddEventScreen extends Component {
                                 </Fab>
 
                             </Card>
-                        </Card>
-                    </ScrollView>
+                        {/* </Card> */}
+                        </View>
+</ScrollView>
 
 
 
