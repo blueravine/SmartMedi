@@ -399,154 +399,165 @@ export default class AlertScreen extends Component{
         Actions.trendScreen(testtdetail);
     };
 
-   async componentDidMount() {
-      //#####
-      await  AsyncStorage.getItem('userInfo')
-      .then((userInfo) => {
-          
-          let tempuserdata = userdata;
-      let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
-      
-      userdata.name = jsonuserinfo.name;
-          userdata.mobile = jsonuserinfo.mobile;
-          userdata.jwt = jsonuserinfo.jwt;
-          userdata.countrycode = jsonuserinfo.countrycode;
-          userdata.email = jsonuserinfo.email;
-          userdata.username = jsonuserinfo.username;
-          userdata.age = jsonuserinfo.age;
-          userdata.gender = jsonuserinfo.gender;
-          
-          
-      }).done();
+    ShowHideActivityIndicator = () =>{
 
-      await AsyncStorage.getItem('useralertInfo')
-      .then((useralertInfo) => {
-    
-      let tempuseralertdata = testdata;
-      testdata = useralertInfo ? JSON.parse(useralertInfo) : tempuseralertdata;
-
-
-
-      }).done(() => {
-      if(!(testdata.length)) {
-        fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-        method: 'POST', // USE GET, POST, PUT,ETC
-        headers: { //MODIFY HEADERS
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization':'Bearer '+userdata.jwt,
-            'mobile':userdata.mobile,
-            'countrycode':userdata.countrycode,
-            'jwtaudience':'SmartMedi'
-            //    application/x-www-form-urlencoded
-        },
-    // body: JSON.stringify({mobile:userdata.mobile,
-    //     jwtaudience:'SmartMedi'  })
-    }) //fetch
-    .then((response) => response.json())
-    .then((responseJson) => {
-
-        if (responseJson.messagecode===4002) {
-            testdata = responseJson.Alert.slice();
-            AsyncStorage.setItem('useralertInfo',JSON.stringify(testdata))
-                .then((useralertInfo) => {
-                    
-                }).done(() =>{
-                    medicinetypes = testdata.slice();
-
-                    // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-                    // for( i=0; i<l; i++) {
-                    //     if( tfrequency[testdata[i].medfrequency]) continue;
-                    //     tfrequency[testdata[i].medfrequency] = true;
-                    //     outfrequencies.push(testdata[i].medfrequency);
-                    // }
-                
-                    // medsfrequecy = [];
-                    // outfrequencies.forEach((currfreq, dateidx) => {
-                    //     let eachfreq = 
-                    //         {label:currfreq,key: currfreq};
-                
-                    //         medsfrequecy.push(eachfreq);
-                    // }); //forEach
-                
-                }); //done
-        }
-        else {
-            //###Need to handle error in retrieving test results from server
-        }
-    }).catch((error) => {
-            alert(error);
-        });
-      } //end of if no test results in Async Storage
-      else {
-        medicinetypes = testdata.slice();
-
-        // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-        // for( i=0; i<l; i++) {
-        //     if( tfrequency[testdata[i].medfrequency]) continue;
-        //     tfrequency[testdata[i].medfrequency] = true;
-        //     outfrequencies.push(testdata[i].medfrequency);
-        // }
-    
-        // medsfrequecy = [];
-        // outfrequencies.forEach((currfreq, dateidx) => {
-        //     let eachfreq = 
-        //         {label:currfreq,key: currfreq};
-    
-        //         medsfrequecy.push(eachfreq);
-        // }); //forEach
-    
-          }
-
-      });
-//#####
-        this.filterByMedfreq(this.state.selectedmedicinefrequency);
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        AppState.addEventListener('change', this.handleAppStateChange);
-        // this.fetchData();
-//           const calendars = await RNCalendarEvents.findCalendars();
-// const primaryCalendar = calendars.find(c => c.isPrimary && c.allowsModifications);
-//         if (!primaryCalendar) { return;}
-//         else{
-       // Creates an alarm with the TAG iDream at 17:30 hrs.
-
-       //^^^^^^^
-       RNCalendarEvents.authorizationStatus()
-      .then(status => {
-        this.setState({ cal_auth: status });
-        if(status === 'undetermined') {
-            RNCalendarEvents.authorizeEventStore()
-            .then((out) => {
-              if(out == 'authorized') {
-                // set the new status to the auth state
-                this.setState({ cal_auth: out })
-              }
-            })
-            .catch(error => console.warn('Auth Error: ', error));
-          }
+        this.setState({loading: true});
+                setTimeout(() => {
+            this._onLoadScreen();
+                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 3000)
+            // this.setState({loading: false})
+    };
+    _onLoadScreen(){
+        AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            
+            let tempuserdata = userdata;
+        let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
         
-      })
-      .catch(error => {
-       alert(error)
-      });
-      //^^^^^^^
-        RNCalendarEvents.saveEvent('Title of event', {
-            // id: 'SmartMedi100',
-            startDate: '2018-11-08T09:50:00.000Z',
-            endDate: '2018-12-08T09:50:00.000Z',
-            alarm: [{
-              date: -2
-            }]
+        userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            userdata.jwt = jsonuserinfo.jwt;
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            
+            
+        }).done();
+  
+         AsyncStorage.getItem('useralertInfo')
+        .then((useralertInfo) => {
+      
+        let tempuseralertdata = testdata;
+        testdata = useralertInfo ? JSON.parse(useralertInfo) : tempuseralertdata;
+  
+  
+  
+        }).done(() => {
+        if(!(testdata.length)) {
+          fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+          method: 'POST', // USE GET, POST, PUT,ETC
+          headers: { //MODIFY HEADERS
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization':'Bearer '+userdata.jwt,
+              'mobile':userdata.mobile,
+              'countrycode':userdata.countrycode,
+              'jwtaudience':'SmartMedi'
+              //    application/x-www-form-urlencoded
+          },
+      // body: JSON.stringify({mobile:userdata.mobile,
+      //     jwtaudience:'SmartMedi'  })
+      }) //fetch
+      .then((response) => response.json())
+      .then((responseJson) => {
+  
+          if (responseJson.messagecode===4002) {
+              testdata = responseJson.Alert.slice();
+              AsyncStorage.setItem('useralertInfo',JSON.stringify(testdata))
+                  .then((useralertInfo) => {
+                      
+                  }).done(() =>{
+                      medicinetypes = testdata.slice();
+  
+                      // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+                      // for( i=0; i<l; i++) {
+                      //     if( tfrequency[testdata[i].medfrequency]) continue;
+                      //     tfrequency[testdata[i].medfrequency] = true;
+                      //     outfrequencies.push(testdata[i].medfrequency);
+                      // }
+                  
+                      // medsfrequecy = [];
+                      // outfrequencies.forEach((currfreq, dateidx) => {
+                      //     let eachfreq = 
+                      //         {label:currfreq,key: currfreq};
+                  
+                      //         medsfrequecy.push(eachfreq);
+                      // }); //forEach
+                  
+                  }); //done
+          }
+          else {
+              //###Need to handle error in retrieving test results from server
+          }
+      }).catch((error) => {
+              alert(error);
           });
-
-          RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
-          .then((thisevent) => {
-        //   if(thisevent.id.toString().includes('SmartMedi')){
-        // }
-    })
-          .catch(error => { alert(error)});
-    // }
-
+        } //end of if no test results in Async Storage
+        else {
+          medicinetypes = testdata.slice();
+  
+          // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+          // for( i=0; i<l; i++) {
+          //     if( tfrequency[testdata[i].medfrequency]) continue;
+          //     tfrequency[testdata[i].medfrequency] = true;
+          //     outfrequencies.push(testdata[i].medfrequency);
+          // }
+      
+          // medsfrequecy = [];
+          // outfrequencies.forEach((currfreq, dateidx) => {
+          //     let eachfreq = 
+          //         {label:currfreq,key: currfreq};
+      
+          //         medsfrequecy.push(eachfreq);
+          // }); //forEach
+      
+            }
+  
+        });
+  //#####
+          this.filterByMedfreq(this.state.selectedmedicinefrequency);
+          BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+          AppState.addEventListener('change', this.handleAppStateChange);
+          // this.fetchData();
+  //           const calendars = await RNCalendarEvents.findCalendars();
+  // const primaryCalendar = calendars.find(c => c.isPrimary && c.allowsModifications);
+  //         if (!primaryCalendar) { return;}
+  //         else{
+         // Creates an alarm with the TAG iDream at 17:30 hrs.
+  
+         //^^^^^^^
+         RNCalendarEvents.authorizationStatus()
+        .then(status => {
+          this.setState({ cal_auth: status });
+          if(status === 'undetermined') {
+              RNCalendarEvents.authorizeEventStore()
+              .then((out) => {
+                if(out == 'authorized') {
+                  // set the new status to the auth state
+                  this.setState({ cal_auth: out })
+                }
+              })
+              .catch(error => console.warn('Auth Error: ', error));
+            }
+          
+        })
+        .catch(error => {
+         alert(error)
+        });
+        //^^^^^^^
+          RNCalendarEvents.saveEvent('Title of event', {
+              // id: 'SmartMedi100',
+              startDate: '2018-11-08T09:50:00.000Z',
+              endDate: '2018-12-08T09:50:00.000Z',
+              alarm: [{
+                date: -2
+              }]
+            });
+  
+            RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
+            .then((thisevent) => {
+          //   if(thisevent.id.toString().includes('SmartMedi')){
+          // }
+      })
+            .catch(error => { alert(error)});
+      // }
+    }
+     componentDidMount() {
+      //#####
+      this.ShowHideActivityIndicator();
     }
    
     componentWillUnmount() {
@@ -730,7 +741,7 @@ export default class AlertScreen extends Component{
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
 
                 <View style={[styles.headerview]}>
@@ -781,8 +792,14 @@ export default class AlertScreen extends Component{
                                    onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedmedicineDate)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
                       
+                     
                                 {renderResultCard}
-
+        {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                     </View>
                     </ScrollView>
                 </View>
