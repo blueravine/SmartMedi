@@ -889,18 +889,25 @@ export default class Home extends Component {
 
                 <View style={[styles.headerview]}>
 
-                    <View style={{flexDirection:"row",paddingRight:10,
-                        paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
+                    <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:60}}>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginRight:100,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
 
-                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity style={{marginTop:10}}
                                          onPress={this.refreshtestresults}>
+                                         <View style={{flexDirection:"column"}}>
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Refresh </Text>
+                            </View>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity style={{marginTop:10}}
                                           onPress={this.onTestNameShowpicker}>
+                                          <View style={{flexDirection:"column",marginLeft:10}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Search By{"\n"}Date  </Text>
+                            </View>
                         </TouchableOpacity>
                         <ModalFilterPicker
                             visible={this.state.pickervisible2}
@@ -911,7 +918,11 @@ export default class Home extends Component {
                         />
                         <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
                                           onPress={this.onplusButtonPress}>
+                                          <View style={{flexDirection:"column"}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Add {"\n"}Test  </Text>
+                            </View>
 
                         </TouchableOpacity>
                     </View>

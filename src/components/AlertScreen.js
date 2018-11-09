@@ -746,17 +746,20 @@ export default class AlertScreen extends Component{
                     </View> */}
                     <ScrollView ref={ (c) => {this.scroll = c}}>
                     <View style={{flexDirection:"row",paddingRight:10,
-                        paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
+                        paddingLeft:10,backgroundColor:'#4d6bcb',height:60}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Alerts</Text>
 
                         {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
-                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity style={{marginTop:10}}
                                           onPress={this.onTestNameShowpicker} >
-
+                            <View style={{flexDirection:"column"}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Search By{"\n"}Date  </Text>
+                                    </View>
                         </TouchableOpacity>
                         <ModalFilterPicker
                             visible={this.state.pickervisible2}
@@ -765,9 +768,13 @@ export default class AlertScreen extends Component{
                             options={medsfrequecy}
                             optionTextStyle={style={fontSize:16}}
                         />
-                        <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity style={{marginTop:5,marginLeft:10}}
                                           onPress={this.onplusButtonPress}>
+                                          <View style={{flexDirection:"column"}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Add{"\n"}Alerts  </Text>
+                            </View>
 
                         </TouchableOpacity>
                     </View>
