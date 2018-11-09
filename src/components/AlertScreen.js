@@ -403,7 +403,7 @@ export default class AlertScreen extends Component{
       //#####
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {
-          // alert(JSON.stringify(userInfo));
+          
           let tempuserdata = userdata;
       let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
       
@@ -415,18 +415,17 @@ export default class AlertScreen extends Component{
           userdata.username = jsonuserinfo.username;
           userdata.age = jsonuserinfo.age;
           userdata.gender = jsonuserinfo.gender;
-          // alert((userdata.mobile)+(userdata.jwt))
+          
           
       }).done();
 
       await AsyncStorage.getItem('useralertInfo')
       .then((useralertInfo) => {
-    //   alert(JSON.stringify(useralertInfo));
+    
       let tempuseralertdata = testdata;
       testdata = useralertInfo ? JSON.parse(useralertInfo) : tempuseralertdata;
 
 
-      // alert("initial fetch " +JSON.stringify(testdata));
 
       }).done(() => {
       if(!(testdata.length)) {
@@ -481,7 +480,6 @@ export default class AlertScreen extends Component{
       } //end of if no test results in Async Storage
       else {
         medicinetypes = testdata.slice();
-        // alert('medicinetypes '+JSON.stringify(medicinetypes) + ' testdata: ' + JSON.stringify(testdata));
 
         // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
         // for( i=0; i<l; i++) {
@@ -515,7 +513,6 @@ export default class AlertScreen extends Component{
        //^^^^^^^
        RNCalendarEvents.authorizationStatus()
       .then(status => {
-        // alert(status);
         this.setState({ cal_auth: status });
         if(status === 'undetermined') {
             RNCalendarEvents.authorizeEventStore()
@@ -545,7 +542,6 @@ export default class AlertScreen extends Component{
           RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
           .then((thisevent) => {
         //   if(thisevent.id.toString().includes('SmartMedi')){
-          alert(JSON.stringify(thisevent))
         // }
     })
           .catch(error => { alert(error)});
@@ -602,7 +598,6 @@ export default class AlertScreen extends Component{
             this.setState({selectedmedicinefrequency: newfrequency,
             filteredTestResult: medicinetypes.slice() });
 
-            // alert('='+newfrequency+'='+'medicinetypes: '+JSON.stringify(medicinetypes));
         }
         else {
             this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
@@ -655,7 +650,6 @@ export default class AlertScreen extends Component{
 
         this.setState({selectedmedicinefrequency: testdates[newdateindex].key});
 
-        // alert("Swiped left "+ testdates[newdateindex].key);
         this.filterByMedfreq(testdates[newdateindex].key);
 
     }
@@ -675,7 +669,6 @@ export default class AlertScreen extends Component{
         this.setState({selectedmedicinefrequency: testdates[newdateindex].key});
 
 
-        // alert("Swiped Right "+ testdates[newdateindex].key);
         this.filterByMedfreq(testdates[newdateindex].key);
     }
 
@@ -746,19 +739,19 @@ export default class AlertScreen extends Component{
                     </View> */}
                     <ScrollView ref={ (c) => {this.scroll = c}}>
                     <View style={{flexDirection:"row",paddingRight:10,
-                        paddingLeft:10,backgroundColor:'#4d6bcb',height:60}}>
+                        paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Alerts</Text>
 
                         {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
-                        <TouchableOpacity style={{marginTop:10}}
+                        <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker} >
-                            <View style={{flexDirection:"column"}}>
+                            <View style={{flexDirection:"column",marginTop:11}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
-                                    Search By{"\n"}Date  </Text>
+                                    Search</Text>
                                     </View>
                         </TouchableOpacity>
                         <ModalFilterPicker
@@ -768,12 +761,12 @@ export default class AlertScreen extends Component{
                             options={medsfrequecy}
                             optionTextStyle={style={fontSize:16}}
                         />
-                        <TouchableOpacity style={{marginTop:5,marginLeft:10}}
+                        <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
-                                          <View style={{flexDirection:"column"}}>
+                                          <View style={{flexDirection:"column",marginTop:5,marginLeft:10}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
-                                    Add{"\n"}Alerts  </Text>
+                                    Add Alerts  </Text>
                             </View>
 
                         </TouchableOpacity>

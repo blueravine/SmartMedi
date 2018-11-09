@@ -898,18 +898,18 @@ export default class Home extends Component {
                                          onPress={this.onNametextPress}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,marginRight:100,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{marginTop:10}}
+                        <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
-                                         <View style={{flexDirection:"column"}}>
+                                         <View style={{flexDirection:"column",marginTop:10}}>
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Refresh </Text>
                             </View>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity style={{marginTop:10}}
+                        <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
-                                          <View style={{flexDirection:"column",marginLeft:10}}>
+                                          <View style={{flexDirection:"column",marginTop:11,marginLeft:10}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
@@ -922,9 +922,9 @@ export default class Home extends Component {
                             options={testdates}
                             optionTextStyle={style={fontSize:16}}
                         />
-                        <TouchableOpacity style={{marginTop:5,paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity style={{paddingRight:10,paddingLeft:10}}
                                           onPress={this.onplusButtonPress}>
-                                          <View style={{flexDirection:"column"}}>
+                                          <View style={{flexDirection:"column",marginTop:5}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Add Test  </Text>
