@@ -506,6 +506,7 @@ export default class AddEventScreen extends Component {
     };
 
     async saveAlertsData() {
+        Keyboard.dismiss();
         this.setState({datepicked1: Moment(this.state.date).format('YYYYMMDD'),
                        datepicked2: Moment(this.state.date).format('YYYYMMDD')});
 
@@ -850,6 +851,13 @@ export default class AddEventScreen extends Component {
 
                                     </View>
                                 </View>
+
+                                {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                                 <Fab
                                     // active={this.state.active}
                                     // active={!this.state.active}

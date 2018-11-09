@@ -271,7 +271,7 @@ export default class AddTestData extends Component {
                 duration: Snackbar.LENGTH_SHORT,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
         // this.setState({loading: false})
     };
    
@@ -354,7 +354,7 @@ export default class AddTestData extends Component {
     };
 
     async saveTestsData() {
-
+        Keyboard.dismiss();
         this.setState({date: Moment(this.state.date).format('YYYYMMDD')});
 
         fetch('https://smartmedi.blueravine.in/testresult/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -543,6 +543,13 @@ export default class AddTestData extends Component {
 
                             </View>
                         </View>
+
+                        {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                         <Fab
                             // active={this.state.active}
                             // active={!this.state.active}
@@ -565,14 +572,14 @@ export default class AddTestData extends Component {
                                 });
                                 // this.resetData();
                             }
-                            else if(this.state.age===''){
-                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-                                Snackbar.show({
-                                    title: 'age field cannot be empty!',
-                                    duration: Snackbar.LENGTH_SHORT,
-                                });
-                                // this.resetData();
-                            }
+                            // else if(this.state.age===''){
+                            //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                            //     Snackbar.show({
+                            //         title: 'age field cannot be empty!',
+                            //         duration: Snackbar.LENGTH_SHORT,
+                            //     });
+                            //     // this.resetData();
+                            // }
                             else{
                                 // Actions.searchScreen(params);
                                 this.ShowHideActivityIndicator();

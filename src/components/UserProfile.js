@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image,StyleSheet,TouchableHighlight,TouchableOpacity,ImageBackground,AsyncStorage,BackHandler,TextInput,PixelRatio,
-    Dimensions,ScrollView,Alert} from 'react-native';
+    Dimensions,ScrollView,Alert,Keyboard} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail,Picker,DeckSwiper, Text,Item,Input,View,Fab, Button, Left, Body, Right,
     Footer, FooterTab} from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -145,7 +145,7 @@ export default class UserProfile extends Component {
     }
 
    async _EditUserInformation() {
-
+    Keyboard.dismiss();
     // alert('testing...');
     fetch('https://smartmedi.blueravine.in/user/update/mobile',
      { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -256,7 +256,7 @@ export default class UserProfile extends Component {
                 duration: Snackbar.LENGTH_SHORT,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
         // this.setState({loading: false})
     };
     _onPresstext(){
