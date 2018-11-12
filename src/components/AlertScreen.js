@@ -298,16 +298,17 @@ export default class AlertScreen extends Component{
         };
         this.handleAppStateChange = this.handleAppStateChange.bind(this);
         this._onLoadScreen = this._onLoadScreen.bind(this);
+        this.refreshalerttestresults = this.refreshalerttestresults.bind(this);
     }
 
 
     tabs = [
         {
-            key:"tests",
+            key:"home",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
             label:"Tests",
             icon : 'description',
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -315,7 +316,7 @@ export default class AlertScreen extends Component{
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'timeline' ,
             label:"Reports",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -323,7 +324,7 @@ export default class AlertScreen extends Component{
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'schedule' ,
             label:"Alerts",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -331,13 +332,13 @@ export default class AlertScreen extends Component{
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'person-pin' ,
             label:"Profile",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="gery" name={icon} />
+        <Icon size={24} color="white" name={icon} />
 
     );
 
@@ -376,7 +377,7 @@ export default class AlertScreen extends Component{
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'tests':
+            case 'home':
                 Actions.homeScreen();
                 break;
             case 'reports':
@@ -409,6 +410,58 @@ export default class AlertScreen extends Component{
     //     }, 3000)
     //         // this.setState({loading: false})
     // };
+    async refreshalerttestresults(){
+        fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+    // body: JSON.stringify({mobile:userdata.mobile,
+    //     jwtaudience:'SmartMedi'  })
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===4002) {
+            testdata = responseJson.Alert.slice();
+            AsyncStorage.setItem('useralertInfo',JSON.stringify(testdata))
+                .then((useralertInfo) => {
+                    
+                }).done(() =>{
+                    medicinetypes = testdata.slice();
+                    this.setState({filteredTestResult: medicinetypes.slice()});
+
+
+                    // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
+                    // for( i=0; i<l; i++) {
+                    //     if( tfrequency[testdata[i].medfrequency]) continue;
+                    //     tfrequency[testdata[i].medfrequency] = true;
+                    //     outfrequencies.push(testdata[i].medfrequency);
+                    // }
+                
+                    // medsfrequecy = [];
+                    // outfrequencies.forEach((currfreq, dateidx) => {
+                    //     let eachfreq = 
+                    //         {label:currfreq,key: currfreq};
+                
+                    //         medsfrequecy.push(eachfreq);
+                    // }); //forEach
+                
+                }); //done
+        }
+        else {
+            //###Need to handle error in retrieving test results from server
+        }
+    }).catch((error) => {
+            alert(error);
+        });
+    }
     _onLoadScreen(){
         AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -754,17 +807,25 @@ export default class AlertScreen extends Component{
                     {/* <View>
                         <DropdownAlert ref={ref => this.dropdown = ref} />
                     </View> */}
-                    <ScrollView ref={ (c) => {this.scroll = c}}>
+                   
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <View style={{flex:2,flexDirection:"row"}}>
+                        <View style={{flex:3,flexDirection:"row"}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,color:'#FFFFFF'}} >  Alerts</Text>
                         </View>
                         {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
-                        <View style={{flex:1,flexDirection:"row",justifyContent:'space-evenly'}}>
+                        <View style={{flex:2,flexDirection:"row",justifyContent:'space-evenly'}}>
+                        <TouchableOpacity 
+                                         onPress={this.refreshalerttestresults}>
+                                         <View style={{flexDirection:"column",marginTop:10}}>
+                            <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Refresh </Text>
+                            </View>
+                        </TouchableOpacity>
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker} >
                             <View style={{flexDirection:"column",marginTop:11}}>
@@ -791,7 +852,8 @@ export default class AlertScreen extends Component{
                         </TouchableOpacity>
                         </View>
                     </View>
-
+                    <ScrollView >
+                    <View style={{marginBottom:300}}>
                     <View >
                         <TextField label="Search Medicine By Name"
                                    lineHeight={30}
@@ -804,6 +866,7 @@ export default class AlertScreen extends Component{
                      
                                 {renderResultCard}
       
+                    </View>
                     </View>
                     </ScrollView>
                 </View>

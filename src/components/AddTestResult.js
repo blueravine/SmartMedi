@@ -459,11 +459,11 @@ export default class AddTestData extends Component {
                     </View>
 
                     {/* <Card style={{height:500}}> */}
-                    <ScrollView>
-                    <View style={{marginBottom:300}}>
+                   
                     <Card style={{ height:450,borderRightWidth:10,marginTop:15,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                         borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
-                    
+                     <ScrollView>
+                    <View style={{marginBottom:300}}>
                             <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
                             <TouchableOpacity onPress={this._showDateTimePicker} style={{width:280,justifyContent:'flex-end'}}>
                                
@@ -590,11 +590,11 @@ export default class AddTestData extends Component {
                             <Iccon type='Entypo' name='cross' size={30} color="#FFFFFF"/>
                         </Fab>
 
-                 
+                     </View>
+</ScrollView>
                     </Card>
                     {/* </Card> */}
-                    </View>
-</ScrollView>
+                
                    
                 </View>
                

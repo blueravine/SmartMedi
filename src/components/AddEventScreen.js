@@ -620,10 +620,11 @@ export default class AddEventScreen extends Component {
                         </View>
 
                         {/* <Card style={{height:500}}> */}
-                        <ScrollView><View style={{marginBottom:300}}>
+                        
                             <Card style={{ height:500,borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                                 borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
                                 {/*<TouchableOpacity onPress={this._showDateTimePicker} style={{alignItems:'center'}}>*/}
+                                <ScrollView><View style={{marginBottom:300}}>
                                     <View style={{flexDirection:"row",marginTop:10}}>
 
                                         <TouchableOpacity onPress={this._showDateTimePicker} style={{justifyContent:'flex-start'}}>
@@ -898,11 +899,11 @@ export default class AddEventScreen extends Component {
                                     onPress={this.onCancelButtonPress}>
                                     <Iccon type='Entypo' name='cross' size={30} color="#FFFFFF"/>
                                 </Fab>
-
+                                </View>
+</ScrollView>
                             </Card>
                         {/* </Card> */}
-                        </View>
-</ScrollView>
+      
 
 
 
