@@ -453,8 +453,44 @@ export default class AddTestData extends Component {
 
                 <View style={[styles.headerview]}>
                     
-                    <View style={{justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
+                    <View style={{flexDirection:"row",justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Test Result</Text>
+                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                             onPress={() => {        if(this.state.picked2===''){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Test Type field cannot be empty!',
+                                    duration: Snackbar.LENGTH_SHORT,
+                                });
+                            }
+                            else if(this.state.testvalue===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Test value field cannot be empty!',
+                                    duration: Snackbar.LENGTH_SHORT,
+                                });
+                                // this.resetData();
+                            }
+                            // else if(this.state.age===''){
+                            //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                            //     Snackbar.show({
+                            //         title: 'age field cannot be empty!',
+                            //         duration: Snackbar.LENGTH_SHORT,
+                            //     });
+                            //     // this.resetData();
+                            // }
+                            else{
+                                // Actions.searchScreen(params);
+                                this.ShowHideActivityIndicator();
+                                // this.saveTestsData();
+                                // this._onButtonPressed();
+                            }}}>
+                            <Icon type='MaterialIcons' name='done' size={25} color="#FFFFFF"/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            onPress={this.onCancelButtonPress}>
+                            <Icon type='MaterialIcons' name='close' size={25} color="#FFFFFF"/>
+                            </TouchableOpacity>
 
                     </View>
 
@@ -540,7 +576,7 @@ export default class AddTestData extends Component {
                         this.state.loading ?  <ActivityIndicator color = '#2eacde'
                                                                  size = "large" style={{padding: 20}} /> : null
                     }
-                        <Fab
+                        {/* <Fab
                             // active={this.state.active}
                             // active={!this.state.active}
                             direction="up"
@@ -588,7 +624,7 @@ export default class AddTestData extends Component {
                             position="bottomLeft"
                             onPress={this.onCancelButtonPress}>
                             <Iccon type='Entypo' name='cross' size={30} color="#FFFFFF"/>
-                        </Fab>
+                        </Fab> */}
 
                      </View>
 </ScrollView>

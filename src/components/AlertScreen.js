@@ -764,8 +764,7 @@ export default class AlertScreen extends Component{
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <Card style={{borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
-                    borderTopLeftRadius:10,borderLeftWidth:10}}>
+                <Card>
                 <View style={{flexDirection:'row' ,marginBottom:25}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
                             <Text style={{marginBottom:5}}>Medicine</Text>
