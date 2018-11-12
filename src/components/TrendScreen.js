@@ -371,7 +371,7 @@ export default class TrendScreen extends Component {
             activeTab: 'reports',
             active: 'false',
             pickervisible1: false,
-            selectedtestname:this.props.testname?this.props.testname:'',
+            selectedtestname:'',
             testrange:'',
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
@@ -473,6 +473,7 @@ export default class TrendScreen extends Component {
 
     async componentDidMount() {
 //#####
+
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             // alert(JSON.stringify(userInfo));
@@ -521,7 +522,10 @@ export default class TrendScreen extends Component {
                 trentestresultname.push(eachname);
                 }); //forEach
 
-                if(trentestresultname.length){
+                if(this.props.data){
+                    this.setState({selectedtestname:this.props.data});
+            }
+            else if(trentestresultname.length){
                 this.setState({selectedtestname: trentestresultname[0].key});
                 }
                               
@@ -605,7 +609,6 @@ export default class TrendScreen extends Component {
 
 
     render() {
-
 
 
         testdetail = {};

@@ -297,6 +297,7 @@ export default class AlertScreen extends Component{
 
         };
         this.handleAppStateChange = this.handleAppStateChange.bind(this);
+        this._onLoadScreen = this._onLoadScreen.bind(this);
     }
 
 
@@ -399,15 +400,15 @@ export default class AlertScreen extends Component{
         Actions.trendScreen(testtdetail);
     };
 
-    ShowHideActivityIndicator = () =>{
+    // ShowHideActivityIndicator = () =>{
 
-        this.setState({loading: true});
-                setTimeout(() => {
-            this._onLoadScreen();
-                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 3000)
-            // this.setState({loading: false})
-    };
+    //     this.setState({loading: true});
+    //             setTimeout(() => {
+    //         this._onLoadScreen();
+    //                 // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    //     }, 3000)
+    //         // this.setState({loading: false})
+    // };
     _onLoadScreen(){
         AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -461,6 +462,8 @@ export default class AlertScreen extends Component{
                       
                   }).done(() =>{
                       medicinetypes = testdata.slice();
+                      this.setState({filteredTestResult: medicinetypes.slice()});
+
   
                       // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
                       // for( i=0; i<l; i++) {
@@ -488,6 +491,8 @@ export default class AlertScreen extends Component{
         } //end of if no test results in Async Storage
         else {
           medicinetypes = testdata.slice();
+          this.setState({filteredTestResult: medicinetypes.slice()});
+
   
           // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
           // for( i=0; i<l; i++) {
@@ -508,7 +513,7 @@ export default class AlertScreen extends Component{
   
         });
   //#####
-          this.filterByMedfreq(this.state.selectedmedicinefrequency);
+ 
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
           AppState.addEventListener('change', this.handleAppStateChange);
           // this.fetchData();
@@ -556,8 +561,10 @@ export default class AlertScreen extends Component{
       // }
     }
      componentDidMount() {
+         this.setState({selectedmedicinefrequency:'All'});
       //#####
-      this.ShowHideActivityIndicator();
+    //   this.ShowHideActivityIndicator();
+    this._onLoadScreen();
     }
    
     componentWillUnmount() {
@@ -608,7 +615,6 @@ export default class AlertScreen extends Component{
         if(!newfrequency || newfrequency === 'All'){
             this.setState({selectedmedicinefrequency: newfrequency,
             filteredTestResult: medicinetypes.slice() });
-
         }
         else {
             this.setState( {filteredTestResult: medicinetypes.filter( (testresult) =>
@@ -751,12 +757,14 @@ export default class AlertScreen extends Component{
                     <ScrollView ref={ (c) => {this.scroll = c}}>
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Alerts</Text>
-
+                        <View style={{flex:2,flexDirection:"row"}}>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,color:'#FFFFFF'}} >  Alerts</Text>
+                        </View>
                         {/*<TouchableOpacity  style={{marginTop:5,paddingRight:10,paddingLeft:10}}*/}
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
+                        <View style={{flex:1,flexDirection:"row",justifyContent:'space-evenly'}}>
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker} >
                             <View style={{flexDirection:"column",marginTop:11}}>
@@ -774,13 +782,14 @@ export default class AlertScreen extends Component{
                         />
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
-                                          <View style={{flexDirection:"column",marginTop:5,marginLeft:10}}>
+                                          <View style={{flexDirection:"column",marginTop:5}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Add Alerts  </Text>
                             </View>
 
                         </TouchableOpacity>
+                        </View>
                     </View>
 
                     <View >
@@ -794,12 +803,7 @@ export default class AlertScreen extends Component{
                       
                      
                                 {renderResultCard}
-        {
-                        // Here the ? Question Mark represent the ternary operator.
-                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
-                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
-                                                                 size = "large" style={{padding: 20}} /> : null
-                    }
+      
                     </View>
                     </ScrollView>
                 </View>

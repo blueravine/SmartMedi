@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/Entypo';
 import Icoons from 'react-native-vector-icons/SimpleLineIcons';
 import Iccons from 'react-native-vector-icons/FontAwesome';
+import { Dropdown } from 'react-native-material-dropdown';
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const { width } = Dimensions.get('window');
@@ -44,7 +45,13 @@ const ac_icon_grey = require('../Images/ac_icon_grey.png');
 const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
 const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
 var paramsmobile={tempnumber:''};
-
+var genderselect = [
+    {
+    value: 'MALE',
+}, {
+    value: 'FEMALE',
+}
+]; 
 export default class UserProfile extends Component {
 
 
@@ -66,6 +73,7 @@ export default class UserProfile extends Component {
             invalidemail:''
         };
         this._validateemail = this._validateemail.bind(this);
+        this.onChangegenderTextPress=this.onChangegenderTextPress.bind(this);
     }
 
     tabs = [
@@ -259,8 +267,22 @@ export default class UserProfile extends Component {
         }, 500)
         // this.setState({loading: false})
     };
+
+    
+    onChangegenderTextPress(value){
+
+        // this.setState({selectedvalue: value});
+        this.setState({gender: value});
+    }
     _onPresstext(){
         Actions.registerScreen();
+     }
+     _onPressCancel(){
+        Actions.profileScreen();
+        this.setState({usereditableflag: false,
+            headername:'User Profile',
+            invalidemail:''});
+
      }
 
     render() {
@@ -281,6 +303,14 @@ export default class UserProfile extends Component {
                             <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
                             onPress={this.ShowHideActivityIndicator}>
                             <Icon type='MaterialIcons' name='done' size={25} color="#FFFFFF"/>
+                            
+                            {/* <Text>ADD</Text> */}
+                            </TouchableOpacity>
+                            }
+                            {(this.state.usereditableflag) &&
+                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            onPress={() => {this._onPressCancel()}}>
+                            <Icon type='MaterialIcons' name='close' size={25} color="#FFFFFF"/>
                             
                             {/* <Text>ADD</Text> */}
                             </TouchableOpacity>
@@ -365,15 +395,35 @@ export default class UserProfile extends Component {
 
 
 
-                                    <TextField label="Gender"
+                                    {/* <TextField label="Gender"
                                                lineHeight={30}
                                         value={this.state.gender}
                                         editable={this.state.usereditableflag}
                                                fontSize={16}
                                                returnKeyType={"done"}
                                         onChangeText={(itemValue) => this.setState({gender: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/> */}
+                                               <Dropdown
+                                           placeholder='Please select gender'
+                                            value={this.state.gender}
+                                            baseColor={'#000'}
+                                            textColor={'#000'}
+                                            selectedItemColor={'#000'}
+                                            itemColor={'#000'}
+                                            fontSize={13}
+                                            disabled={!this.state.usereditableflag}
+                                            itemPadding={8}
+                                            dropdownPosition={0}
+                                            // pickerStyle={{paddingLeft:200}}
+                                            containerStyle={{width:250,height:45,marginTop:15,borderRadius:20,paddingTop:2,paddingBottom:5,paddingLeft:width*0.04}}
+                                            rippleCentered={true}
+                                            overlayStyle={{position:'absolute',width:250,marginLeft:10,marginTop:450}}
+                                            inputContainerStyle={{ borderBottomColor: '#000' }}
+                                            dropdownOffset={top= 0}
+                                            data={genderselect}
+                                            // valueExtractor={({value})=> value}
+                                            onChangeText={(value)=>{this.onChangegenderTextPress(value)}}
+                                        />
                             </View>
 
                             {/* <Fab

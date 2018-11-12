@@ -28,6 +28,7 @@ const users = {
     name: 'John Doe',
     mobile: 9674892081
 };
+var selecttest;
 const testtypes=[
     // {
     //     id: 1267,
@@ -845,6 +846,7 @@ export default class Home extends Component {
         let localFilteredResult = this.state.filteredTestResult;
 
         renderResultName = localFilteredResult.map( (currentResult, resultIndex) => {
+            
             return(
                     <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
@@ -894,10 +896,13 @@ export default class Home extends Component {
                 <View style={[styles.headerview]}>
 
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
+                    <View style={{flex:2,flexDirection:"row"}}>
                     <TouchableOpacity style={{marginTop:10}}
                                          onPress={this.onNametextPress}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,marginRight:100,flex:2,color:'#FFFFFF'}} > {userdata.name}</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
+                    </View>
+                    <View style={{flex:1,flexDirection:"row",justifyContent:'space-evenly'}}>
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",marginTop:10}}>
@@ -906,10 +911,10 @@ export default class Home extends Component {
                                     Refresh </Text>
                             </View>
                         </TouchableOpacity>
-                        
+                    
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
-                                          <View style={{flexDirection:"column",marginTop:11,marginLeft:10}}>
+                                          <View style={{flexDirection:"column",marginTop:11}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
@@ -922,7 +927,7 @@ export default class Home extends Component {
                             options={testdates}
                             optionTextStyle={style={fontSize:16}}
                         />
-                        <TouchableOpacity style={{paddingRight:10,paddingLeft:10}}
+                        <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
                                           <View style={{flexDirection:"column",marginTop:5}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
@@ -931,6 +936,8 @@ export default class Home extends Component {
                             </View>
 
                         </TouchableOpacity>
+                        </View>
+                    
                     </View>
                   
                     <Card style={{flexDirection:'row',justifyContent:'space-between',marginTop:5}}>
