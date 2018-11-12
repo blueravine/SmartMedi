@@ -380,11 +380,11 @@ export default class TrendScreen extends Component {
 
     tabs = [
         {
-            key:"tests",
+            key:"home",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
-            label:"Tests",
+            label:"Home",
             icon : 'description',
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -392,7 +392,7 @@ export default class TrendScreen extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'timeline' ,
             label:"Reports",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -400,7 +400,7 @@ export default class TrendScreen extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'schedule' ,
             label:"Alerts",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -408,13 +408,13 @@ export default class TrendScreen extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'person-pin' ,
             label:"Profile",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="gery" name={icon} />
+        <Icon size={24} color="white" name={icon} />
 
     );
 
@@ -453,7 +453,7 @@ export default class TrendScreen extends Component {
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'tests':
+            case 'home':
                 Actions.homeScreen();
                 break;
             case 'reports':

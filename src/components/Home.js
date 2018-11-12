@@ -356,7 +356,7 @@ export default class Home extends Component {
         this.state = {
             loading:false,
             favticket:[],
-            activeTab: 'tests',
+            activeTab: 'home',
             active: 'false',
             isDateTimePickerVisible: false,
             selectedItem: undefined,
@@ -389,11 +389,11 @@ export default class Home extends Component {
 
     tabs = [
         {
-            key:"tests",
+            key:"home",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
-            label:"Tests",
+            label:"Home",
             icon : 'description',
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -401,7 +401,7 @@ export default class Home extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'timeline' ,
             label:"Reports",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -409,7 +409,7 @@ export default class Home extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'schedule' ,
             label:"Alerts",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -417,13 +417,13 @@ export default class Home extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'person-pin' ,
             label:"Profile",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="gery" name={icon} />
+        <Icon size={24} color="white" name={icon} />
 
     );
 
@@ -462,7 +462,7 @@ export default class Home extends Component {
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'tests':
+            case 'home':
                 break;
             case 'reports':
                 // this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
@@ -896,13 +896,13 @@ export default class Home extends Component {
                 <View style={[styles.headerview]}>
 
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
-                    <View style={{flex:2,flexDirection:"row"}}>
+                    <View style={{flex:3,flexDirection:"row"}}>
                     <TouchableOpacity style={{marginTop:10}}
                                          onPress={this.onNametextPress}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flex:1,flexDirection:"row",justifyContent:'space-evenly'}}>
+                    <View style={{flex:2,flexDirection:"row",justifyContent:'space-evenly'}}>
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",marginTop:10}}>

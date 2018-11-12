@@ -78,11 +78,11 @@ export default class UserProfile extends Component {
 
     tabs = [
         {
-            key:"tests",
+            key:"home",
             // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
             label:"Tests",
             icon : 'description',
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -90,7 +90,7 @@ export default class UserProfile extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'timeline' ,
             label:"Reports",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -98,7 +98,7 @@ export default class UserProfile extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'schedule' ,
             label:"Alerts",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         },
         {
@@ -106,21 +106,21 @@ export default class UserProfile extends Component {
             // icon={<Image source={require('../Images/route.png')}color="#669999" name="trips" style={{ width: 20, height: 20 }} />}
             icon : 'person-pin' ,
             label:"Profile",
-            barColor: '#FFFFFF',
+            barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ];
 
 
     renderIcon = icon => ({ isActive }) => (
-        <Icon size={24} color="gery" name={icon} />
+        <Icon size={24} color="white" name={icon} />
 
     )
 
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
-            case 'tests':
+            case 'home':
                 Actions.homeScreen();
                 break;
             case 'reports':
@@ -275,13 +275,41 @@ export default class UserProfile extends Component {
         this.setState({gender: value});
     }
     _onPresstext(){
+        Alert.alert(
+            'Exit App',
+            'Are you sure you want to login with different Mobile Number?', [{
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+            }, {
+                text: 'OK',
+                onPress: () => this._onPresschangeMobileNo()
+            }, ]
+            , {
+                cancelable: false
+            }
+        );
+        // Actions.registerScreen();
+     }
+     _onPresschangeMobileNo(){
+         
+        AsyncStorage.removeItem('userInfo')
+        AsyncStorage.removeItem('testInfo')
+        AsyncStorage.removeItem('usertestInfo')
+        AsyncStorage.removeItem('useralertInfo')
         Actions.registerScreen();
      }
      _onPressCancel(){
-        Actions.profileScreen();
         this.setState({usereditableflag: false,
             headername:'User Profile',
-            invalidemail:''});
+            invalidemail:'',
+            phone : userdata.mobile,
+            username : userdata.username,
+            name : userdata.name,
+            countrycode : userdata.countrycode,
+            ageofuser : userdata.age,
+            gender : userdata.gender,
+            email : userdata.email});
 
      }
 
@@ -324,8 +352,7 @@ export default class UserProfile extends Component {
                             </TouchableOpacity>
                             }
                         </View>
-                            {/* onPress={this.onAddButtonPress()} */}
-                        {/*<Card style={{height:500}}>*/}
+                         
                         <Card style={{height:500, borderRightWidth:10,borderBottomRightRadius:10,borderTopRightRadius:10,borderBottomLeftRadius:10,
                             borderTopLeftRadius:10,borderLeftWidth:10,shadowColor:"#f1f1f1f1",borderColor:'#FFFFFF'}}>
                            
@@ -340,9 +367,7 @@ export default class UserProfile extends Component {
                                                         Click to change Mobile Number  </Text>
                                                         </TouchableOpacity>
                                 <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
-                              
-                                    {/*<Image source = {require('../Images/phonecircle.png')} style = {{ width: 45, height: 45,marginTop: 78 }} />*/}
-                                    {/*<Iconns type='FontAwesome' name='whatsapp' size={22} color="#bbbfbc" style = {{marginTop: 25 }}/>*/}
+                            
                                     <TextField label="Phone No"
                                                lineHeight={30}
                                                keyboardType='phone-pad'
@@ -362,7 +387,6 @@ export default class UserProfile extends Component {
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
-                                {/*</View>*/}
                                 {/* onChangeText={(itemValue) => this.setState({email: itemValue})} */}
                                 <TextField label="Email"
                                                lineHeight={30}
@@ -426,32 +450,9 @@ export default class UserProfile extends Component {
                                         />
                             </View>
 
-                            {/* <Fab
-                                // active={this.state.active}
-                                // active={!this.state.active}
-                                direction="up"
-                                containerStyle={{position:'absolute'}}
-                                style={{ backgroundColor: '#071398' }}
-                                position="topRight"
-                                onPress={this.onAddButtonPress()}>
-                                <Icon type='MaterialIcons' name='done' size={15} color="#FFFFFF"/>
-                            </Fab>
-
-                            <Fab
-                                // active={this.state.active}
-                                // active={!this.state.active}
-                                direction="up"
-                                containerStyle={{position:'absolute',marginLeft:150}}
-                                style={{ backgroundColor: '#ff0f20' }}
-                                position="topLeft"
-                                onPress={this.onCancelButtonPress}>
-                                <Icon type='MaterialIcons' name='edit' size={15} color="#FFFFFF"/>
-                            </Fab> */}
+                            
                         </Card>
-                        {/*</Card>*/}
-
-                        {/*</Accordion>*/}
-                        {/*</ScrollView>*/}
+                        
                     </ScrollView>
                 </View>
 
