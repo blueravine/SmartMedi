@@ -63,6 +63,7 @@ var tests = [
     // },
 ];
 const testtypes=[];
+var testtdetail;
 var testsname = [
     // {
     //     key: 'FBS',
@@ -277,6 +278,7 @@ export default class AddTestData extends Component {
    
     async componentDidMount() {
         //#####
+        // alert(JSON.stringify(testtdetail));
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             // alert(JSON.stringify(userInfo));
@@ -427,7 +429,14 @@ export default class AddTestData extends Component {
     }
 
     render() {
+        testtdetail = {};
+        testtdetail = {
+            edittestdate:this.props.edittestdate,
+            edittestsname:this.props.edittestsname,
+            testvalue:this.props.testvalue,
+            testage:this.props.testage
 
+        };
         // temptests =
         // {
         //     id: 1267,
