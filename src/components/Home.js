@@ -373,6 +373,8 @@ export default class Home extends Component {
             selectedDate:'',
             filteredTestResult:[],
             selectedTestName:'',
+            selectedtestValue:'',
+            selectedName:'',
             istestSorted: false,
             result:[],
             gestureName: 'none',
@@ -834,13 +836,14 @@ export default class Home extends Component {
 
 
     render() {
-
-
-
         testtdetail = {};
         testtdetail = {
             testdate:this.state.selectedDate,
-            testname:''
+            edittestdate:this.state.selectedDate,
+            testname:'',
+            edittestsname:this.state.selectedTestName,
+            testvalue:this.state.selectedtestValue,
+            testage:userdata.age
 
         };
         let localFilteredResult = this.state.filteredTestResult;
@@ -857,7 +860,9 @@ export default class Home extends Component {
         });
 
         renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
-            return(<View>
+            return(
+                <TouchableOpacity onPress={() => {Actions.addtestScreen(testtdetail)}}>
+            <View>
                     {(currentResult.result==="high") &&
                     <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
                     }
@@ -867,7 +872,8 @@ export default class Home extends Component {
                     {(currentResult.result==="between") &&
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
                     }
-                    </View>
+            </View>
+                    </TouchableOpacity>
                     );
         });
 
