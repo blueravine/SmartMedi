@@ -221,6 +221,7 @@ export default class AddEventScreen extends Component {
             weektype:'Monday',
             resultnotes:'',
             meddate:8,
+            savealert:'Add'
 
         };
         this.onChangeTextPress=this.onChangeTextPress.bind(this);
@@ -469,6 +470,7 @@ export default class AddEventScreen extends Component {
   
     async componentDidMount() {
       //#####
+      
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {
           // alert(JSON.stringify(userInfo));
@@ -486,7 +488,22 @@ export default class AddEventScreen extends Component {
           // alert((userdata.mobile)+(userdata.jwt))
           
       }).done();
-              
+    //   alert(JSON.stringify(this.props));
+      if(this.props.startdate){
+        this.setState({savealert:'Update',
+                       datepicked1:Moment(this.props.startdate, 'YYYYMMDD'),
+                       datepicked2:Moment(this.props.enddate, 'YYYYMMDD'),
+                       picked3:this.props.medicinename,
+                       picked2:this.props.medfrequency,
+                       "timepicked": this.props.repeat1 ? Moment(this.props.repeat1,'hh:mm A') : '',
+                       "timepicked1": this.props.repeat2 ? Moment(this.props.repeat2,'hh:mm A') :'',
+                       "timepicked2": this.props.repeat3 ? Moment(this.props.repeat3,'hh:mm A') : '',
+                       "timepicked3": this.props.repeat4 ? Moment(this.props.repeat4,'hh:mm A') : '',
+                       "weektype": this.props.weekday,
+                       "meddate": this.props.meddate,
+                       resultnotes:this.props.notes});
+    }
+    // alert(Moment(this.state.timepicked).format('hh:mma'));
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -507,9 +524,10 @@ export default class AddEventScreen extends Component {
 
     async saveAlertsData() {
         Keyboard.dismiss();
-        this.setState({datepicked1: Moment(this.state.date).format('YYYYMMDD'),
-                       datepicked2: Moment(this.state.date).format('YYYYMMDD')});
-
+        // this.setState({datepicked1: Moment(this.state.date).format('YYYYMMDD'),
+        //                datepicked2: Moment(this.state.date).format('YYYYMMDD')});
+        if(this.state.savealert==='Add')
+        {
         fetch('https://smartmedi.blueravine.in/alert/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
@@ -523,14 +541,14 @@ export default class AddEventScreen extends Component {
         },
         body: JSON.stringify([{"mobile":userdata.mobile,
                                 "countrycode":userdata.countrycode,
-                                "startdate": this.state.datepicked1,
-                                "enddate": this.state.datepicked2,
+                                "startdate": Moment(this.state.datepicked1).format('YYYYMMDD'),
+                                "enddate": Moment(this.state.datepicked2).format('YYYYMMDD'),
                                 "medicinename": this.state.picked3,
                                 "medfrequency": this.state.picked2,
-                                "repeat1": this.state.timepicked,
-                                "repeat2": this.state.timepicke1,
-                                "repeat3": this.state.timepicke2,
-                                "repeat4": this.state.timepicked3,
+                                "repeat1": this.state.timepicked ? Moment(this.state.timepicked).format('hh:mm A') :'',
+                                "repeat2": this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mm A') : '',
+                                "repeat3": this.state.timepicke2 ? Moment(this.state.timepicked2).format('hh:mm A') : '',
+                                "repeat4": this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mm A') : '',
                                 "weekday": this.state.weektype,
                                 "meddate": this.state.meddate,
                                 "notes":this.state.resultnotes
@@ -583,7 +601,80 @@ export default class AddEventScreen extends Component {
             console.error(error);
         });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-  
+    }
+    else if(this.state.savealert==='Update'){
+            
+        fetch('https://smartmedi.blueravine.in/alert/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+        body: JSON.stringify({"mobile":userdata.mobile,
+                                "countrycode":userdata.countrycode,
+                                "startdate": Moment(this.state.datepicked1).format('YYYYMMDD'),
+                                "enddate": Moment(this.state.datepicked2).format('YYYYMMDD'),
+                                "medicinename": this.state.picked3,
+                                "medfrequency": this.state.picked2,
+                                "repeat1": this.state.timepicked ? Moment(this.state.timepicked).format('hh:mm A') :'',
+                                "repeat2": this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mm A') : '',
+                                "repeat3": this.state.timepicke2 ? Moment(this.state.timepicked2).format('hh:mm A') : '',
+                                "repeat4": this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mm A') : '',
+                                "weekday": this.state.weektype,
+                                "meddate": this.state.meddate,
+                                "notes":this.state.resultnotes
+                                })
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            if (responseJson.messagecode === 4001) {
+                fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                method: 'POST', // USE GET, POST, PUT,ETC
+                headers: { //MODIFY HEADERS
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization':'Bearer '+userdata.jwt,
+                    'mobile':userdata.mobile,
+                    'countrycode':userdata.countrycode,
+                    'jwtaudience':'SmartMedi'
+                    //    application/x-www-form-urlencoded
+                },
+            // body: JSON.stringify({mobile:userdata.mobile,
+            //     jwtaudience:'SmartMedi'  })
+            }) //fetch
+            .then((response) => response.json())
+            .then((responseJson) => {
+        
+                if (responseJson.messagecode===4002) {
+                    alertdata = responseJson.Alert.slice();
+                    AsyncStorage.setItem('useralertInfo',JSON.stringify(alertdata))
+                        .then((useralertInfo) => {
+                            // alert(usertestInfo);                            
+                        }).done(() =>{
+
+                            }); //done close
+                }
+                else {
+                    //###Need to handle error in retrieving test results from server
+                }
+            }).catch((error) => {
+                    alert(error);
+                });
+            }//if condition close
+            else {
+                //alert(responseJson.message);
+
+            }
+                //second then end after fetch
+            }).catch((error) => {
+                console.error(error);
+            });
+    }
     }
 
     render() {
@@ -614,9 +705,21 @@ export default class AddEventScreen extends Component {
 
                 <View style={[styles.headerview]}>
                 
-                        <View style={{flexDirection:"row", justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
-                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Alert</Text>
-                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                        <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
+                    <View style={{flex:3,flexDirection:"row"}}>
+                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add or Edit Alert</Text>
+                           </View>
+                           <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
+                        <TouchableOpacity 
+                                          onPress={this.ondeleteButtonPress}>
+                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
+                            <Icon type='MaterialIcons' name='delete' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                   Delete  </Text>
+                            </View>
+
+                        </TouchableOpacity>
+                            <TouchableOpacity
                             onPress={() => {        if(this.state.picked3===''){
                                         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                         Snackbar.show({
@@ -637,12 +740,21 @@ export default class AddEventScreen extends Component {
                                         this.ShowHideActivityIndicator();
                                         // this._onButtonPressed();
                                     }}}>
+                                    <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='done' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Save  </Text>
+                            </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            <TouchableOpacity
                             onPress={this.onCancelButtonPress}>
+                            <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='close' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Cancel  </Text>
+                            </View>
                             </TouchableOpacity>
+                            </View>
                         </View>
 
                         {/* <Card style={{height:500}}> */}
@@ -823,7 +935,7 @@ export default class AddEventScreen extends Component {
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         editable={false}
-                                                        value={this.state.timepicked ? Moment(this.state.timepicked).format('hh:mma') : this.state.timepicked}
+                                                        value={this.state.timepicked ? Moment(this.state.timepicked).format('hh:mm A') : ''}
                                                         editable={false}
                                                         fontSize={16}
                                                         onChangeText={(itemValue) => this.setState({timepicked: itemValue})}
@@ -835,7 +947,7 @@ export default class AddEventScreen extends Component {
                                             <TextField  label="Time"
                                                         lineHeight={30}
                                                         keyboardType='phone-pad'
-                                                        value={this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mma') : this.state.timepicked1}
+                                                        value={this.state.timepicked1 ? Moment(this.state.timepicked1).format('hh:mm A') : ''}
                                                         editable={false}
                                                         fontSize={16}
                                                         onChangeText={(itemValue) => this.setState({timepicked1: itemValue})}
@@ -845,7 +957,7 @@ export default class AddEventScreen extends Component {
                                             <TouchableOpacity onPress={this._showTimePicker2}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
-                                                        value={this.state.timepicked2 ? Moment(this.state.timepicked2).format('hh:mma') : this.state.timepicked2}
+                                                        value={this.state.timepicked2 ? Moment(this.state.timepicked2).format('hh:mm A') : ''}
                                                         editable={false}
                                                         fontSize={16}
                                                         onChangeText={(itemValue) => this.setState({timepicked2: itemValue})}
@@ -855,7 +967,7 @@ export default class AddEventScreen extends Component {
                                             <TouchableOpacity onPress={this._showTimePicker3}>
                                             <TextField  label="Time"
                                                         lineHeight={30}
-                                                        value={this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mma') : this.state.timepicked3}
+                                                        value={this.state.timepicked3 ? Moment(this.state.timepicked3).format('hh:mm A') : ''}
                                                         editable={false}
                                                         fontSize={16}
                                                         onChangeText={(itemValue) => this.setState({timepicked3: itemValue})}

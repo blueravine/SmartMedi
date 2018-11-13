@@ -600,7 +600,8 @@ export default class Home extends Component {
                         testdates.push(eachdata);
                     }); //forEach
                     this.setState({selectedDate: testdates.length ? testdates[0].key : ''});
-            
+                    // this.setState({selectedName: testdata.testname});
+                    
                     if(testdates.length){ this.filterByTestDate(testdates[0].key)}
                 
                                     }); //done
@@ -703,6 +704,7 @@ export default class Home extends Component {
     componentDidMount() {
         
         this.getusertestdata();
+       
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -839,11 +841,11 @@ export default class Home extends Component {
         testtdetail = {};
         testtdetail = {
             testdate:this.state.selectedDate,
-            edittestdate:this.state.selectedDate,
+            // edittestdate:this.state.selectedDate,
             testname:'',
-            edittestsname:this.state.selectedTestName,
-            testvalue:this.state.selectedtestValue,
-            testage:userdata.age
+            // edittestsname:this.state.selectedName,
+            // edittestvalue:this.state.selectedtestValue,
+            // testage:userdata.age
 
         };
         let localFilteredResult = this.state.filteredTestResult;
@@ -861,7 +863,7 @@ export default class Home extends Component {
 
         renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <TouchableOpacity onPress={() => {Actions.addtestScreen(testtdetail)}}>
+                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
             <View>
                     {(currentResult.result==="high") &&
                     <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
@@ -908,10 +910,10 @@ export default class Home extends Component {
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{flex:2,flexDirection:"row",justifyContent:'space-evenly'}}>
+                    <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
-                                         <View style={{flexDirection:"column",marginTop:10}}>
+                                         <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Refresh </Text>
@@ -920,7 +922,7 @@ export default class Home extends Component {
                     
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
-                                          <View style={{flexDirection:"column",marginTop:11}}>
+                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
@@ -935,7 +937,7 @@ export default class Home extends Component {
                         />
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
-                                          <View style={{flexDirection:"column",marginTop:5}}>
+                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Add Test  </Text>

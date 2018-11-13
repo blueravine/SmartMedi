@@ -9,7 +9,7 @@ import Moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Iccon from 'react-native-vector-icons/Entypo';
 import Icons from 'react-native-vector-icons/FontAwesome5';
-import Iccons from 'react-native-vector-icons/Foundation'
+import Iccons from 'react-native-vector-icons/MaterialCommunityIcons'
 import BottomNavigation, {
     ShiftingTab
 } from 'react-native-material-bottom-navigation';
@@ -126,6 +126,7 @@ export default class AddTestData extends Component {
             date: new Date(),
             selected1: '',
             selectedtestname:'',
+            saveaction:'Add'
 
         };
         
@@ -278,7 +279,7 @@ export default class AddTestData extends Component {
    
     async componentDidMount() {
         //#####
-        // alert(JSON.stringify(testtdetail));
+        
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             // alert(JSON.stringify(userInfo));
@@ -327,6 +328,15 @@ export default class AddTestData extends Component {
 
     });
 //#####
+// alert(JSON.stringify(this.props));
+                if(this.props.testdate){
+                    this.setState({saveaction:'Update',
+                                    date:Moment(this.props.testdate, 'YYYYMMDD'),
+                                   picked2:this.props.testname,
+                                   testvalue:this.props.value.toString(),
+                                   age:this.props.ageontest.toString(),
+                                   resultnotes:this.props.notes});
+                }
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -357,8 +367,9 @@ export default class AddTestData extends Component {
 
     async saveTestsData() {
         Keyboard.dismiss();
-        this.setState({date: Moment(this.state.date).format('YYYYMMDD')});
-
+        // this.setState({date: Moment(this.state.date).format('YYYYMMDD')});
+        if(this.state.saveaction==='Add')
+        {
         fetch('https://smartmedi.blueravine.in/testresult/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
@@ -370,7 +381,7 @@ export default class AddTestData extends Component {
             'jwtaudience':'SmartMedi'
             //    application/x-www-form-urlencoded
         },
-        body: JSON.stringify([{"testdate":this.state.date,
+        body: JSON.stringify([{"testdate":Moment(this.state.date).format('YYYYMMDD'),
                                 "testname":this.state.picked2,
                                 "mobile":userdata.mobile,
                                 "countrycode":userdata.countrycode,
@@ -420,37 +431,89 @@ export default class AddTestData extends Component {
 
             }
                 //second then end after fetch
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }
+
+        else if(this.state.saveaction==='Update'){
+            
+            fetch('https://smartmedi.blueravine.in/testresult/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer '+userdata.jwt,
+                'mobile':userdata.mobile,
+                'countrycode':userdata.countrycode,
+                'jwtaudience':'SmartMedi'
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({"testdate":Moment(this.state.date).format('YYYYMMDD'),
+                                    "testname":this.state.picked2,
+                                    "mobile":userdata.mobile,
+                                    "countrycode":userdata.countrycode,
+                                    "age":this.state.age,
+                                    "value":this.state.testvalue,
+                                    "notes":this.state.resultnotes
+                                    })
         })
-        .catch((error) => {
-            console.error(error);
-        });
-            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-      
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.messagecode === 2003) {
+                    fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    method: 'POST', // USE GET, POST, PUT,ETC
+                    headers: { //MODIFY HEADERS
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization':'Bearer '+userdata.jwt,
+                        'mobile':userdata.mobile,
+                        'countrycode':userdata.countrycode,
+                        'jwtaudience':'SmartMedi'
+                        //    application/x-www-form-urlencoded
+                    },
+                // body: JSON.stringify({mobile:userdata.mobile,
+                //     jwtaudience:'SmartMedi'  })
+                }) //fetch
+                .then((response) => response.json())
+                .then((responseJson) => {
+            
+                    if (responseJson.messagecode===2004) {
+                        testdata = responseJson.TestResult.slice();
+                        AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
+                            .then((usertestInfo) => {
+                                // alert(usertestInfo);                            
+                            }).done(() =>{
+    
+                                }); //done close
+                    }
+                    else {
+                        //###Need to handle error in retrieving test results from server
+                    }
+                }).catch((error) => {
+                        alert(error);
+                    });
+                }//if condition close
+                else {
+                    //alert(responseJson.message);
+    
+                }
+                    //second then end after fetch
+                }).catch((error) => {
+                    console.error(error);
+                });
+        }
     }
 
-    render() {
-        testtdetail = {};
-        testtdetail = {
-            edittestdate:this.props.edittestdate,
-            edittestsname:this.props.edittestsname,
-            testvalue:this.props.testvalue,
-            testage:this.props.testage
+    ondeleteButtonPress = () => {
+        // Actions.addtestScreen();
+    };
 
-        };
-        // temptests =
-        // {
-        //     id: 1267,
-        //         name: this.state.picked2,
-        //     value: this.state.testvalue,
-        //     normal: {min: null,
-        //     max: 100,
-        //     comparator: 'lessthan'
-        // },
-        //     result: 'high',
-        //         testdate: parseInt(Moment(this.state.date).format('YYYYMMDD')),
-        //     catid: 1142,
-        //     catname: this.state.picked1,
-        // };
+
+    render() {
+        
         return (
 
             <View style={styles.container}>
@@ -462,9 +525,21 @@ export default class AddTestData extends Component {
 
                 <View style={[styles.headerview]}>
                     
-                    <View style={{flexDirection:"row",justifyContent:'flex-start',backgroundColor:'#4d6bcb',height:50}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add Test Result</Text>
-                        <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                    <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
+                    <View style={{flex:3,flexDirection:"row"}}>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add or Edit Test Result</Text>
+                        </View>
+                    <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
+                        <TouchableOpacity 
+                                          onPress={this.ondeleteButtonPress}>
+                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
+                            <Icon type='MaterialIcons' name='delete' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                   Delete  </Text>
+                            </View>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity 
                              onPress={() => {        if(this.state.picked2===''){
                                 // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                 Snackbar.show({
@@ -494,13 +569,21 @@ export default class AddTestData extends Component {
                                 // this.saveTestsData();
                                 // this._onButtonPressed();
                             }}}>
+                            <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='done' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Save  </Text>
+                            </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginTop:10,paddingRight:10,paddingLeft:10}}
+                            <TouchableOpacity 
                             onPress={this.onCancelButtonPress}>
+                            <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='close' size={25} color="#FFFFFF"/>
+                            <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
+                                    Cancel  </Text>
+                            </View>
                             </TouchableOpacity>
-
+                        </View>
                     </View>
 
                     {/* <Card style={{height:500}}> */}

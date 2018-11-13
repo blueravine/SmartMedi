@@ -411,6 +411,7 @@ export default class AlertScreen extends Component{
     //         // this.setState({loading: false})
     // };
     async refreshalerttestresults(){
+        
         fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
@@ -577,40 +578,40 @@ export default class AlertScreen extends Component{
          // Creates an alarm with the TAG iDream at 17:30 hrs.
   
          //^^^^^^^
-         RNCalendarEvents.authorizationStatus()
-        .then(status => {
-          this.setState({ cal_auth: status });
-          if(status === 'undetermined') {
-              RNCalendarEvents.authorizeEventStore()
-              .then((out) => {
-                if(out == 'authorized') {
-                  // set the new status to the auth state
-                  this.setState({ cal_auth: out })
-                }
-              })
-              .catch(error => console.warn('Auth Error: ', error));
-            }
+    //      RNCalendarEvents.authorizationStatus()
+    //     .then(status => {
+    //       this.setState({ cal_auth: status });
+    //       if(status === 'undetermined') {
+    //           RNCalendarEvents.authorizeEventStore()
+    //           .then((out) => {
+    //             if(out == 'authorized') {
+    //               // set the new status to the auth state
+    //               this.setState({ cal_auth: out })
+    //             }
+    //           })
+    //           .catch(error => console.warn('Auth Error: ', error));
+    //         }
           
-        })
-        .catch(error => {
-         alert(error)
-        });
-        //^^^^^^^
-          RNCalendarEvents.saveEvent('Title of event', {
-              // id: 'SmartMedi100',
-              startDate: '2018-11-08T09:50:00.000Z',
-              endDate: '2018-12-08T09:50:00.000Z',
-              alarm: [{
-                date: -2
-              }]
-            });
+    //     })
+    //     .catch(error => {
+    //      alert(error)
+    //     });
+    //     //^^^^^^^
+    //       RNCalendarEvents.saveEvent('Title of event', {
+    //           // id: 'SmartMedi100',
+    //           startDate: '2018-11-08T09:50:00.000Z',
+    //           endDate: '2018-12-08T09:50:00.000Z',
+    //           alarm: [{
+    //             date: -2
+    //           }]
+    //         });
   
-            RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
-            .then((thisevent) => {
-          //   if(thisevent.id.toString().includes('SmartMedi')){
-          // }
-      })
-            .catch(error => { alert(error)});
+    //         RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
+    //         .then((thisevent) => {
+    //       //   if(thisevent.id.toString().includes('SmartMedi')){
+    //       // }
+    //   })
+    //         .catch(error => { alert(error)});
       // }
     }
      componentDidMount() {
@@ -658,11 +659,11 @@ export default class AlertScreen extends Component{
         Actions.addeventScreen();
     };
 
-    displayAlert(msg) {
-        // Toast.show(" current result name" +msg,Toast.LONG)
-        testtdetail.medicinename=msg;
-        // Actions.trendScreen(testtdetail);
-    };
+    // EditAlert(msg) {
+    //     // Toast.show(" current result name" +msg,Toast.LONG)
+    //     testtdetail.medicinename=msg;
+    //     // Actions.trendScreen(testtdetail);
+    // };
 
     filterByMedfreq(newfrequency){
         if(!newfrequency || newfrequency === 'All'){
@@ -764,7 +765,9 @@ export default class AlertScreen extends Component{
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
+                
                 <Card>
+                 <TouchableOpacity onPress={() => {Actions.addeventScreen(currentResult)}}>
                 <View style={{flexDirection:'row' ,marginBottom:25}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
                             <Text style={{marginBottom:5}}>Medicine</Text>
@@ -773,9 +776,9 @@ export default class AlertScreen extends Component{
                         </View>
 
                         <View style={{flexDirection:"column",justifyContent:'flex-start',flex:3}}>
-                            <TouchableOpacity onPress={() => {this.displayAlert(currentResult.medicinename)}}>
+                           
                                 <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medicinename}</Text>
-                            </TouchableOpacity>
+                        
                             <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medfrequency}</Text>
                             {(currentResult.medfrequency==="Daily") &&
                             <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {currentResult.repeat4}</Text>
@@ -789,6 +792,7 @@ export default class AlertScreen extends Component{
 
                          </View>
                 </View>
+                </TouchableOpacity>
                 </Card>
                     );
         });
@@ -816,10 +820,10 @@ export default class AlertScreen extends Component{
                         {/*onPress={() => {(this.openDialog(true))}}>*/}
                         {/*<Icons type='FontAwesome' name='search' size={30} color="#FFFFFF"/>*/}
                         {/*</TouchableOpacity>*/}
-                        <View style={{flex:2,flexDirection:"row",justifyContent:'space-evenly'}}>
+                        <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
                         <TouchableOpacity 
                                          onPress={this.refreshalerttestresults}>
-                                         <View style={{flexDirection:"column",marginTop:10}}>
+                                         <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Refresh </Text>
@@ -827,7 +831,7 @@ export default class AlertScreen extends Component{
                         </TouchableOpacity>
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker} >
-                            <View style={{flexDirection:"column",marginTop:11}}>
+                            <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
@@ -842,7 +846,7 @@ export default class AlertScreen extends Component{
                         />
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
-                                          <View style={{flexDirection:"column",marginTop:5}}>
+                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icons type='MaterialCommunityIcons' name='plus' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Add Alerts  </Text>
