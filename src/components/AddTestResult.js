@@ -126,7 +126,8 @@ export default class AddTestData extends Component {
             date: new Date(),
             selected1: '',
             selectedtestname:'',
-            saveaction:'Add'
+            saveaction:'Add',
+            testheader:'Add Test Result'
 
         };
         
@@ -269,8 +270,8 @@ export default class AddTestData extends Component {
             this.saveTestsData();
             Actions.homeScreen();
             Snackbar.show({
-                title: 'Test details added succesfully',
-                duration: Snackbar.LENGTH_SHORT,
+                title: 'Test details added succesfully. Please "Refresh"',
+                duration: Snackbar.LENGTH_LONG,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         }, 500)
@@ -331,6 +332,7 @@ export default class AddTestData extends Component {
 // alert(JSON.stringify(this.props));
                 if(this.props.testdate){
                     this.setState({saveaction:'Update',
+                                    testheader:'Edit Test Result',
                                     date:Moment(this.props.testdate, 'YYYYMMDD'),
                                    picked2:this.props.testname,
                                    testvalue:this.props.value.toString(),
@@ -506,8 +508,89 @@ export default class AddTestData extends Component {
                 });
         }
     }
+    handleDeleteButton = () => {
+        Alert.alert(
+            'Delete Record',
+            'Do you want to delete this test Result?', [{
+                text: 'CANCEL',
+                onPress: () => alert('Successfully canceled the Test Result Delete.')
+                
+            }, {
+                text: 'OK',
+                onPress: () =>  {this.ondeleteButtonPress(),Actions.homeScreen()}
+            }, ]
+            , {
+                cancelable: false
+            }
+        );
+        return true;
+    };
 
     ondeleteButtonPress = () => {
+        fetch('https://smartmedi.blueravine.in/testresult/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+    body: JSON.stringify({"testdate":this.props.testdate,
+                        "testname":this.props.testname,
+                        "mobile":userdata.mobile,
+                        "countrycode":userdata.countrycode  })
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===2007) {
+            Snackbar.show({
+                title: 'Successfully deleted the Test Result. Please "Refresh" ',
+                duration: Snackbar.LENGTH_LONG,
+                
+            });
+            fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer '+userdata.jwt,
+                'mobile':userdata.mobile,
+                'countrycode':userdata.countrycode,
+                'jwtaudience':'SmartMedi'
+                //    application/x-www-form-urlencoded
+            },
+        // body: JSON.stringify({mobile:userdata.mobile,
+        //     jwtaudience:'SmartMedi'  })
+        }) //fetch
+        .then((response) => response.json())
+        .then((responseJson) => {
+    
+            if (responseJson.messagecode===2004) {
+                testdata = responseJson.TestResult.slice();
+                AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
+                    .then((usertestInfo) => {
+                        // alert(usertestInfo);                            
+                    }).done(() =>{
+
+                        }); //done close
+            }
+            else {
+                //###Need to handle error in retrieving test results from server
+            }
+        }).catch((error) => {
+                alert(error);
+            });
+        }
+        else {
+            //###Need to handle error in retrieving test results from server
+        }
+    }).catch((error) => {
+            alert(error);
+        });
         // Actions.addtestScreen();
     };
 
@@ -527,11 +610,11 @@ export default class AddTestData extends Component {
                     
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
-                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add or Edit Test Result</Text>
+                        <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  {this.state.testheader}</Text>
                         </View>
                     <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
                         <TouchableOpacity 
-                                          onPress={this.ondeleteButtonPress}>
+                                          onPress={this.handleDeleteButton}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='delete' size={25} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >

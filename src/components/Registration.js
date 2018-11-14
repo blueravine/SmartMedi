@@ -20,6 +20,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 global.sessionid ;
+global.callerscreen ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';
@@ -88,7 +89,7 @@ export default class Registration extends Component {
 
     _onPress(){
 
-        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/'+this.state.phone+'/AUTOGEN/Registration', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.countrycode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'GET', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -114,6 +115,7 @@ export default class Registration extends Component {
                     }).done(() =>{
                         // alert("calling inside fetch user");
                         sessionid = responseJson.Details;
+                        callerscreen='registration';
                         Actions.otpScreen();
                 });
             }

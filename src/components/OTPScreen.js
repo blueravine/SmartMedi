@@ -60,6 +60,7 @@ export default class OTPScreen extends Component {
     .then((responseJson) => {
         if((responseJson.Status==="Success") && (responseJson.Details==="OTP Matched")){
 
+            if(callerscreen==='registration'){
             fetch('https://smartmedi.blueravine.in/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
@@ -136,6 +137,80 @@ export default class OTPScreen extends Component {
                     }).catch((error) => {
                 alert(error);
             });
+        }
+        else if(callerscreen==='login'){
+            fetch('https://smartmedi.blueravine.in/user/update/password', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({mobile:userdata.mobile,
+                                  password:this.state.password,
+                                  countrycode:userdata.countrycode })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                    // alert(JSON.stringify(responseJson));
+                if (responseJson.messagecode===1009) {
+                    // Actions.loginScreen({phone:this.props.phone});
+                    fetch('https://smartmedi.blueravine.in/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                        method: 'POST', // USE GET, POST, PUT,ETC
+                        headers: { //MODIFY HEADERS
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            //    application/x-www-form-urlencoded
+                        },
+                        body: JSON.stringify({mobile:userdata.mobile,
+                                              countrycode:userdata.countrycode,  
+                                              password: this.state.password,
+                                              jwtaudience:'SmartMedi'  })
+                    })
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+
+                            if (responseJson.messagecode===1003) {
+                                userdata.jwt = responseJson.token;
+                                AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                                    .then((userInfo) => {
+                                        
+                                    }).done(() =>{
+                                        Actions.homeScreen();
+                            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                                    });
+                            // Actions.homeScreen();
+                            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            
+                        }
+                            else if(responseJson.messagecode===1004)
+                            {
+                                alert(responseJson.message);
+                            }
+                            else 
+                            {
+                                alert("An error occurred while authenticating user! Please try again..");
+                            }
+
+                        }).catch((error) => {
+                        alert(error);
+                    });
+                    // Actions.homeScreen(paramsmobile);
+                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                // else if(responseJson.messagecode===1010)
+                // {
+                //     alert(responseJson.message);
+                // }
+                else{
+                    alert("An error occurred while updating password! Please try again..");
+                }
+
+
+                }).catch((error) => {
+            alert(error);
+        });
+        }
         }
         else if((responseJson.Status==="Success") && (responseJson.Details==="OTP Mismatched")){
             //sessionid=responseJson.Details;

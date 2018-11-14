@@ -221,7 +221,8 @@ export default class AddEventScreen extends Component {
             weektype:'Monday',
             resultnotes:'',
             meddate:8,
-            savealert:'Add'
+            savealert:'Add',
+            alertheader:'Add Alert',
 
         };
         this.onChangeTextPress=this.onChangeTextPress.bind(this);
@@ -460,7 +461,7 @@ export default class AddEventScreen extends Component {
             // alert("saved test data " +JSON.stringify(temptests));
             Actions.alertScreen();
             Snackbar.show({
-                title: 'Medicine details added succesfully',
+                title: 'Medicine details added succesfully. Please "Refresh"',
                 duration: Snackbar.LENGTH_SHORT,
             });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -491,6 +492,7 @@ export default class AddEventScreen extends Component {
     //   alert(JSON.stringify(this.props));
       if(this.props.startdate){
         this.setState({savealert:'Update',
+                       alertheader:'Edit Alert',
                        datepicked1:Moment(this.props.startdate, 'YYYYMMDD'),
                        datepicked2:Moment(this.props.enddate, 'YYYYMMDD'),
                        picked3:this.props.medicinename,
@@ -676,6 +678,93 @@ export default class AddEventScreen extends Component {
             });
     }
     }
+    handleDeletealertButton = () => {
+        Alert.alert(
+            'Delete Record',
+            'Do you want to delete this test Result?', [{
+                text: 'CANCEL',
+                onPress: () => alert('Successfully canceled the Alert Result Delete.')
+                
+            }, {
+                text: 'OK',
+                onPress: () =>  {this.ondeletealertButtonPress(),Actions.alertScreen()}
+            }, ]
+            , {
+                cancelable: false
+            }
+        );
+        return true;
+    };
+
+    ondeletealertButtonPress = () => {
+        fetch('https://smartmedi.blueravine.in/alert/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'POST', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+userdata.jwt,
+            'mobile':userdata.mobile,
+            'countrycode':userdata.countrycode,
+            'jwtaudience':'SmartMedi'
+            //    application/x-www-form-urlencoded
+        },
+    body: JSON.stringify({"mobile": userdata.mobile,
+                        "countrycode": userdata.countrycode,
+                        "startdate": this.props.startdate,
+                        "enddate": this.props.enddate,
+                        "medicinename":this.props.medicinename,
+                        "medfrequency":this.props.medfrequency   })
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===4006) {
+            Snackbar.show({
+                title: 'Successfully deleted the Alert Result. Please "Refresh" ',
+                duration: Snackbar.LENGTH_LONG,
+                
+            });
+            fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer '+userdata.jwt,
+                'mobile':userdata.mobile,
+                'countrycode':userdata.countrycode,
+                'jwtaudience':'SmartMedi'
+                //    application/x-www-form-urlencoded
+            },
+        // body: JSON.stringify({mobile:userdata.mobile,
+        //     jwtaudience:'SmartMedi'  })
+        }) //fetch
+        .then((response) => response.json())
+        .then((responseJson) => {
+    
+            if (responseJson.messagecode===4002) {
+                alertdata = responseJson.Alert.slice();
+                AsyncStorage.setItem('useralertInfo',JSON.stringify(alertdata))
+                    .then((useralertInfo) => {
+                        // alert(usertestInfo);                            
+                    }).done(() =>{
+
+                        }); //done close
+            }
+            else {
+                //###Need to handle error in retrieving test results from server
+            }
+        }).catch((error) => {
+                alert(error);
+            });
+        }
+        else {
+            //###Need to handle error in retrieving test results from server
+        }
+    }).catch((error) => {
+            alert(error);
+        });
+        // Actions.addtestScreen();
+    };
 
     render() {
 
@@ -707,11 +796,11 @@ export default class AddEventScreen extends Component {
                 
                         <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
-                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Add or Edit Alert</Text>
+                            <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  {this.state.alertheader}</Text>
                            </View>
                            <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
                         <TouchableOpacity 
-                                          onPress={this.ondeleteButtonPress}>
+                                          onPress={this.handleDeletealertButton}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
                             <Icon type='MaterialIcons' name='delete' size={25} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
