@@ -107,6 +107,45 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
     _onPresstext(){
        Actions.registerScreen();
     }
+    _onPressforgetpassword(){
+        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.countrycode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'GET', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            //    application/x-www-form-urlencoded
+        },
+        // body: JSON.stringify({mobile:this.state.phone})
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            if (responseJson.Status === "Success") {
+        //         userdata.name = this.state.name;
+        //         userdata.mobile = this.state.phone;
+        //         userdata.countrycode = this.state.callingCode;
+        //         userdata.email = this.state.email;
+        //         userdata.username = this.state.username;
+        //         userdata.age = this.state.age;
+        //         userdata.gender = this.state.gender;
+        //         userdata.jwt = null;
+        // AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                // .then((userInfo) => {
+                //     //do nothing
+                // }).done(() =>{
+                    // alert("calling inside fetch user");
+                    sessionid = responseJson.Details;
+                    callerscreen='login';
+                    Actions.otpScreen();
+            // });
+        }
+        else {
+            alert(responseJson.message);
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+    }
     render() {
      
         return(
@@ -139,7 +178,7 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
         <TouchableOpacity style={{marginBottom:10,marginLeft:20}}
               onPress={() => {this._onPresstext()}}>
               <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
-                                    Click to change Mobile Number  </Text>
+                                    Click here to change Mobile Number  </Text>
                                     </TouchableOpacity>
                                     
         <View style={styles.inputContainer}>
@@ -151,7 +190,11 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
               underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}/>
         </View>
-
+        <TouchableOpacity style={{marginBottom:10,marginLeft:20}}
+              onPress={() => {this._onPressforgetpassword()}}>
+              <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
+                                    Forget Password ?  </Text>
+                                    </TouchableOpacity>
 <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={
     this._onVerifyPassword
     // this.ShowHideActivityIndicator
@@ -202,7 +245,7 @@ const styles = StyleSheet.create(
                 borderBottomWidth: 1,
                 width:250,
                 height:45,
-                marginBottom:20,
+                marginBottom:10,
                 marginLeft:50,
                 flexDirection: 'row',
                 justifyContent:"space-evenly",
