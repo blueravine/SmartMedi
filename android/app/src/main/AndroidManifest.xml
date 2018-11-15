@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
  
-    
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -38,8 +37,6 @@
         <!--<meta-data-->
                 <!--android:name="com.google.android.geo.API_KEY"-->
                 <!--android:value="AIzaSyD3a7smG62nUL0Wp4jsP4Iv3rNg763HFyQ"/>-->
-
-    
     </application>
 
 </manifest>
