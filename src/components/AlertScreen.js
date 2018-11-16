@@ -293,10 +293,11 @@ export default class AlertScreen extends Component{
             result:[],
             gestureName: 'none',
             timer:500,
-            cal_auth: ''
+            cal_auth: '',
+            appState: AppState.currentState
 
         };
-        this.handleAppStateChange = this.handleAppStateChange.bind(this);
+        this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._onLoadScreen = this._onLoadScreen.bind(this);
         this.refreshalerttestresults = this.refreshalerttestresults.bind(this);
     }
@@ -569,7 +570,7 @@ export default class AlertScreen extends Component{
   //#####
  
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-          AppState.addEventListener('change', this.handleAppStateChange);
+          AppState.addEventListener('change', this._handleAppStateChange);
           // this.fetchData();
   //           const calendars = await RNCalendarEvents.findCalendars();
   // const primaryCalendar = calendars.find(c => c.isPrimary && c.allowsModifications);
@@ -597,6 +598,20 @@ export default class AlertScreen extends Component{
     //      alert(error)
     //     });
     //     //^^^^^^^
+    PushNotification.localNotificationSchedule({
+        //... You can use all the options from localNotifications
+        message: "Medicine Alert", // (required)
+        ongoing: false, // (optional) set whether this is an "ongoing" notification
+        priority: "high", // (optional) set notification priority, default: high
+        visibility: "private", // (optional) set notification visibility, default: private
+        importance: "high", // (optional) set notification importance, default: high
+        playSound: true, // (optional) default: true
+        soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+        number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+        repeatType: 'hour', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+        actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+        date: new Date(Date.now() + (1 * 1000)) // in 60 secs
+      });
     //       RNCalendarEvents.saveEvent('Title of event', {
     //           // id: 'SmartMedi100',
     //           startDate: '2018-11-08T09:50:00.000Z',
@@ -619,18 +634,32 @@ export default class AlertScreen extends Component{
       //#####
     //   this.ShowHideActivityIndicator();
     this._onLoadScreen();
+    AppState.addEventListener('change', this._handleAppStateChange);
     }
    
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        AppState.removeEventListener('change', this.handleAppStateChange);
+        AppState.removeEventListener('change', this._handleAppStateChange);
     }
-    handleAppStateChange(appState) {
-        // (seconds) => this.setState({ seconds })
-        // this.setState({ seconds: true });
-        if (appState === 'background') {
-            // this.timer = setInterval(()=> this.fetchData(), 500);
-        }
+    _handleAppStateChange =(nextappState) => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            console.log('App has come to the foreground!')
+            PushNotification.localNotificationSchedule({
+                //... You can use all the options from localNotifications
+                message: "Medicine Alert", // (required)
+                ongoing: false, // (optional) set whether this is an "ongoing" notification
+                priority: "high", // (optional) set notification priority, default: high
+                visibility: "private", // (optional) set notification visibility, default: private
+                importance: "high", // (optional) set notification importance, default: high
+                playSound: true, // (optional) default: true
+                soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+                number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+                repeatType: 'hour', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+                actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+                date: new Date(Date.now() + (1 * 1000)) // in 60 secs
+              });
+          }
+          this.setState({appState: nextAppState});
     }
     handleBackButton = () => {
         Actions.homeScreen();

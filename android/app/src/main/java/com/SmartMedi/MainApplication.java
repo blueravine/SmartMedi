@@ -15,6 +15,7 @@ import com.imagepicker.ImagePickerPackage;
 import java.util.Arrays;
 import java.util.List;
 import com.calendarevents.CalendarEventsPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new ReactNativePushNotificationPackage(),
           new CalendarEventsPackage(),
             new SnackbarPackage(),
             new SendSMSPackage(),
