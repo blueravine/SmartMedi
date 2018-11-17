@@ -223,8 +223,10 @@ export default class AddEventScreen extends Component {
             meddate:8,
             savealert:'Add',
             alertheader:'Add Alert',
+            appState: AppState.currentState
 
         };
+        this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this.onChangeTextPress=this.onChangeTextPress.bind(this);
         this.onChangeFrequecyTextPress=this.onChangeFrequecyTextPress.bind(this);
 
@@ -505,13 +507,15 @@ export default class AddEventScreen extends Component {
                        "meddate": this.props.meddate,
                        resultnotes:this.props.notes});
     }
-    // alert(Moment(this.state.timepicked).format('hh:mma'));
+    // alert(Moment((Moment(this.props.startdate).format('YYYYMMDD')+ ' ' +Moment(this.props.repeat1).format('hh:mm A')), 'YYYYMMDD hh:mm A').format('DD-MM-YYYY hh:mm A'));
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
 
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
 
@@ -603,6 +607,20 @@ export default class AddEventScreen extends Component {
             console.error(error);
         });
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            PushNotification.localNotificationSchedule({
+                //... You can use all the options from localNotifications
+                message: "Medicine Alert", // (required)
+                ongoing: false, // (optional) set whether this is an "ongoing" notification
+                priority: "high", // (optional) set notification priority, default: high
+                visibility: "private", // (optional) set notification visibility, default: private
+                importance: "high", // (optional) set notification importance, default: high
+                playSound: true, // (optional) default: true
+                soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+                number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+                repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+                actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+                date: (Moment(Moment(this.props.startdate).format('YYYYMMDD')+ ' ' +Moment(this.props.repeat1).format('hh:mm A')), 'YYYYMMDD hh:mm A'), // in 60 secs
+              });
     }
     else if(this.state.savealert==='Update'){
             
@@ -676,8 +694,45 @@ export default class AddEventScreen extends Component {
             }).catch((error) => {
                 console.error(error);
             });
+            PushNotification.localNotificationSchedule({
+                //... You can use all the options from localNotifications
+                message: "Medicine Alert", // (required)
+                ongoing: false, // (optional) set whether this is an "ongoing" notification
+                priority: "high", // (optional) set notification priority, default: high
+                visibility: "private", // (optional) set notification visibility, default: private
+                importance: "high", // (optional) set notification importance, default: high
+                playSound: true, // (optional) default: true
+                soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+                number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+                repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+                actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+                date: (Moment(Moment(this.props.startdate).format('YYYYMMDD')+ ' ' +Moment(this.props.repeat1).format('hh:mm A')), 'YYYYMMDD hh:mm A'), // in 60 secs
+              });
     }
+  
     }
+
+    _handleAppStateChange =(nextappState) => {
+        if (this.state.appState.match(/inactive/) && nextAppState === 'active') {
+            console.log('App has come to the foreground!')
+            PushNotification.localNotificationSchedule({
+                //... You can use all the options from localNotifications
+                message: "Medicine Alert", // (required)
+                ongoing: false, // (optional) set whether this is an "ongoing" notification
+                priority: "high", // (optional) set notification priority, default: high
+                visibility: "private", // (optional) set notification visibility, default: private
+                importance: "high", // (optional) set notification importance, default: high
+                playSound: true, // (optional) default: true
+                soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+                number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+                repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
+                actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+                date: (Moment(Moment(this.props.startdate).format('YYYYMMDD')+ ' ' +Moment(this.props.repeat1).format('hh:mm A')), 'YYYYMMDD hh:mm A'), // in 60 secs
+              });
+          }
+          this.setState({appState: nextAppState});
+    }
+
     handleDeletealertButton = () => {
         Alert.alert(
             'Delete Record',
