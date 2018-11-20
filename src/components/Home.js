@@ -898,14 +898,14 @@ export default class Home extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#1C306F'/>
                 </View>
 
                 <View style={[styles.headerview]}>
 
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
-                    <TouchableOpacity style={{marginTop:10}}
+                    <TouchableOpacity 
                                          onPress={this.onNametextPress}>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>

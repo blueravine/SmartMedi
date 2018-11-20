@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Navigator,
     Platform, StyleSheet, View, Text,text,TextInput, Image,ActivityIndicator, TouchableOpacity, Alert,AsyncStorage,
-    AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,
+    AppRegistry,TouchableHighlight,StatusBar,Keyboard,Dimensions,Button,ScrollView,Animated,
     Easing,BackHandler,
 } from 'react-native';
 import {Card,icon} from 'native-base';
@@ -9,6 +9,7 @@ import { Actions, ActionConst } from 'react-native-router-flux'; // 4.0.0-beta.3
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icoon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Foundation';
+import Iccon from 'react-native-vector-icons/Feather'
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker, {
     getAllCountries
@@ -83,12 +84,21 @@ export default class Registration extends Component {
                 setTimeout(() => {
             this._onPress();
                     // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
             // this.setState({loading: false})
     };
 
-    _onPress(){
+    ShowHideActivityIndicatoruser = () =>{
 
+        this.setState({loading: true});
+                setTimeout(() => {
+            this._onPhoneEntered();
+                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }, 500)
+            // this.setState({loading: false})
+    };
+    _onPress(){
+        Keyboard.dismiss();
         fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.countrycode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'GET', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
@@ -129,6 +139,7 @@ export default class Registration extends Component {
     }
 
     _onPhoneEntered(){
+        Keyboard.dismiss();
         fetch('https://smartmedi.blueravine.in/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
@@ -213,12 +224,14 @@ export default class Registration extends Component {
                   placeholder="Phone No"
                   keyboardType="phone-pad"
                   maxLength={10}
-                  onBlur={() => {this._onPhoneEntered()}}
+                  onBlur={() => {this.ShowHideActivityIndicatoruser()}}
                   returnKeyType={"next"}
                   value={this.state.phone}
                   underlineColorAndroid='transparent'
                   onChangeText={(phone) => this.setState({phone})}/>
+                  <Iccon type='Feather' name='arrow-right-circle' size={20} color="#4d6bcb" style={{marginRight:10}}/>
             </View> 
+            
             {(this.state.uservisibiltyflag) &&
             <View>
                 <View style={styles.inputContainer}>
@@ -258,12 +271,7 @@ export default class Registration extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
         </View>
-        {
-                        // Here the ? Question Mark represent the ternary operator.
-                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
-                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
-                                                                 size = "large" style={{padding: 20}} /> : null
-                    }
+       
         <View style={styles.inputContainer}>
         <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:55}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
@@ -315,6 +323,12 @@ export default class Registration extends Component {
         </TouchableHighlight>
         </View>
     }
+    {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
     </ScrollView>
    
                 </View>

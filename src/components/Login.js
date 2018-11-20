@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {Navigator,
-    Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, Alert,AsyncStorage,
+    Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, ActivityIndicator,Alert,AsyncStorage,
     AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,Keyboard,
     Easing,BackHandler,
 } from 'react-native';
 import {Card,icon} from 'native-base';
 import { Actions, ActionConst } from 'react-native-router-flux'; // 4.0.0-beta.31
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icons from 'react-native-vector-icons/MaterialIcons'; 
 import Icoon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -29,16 +30,23 @@ export default class Login extends Component {
              loading:false,
             password: '',
             phone:'',
+            hidePassword: true
         };
-this._onVerifyPassword = this._onVerifyPassword.bind(this);
+        this._onVerifyPassword = this._onVerifyPassword.bind(this);
+        // this.state = { hidePassword: true }
     }
+        managePasswordVisibility = () =>
+        {
+            // function used to change password visibility
+            this.setState({ hidePassword: !this.state.hidePassword });
+        }
     ShowHideActivityIndicator = () =>{
 
         this.setState({loading: true});
         setTimeout(() => {
             this._onVerifyPassword()
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
         // this.setState({loading: false})
     };
     _onVerifyPassword(){
@@ -180,15 +188,23 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
               <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
                                     Click here to change Mobile Number  </Text>
                                     </TouchableOpacity>
-                                    
+        <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
         <View style={styles.inputContainer}>
-<Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+        <Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           <TextInput style={styles.inputs}
               placeholder="Password"
-              secureTextEntry={true}
               returnKeyType={"done"}
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
+              onChangeText={(password) => this.setState({password})}
+                maxLength={12}
+                // Making the Text Input Text Hidden.
+                secureTextEntry = { this.state.hidePassword }
+                />
+            <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>
+                <Image source = { ( this.state.hidePassword ) ? require('../Images/hide.png') : require('../Images/view.png') }
+                        style = { styles.btnImage } />
+            </TouchableOpacity>
+        </View>
         </View>
         <TouchableOpacity style={{marginBottom:10,marginLeft:20}}
               onPress={() => {this._onPressforgetpassword()}}>
@@ -196,12 +212,17 @@ this._onVerifyPassword = this._onVerifyPassword.bind(this);
                                     Forget Password ?  </Text>
                                     </TouchableOpacity>
 <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={
-    this._onVerifyPassword
-    // this.ShowHideActivityIndicator
+    // this._onVerifyPassword
+    this.ShowHideActivityIndicator
 }>
           <Text style={styles.signUpText}>Login</Text>
         </TouchableHighlight>
-
+        {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
 
 
 
@@ -222,7 +243,7 @@ const styles = StyleSheet.create(
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                backgroundColor: '#4d6bcb',
+                backgroundColor: '#f1f1f1f1',
                 // paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
             },
             inputContainerphone:{
@@ -243,13 +264,34 @@ const styles = StyleSheet.create(
                 backgroundColor: '#FFFFFF',
                 borderRadius:30,
                 borderBottomWidth: 1,
-                width:250,
-                height:45,
-                marginBottom:10,
-                marginLeft:50,
                 flexDirection: 'row',
-                justifyContent:"space-evenly",
-                alignItems:'center'
+                // justifyContent:"space-evenly",
+                alignItems:'center',
+                height: 45,
+                fontSize: 14,
+                width:250,
+                padding:4,
+                paddingLeft:5,
+                marginLeft:15,
+                marginRight: 10,
+                marginTop: 20,
+                marginBottom:10,
+                textAlign: 'center',
+                alignSelf: 'center'
+            },
+            visibilityBtn:
+                {
+                    position: 'absolute',
+                    right: 3,
+                    height: 40,
+                    width: 35,
+                    padding: 5
+                },
+            btnImage:
+            {
+                resizeMode: 'contain',
+                height: '100%',
+                width: '100%'
             },
             inputs:{
                 height:45,
