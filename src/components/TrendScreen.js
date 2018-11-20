@@ -41,12 +41,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 const cardItem = {cardItem: {fontSize: 40}};
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
-const ac_icon_blue = require('../Images/ac_icon_blue.png');
-const ac_icon_grey = require('../Images/ac_icon_grey.png');
-const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
-const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
-const search_magnifier_black = require('../Images/search_magnifier_black.png');
-const search_magnifier_blue = require('../Images/search_magnifier_blue.png');
 import Icoons from 'react-native-vector-icons/FontAwesome';
 var testdetail;
 var testData;
@@ -671,7 +665,7 @@ export default class TrendScreen extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#1C306F'/>
                 </View>
 
                 <View style={[styles.headerview]}>

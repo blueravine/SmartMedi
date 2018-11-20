@@ -812,13 +812,18 @@ export default class AlertScreen extends Component{
                         
                             <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medfrequency}</Text>
                             {(currentResult.medfrequency==="Daily") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {currentResult.repeat4}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {"\n"}   {currentResult.repeat4}</Text>
                             }
                             {(currentResult.medfrequency==="Weekly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.weekday}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.weekday} {currentResult.repeat1}</Text>
                             }
                             {(currentResult.medfrequency==="Monthly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.meddate}th of every month</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.meddate}
+                            {(currentResult.meddate > 3 && currentResult.meddate < 21) ? 'th '
+                                    : (((currentResult.meddate % 10) === 1) ? 'st '
+                                    : (((currentResult.meddate % 10) === 2) ? 'nd '
+                                    : (((currentResult.meddate % 10) === 3) ? 'rd ' : 'th ')))}
+                             of every month at {currentResult.repeat1}</Text>
                             }
 
                          </View>
@@ -834,7 +839,7 @@ export default class AlertScreen extends Component{
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#1C306F'/>
                 </View>
 
                 <View style={[styles.headerview]}>

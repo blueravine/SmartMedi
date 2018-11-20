@@ -40,10 +40,6 @@ const card      = {card: {width: 100,height:300,borderWidth: 3,
 const cardItem = {cardItem: {fontSize: 40}};
 import Accordion from 'react-native-collapsible/Accordion';
 import Moment from "moment/moment";
-const ac_icon_blue = require('../Images/ac_icon_blue.png');
-const ac_icon_grey = require('../Images/ac_icon_grey.png');
-const nonac_icon_blue = require('../Images/nonac_icon_blue.png');
-const nonac_icon_grey = require('../Images/nonac_icon_grey.png');
 var paramsmobile={tempnumber:''};
 var genderselect = [
     {
@@ -318,7 +314,11 @@ export default class UserProfile extends Component {
         return (
 
             <View style={styles.container}>
-
+                <View>
+                    <StatusBar
+                        hidden={false}
+                        backgroundColor='#1C306F'/>
+                </View>
                 {/*<ScrollView >*/}
                 <View style={[styles.headerview]}>
                     <ScrollView ref={ (c) => {this.scroll = c}} >

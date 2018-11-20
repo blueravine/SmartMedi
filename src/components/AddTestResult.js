@@ -603,7 +603,7 @@ export default class AddTestData extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#4d6bcb'/>
+                        backgroundColor='#1C306F'/>
                 </View>
 
                 <View style={[styles.headerview]}>
