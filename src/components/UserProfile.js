@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image,StyleSheet,TouchableHighlight,TouchableOpacity,ImageBackground,AsyncStorage,BackHandler,TextInput,PixelRatio,
-    Dimensions,ScrollView,Alert,Keyboard} from 'react-native';
+    Dimensions,ScrollView,Alert,Keyboard,,StatusBar} from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail,Picker,DeckSwiper, Text,Item,Input,View,Fab, Button, Left, Body, Right,
     Footer, FooterTab} from 'native-base';
 import ToggleSwitch from 'toggle-switch-react-native';
