@@ -14,11 +14,10 @@ import Iconns from 'react-native-vector-icons/EvilIcons';
 import Icoons from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-material-dropdown';
 import Iccons from 'react-native-vector-icons/FontAwesome'
-import { Dialog } from 'react-native-simple-dialogs';
 import BottomNavigation, {
     ShiftingTab
 } from 'react-native-material-bottom-navigation';
-
+import { Dialog } from 'react-native-simple-dialogs';
 var renderCategory=[];
 var renderCard=[];
 var rendertypelabel=[];
@@ -378,6 +377,7 @@ export default class Home extends Component {
             istestSorted: false,
             result:[],
             gestureName: 'none',
+            feedbacknotes:''
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
@@ -421,7 +421,15 @@ export default class Home extends Component {
             label:"Profile",
             barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
-        }
+        },
+        {
+            key:"feedback",
+            // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
+            label:"Feedback",
+            icon : 'comment',
+            barColor: '#4d6bcb',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
     ];
 
     renderIcon = icon => ({ isActive }) => (
@@ -462,6 +470,12 @@ export default class Home extends Component {
         this.setState({picked1: this.state.picked2, picked2:temploc});
     };
 
+    state = {}
+
+    openDialog(show) {
+        this.setState({ showDialog: show })
+    }
+    
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
             case 'home':
@@ -475,6 +489,9 @@ export default class Home extends Component {
                 break;
             case 'profile':
                 Actions.profileScreen();
+                break;
+            case 'feedback':
+            (this.openDialog(true))
                 break;
             default:
 
@@ -900,7 +917,7 @@ export default class Home extends Component {
                         hidden={false}
                         backgroundColor='#1C306F'/>
                 </View>
-
+                    
                 <View style={[styles.headerview]}>
 
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
@@ -964,7 +981,12 @@ export default class Home extends Component {
                                     Date of Test{"\n"}{this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
                                 + this.state.selectedDate.toString().substring(0, 4)}</Text>
-
+                                <View
+                                style={{
+                                    borderBottomColor: '#f1f1f1f1',
+                                    borderBottomWidth: 1,
+                                }}
+                                />
                                 {/*</View>*/}
                                 <TextField label="Search Test By Name"
                                            lineHeight={30}
@@ -974,8 +996,8 @@ export default class Home extends Component {
                                            onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedDate)} }
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:20,marginRight:5,justifyContent:'flex-end'}}/>
 
-                        <View style={{flexDirection:'row',justifyContent:'space-between', marginLeft:5, marginRight:5}}>
-                        <View style={{flexDirection:'column'}}>
+                        <View style={{flexDirection:'row',justifyContent:'space-between',borderWidth:1,borderColor:'#f1f1f1f1'}}>
+                        <View style={{flexDirection:'column',marginLeft:5}}>
                         <TouchableOpacity onPress={() => this.sortByTestName(this.state.selectedDate)}>
                                 <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                             <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Test Name</Text>
@@ -1004,6 +1026,39 @@ export default class Home extends Component {
                     </Card>
 
                     {/*</Card>*/}
+                    <Dialog 
+                        visible={this.state.showDialog} 
+                        title="SmartMedi"
+                        onTouchOutside={() => this.openDialog(false)}
+                        contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
+                        animationType="fade">
+                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                         <TextField label="Feedback"
+                                           lineHeight={30}
+                                           value={this.state.feedbacknotes}
+                                           editable={true}
+                                           fontSize={16}
+                                           multiline = {true}
+                                           returnKeyType={"done"}
+                                           onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                 >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Submit</Text>
+                        </Button>
+
+                        <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Close</Text>
+                        </Button>
+                        </View>
+                    </Dialog>
                 </View>
 
                 <View style={[styles.footer]}>

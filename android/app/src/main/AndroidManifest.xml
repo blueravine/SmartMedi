@@ -39,14 +39,18 @@
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:screenOrientation="portrait"
-        android:configChanges="keyboard|keyboardHidden|screenSize"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+       <meta-data
+         android:name="io.fabric.ApiKey"
+         android:value="7c229c128da8e1823a52b4a68f29f0330d91e8f0"
+       />
         <!--<meta-data-->
                 <!--android:name="com.google.android.geo.API_KEY"-->
                 <!--android:value="AIzaSyD3a7smG62nUL0Wp4jsP4Iv3rNg763HFyQ"/>-->
