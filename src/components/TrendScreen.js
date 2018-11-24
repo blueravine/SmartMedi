@@ -47,6 +47,8 @@ var testData;
 var trendchartdata = [];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 var testdata=[];
+var testInfodata=[];
+var testtypesdata=[];
 // import Chart from 'react-native-simple-charts';
 import PureChart from 'react-native-pure-chart';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
@@ -503,6 +505,47 @@ export default class TrendScreen extends Component {
             
         }).done();
 
+        // await  AsyncStorage.getItem('testInfo')
+        // .then(() => {
+            // alert(JSON.stringify(userInfo));
+            // let temptestdata = testInfodata;
+            // testInfodata = testInfo ? JSON.parse(testInfo) : temptestdata;
+        
+            // testtypesdata = JSON.parse(testInfodata).slice();
+
+            // testInfodata.countrycode = jsontestinfo.countrycode;
+            // testInfodata.testname = jsontestinfo.testname;
+            // testInfodata.testunit = jsontestinfo.testunit;
+            // testInfodata.testagemin = jsontestinfo.testagemin;
+            // testInfodata.testagemax = jsontestinfo.testagemax;
+            // testInfodata.testgender = jsontestinfo.testgender;
+            // testInfodata.normalmin = jsontestinfo.normalmin;
+            // testInfodata.normalmax = jsontestinfo.normalmax;
+            // testInfodata.normalcomparator = jsontestinfo.normalcomparator;
+            // testInfodata.category = jsontestinfo.category;
+            // alert((testInfodata.mobile)+(userdata.jwt))
+            
+        // }).done( (testInfo) => {
+            
+        //     // testtypesdata = JSON.parse(testInfo).slice();
+        // });
+
+        await AsyncStorage.getItem('testInfo')
+        .then((testInfo) => {
+        // alert(JSON.stringify(userInfo));
+        let temptestdata = testInfodata;
+        testInfodata = testInfo ? JSON.parse(testInfo) : temptestdata;
+        }).done(() => {
+        if(!(testInfodata.length)) {
+            Actions.homeScreen();
+        } //if no test results in Async Storage
+        else {
+                testtypesdata = testInfodata.slice();
+                // alert(JSON.stringify(testtypesdata));
+           }
+
+        });
+
         await AsyncStorage.getItem('usertestInfo')
         .then((usertestInfo) => {
         // alert(JSON.stringify(userInfo));
@@ -674,7 +717,20 @@ export default class TrendScreen extends Component {
             );
         });
 
-
+        var testNormalRange = testtypesdata.map((currTest) => {
+            if((currTest.countrycode === userdata.countrycode) && (currTest.testname === this.state.selectedtestname)) {
+                return (
+                    <View>
+                    {(currTest.normalcomparator === "lessthan")&&
+                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range &#x0003C; {currTest.normalmax + '-' + currTest.testunit}</Text>
+                    }
+                    {(currTest.normalcomparator === "between") &&
+                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range {currTest.normalmin + '-' + currTest.normalmax + '-' + currTest.testunit}</Text>
+                    }
+                    </View>
+                );
+            }
+        });
 
         return (
 
@@ -724,10 +780,12 @@ export default class TrendScreen extends Component {
                                 options={trentestresultname}
                                 optionTextStyle={style={fontSize:16}}
                             />
+                            
                         </View>
+                        {testNormalRange}
                         <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly',borderWidth:1,borderColor:'#f1f1f1f1'}}>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Test Date</Text>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Actual</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
+                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
                             {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
                         </View>
 

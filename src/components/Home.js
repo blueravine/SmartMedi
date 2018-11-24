@@ -872,7 +872,8 @@ export default class Home extends Component {
             return(
                     <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
-                        <Text style={{marginBottom:10,justifyContent:'flex-start'}}>{currentResult.testname}</Text>
+                        <Text style={{marginBottom:10,justifyContent:'flex-start'}}>{(currentResult.testname.length >12) ? 
+                            (currentResult.testname.substring(0,12))+ '..': (currentResult.testname)}</Text>
                     </TouchableOpacity>
                     
                     );
