@@ -45,6 +45,7 @@
     "react-native-divider": "^1.0.3",
     "react-native-drawer": "^2.5.0",
     "react-native-dropdownalert": "^3.7.0",
+    "react-native-fabric": "^0.5.2",
     "react-native-foldview": "^1.2.1",
     "react-native-fontawesome": "^5.7.0",
     "react-native-image-picker": "^0.27.1",

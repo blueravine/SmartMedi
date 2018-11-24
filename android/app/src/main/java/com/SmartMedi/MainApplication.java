@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 import com.calendarevents.CalendarEventsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.smixx.fabric.FabricPackage;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -28,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new FabricPackage(),
           new ReactNativePushNotificationPackage(),
           new CalendarEventsPackage(),
             new SnackbarPackage(),
@@ -53,5 +57,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Fabric.with(this, new Crashlytics());
   }
 }

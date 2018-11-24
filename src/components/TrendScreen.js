@@ -367,6 +367,7 @@ export default class TrendScreen extends Component {
             pickervisible1: false,
             selectedtestname:'',
             testrange:'',
+            feedbacknotes:''
         };
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
@@ -404,7 +405,15 @@ export default class TrendScreen extends Component {
             label:"Profile",
             barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
-        }
+        },
+        {
+            key:"feedback",
+            // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
+            label:"Feedback",
+            icon : 'comment',
+            barColor: '#4d6bcb',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
     ];
 
     renderIcon = icon => ({ isActive }) => (
@@ -444,6 +453,11 @@ export default class TrendScreen extends Component {
         let temploc=this.state.picked1;
         this.setState({picked1: this.state.picked2, picked2:temploc});
     };
+    state = {}
+
+    openDialog(show) {
+        this.setState({ showDialog: show })
+    }
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
@@ -459,6 +473,9 @@ export default class TrendScreen extends Component {
             case 'profile':
                 Actions.profileScreen();
                 break;
+                case 'feedback':
+                (this.openDialog(true))
+                    break;
             default:
 
         }
@@ -638,7 +655,7 @@ export default class TrendScreen extends Component {
             trendchartdata.push(testData);
 
             return(
-                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:5}}>
+                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:5,borderWidth:1,borderColor:'#f1f1f1f1'}}>
                     <Text style={{marginBottom:5}} >{currentTrend.testdate.toString().substring(6, 8)
                     + '/' + currentTrend.testdate.toString().substring(4, 6) + '/'
                     + currentTrend.testdate.toString().substring(0, 4)}</Text>
@@ -708,7 +725,7 @@ export default class TrendScreen extends Component {
                                 optionTextStyle={style={fontSize:16}}
                             />
                         </View>
-                        <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly'}}>
+                        <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly',borderWidth:1,borderColor:'#f1f1f1f1'}}>
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Test Date</Text>
                             <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline'}}>Actual</Text>
                             {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
@@ -722,7 +739,7 @@ export default class TrendScreen extends Component {
                         <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
                             <Text style={{textAlign:'center',color:'#0A68FF',textDecorationLine:'underline',fontWeight:'bold'}}>here</Text>
                             </TouchableOpacity>
-                            <Text style={{textAlign:'center'}}> to search by test name</Text>
+                            <Text style={{textAlign:'center'}}> to change to different test</Text>
                         </View>
                        
                         <Card style={{marginBottom:90}}>
@@ -748,7 +765,39 @@ export default class TrendScreen extends Component {
 </ScrollView>
                     {/*</Card>*/}
 
+                        <Dialog 
+                        visible={this.state.showDialog} 
+                        title="SmartMedi"
+                        onTouchOutside={() => this.openDialog(false)}
+                        contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
+                        animationType="fade">
+                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
 
+                         <TextField label="Feedback"
+                                           lineHeight={30}
+                                           value={this.state.feedbacknotes}
+                                           editable={true}
+                                           fontSize={16}
+                                           multiline = {true}
+                                           returnKeyType={"done"}
+                                           onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                 >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Submit</Text>
+                        </Button>
+
+                        <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Close</Text>
+                        </Button>
+                        </View>
+                    </Dialog>
 
                 </View>
 

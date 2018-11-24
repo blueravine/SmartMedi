@@ -31,6 +31,7 @@ const MARGIN = 40;
 var testtdetail;
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
 var testarray=[];
+import { Dialog } from 'react-native-simple-dialogs';
 // import { BottomNavigation } from 'react-native-material-ui';
 // var Accordion = require('react-native-accordion');
 const card      = {card: {width: 100,height:300,borderWidth: 3,
@@ -66,7 +67,8 @@ export default class UserProfile extends Component {
             headername:' User Profile',
             ageofuser:'',
             usereditableflag:false,
-            invalidemail:''
+            invalidemail:'',
+            feedbacknotes:''
         };
         this._validateemail = this._validateemail.bind(this);
         this.onChangegenderTextPress=this.onChangegenderTextPress.bind(this);
@@ -104,7 +106,15 @@ export default class UserProfile extends Component {
             label:"Profile",
             barColor: '#4d6bcb',
             pressColor: 'rgba(255, 255, 255, 0.16)'
-        }
+        },
+        {
+            key:"feedback",
+            // icon={<Image source={require('../Images/home_icon.png')} color="#2eacde" name="Search" style={{ width: 20, height: 20 }} />}
+            label:"Feedback",
+            icon : 'comment',
+            barColor: '#4d6bcb',
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
     ];
 
 
@@ -113,6 +123,11 @@ export default class UserProfile extends Component {
 
     )
 
+    state = {}
+
+    openDialog(show) {
+        this.setState({ showDialog: show })
+    }
 
     _handleTabPress(pressedKey) {
         switch (pressedKey) {
@@ -128,6 +143,9 @@ export default class UserProfile extends Component {
             case 'profile':
                 // Actions.profileScreen();
                 break;
+                case 'feedback':
+                (this.openDialog(true))
+                    break;
             default:
 
         }
@@ -454,6 +472,39 @@ export default class UserProfile extends Component {
                         </Card>
                         
                     </ScrollView>
+                    <Dialog 
+                        visible={this.state.showDialog} 
+                        title="SmartMedi"
+                        onTouchOutside={() => this.openDialog(false)}
+                        contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
+                        animationType="fade">
+                        <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
+
+                         <TextField label="Feedback"
+                                           lineHeight={30}
+                                           value={this.state.feedbacknotes}
+                                           editable={true}
+                                           fontSize={16}
+                                           multiline = {true}
+                                           returnKeyType={"done"}
+                                           onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                 >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Submit</Text>
+                        </Button>
+
+                        <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                        }}
+                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                            <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
+                                ,textAlign:'center'}}>Close</Text>
+                        </Button>
+                        </View>
+                    </Dialog>
                 </View>
 
                 <View style={[styles.footer]}>
