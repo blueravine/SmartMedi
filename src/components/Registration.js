@@ -270,7 +270,7 @@ export default class Registration extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
         </View>
-       
+        <Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
         <View style={styles.inputContainer}>
         <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:55}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
@@ -282,7 +282,7 @@ export default class Registration extends Component {
               value={this.state.gender}
               underlineColorAndroid='transparent'
               onChangeText={(gender) => this.setState({gender})}/> */}
-              <Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
+              
               <Dropdown
               placeholder='Please select gender'
                                             // value={'Please select gender'}
