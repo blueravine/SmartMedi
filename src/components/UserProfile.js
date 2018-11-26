@@ -169,7 +169,7 @@ export default class UserProfile extends Component {
 
    async _EditUserInformation() {
     Keyboard.dismiss();
-    fetch('https://smartmedi.blueravine.in/user/update/mobile',
+    fetch('https://interface.blueravine.in/smartmedi/user/update/mobile',
      { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'POST', // USE GET, POST, PUT,ETC
     headers: { //MODIFY HEADERS
@@ -469,7 +469,7 @@ export default class UserProfile extends Component {
                                         onChangeText={(itemValue) => this.setState({username: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-
+<Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
                                         <TextField label="Age"
                                                    lineHeight={30}
                                             value={this.state.ageofuser.toString()}

@@ -51,7 +51,7 @@ export default class Login extends Component {
     };
     _onVerifyPassword(){
         Keyboard.dismiss();
-       fetch('https://smartmedi.blueravine.in/user/login', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+       fetch('https://interface.blueravine.in/smartmedi/user/login', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'POST', // USE GET, POST, PUT,ETC
     headers: { //MODIFY HEADERS
         'Accept': 'application/json',

@@ -492,7 +492,7 @@ export default class TrendScreen extends Component {
         .then((userInfo) => {
             let tempuserdata = userdata;
         let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
-        
+
         userdata.name = jsonuserinfo.name;
             userdata.mobile = jsonuserinfo.mobile;
             userdata.jwt = jsonuserinfo.jwt;
@@ -726,14 +726,15 @@ export default class TrendScreen extends Component {
         });
 
         var testNormalRange = testtypesdata.map((currTest) => {
+            
             if((currTest.countrycode === userdata.countrycode) && (currTest.testname === this.state.selectedtestname)) {
                 return (
                     <View>
                     {(currTest.normalcomparator === "lessthan")&&
-                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range &#x0003C; {currTest.normalmax + '-' + currTest.testunit}</Text>
+                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range &#x0003C; {currTest.normalmax.toString() + '-' + currTest.testunit}</Text>
                     }
                     {(currTest.normalcomparator === "between") &&
-                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range {currTest.normalmin + '-' + currTest.normalmax + '-' + currTest.testunit}</Text>
+                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range {currTest.normalmin.toString() + '-' + currTest.normalmax.toString() + '-' + currTest.testunit}</Text>
                     }
                     </View>
                 );
@@ -745,7 +746,7 @@ export default class TrendScreen extends Component {
                 return (
                     <View>
                     {/* {(currTest.normalcomparator === "lessthan")&& */}
-                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>  {currTest.category}</Text>
+                    <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>  {currTest.notes}</Text>
                     {/* } */}
                     {/* {(currTest.normalcomparator === "between") &&
                     <Text style={{textAlign:'center',fontStyle: 'italic',fontSize:12}}>Normal range {currTest.normalmin + '-' + currTest.normalmax + '-' + currTest.testunit}</Text>
@@ -793,7 +794,8 @@ export default class TrendScreen extends Component {
                                 <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginTop:10}}>
 
                             <TouchableOpacity onPress={this.onTrendTestNameShowpicker}>
-                            <Text style={{textAlign:'center',color:'#000',textsize:12,paddingLeft:5,paddingRight:5, borderRadius:30,borderColor:'#0A68FF',borderWidth:1}}>{this.state.selectedtestname.toString().toUpperCase()}</Text>
+                            <Text style={{textAlign:'center',color:'#000',textsize:12,paddingLeft:5,paddingRight:5, borderRadius:30,borderColor:'#0A68FF',borderWidth:1}}>{(this.state.selectedtestname.toString().length >12) ? 
+                            (this.state.selectedtestname.toString().toUpperCase().substring(0,12))+ '..': (this.state.selectedtestname.toString().toUpperCase())}</Text>
                             </TouchableOpacity>
                             <ModalFilterPicker
                                 visible={this.state.pickervisible1}

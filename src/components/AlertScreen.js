@@ -420,7 +420,7 @@ export default class AlertScreen extends Component{
     };
     async refreshalerttestresults(){
         
-        fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -484,7 +484,7 @@ export default class AlertScreen extends Component{
   
         }).done(() => {
         if(!(testdata.length)) {
-          fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+          fetch('https://interface.blueravine.in/smartmedi/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
           method: 'POST', // USE GET, POST, PUT,ETC
           headers: { //MODIFY HEADERS
               'Accept': 'application/json',

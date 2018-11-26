@@ -34,7 +34,7 @@ export default class SplashScreen extends Component {
                      Actions.loginScreen();
                  }
                  else{
-                    fetch('https://smartmedi.blueravine.in/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    fetch('https://interface.blueravine.in/smartmedi/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                     method: 'POST', // USE GET, POST, PUT,ETC
                     headers: { //MODIFY HEADERS
                         'Accept': 'application/json',

@@ -519,7 +519,7 @@ export default class Home extends Component {
             
         }).done(() => {
 
-       fetch('https://smartmedi.blueravine.in/test', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+       fetch('https://interface.blueravine.in/smartmedi/test', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -558,7 +558,7 @@ export default class Home extends Component {
 
         }).done(() => {
         if(!(testdata.length)) {
-        fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -646,7 +646,7 @@ export default class Home extends Component {
 
     async refreshtestresults(){
         
-        fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -772,7 +772,8 @@ export default class Home extends Component {
         this.setState({selectedTestName: searchText});
 
         this.setState( {filteredTestResult: testtypes.filter( (testresult) =>
-            {return (testresult.testname.toLowerCase().includes(searchText.toLowerCase()) || testresult.category.toLowerCase().includes(searchText.toLowerCase())) && testresult.testdate === nDate}) });
+            {return (testresult.testname.toLowerCase().includes(searchText.toLowerCase()) || testresult.category.toLowerCase().includes(searchText.toLowerCase())
+                || testresult.notes.toLowerCase().includes(searchText.toLowerCase())) && testresult.testdate === nDate}) });
     };
 
     sortByTestName(sDate) {

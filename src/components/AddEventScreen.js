@@ -532,7 +532,7 @@ export default class AddEventScreen extends Component {
         alertid2 = parseInt(Moment().format('hhmmssSSS'))+Math.floor(Math.random() * 100);
         alertid3 = parseInt(Moment().format('hhmmssSSS'))+Math.floor(Math.random() * 100);
         alertid4 = parseInt(Moment().format('hhmmssSSS'))+Math.floor(Math.random() * 100);
-        fetch('https://smartmedi.blueravine.in/alert/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -686,7 +686,7 @@ export default class AddEventScreen extends Component {
                     }
                                   
 
-                fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                fetch('https://interface.blueravine.in/smartmedi/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
                     'Accept': 'application/json',
@@ -732,7 +732,7 @@ export default class AddEventScreen extends Component {
     }
     else if(this.state.savealert==='Update'){
             
-        fetch('https://smartmedi.blueravine.in/alert/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -884,7 +884,7 @@ export default class AddEventScreen extends Component {
                     }
 
                 
-                fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                fetch('https://interface.blueravine.in/smartmedi/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
                     'Accept': 'application/json',
@@ -974,7 +974,7 @@ export default class AddEventScreen extends Component {
     };
 
     ondeletealertButtonPress = () => {
-        fetch('https://smartmedi.blueravine.in/alert/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -1027,7 +1027,7 @@ export default class AddEventScreen extends Component {
                 duration: Snackbar.LENGTH_LONG,
                 
             });
-            fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://interface.blueravine.in/smartmedi/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',

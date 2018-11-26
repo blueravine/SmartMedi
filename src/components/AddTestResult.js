@@ -370,7 +370,7 @@ export default class AddTestData extends Component {
         // this.setState({date: Moment(this.state.date).format('YYYYMMDD')});
         if(this.state.saveaction==='Add')
         {
-        fetch('https://smartmedi.blueravine.in/testresult/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/testresult/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -393,7 +393,7 @@ export default class AddTestData extends Component {
         .then((response) => response.json())
         .then((responseJson) => {
             if (responseJson.messagecode === 2003) {
-                fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
                     'Accept': 'application/json',
@@ -438,7 +438,7 @@ export default class AddTestData extends Component {
 
         else if(this.state.saveaction==='Update'){
             
-            fetch('https://smartmedi.blueravine.in/testresult/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://interface.blueravine.in/smartmedi/testresult/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -461,7 +461,7 @@ export default class AddTestData extends Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 if (responseJson.messagecode === 2003) {
-                    fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                     method: 'POST', // USE GET, POST, PUT,ETC
                     headers: { //MODIFY HEADERS
                         'Accept': 'application/json',
@@ -522,7 +522,7 @@ export default class AddTestData extends Component {
     };
 
     ondeleteButtonPress = () => {
-        fetch('https://smartmedi.blueravine.in/testresult/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/testresult/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -547,7 +547,7 @@ export default class AddTestData extends Component {
                 duration: Snackbar.LENGTH_LONG,
                 
             });
-            fetch('https://smartmedi.blueravine.in/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',

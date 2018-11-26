@@ -61,7 +61,7 @@ export default class OTPScreen extends Component {
         if((responseJson.Status==="Success") && (responseJson.Details==="OTP Matched")){
 
             if(callerscreen==='registration'){
-            fetch('https://smartmedi.blueravine.in/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://interface.blueravine.in/smartmedi/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
                     'Accept': 'application/json',
@@ -79,10 +79,9 @@ export default class OTPScreen extends Component {
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
-
                     if (responseJson.messagecode===1002) {
                         // Actions.loginScreen({phone:this.props.phone});
-                        fetch('https://smartmedi.blueravine.in/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                        fetch('https://interface.blueravine.in/smartmedi/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                             method: 'POST', // USE GET, POST, PUT,ETC
                             headers: { //MODIFY HEADERS
                                 'Accept': 'application/json',
@@ -134,7 +133,7 @@ export default class OTPScreen extends Component {
             });
         }
         else if(callerscreen==='login'){
-            fetch('https://smartmedi.blueravine.in/user/update/password', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            fetch('https://interface.blueravine.in/smartmedi/user/update/password', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -149,7 +148,7 @@ export default class OTPScreen extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode===1009) {
                     // Actions.loginScreen({phone:this.props.phone});
-                    fetch('https://smartmedi.blueravine.in/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                    fetch('https://interface.blueravine.in/smartmedi/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                         method: 'POST', // USE GET, POST, PUT,ETC
                         headers: { //MODIFY HEADERS
                             'Accept': 'application/json',

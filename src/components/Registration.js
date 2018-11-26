@@ -99,7 +99,7 @@ export default class Registration extends Component {
     };
     _onPress(){
         Keyboard.dismiss();
-        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.countrycode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.callingCode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'GET', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -113,7 +113,7 @@ export default class Registration extends Component {
                 if (responseJson.Status === "Success") {
                     userdata.name = this.state.name;
                     userdata.mobile = this.state.phone;
-                    userdata.countrycode = this.state.callingCode;
+                    userdata.countrycode = parseInt(this.state.callingCode);
                     userdata.email = this.state.email;
                     userdata.username = this.state.username;
                     userdata.age = this.state.age;
@@ -140,7 +140,7 @@ export default class Registration extends Component {
 
     _onPhoneEntered(){
         Keyboard.dismiss();
-        fetch('https://smartmedi.blueravine.in/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -282,6 +282,7 @@ export default class Registration extends Component {
               value={this.state.gender}
               underlineColorAndroid='transparent'
               onChangeText={(gender) => this.setState({gender})}/> */}
+              <Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
               <Dropdown
               placeholder='Please select gender'
                                             // value={'Please select gender'}
