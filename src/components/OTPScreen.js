@@ -104,10 +104,7 @@ export default class OTPScreen extends Component {
                                             
                                         }).done(() =>{
                                             Actions.homeScreen();
-                                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                                         });
-                                // Actions.homeScreen();
-                                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                                 
                             }
                                 else if(responseJson.messagecode===1004)
@@ -122,8 +119,6 @@ export default class OTPScreen extends Component {
                             }).catch((error) => {
                             alert(error);
                         });
-                        // Actions.homeScreen(paramsmobile);
-                        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                     }
                     else if(responseJson.messagecode===1010)
                     {
@@ -152,7 +147,6 @@ export default class OTPScreen extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                    // alert(JSON.stringify(responseJson));
                 if (responseJson.messagecode===1009) {
                     // Actions.loginScreen({phone:this.props.phone});
                     fetch('https://smartmedi.blueravine.in/user/login  ', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -195,13 +189,7 @@ export default class OTPScreen extends Component {
                         }).catch((error) => {
                         alert(error);
                     });
-                    // Actions.homeScreen(paramsmobile);
-                    // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                 }
-                // else if(responseJson.messagecode===1010)
-                // {
-                //     alert(responseJson.message);
-                // }
                 else{
                     alert("An error occurred while updating password! Please try again..");
                 }
@@ -250,7 +238,7 @@ export default class OTPScreen extends Component {
             userdata.gender = jsonuserinfo.gender;
             userdata.jwt = jsonuserinfo.jwt;
         }).done(() => {
-            // alert((this.state.phone));
+            
         });
     
     }

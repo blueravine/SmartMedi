@@ -123,7 +123,7 @@ export default class Registration extends Component {
                     .then((userInfo) => {
                         //do nothing
                     }).done(() =>{
-                        // alert("calling inside fetch user");
+                        
                         sessionid = responseJson.Details;
                         callerscreen='registration';
                         Actions.otpScreen();
@@ -152,7 +152,6 @@ export default class Registration extends Component {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                // alert(responseJson.message);
                 
                 if (responseJson.messagecode===1005){
                     this.setState({uservisibiltyflag: true});

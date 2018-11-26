@@ -109,7 +109,7 @@ export default class Login extends Component {
             userdata.gender = jsonuserinfo.gender;
             userdata.jwt = jsonuserinfo.jwt;
         }).done(() => {
-            // alert((this.state.phone));
+            
         });
     }
     _onPresstext(){
@@ -140,7 +140,6 @@ export default class Login extends Component {
                 // .then((userInfo) => {
                 //     //do nothing
                 // }).done(() =>{
-                    // alert("calling inside fetch user");
                     sessionid = responseJson.Details;
                     callerscreen='login';
                     Actions.otpScreen();

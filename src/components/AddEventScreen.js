@@ -460,9 +460,6 @@ export default class AddEventScreen extends Component {
         this.setState({loading: true});
         setTimeout(() => {
             this.saveAlertsData();
-
-
-            // alert("saved test data " +JSON.stringify(temptests));
             Actions.alertScreen();
             Snackbar.show({
                 title: 'Medicine details added succesfully. Please "Refresh"',
@@ -478,7 +475,6 @@ export default class AddEventScreen extends Component {
       
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {
-          // alert(JSON.stringify(userInfo));
           let tempuserdata = userdata;
       let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
       
@@ -490,10 +486,8 @@ export default class AddEventScreen extends Component {
           userdata.username = jsonuserinfo.username;
           userdata.age = jsonuserinfo.age;
           userdata.gender = jsonuserinfo.gender;
-          // alert((userdata.mobile)+(userdata.jwt))
           
       }).done();
-    //   alert(JSON.stringify(this.props));
       if(this.props.startdate){
         this.setState({savealert:'Update',
                        alertheader:'Edit Alert',
@@ -508,19 +502,13 @@ export default class AddEventScreen extends Component {
                        "weektype": this.props.weekday,
                        "meddate": this.props.meddate,
                        resultnotes:this.props.notes});
-        // alert(Moment(Moment(this.state.datepicked1).format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf());
-        // alert(Moment(this.state.datepicked1).format('YYYYMMDD'));
       }
-
-    // alert(Date.now());
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        // AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
 
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        // AppState.removeEventListener('change', this._handleAppStateChange);
     }
 
 
@@ -673,9 +661,6 @@ export default class AddEventScreen extends Component {
                     // .add(1, 'months');
                     do{
                     
-                    // alert(Moment(this.state.datepicked1).add(monthlyinterval, 'months').format('DD-MM-YYYY hh:mm:ss A'));
-                    // alert(" "  + this.state.picked3 + " to be taken " + this.state.picked2 + " on " + Moment(this.state.datepicked1).add(monthlyinterval, 'months').date() + " at " +Moment(this.state.timepicked).format('hh:mm A'));
-                    
                     PushNotification.localNotificationSchedule({
                         //... You can use all the options from localNotifications
                         id: Moment(this.state.datepicked1).add(monthlyinterval, 'months').format('YYYYMMDD')+monthlyinterval.toString(),
@@ -722,7 +707,7 @@ export default class AddEventScreen extends Component {
                     alertdata = responseJson.Alert.slice();
                     AsyncStorage.setItem('useralertInfo',JSON.stringify(alertdata))
                         .then((useralertInfo) => {
-                            // alert(usertestInfo);                            
+
                         }).done(() =>{
 
                             }); //done close
@@ -735,7 +720,7 @@ export default class AddEventScreen extends Component {
                 });
             }//if condition close
             else {
-                //alert(responseJson.message);
+                
 
             }
                 //second then end after fetch
@@ -776,13 +761,10 @@ export default class AddEventScreen extends Component {
         .then((response) => response.json())
         .then((responseJson) => {
             if (responseJson.messagecode === 4004) {
-                
-                  // responseJson.Alert.slice().forEach( (currentAlert) => {
                     let rptTyp;
                     rptTyp = (responseJson.Alert.medfrequency === 'Daily') ? 'day'
                                 : ((responseJson.Alert.medfrequency === 'Weekly') ? 'week'
                                         : 'day');
-                    // alert(Moment(alertdata[0].startdate + ' ' +alertdata[0].repeat1, 'YYYYMMDD hh:mm A').valueOf());
                     if(responseJson.Alert.medfrequency === 'Daily' || responseJson.Alert.medfrequency === 'Weekly'){ 
                     PushNotification.localNotificationSchedule({
                         //... You can use all the options from localNotifications
@@ -876,9 +858,6 @@ export default class AddEventScreen extends Component {
                     let monthlyinterval = 0;
                     // .add(1, 'months');
                     do{
-                    // alert(Moment(responseJson.Alert.startdate, 'YYYYMMDD').add(monthlyinterval, 'months').format('YYYYMMDD')+monthlyinterval.toString());
-                    // alert(Moment(this.state.datepicked1).add(monthlyinterval, 'months').format('DD-MM-YYYY hh:mm:ss A'));
-                    // alert(" "  + this.state.picked3 + " to be taken " + this.state.picked2 + " on " + Moment(this.state.datepicked1).add(monthlyinterval, 'months').date() + " at " +Moment(this.state.timepicked).format('hh:mm A'));
                     
                     PushNotification.localNotificationSchedule({
                         //... You can use all the options from localNotifications
@@ -926,7 +905,7 @@ export default class AddEventScreen extends Component {
                     alertdata = responseJson.Alert.slice();
                     AsyncStorage.setItem('useralertInfo',JSON.stringify(alertdata))
                         .then((useralertInfo) => {
-                            // alert(usertestInfo);                            
+                                                      
                         }).done(() =>{
 
                             }); //done close
@@ -1069,95 +1048,9 @@ export default class AddEventScreen extends Component {
                 alertdata = responseJson.Alert.slice();
                 AsyncStorage.setItem('useralertInfo',JSON.stringify(alertdata))
                     .then((useralertInfo) => {
-                        // alert(usertestInfo);                            
+
                     }).done(() =>{
-                        // responseJson.Alert.slice().forEach( (currentAlert) => {
-                        //     // alert(Moment(alertdata[0].startdate + ' ' +alertdata[0].repeat1, 'YYYYMMDD hh:mm A').valueOf());
-                        //         PushNotification.localNotificationSchedule({
-                        //         //... You can use all the options from localNotifications
-                        //         title: "Reminder from SmartMedi!",
-                        //         id:currentAlert.notificationid1,
-                        //         message: currentAlert.medicinename, // (required)
-                        //         ongoing: false, // (optional) set whether this is an "ongoing" notification
-                        //         priority: "high", // (optional) set notification priority, default: high
-                        //         visibility: "private", // (optional) set notification visibility, default: private
-                        //         importance: "default", // (optional) set notification importance, default: high
-                        //         playSound: true, // (optional) default: true
-                        //         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-                        //         repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-                        //         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        //         date: new Date(Moment(currentAlert.startdate + ' ' +currentAlert.repeat1, 'YYYYMMDD hh:mm A').valueOf()),
-                        //         subText: " "  + currentAlert.medicinename + " to be taken " + currentAlert.medfrequency + " at " + currentAlert.repeat1, // (optional) default: "message" prop
-                        //         // subText: currentAlert.repeat1 + " " + currentAlert.medfrequency,
-                        //         // date: new Date(1542611975)
-                        //     });
-
-                        //     if(currentAlert.repeat2){
-                                
-                        //         PushNotification.localNotificationSchedule({
-                        //             //... You can use all the options from localNotifications
-                        //             title: "Reminder from SmartMedi!",
-                        //             id:currentAlert.notificationid2,
-                        //             message: currentAlert.medicinename, // (required)
-                        //             ongoing: false, // (optional) set whether this is an "ongoing" notification
-                        //             priority: "high", // (optional) set notification priority, default: high
-                        //             visibility: "private", // (optional) set notification visibility, default: private
-                        //             importance: "default", // (optional) set notification importance, default: high
-                        //             playSound: true, // (optional) default: true
-                        //             soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-                        //             repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-                        //             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        //             date: new Date(Moment(currentAlert.startdate + ' ' +currentAlert.repeat2, 'YYYYMMDD hh:mm A').valueOf()),
-                        //             subText: " "   + currentAlert.medicinename + " to be taken " + currentAlert.medfrequency + " at " + currentAlert.repeat2, // (optional) default: "message" prop
-                        //             // subText: currentAlert.repeat2 + " " + currentAlert.medfrequency,
-                        //             // date: new Date(1542611975)
-                        //         });
-                        //     }
-
-                        //     if(currentAlert.repeat3){
-                                
-                        //         PushNotification.localNotificationSchedule({
-                        //             //... You can use all the options from localNotifications
-                        //             title: "Reminder from SmartMedi!",
-                        //             id:currentAlert.notificationid3,
-                        //             message: currentAlert.medicinename, // (required)
-                        //             ongoing: false, // (optional) set whether this is an "ongoing" notification
-                        //             priority: "high", // (optional) set notification priority, default: high
-                        //             visibility: "private", // (optional) set notification visibility, default: private
-                        //             importance: "default", // (optional) set notification importance, default: high
-                        //             playSound: true, // (optional) default: true
-                        //             soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-                        //             repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-                        //             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        //             date: new Date(Moment(currentAlert.startdate + ' ' +currentAlert.repeat3, 'YYYYMMDD hh:mm A').valueOf()),
-                        //             subText: " "   + currentAlert.medicinename + " to be taken " + currentAlert.medfrequency + " at " + currentAlert.repeat3, // (optional) default: "message" prop
-                        //             // subText: currentAlert.repeat2 + " " + currentAlert.medfrequency,
-                        //             // date: new Date(1542611975)
-                        //         });
-                        //     }
-
-                        //     if(currentAlert.repeat4){
-                                
-                        //         PushNotification.localNotificationSchedule({
-                        //             //... You can use all the options from localNotifications
-                        //             title: "Reminder from SmartMedi!",
-                        //             id:currentAlert.notificationid4,
-                        //             message: currentAlert.medicinename, // (required)
-                        //             ongoing: false, // (optional) set whether this is an "ongoing" notification
-                        //             priority: "high", // (optional) set notification priority, default: high
-                        //             visibility: "private", // (optional) set notification visibility, default: private
-                        //             importance: "default", // (optional) set notification importance, default: high
-                        //             playSound: true, // (optional) default: true
-                        //             soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-                        //             repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-                        //             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        //             date: new Date(Moment(currentAlert.startdate + ' ' +currentAlert.repeat4, 'YYYYMMDD hh:mm A').valueOf()),
-                        //             subText: " "   + currentAlert.medicinename + " to be taken " + currentAlert.medfrequency + " at " + currentAlert.repeat4, // (optional) default: "message" prop
-                        //             // subText: currentAlert.repeat2 + " " + currentAlert.medfrequency,
-                        //             // date: new Date(1542611975)
-                        //         });
-                        //     }
-                        // });//forEach
+                        
                         }); //done close
             }
             else {

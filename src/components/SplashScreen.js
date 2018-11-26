@@ -18,23 +18,20 @@ export default class SplashScreen extends Component {
         setTimeout(() => {
              AsyncStorage.getItem('userInfo')
                 .then((userInfo) => {
-                    // alert(JSON.stringify(userInfo));
+                    
                     let tempuserdata = userdata;
                    let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
                   
                     userdata.mobile = jsonuserinfo.mobile;
                     userdata.jwt = jsonuserinfo.jwt;
                     userdata.countrycode = jsonuserinfo.countrycode;
-                    // alert((userdata.mobile)+(userdata.jwt))
                     
                 }).done(() => {
                  if(!(userdata.mobile)) {
                      Actions.registerScreen();
-                     // alert("b4reg"+(mobiledata.mobile));
                  }
                  else if(!(userdata.jwt)){
                      Actions.loginScreen();
-                     // alert("b4home"+(mobiledata.mobile));
                  }
                  else{
                     fetch('https://smartmedi.blueravine.in/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -62,7 +59,6 @@ export default class SplashScreen extends Component {
                         else
                         {
                             Actions.loginScreen();
-                            // alert("user creation failed");
                         }
 
 
@@ -80,10 +76,6 @@ export default class SplashScreen extends Component {
     }
 
     render() {
-        // paramsmobile = {};
-        // paramsmobile = {
-        //     mobileno :this.props.tempnumber,
-        // };
         return (
             <View style={styles.SplashScreen_ChildView}>
                 <View>
@@ -94,16 +86,10 @@ export default class SplashScreen extends Component {
             <View style={{  justifyContent: 'space-between',
                 alignItems: 'center',
                }}>
-
-                {/* Put all your components Image and Text here inside Child view which you want to show in Splash Screen. */}
-
-                {/*<Image source={require('../Images/SmartMedi_newlogo.png')}*/}
-                       {/*style={{justifyContent: 'space-between',*/}
-                           {/*alignItems: 'center',}} />*/}
                 <View style={{flexDirection:"row",justifyContent:'flex-start',marginTop:10}}>
 
-                    <Text note style={{fontSize:20,color:'#2eacde'}}> Smart </Text>
-                    <Text note style={{fontSize:20,color:'#46de21'}}>Medi </Text>
+                    <Text note style={{fontSize:20,color:'#2eacde'}}> Smart</Text>
+                    <Text note style={{fontSize:20,color:'#46de21'}}>Medi</Text>
                 </View>
 
             </View>

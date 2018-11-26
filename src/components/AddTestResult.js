@@ -283,7 +283,7 @@ export default class AddTestData extends Component {
         
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
-            // alert(JSON.stringify(userInfo));
+            
             let tempuserdata = userdata;
         let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
         
@@ -295,7 +295,6 @@ export default class AddTestData extends Component {
             userdata.username = jsonuserinfo.username;
             userdata.age = jsonuserinfo.age;
             userdata.gender = jsonuserinfo.gender;
-            // alert((userdata.mobile)+(userdata.jwt))
             
         }).done( () => {
 
@@ -329,7 +328,6 @@ export default class AddTestData extends Component {
 
     });
 //#####
-// alert(JSON.stringify(this.props));
                 if(this.props.testdate){
                     this.setState({saveaction:'Update',
                                     testheader:'Edit Test Result',
@@ -415,8 +413,7 @@ export default class AddTestData extends Component {
                 if (responseJson.messagecode===2004) {
                     testdata = responseJson.TestResult.slice();
                     AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
-                        .then((usertestInfo) => {
-                            // alert(usertestInfo);                            
+                        .then((usertestInfo) => {                            
                         }).done(() =>{
 
                             }); //done close
@@ -429,7 +426,6 @@ export default class AddTestData extends Component {
                 });
             }//if condition close
             else {
-                //alert(responseJson.message);
 
             }
                 //second then end after fetch
@@ -486,7 +482,7 @@ export default class AddTestData extends Component {
                         testdata = responseJson.TestResult.slice();
                         AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
                             .then((usertestInfo) => {
-                                // alert(usertestInfo);                            
+
                             }).done(() =>{
     
                                 }); //done close
@@ -499,7 +495,6 @@ export default class AddTestData extends Component {
                     });
                 }//if condition close
                 else {
-                    //alert(responseJson.message);
     
                 }
                     //second then end after fetch
@@ -573,7 +568,7 @@ export default class AddTestData extends Component {
                 testdata = responseJson.TestResult.slice();
                 AsyncStorage.setItem('usertestInfo',JSON.stringify(testdata))
                     .then((usertestInfo) => {
-                        // alert(usertestInfo);                            
+                                                  
                     }).done(() =>{
 
                         }); //done close

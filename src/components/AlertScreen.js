@@ -295,7 +295,8 @@ export default class AlertScreen extends Component{
             timer:500,
             cal_auth: '',
             appState: AppState.currentState,
-            feedbacknotes:''
+            feedbacknotes:'',
+            isloading:false
 
         };
         // this._handleAppStateChange = this._handleAppStateChange.bind(this);
@@ -396,7 +397,6 @@ export default class AlertScreen extends Component{
                 Actions.homeScreen();
                 break;
             case 'reports':
-                // this.displayTrend(testtypes[0].testname ? testtypes[0].testname : 'FBS', this.state.selectedDate);
                 Actions.trendScreen();
                 break;
             case 'alerts':
@@ -418,16 +418,6 @@ export default class AlertScreen extends Component{
         testtdetail.testdate=trendtestdate;
         Actions.trendScreen(testtdetail);
     };
-
-    // ShowHideActivityIndicator = () =>{
-
-    //     this.setState({loading: true});
-    //             setTimeout(() => {
-    //         this._onLoadScreen();
-    //                 // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-    //     }, 3000)
-    //         // this.setState({loading: false})
-    // };
     async refreshalerttestresults(){
         
         fetch('https://smartmedi.blueravine.in/alert/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -455,22 +445,6 @@ export default class AlertScreen extends Component{
                 }).done(() =>{
                     medicinetypes = testdata.slice();
                     this.setState({filteredTestResult: medicinetypes.slice()});
-
-
-                    // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-                    // for( i=0; i<l; i++) {
-                    //     if( tfrequency[testdata[i].medfrequency]) continue;
-                    //     tfrequency[testdata[i].medfrequency] = true;
-                    //     outfrequencies.push(testdata[i].medfrequency);
-                    // }
-                
-                    // medsfrequecy = [];
-                    // outfrequencies.forEach((currfreq, dateidx) => {
-                    //     let eachfreq = 
-                    //         {label:currfreq,key: currfreq};
-                
-                    //         medsfrequecy.push(eachfreq);
-                    // }); //forEach
                 
                 }); //done
         }
@@ -521,8 +495,7 @@ export default class AlertScreen extends Component{
               'jwtaudience':'SmartMedi'
               //    application/x-www-form-urlencoded
           },
-      // body: JSON.stringify({mobile:userdata.mobile,
-      //     jwtaudience:'SmartMedi'  })
+    
       }) //fetch
       .then((response) => response.json())
       .then((responseJson) => {
@@ -535,23 +508,6 @@ export default class AlertScreen extends Component{
                   }).done(() =>{
                       medicinetypes = testdata.slice();
                       this.setState({filteredTestResult: medicinetypes.slice()});
-
-  
-                      // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-                      // for( i=0; i<l; i++) {
-                      //     if( tfrequency[testdata[i].medfrequency]) continue;
-                      //     tfrequency[testdata[i].medfrequency] = true;
-                      //     outfrequencies.push(testdata[i].medfrequency);
-                      // }
-                  
-                      // medsfrequecy = [];
-                      // outfrequencies.forEach((currfreq, dateidx) => {
-                      //     let eachfreq = 
-                      //         {label:currfreq,key: currfreq};
-                  
-                      //         medsfrequecy.push(eachfreq);
-                      // }); //forEach
-                  
                   }); //done
           }
           else {
@@ -564,22 +520,6 @@ export default class AlertScreen extends Component{
         else {
           medicinetypes = testdata.slice();
           this.setState({filteredTestResult: medicinetypes.slice()});
-
-  
-          // let tfrequency = [], outfrequencies = [], l = testdata.length, i;
-          // for( i=0; i<l; i++) {
-          //     if( tfrequency[testdata[i].medfrequency]) continue;
-          //     tfrequency[testdata[i].medfrequency] = true;
-          //     outfrequencies.push(testdata[i].medfrequency);
-          // }
-      
-          // medsfrequecy = [];
-          // outfrequencies.forEach((currfreq, dateidx) => {
-          //     let eachfreq = 
-          //         {label:currfreq,key: currfreq};
-      
-          //         medsfrequecy.push(eachfreq);
-          // }); //forEach
       
             }
   
@@ -587,99 +527,17 @@ export default class AlertScreen extends Component{
   //#####
  
           BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-        //   AppState.addEventListener('change', this._handleAppStateChange);
-          // this.fetchData();
-  //           const calendars = await RNCalendarEvents.findCalendars();
-  // const primaryCalendar = calendars.find(c => c.isPrimary && c.allowsModifications);
-  //         if (!primaryCalendar) { return;}
-  //         else{
-         // Creates an alarm with the TAG iDream at 17:30 hrs.
   
-         //^^^^^^^
-    //      RNCalendarEvents.authorizationStatus()
-    //     .then(status => {
-    //       this.setState({ cal_auth: status });
-    //       if(status === 'undetermined') {
-    //           RNCalendarEvents.authorizeEventStore()
-    //           .then((out) => {
-    //             if(out == 'authorized') {
-    //               // set the new status to the auth state
-    //               this.setState({ cal_auth: out })
-    //             }
-    //           })
-    //           .catch(error => console.warn('Auth Error: ', error));
-    //         }
-          
-    //     })
-    //     .catch(error => {
-    //      alert(error)
-    //     });
-    //     //^^^^^^^
-    // PushNotification.localNotificationSchedule({
-    //     //... You can use all the options from localNotifications
-    //     message: "Medicine Alert", // (required)
-    //     ongoing: false, // (optional) set whether this is an "ongoing" notification
-    //     priority: "high", // (optional) set notification priority, default: high
-    //     visibility: "private", // (optional) set notification visibility, default: private
-    //     importance: "high", // (optional) set notification importance, default: high
-    //     playSound: true, // (optional) default: true
-    //     soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-    //     number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    //     repeatType: 'hour', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-    //     actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-    //     date: new Date(Date.now() + (1 * 1000)) // in 60 secs
-    //   });
-    //       RNCalendarEvents.saveEvent('Title of event', {
-    //           // id: 'SmartMedi100',
-    //           startDate: '2018-11-08T09:50:00.000Z',
-    //           endDate: '2018-12-08T09:50:00.000Z',
-    //           alarm: [{
-    //             date: -2
-    //           }]
-    //         });
-  
-    //         RNCalendarEvents.fetchAllEvents('2018-11-08T09:50:00.000Z', '2018-12-08T09:50:00.000Z')
-    //         .then((thisevent) => {
-    //       //   if(thisevent.id.toString().includes('SmartMedi')){
-    //       // }
-    //   })
-    //         .catch(error => { alert(error)});
-      // }
     }
      componentDidMount() {
          this.setState({selectedmedicinefrequency:'All'});
-      //#####
-    //   this.ShowHideActivityIndicator();
     this._onLoadScreen();
-    // alert(JSON.stringify(medsfrequecy));
-    
-    // AppState.addEventListener('change', this._handleAppStateChange);
     }
    
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        // AppState.removeEventListener('change', this._handleAppStateChange);
     }
-    // _handleAppStateChange =(nextappState) => {
-    //     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-    //         console.log('App has come to the foreground!')
-    //         PushNotification.localNotificationSchedule({
-    //             //... You can use all the options from localNotifications
-    //             message: "Medicine Alert", // (required)
-    //             ongoing: false, // (optional) set whether this is an "ongoing" notification
-    //             priority: "high", // (optional) set notification priority, default: high
-    //             visibility: "private", // (optional) set notification visibility, default: private
-    //             importance: "high", // (optional) set notification importance, default: high
-    //             playSound: true, // (optional) default: true
-    //             soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
-    //             number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
-    //             repeatType: 'hour', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
-    //             actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-    //             date: new Date(Date.now() + (1 * 1000)) // in 60 secs
-    //           });
-    //       }
-    //       this.setState({appState: nextAppState});
-    // }
+    
     handleBackButton = () => {
         Actions.homeScreen();
         return true;
@@ -706,12 +564,6 @@ export default class AlertScreen extends Component{
     onplusButtonPress = () => {
         Actions.addeventScreen();
     };
-
-    // EditAlert(msg) {
-    //     // Toast.show(" current result name" +msg,Toast.LONG)
-    //     testtdetail.medicinename=msg;
-    //     // Actions.trendScreen(testtdetail);
-    // };
 
     filterByMedfreq(newfrequency){
         if(!newfrequency || newfrequency === 'All'){
@@ -752,7 +604,6 @@ export default class AlertScreen extends Component{
                 istestSorted: false
             });
         }
-        // Toast.show(this.state.filteredTestResult[0].testname,Toast.LONG);
     };
 
     onSwipeLeft(swipedLeftDate) {
@@ -791,11 +642,52 @@ export default class AlertScreen extends Component{
         this.filterByMedfreq(testdates[newdateindex].key);
     }
 
-    // fetchData = async () => {
-    //    // Creates an alarm with the TAG iDream at 17:30 hrs.
-    //     RNAlarm.createAlarm('iDream', 17, 30);          
-       
-    // };
+    ShowHidesearchActivityIndicator = () =>{
+
+        this.setState({isloading: true});
+        setTimeout(() => {
+            this._OnfeedbackSubmit();
+            // Actions.homeScreen();
+            // Snackbar.show({
+            //     title: 'FeedBack Submitted succesfully.',
+            //     duration: Snackbar.LENGTH_LONG,
+            // });
+        }, 500)
+        // this.setState({loading: false})
+    };
+    _OnfeedbackSubmit(){
+        Keyboard.dismiss();
+        fetch('https://interface.blueravine.in/smartmedi/feedback/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({id:parseInt(Moment().format('YYYYMMDDhhmmssSSS'))+Math.floor(Math.random() * 100),
+                                name:userdata.name,
+                                mobile:userdata.mobile,
+                                countrycode:userdata.countrycode,
+                                feedback:this.state.feedbacknotes})
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.messagecode === 6002) {
+                    // Actions.homeScreen();
+                    Actions.homeScreen();
+                    Snackbar.show({
+                        title: 'FeedBack Submitted succesfully.',
+                        duration: Snackbar.LENGTH_LONG,
+                    });
+            }
+            else {
+                alert(responseJson.message);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     render() {
 
         // this.filterByMedfreq(this.state.selectedmedicinefrequency);
@@ -925,27 +817,27 @@ export default class AlertScreen extends Component{
                     </View>
                     </View>
                     </ScrollView>
-
                     <Dialog 
                         visible={this.state.showDialog} 
-                        title="SmartMedi"
+                        title="We value your Feedback."
                         onTouchOutside={() => this.openDialog(false)}
                         contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
                         animationType="fade">
                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
+                    {/* <View style={styles.inputContainer}> */}
                          <TextField label="Feedback"
                                            lineHeight={30}
-                                           value={this.state.feedbacknotes}
+                                        //    value={this.state.feedbacknotes}
                                            editable={true}
                                            fontSize={16}
                                            multiline = {true}
                                            returnKeyType={"done"}
                                            onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
-                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                    {/* </View> */}
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10,marginTop:10
                         }}
+                        onPress={() => {(this.openDialog(false)),this.ShowHidesearchActivityIndicator()}}
                                  >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Submit</Text>
@@ -957,6 +849,13 @@ export default class AlertScreen extends Component{
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>
+
+                         {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                         </View>
                     </Dialog>
                 </View>

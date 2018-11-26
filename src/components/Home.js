@@ -512,20 +512,10 @@ export default class Home extends Component {
     async getusertestdata(){
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
-            // alert(JSON.stringify(userInfo));
             let tempuserdata = userdata;
            let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
           
            userdata =jsonuserinfo;
-        //    userdata.name = jsonuserinfo.name;
-        //     userdata.mobile = jsonuserinfo.mobile;
-        //     userdata.jwt = jsonuserinfo.jwt;
-        //     userdata.countrycode = jsonuserinfo.countrycode;
-        //     userdata.email = jsonuserinfo.email;
-        //     userdata.username = jsonuserinfo.username;
-        //     userdata.age = jsonuserinfo.age;
-        //     userdata.gender = jsonuserinfo.gender;
-            // alert((userdata.mobile)+(userdata.jwt))
             
         }).done(() => {
 
@@ -549,8 +539,6 @@ export default class Home extends Component {
                     .then((testInfo) => {
                         
                     }).done();
-            // Actions.homeScreen();
-            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
             
         }
             else 
@@ -565,12 +553,8 @@ export default class Home extends Component {
 
         await AsyncStorage.getItem('usertestInfo')
         .then((usertestInfo) => {
-        // alert(JSON.stringify(userInfo));
         let tempusertestdata = testdata;
         testdata = usertestInfo ? JSON.parse(usertestInfo) : tempusertestdata;
-
-
-        // alert("initial fetch " +JSON.stringify(testdata));
 
         }).done(() => {
         if(!(testdata.length)) {
@@ -829,8 +813,6 @@ export default class Home extends Component {
         }
 
         this.setState({selectedDate: testdates.length ? testdates[newdateindex].key : ''});
-
-        // alert("Swiped left "+ testdates[newdateindex].key);
         if(testdates.length){this.filterByTestDate(testdates[newdateindex].key);}
 
     }
@@ -848,12 +830,55 @@ export default class Home extends Component {
         }
 
         this.setState({selectedDate: testdates.length ? testdates[newdateindex].key : ''});
-
-        // alert("Swiped right "+ testdates[newdateindex].key);
         if(testdates.length){this.filterByTestDate(testdates[newdateindex].key);}
     }
 
+    ShowHidesearchActivityIndicator = () =>{
 
+        this.setState({isloading: true});
+        setTimeout(() => {
+            this._OnfeedbackSubmit();
+            // Actions.homeScreen();
+            // Snackbar.show({
+            //     title: 'FeedBack Submitted succesfully.',
+            //     duration: Snackbar.LENGTH_LONG,
+            // });
+        }, 500)
+        // this.setState({loading: false})
+    };
+    _OnfeedbackSubmit(){
+        Keyboard.dismiss();
+        fetch('https://interface.blueravine.in/smartmedi/feedback/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({id:parseInt(Moment().format('YYYYMMDDhhmmssSSS'))+Math.floor(Math.random() * 100),
+                                name:userdata.name,
+                                mobile:userdata.mobile,
+                                countrycode:userdata.countrycode,
+                                feedback:this.state.feedbacknotes})
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.messagecode === 6002) {
+                    // Actions.homeScreen();
+                    Actions.homeScreen();
+                    Snackbar.show({
+                        title: 'FeedBack Submitted succesfully.',
+                        duration: Snackbar.LENGTH_LONG,
+                    });
+            }
+            else {
+                alert(responseJson.message);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     render() {
         testtdetail = {};
         testtdetail = {
@@ -1029,24 +1054,25 @@ export default class Home extends Component {
                     {/*</Card>*/}
                     <Dialog 
                         visible={this.state.showDialog} 
-                        title="SmartMedi"
+                        title="We value your Feedback."
                         onTouchOutside={() => this.openDialog(false)}
                         contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
                         animationType="fade">
                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
+                    {/* <View style={styles.inputContainer}> */}
                          <TextField label="Feedback"
                                            lineHeight={30}
-                                           value={this.state.feedbacknotes}
+                                        //    value={this.state.feedbacknotes}
                                            editable={true}
                                            fontSize={16}
                                            multiline = {true}
                                            returnKeyType={"done"}
                                            onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
-                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                    {/* </View> */}
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10,marginTop:10
                         }}
+                        onPress={() => {(this.openDialog(false)),this.ShowHidesearchActivityIndicator()}}
                                  >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Submit</Text>
@@ -1058,6 +1084,13 @@ export default class Home extends Component {
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>
+
+                         {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                         </View>
                     </Dialog>
                 </View>
@@ -1085,6 +1118,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#f1f1f1f1',
 
+    },
+    inputContainer: {
+        borderBottomColor: '#FFFFFF',
+        backgroundColor: '#FFFFFF',
+        borderRadius:30,
+        borderBottomWidth: 1,
+        width:250,
+        height:105,
+        marginBottom:20,
+        marginLeft:50,
+        flexDirection: 'row',
+        justifyContent:"space-evenly",
+        alignItems:'center'
     },
     actionButtonIcon: {
         fontSize: 20,

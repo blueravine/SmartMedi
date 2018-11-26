@@ -68,7 +68,8 @@ export default class UserProfile extends Component {
             ageofuser:'',
             usereditableflag:false,
             invalidemail:'',
-            feedbacknotes:''
+            feedbacknotes:'',
+            isloading:false
         };
         this._validateemail = this._validateemail.bind(this);
         this.onChangegenderTextPress=this.onChangegenderTextPress.bind(this);
@@ -168,7 +169,6 @@ export default class UserProfile extends Component {
 
    async _EditUserInformation() {
     Keyboard.dismiss();
-    // alert('testing...');
     fetch('https://smartmedi.blueravine.in/user/update/mobile',
      { // USE THE LINK TO THE SERVER YOU'RE USING mobile
     method: 'POST', // USE GET, POST, PUT,ETC
@@ -197,7 +197,6 @@ export default class UserProfile extends Component {
         userdata.age = responseJson.User.age;
         userdata.email = responseJson.User.email;
         userdata.gender = responseJson.User.gender;
-        // alert(JSON.stringify(userdata));
         AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
             .then((userInfo) => {
                 //do nothing
@@ -214,7 +213,6 @@ export default class UserProfile extends Component {
    async componentDidMount() {
     await AsyncStorage.getItem('userInfo')
     .then((userInfo) => {
-        // alert(userInfo);
         let tempuserdata = userdata;
         let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
         userdata.name = jsonuserinfo.name;
@@ -233,8 +231,8 @@ export default class UserProfile extends Component {
         userdata.gender = jsonuserinfo.gender;
         userdata.jwt = jsonuserinfo.jwt;
     }).done(() => {
-        // alert(JSON.stringify(userdata.jwt));
-    });
+        
+    });//done closed
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -252,7 +250,6 @@ export default class UserProfile extends Component {
         
         if(reg.test(emailtext) === false)
         {
-            // alert("Please enter a valid email.");
             this.setState({email:emailtext,
                             invalidemail:'Please enter a valid email.'})
             return false;
@@ -327,6 +324,53 @@ export default class UserProfile extends Component {
 
      }
 
+
+     ShowHidesearchActivityIndicator = () =>{
+
+        this.setState({isloading: true});
+        setTimeout(() => {
+            this._OnfeedbackSubmit();
+            // Actions.homeScreen();
+            // Snackbar.show({
+            //     title: 'FeedBack Submitted succesfully.',
+            //     duration: Snackbar.LENGTH_LONG,
+            // });
+        }, 500)
+        // this.setState({loading: false})
+    };
+    _OnfeedbackSubmit(){
+        Keyboard.dismiss();
+        fetch('https://interface.blueravine.in/smartmedi/feedback/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({id:parseInt(Moment().format('YYYYMMDDhhmmssSSS'))+Math.floor(Math.random() * 100),
+                                name:userdata.name,
+                                mobile:userdata.mobile,
+                                countrycode:userdata.countrycode,
+                                feedback:this.state.feedbacknotes})
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.messagecode === 6002) {
+                    // Actions.homeScreen();
+                    Actions.homeScreen();
+                    Snackbar.show({
+                        title: 'FeedBack Submitted succesfully.',
+                        duration: Snackbar.LENGTH_LONG,
+                    });
+            }
+            else {
+                alert(responseJson.message);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
     render() {
 
         return (
@@ -474,24 +518,25 @@ export default class UserProfile extends Component {
                     </ScrollView>
                     <Dialog 
                         visible={this.state.showDialog} 
-                        title="SmartMedi"
+                        title="We value your Feedback."
                         onTouchOutside={() => this.openDialog(false)}
                         contentStyle={{ justifyContent: 'center', alignItems: 'center', }}
                         animationType="fade">
                         <View style={{flexDirection:"column",justifyContent:'space-evenly'}}>
-
+                    {/* <View style={styles.inputContainer}> */}
                          <TextField label="Feedback"
                                            lineHeight={30}
-                                           value={this.state.feedbacknotes}
+                                        //    value={this.state.feedbacknotes}
                                            editable={true}
                                            fontSize={16}
                                            multiline = {true}
                                            returnKeyType={"done"}
                                            onChangeText={(itemValue) => this.setState({feedbacknotes: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
-                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
+                    {/* </View> */}
+                       <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10,marginTop:10
                         }}
+                        onPress={() => {(this.openDialog(false)),this.ShowHidesearchActivityIndicator()}}
                                  >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Submit</Text>
@@ -503,6 +548,13 @@ export default class UserProfile extends Component {
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>
+
+                         {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
                         </View>
                     </Dialog>
                 </View>
