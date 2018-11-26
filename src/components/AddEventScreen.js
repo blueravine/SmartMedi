@@ -585,7 +585,7 @@ export default class AddEventScreen extends Component {
                     soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                     repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                     // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                    subText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked).format('hh:mm A'), // (optional) default: "message" prop
+                    bigText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked).format('hh:mm A'), // (optional) default: "message" prop
                     // subText: this.state.timepicked + " " + this.state.picked2,
                     date: new Date(Moment(Moment(this.state.datepicked1).format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                     // date: new Date(1542611975)
@@ -606,7 +606,7 @@ export default class AddEventScreen extends Component {
                         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                         repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        subText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked1).format('hh:mm A'), // (optional) default: "message" prop
+                        bigText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked1).format('hh:mm A'), // (optional) default: "message" prop
                         // subText: this.state.timepicked + " " + this.state.picked2,
                         date: new Date(Moment(Moment(this.state.datepicked1).format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked1).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                         // date: new Date(1542611975)
@@ -627,7 +627,7 @@ export default class AddEventScreen extends Component {
                         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                         repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        subText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked2).format('hh:mm A'), // (optional) default: "message" prop
+                        bigText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked2).format('hh:mm A'), // (optional) default: "message" prop
                         // subText: this.state.timepicked + " " + this.state.picked2,
                         date: new Date(Moment(Moment(this.state.datepicked1).format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked2).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                         // date: new Date(1542611975)
@@ -648,7 +648,7 @@ export default class AddEventScreen extends Component {
                         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                         repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        subText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked3).format('hh:mm A'), // (optional) default: "message" prop
+                        bigText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " at " +Moment(this.state.timepicked3).format('hh:mm A'), // (optional) default: "message" prop
                         // subText: this.state.timepicked + " " + this.state.picked2,
                         date: new Date(Moment(Moment(this.state.datepicked1).format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked3).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                         // date: new Date(1542611975)
@@ -674,7 +674,7 @@ export default class AddEventScreen extends Component {
                         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                         // repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        subText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " on " + Moment(this.state.datepicked1).add(monthlyinterval, 'months').date() + " at " +Moment(this.state.timepicked).format('hh:mm A'), // (optional) default: "message" prop
+                        bigText: " "  + this.state.picked3 + " to be taken " + this.state.picked2 + " on " + Moment(this.state.datepicked1).add(monthlyinterval, 'months').date() + " at " +Moment(this.state.timepicked).format('hh:mm A'), // (optional) default: "message" prop
                         // subText: this.state.timepicked + " " + this.state.picked2,
                         date: new Date(Moment(Moment(this.state.datepicked1).add(monthlyinterval, 'months').format('YYYYMMDD')+ ' ' +Moment(this.state.timepicked).format('hh:mm A'), 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                         // date: new Date(1542611975)
@@ -780,7 +780,7 @@ export default class AddEventScreen extends Component {
                         repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
                         date: new Date(Moment(responseJson.Alert.startdate + ' ' +responseJson.Alert.repeat1, 'YYYYMMDD hh:mm A').valueOf()),
-                        subText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat1, // (optional) default: "message" prop
+                        bigText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat1, // (optional) default: "message" prop
                         // subText: responseJson.Alert.repeat1 + " " + responseJson.Alert.medfrequency,
                         // date: new Date(1542611975)
                     });
@@ -802,7 +802,7 @@ export default class AddEventScreen extends Component {
                             repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
                             date: new Date(Moment(responseJson.Alert.startdate + ' ' +responseJson.Alert.repeat2, 'YYYYMMDD hh:mm A').valueOf()),
-                            subText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat2, // (optional) default: "message" prop
+                            bigText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat2, // (optional) default: "message" prop
                             // subText: responseJson.Alert.repeat2 + " " + responseJson.Alert.medfrequency,
                             // date: new Date(1542611975)
                         });
@@ -824,7 +824,7 @@ export default class AddEventScreen extends Component {
                             repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
                             date: new Date(Moment(responseJson.Alert.startdate + ' ' +responseJson.Alert.repeat3, 'YYYYMMDD hh:mm A').valueOf()),
-                            subText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat3, // (optional) default: "message" prop
+                            bigText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat3, // (optional) default: "message" prop
                             // subText: responseJson.Alert.repeat2 + " " + responseJson.Alert.medfrequency,
                             // date: new Date(1542611975)
                         });
@@ -846,7 +846,7 @@ export default class AddEventScreen extends Component {
                             repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                             // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
                             date: new Date(Moment(responseJson.Alert.startdate + ' ' +responseJson.Alert.repeat4, 'YYYYMMDD hh:mm A').valueOf()),
-                            subText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat4, // (optional) default: "message" prop
+                            bigText: " "   + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " at " + responseJson.Alert.repeat4, // (optional) default: "message" prop
                             // subText: responseJson.Alert.repeat2 + " " + responseJson.Alert.medfrequency,
                             // date: new Date(1542611975)
                         });
@@ -872,7 +872,7 @@ export default class AddEventScreen extends Component {
                         soundName: 'default', // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
                         // repeatType: rptTyp, // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
                         // actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-                        subText: " "  + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " on " + Moment(responseJson.Alert.startdate, 'YYYYMMDD').add(monthlyinterval, 'months').date() + " at " + responseJson.Alert.repeat1, // (optional) default: "message" prop
+                        bigText: " "  + responseJson.Alert.medicinename + " to be taken " + responseJson.Alert.medfrequency + " on " + Moment(responseJson.Alert.startdate, 'YYYYMMDD').add(monthlyinterval, 'months').date() + " at " + responseJson.Alert.repeat1, // (optional) default: "message" prop
                         // subText: this.state.timepicked + " " + this.state.picked2,
                         date: new Date(Moment(Moment(responseJson.Alert.startdate, 'YYYYMMDD').add(monthlyinterval, 'months').format('YYYYMMDD')+ ' ' + responseJson.Alert.repeat1, 'YYYYMMDD hh:mm A').valueOf()) // in 60 secs
                         // date: new Date(1542611975)
