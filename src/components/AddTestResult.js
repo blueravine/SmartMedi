@@ -692,7 +692,7 @@ export default class AddTestData extends Component {
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
                                                    onPress={this.onTestNameShowpicker}>
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="Select Test Type"
+                                    <TextField label="Select Test Name"
                                                lineHeight={30}
                                                value={this.state.picked2}
                                                editable={false}
