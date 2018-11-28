@@ -293,6 +293,7 @@ export default class AddTestData extends Component {
             userdata.countrycode = jsonuserinfo.countrycode;
             userdata.email = jsonuserinfo.email;
             userdata.username = jsonuserinfo.username;
+            this.setState({age : jsonuserinfo.age});
             userdata.age = jsonuserinfo.age;
             userdata.gender = jsonuserinfo.gender;
             
@@ -685,7 +686,7 @@ export default class AddTestData extends Component {
                            <DateTimePicker
                                     isVisible={this.state.isDateTimePickerVisible}
                                     mode={'date'}
-                                    minimumDate={Moment().toDate()}
+                                    minimumDate={Moment().date()}
                                     onConfirm={this._handleDatePicked}
                                     onCancel={this._hideDateTimePicker}
                                 />
@@ -719,7 +720,7 @@ export default class AddTestData extends Component {
 
                                 <TextField label="Age at the time of Test"
                                            lineHeight={30}
-                                           value={this.state.age}
+                                           value={this.state.age.toString()}
                                            editable={true}
                                            keyboardType='phone-pad'
                                            fontSize={16}

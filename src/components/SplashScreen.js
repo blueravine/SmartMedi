@@ -4,7 +4,7 @@ import { Platform, StyleSheet,Dimensions, View, Text, Image,AsyncStorage, Toucha
 import { Actions, ActionConst } from 'react-native-router-flux';
 import Moment from "moment/moment";
 // import Registration from "./Registration"; // 4.0.0-beta.31
-var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null,secretquestionid:null};
 // var paramsmobile ;
 export default class SplashScreen extends Component {
     constructor(props) {
@@ -58,6 +58,8 @@ export default class SplashScreen extends Component {
                             userdata.username = responseJson.User.username;
                             userdata.age = responseJson.User.age;
                             userdata.gender = responseJson.User.gender;
+                            userdata.secretquestionid = responseJson.User.secretquestionid;
+
 
                     AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                         .then((userInfo) => {

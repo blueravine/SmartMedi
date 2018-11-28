@@ -925,6 +925,7 @@ export default class Home extends Component {
 
         renderResultNormal = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
+                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
                 <View>
                     {(currentResult.normalcomparator === "lessthan") &&
                     <Text style={{marginBottom:10,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
@@ -932,7 +933,10 @@ export default class Home extends Component {
                     {(currentResult.normalcomparator === "between") &&
                     <Text style={{marginBottom:10,justifyContent:'flex-end'}}> {currentResult.normalmin}-{currentResult.normalmax} {currentResult.testunit} </Text>
                     }
-                </View>);
+                </View>
+                </TouchableOpacity>
+                );
+                
         });
 
       

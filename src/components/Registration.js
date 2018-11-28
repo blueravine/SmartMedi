@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null,countryflag:null};
+    countrycode:null,countryflag:null,secretquestionid:null};
 var genderselect = [
     {
     value: 'MALE',
@@ -90,8 +90,9 @@ export default class Registration extends Component {
             userdata.gender = jsonuserinfo.gender;
             userdata.jwt = jsonuserinfo.jwt;
             userdata.countryflag = jsonuserinfo.countryflag;
+            userdata.secretquestionid = jsonuserinfo.secretquestionid;
         }).done(() => {
-                    alert(JSON.stringify(userdata));
+                    // alert(JSON.stringify(userdata));
 
             if(userdata.mobile){
                 
@@ -219,6 +220,7 @@ export default class Registration extends Component {
                             userdata.age = responseJson.User.age;
                             userdata.gender = responseJson.User.gender;
                             userdata.jwt = null;
+                            userdata.secretquestionid = responseJson.User.secretquestionid;
                     AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                         .then((userInfo) => {
                             
@@ -311,6 +313,10 @@ export default class Registration extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(username) => this.setState({username})}/>
         </View>
+
+        <Text  style={{fontSize:10,textAlign:'center',color:'#F80617',marginBottom:2}} >
+        {this.state.invalidemail}  </Text>
+
         <View style={styles.inputContainer}>
         <Icoon type='MaterialCommunityIcons' name='email-outline' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
@@ -325,8 +331,6 @@ export default class Registration extends Component {
               {/* onChangeText={(email) => this.setState({email})}/> */}
         </View>
        
-        <Text  style={{fontSize:10,textAlign:'center',color:'#F80617',marginBottom:5}} >
-        {this.state.invalidemail}  </Text>
                                    
         <Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
         <View style={styles.inputContainer}>
@@ -345,7 +349,7 @@ export default class Registration extends Component {
               placeholder='Please select gender'
                                             // value={'Please select gender'}
                                             baseColor={'#000'}
-                                            value={this.state.gender}
+                                            value={this.state.gender ? this.state.gender : 'Please select gender'}
                                             textColor={'#000'}
                                             selectedItemColor={'#000'}
                                             itemColor={'#000'}

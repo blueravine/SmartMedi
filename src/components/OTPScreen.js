@@ -7,7 +7,9 @@ import {Navigator,
 import {Card,icon} from 'native-base';
 import { Actions, ActionConst } from 'react-native-router-flux'; // 4.0.0-beta.31
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Snackbar from 'react-native-snackbar';
 import Icoon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ModalFilterPicker from 'react-native-modal-filter-picker';
 import Icons from 'react-native-vector-icons/Foundation';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
@@ -18,10 +20,13 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 global.sessionid ;
+import { TextField } from 'react-native-material-textfield';
+var secretquestions = [];
+var securityquestion = [];
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null};
+    countrycode:null,secretquestionid:null};
 export default class OTPScreen extends Component {
     // public static var=sessionid;
     constructor(props) {
@@ -33,8 +38,13 @@ export default class OTPScreen extends Component {
             countrycode:null,
             username:'',
             otp:'',
+            securitypickervisible:false,
+            securitypickerquestion:'',
+            securityanswer:'',
+            securityquestionid: null
               
         };
+        this._onLinkPress=this._onLinkPress.bind(this);
         this._onVerify = this._onVerify.bind(this);
 
     }
@@ -44,7 +54,7 @@ export default class OTPScreen extends Component {
         setTimeout(() => {
             this._onVerify()
             BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
+        }, 500)
         // this.setState({loading: false})
     };
     _onVerify(){
@@ -61,6 +71,13 @@ export default class OTPScreen extends Component {
         if((responseJson.Status==="Success") && (responseJson.Details==="OTP Matched")){
 
             if(callerscreen==='registration'){
+
+            // let selectedQid = secretquestions.map((currentsecretQ) => {
+            //     if(currentsecretQ.question === this.state.securityquestion){
+            //         return currentsecretQ.questionid;
+            //     }
+            // });
+
             fetch('https://interface.blueravine.in/smartmedi/user/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
                 method: 'POST', // USE GET, POST, PUT,ETC
                 headers: { //MODIFY HEADERS
@@ -75,6 +92,8 @@ export default class OTPScreen extends Component {
                                       email:userdata.email,
                                      username:userdata.username,
                                     gender:userdata.gender,
+                                    secretquestionid:this.state.securityquestionid,
+                                    secretanswer:this.state.securityanswer,
                                     age:userdata.age })
             })
                 .then((response) => response.json())
@@ -142,6 +161,8 @@ export default class OTPScreen extends Component {
             },
             body: JSON.stringify({mobile:userdata.mobile,
                                   password:this.state.password,
+                                //   securityquestion:this.state.securityquestion,
+                                  secretanswer:this.state.securityanswer,
                                   countrycode:userdata.countrycode })
         })
             .then((response) => response.json())
@@ -189,7 +210,11 @@ export default class OTPScreen extends Component {
                         alert(error);
                     });
                 }
-                else{
+                else if(responseJson.messagecode===1010)
+                {
+                    alert(responseJson.message);
+                }
+                else {
                     alert("An error occurred while updating password! Please try again..");
                 }
 
@@ -219,28 +244,121 @@ export default class OTPScreen extends Component {
     });
         // Actions.homeScreen();
     }
-     async componentDidMount(){
-    
-        await AsyncStorage.getItem('userInfo')
-        .then((userInfo) => {
-            let tempuserdata = userdata;
-            let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
-            userdata.name = jsonuserinfo.name;
-            userdata.mobile = jsonuserinfo.mobile;
-            this.setState({phone : jsonuserinfo.mobile});
-            this.setState({countrycode : jsonuserinfo.countrycode});
-            this.setState({username : jsonuserinfo.username});
-            userdata.countrycode = jsonuserinfo.countrycode;
-            userdata.email = jsonuserinfo.email;
-            userdata.username = jsonuserinfo.username;
-            userdata.age = jsonuserinfo.age;
-            userdata.gender = jsonuserinfo.gender;
-            userdata.jwt = jsonuserinfo.jwt;
-        }).done(() => {
-            
+
+    componentDidMount(){
+        // Fetch code for retreving security question
+
+        
+        fetch('https://interface.blueravine.in/smartmedi/secretquestions/retrieve', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        method: 'GET', // USE GET, POST, PUT,ETC
+        headers: { //MODIFY HEADERS
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            //    application/x-www-form-urlencoded
+        },
+    }) //fetch
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+        if (responseJson.messagecode===7006) {
+            secretquestions = responseJson.SecretQuestion.slice();
+            // AsyncStorage.setItem('usersecretquestion',JSON.stringify(secretquestions))
+            //     .then((usersecretquestion) => {
+
+            //     }).done(() =>{
+                    securityquestion = secretquestions.map((currentsecretquestion) => {
+                        return {"label":currentsecretquestion.question,
+                                "key":currentsecretquestion.questionid
+                                };
+                       
+                       });
+
+                       AsyncStorage.getItem('userInfo')
+                       .then((userInfo) => {
+                           let tempuserdata = userdata;
+                           let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+
+                        //    alert(JSON.stringify(jsonuserinfo));
+
+                           userdata.name = jsonuserinfo.name;
+                           userdata.mobile = jsonuserinfo.mobile;
+                           this.setState({phone : jsonuserinfo.mobile,
+                                          countrycode : jsonuserinfo.countrycode,
+                                          username : jsonuserinfo.username,
+                                          securitypickerquestion: (jsonuserinfo.secretquestionid) ? securityquestion[jsonuserinfo.secretquestionid-1].label : null});
+                           userdata.countrycode = jsonuserinfo.countrycode;
+                           userdata.email = jsonuserinfo.email;
+                           userdata.username = jsonuserinfo.username;
+                           userdata.age = jsonuserinfo.age;
+                           userdata.gender = jsonuserinfo.gender;
+                           userdata.jwt = jsonuserinfo.jwt;
+                           userdata.secretquestionid = jsonuserinfo.secretquestionid;
+                       }).done(() => {
+                           
+                       });
+                    // }); //done close
+        }
+        else {
+            alert(responseJson.message);
+            //###Need to handle error in retrieving test results from server
+        }
+    }).catch((error) => {
+            alert(error);
         });
-    
+
+        //******************
+
+
+
     }
+
+    _onLinkPress(){
+        // Actions.otpScreen({texts: this.state.mobiles });
+        // Toast.show('my no'+this.state.mobile);
+        fetch('https://2factor.in/API/V1/88712423-890f-11e8-a895-0200cd936042/SMS/+'+this.state.countrycode+this.state.phone+'/AUTOGEN/SmartMediReg', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'GET', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.Status === "Success") {
+
+                    sessionid = responseJson.Details;
+
+
+                }
+                else {
+
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
+    onTestNameShowpicker = () => {
+        // if(this.state.callerscreen==='registration') {
+        this.setState({ securitypickervisible: true });
+        // }
+    };
+    onTestNameSelectpicker = (picked) => {
+        this.setState({
+            securitypickerquestion: securityquestion[picked-1].label,
+            securityquestionid: picked,
+            securitypickervisible: false,
+        });
+    };
+    onTestNameCancelpicker = () => {
+        this.setState({
+            securitypickervisible: false
+        });
+    };
     render() {
      
         return(
@@ -253,6 +371,8 @@ export default class OTPScreen extends Component {
                         backgroundColor='#f1f1f1f1'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
+
+                <ScrollView><View style={{marginBottom:200}}>
             
                 <View style={styles.inputContainer}>
                 <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
@@ -293,6 +413,48 @@ export default class OTPScreen extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(otp) => this.setState({otp})}/>
         </View>
+       
+        <View style={styles.inputselectpickerContainer}>
+                {/* <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/> */}
+          {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
+          <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                    onPress={this.onTestNameShowpicker}>
+          <TextInput style={styles.inputselectpicker}
+              placeholder="Please select security question"
+              keyboardType="email-address"
+              returnKeyType={"next"}
+              editable={false}
+              multiline = {true}
+              value={this.state.securitypickerquestion}
+              underlineColorAndroid='transparent'>
+            {/* //   onChangeText={(securityquestion) => this.setState({securityquestion})}
+             > */}
+              
+             {/* {userdata.username} */}
+             </TextInput>
+             </TouchableOpacity>
+             
+        </View>
+        <ModalFilterPicker
+                                    visible={this.state.securitypickervisible}
+                                    onSelect={this.onTestNameSelectpicker}
+                                    onCancel={this.onTestNameCancelpicker}
+                                    options={securityquestion}
+                                    optionTextStyle={style={fontSize:16}}
+                                />
+        <View style={styles.inputContainer}>
+                {/* <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/> */}
+          {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
+          <TextInput style={styles.inputs}
+              placeholder="Please enter your security answer"
+              keyboardType="email-address"
+              returnKeyType={"next"}
+              underlineColorAndroid='transparent'
+              onChangeText={(securityanswer) => this.setState({securityanswer:securityanswer.toString().toUpperCase()})}
+             >
+             {/* {userdata.username} */}
+             </TextInput>
+        </View>
 <View style={styles.inputContainer}>
 <Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           <TextInput style={styles.inputs}
@@ -302,11 +464,69 @@ export default class OTPScreen extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}/>
         </View>
+        
+        <TouchableOpacity
+     onPress={this._onLinkPress}>
+    <Text style={{textAlign:'right',textDecorationLine:'underline',color:'#0000ff',marginTop:2,marginBottom:5}} >Resend OTP </Text>
+                      {/*onPress={this._onLinkPress(this.props.phone)}*/}
+    </TouchableOpacity>
 
-<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={
-    this._onVerify
-    // this.ShowHideActivityIndicator
-    }>
+<TouchableHighlight style={[styles.buttonContainer, styles.signupButton]}
+ 
+        
+ onPress={() => {        if(this.state.username===''){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Username field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                            }
+                            else if(this.state.otp===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Otp field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else if(this.state.password===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Password field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else if(this.state.securitypickerquestion===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Question field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            
+                            else if(this.state.securityanswer===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Answer field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else{
+                                // Actions.searchScreen(params);
+                                this.ShowHideActivityIndicator();
+                                // this.saveTestsData();
+                                // this._onButtonPressed();
+                            }}}
+//  onPress={
+//     this._onVerify
+//     // this.ShowHideActivityIndicator
+//     }
+    >
+
+   
           <Text style={styles.signUpText}>Verify</Text>
         </TouchableHighlight>
 
@@ -316,7 +536,8 @@ export default class OTPScreen extends Component {
                         this.state.loading ?  <ActivityIndicator color = '#4d6bcb'
                                                                  size = "large" style={{padding: 20}} /> : null
                     }
-
+</View>
+</ScrollView>
                 </View>
 
             </View>
@@ -354,6 +575,27 @@ const styles = StyleSheet.create(
             },
             inputs:{
                 height:45,
+                marginLeft:16,
+                borderBottomColor: '#FFFFFF',
+                flex:1,
+                justifyContent:"space-evenly",
+                alignItems:"center"
+            },
+            inputselectpickerContainer: {
+                borderBottomColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
+                // borderRadius:30,
+                borderBottomWidth: 1,
+                width:250,
+                height:60,
+                marginBottom:20,
+                marginLeft:50,
+                flexDirection: 'row',
+                justifyContent:"space-evenly",
+                alignItems:'center'
+            },
+            inputselectpicker:{
+                height:60,
                 marginLeft:16,
                 borderBottomColor: '#FFFFFF',
                 flex:1,
@@ -405,6 +647,7 @@ const styles = StyleSheet.create(
             left: 0,
             right: 0,
             top:0,
+            bottom:0
 
         },
         halfHeight: {
