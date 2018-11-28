@@ -426,7 +426,7 @@ export default class UserProfile extends Component {
                             <TouchableOpacity style={{marginLeft:20}}
                                 onPress={() => {this._onPresstext()}}>
                                 <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
-                                                        Click to change Mobile Number  </Text>
+                                                        Login with different Mobile Number  </Text>
                                                         </TouchableOpacity>
                                 <View style={{flexDirection:"column",justifyContent:"space-evenly"}}>
                             

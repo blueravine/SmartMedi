@@ -186,7 +186,7 @@ export default class Login extends Component {
         <TouchableOpacity style={{marginBottom:10,marginLeft:20}}
               onPress={() => {this._onPresstext()}}>
               <Text note style={{fontSize:12,textAlign:'right',color:'#4d6bcb'}} >
-                                    Click here to change Mobile Number  </Text>
+              Login with different Mobile Number  </Text>
                                     </TouchableOpacity>
         <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
         <View style={styles.inputContainer}>
