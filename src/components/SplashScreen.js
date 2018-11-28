@@ -30,48 +30,98 @@ export default class SplashScreen extends Component {
                  if(!(userdata.mobile)) {
                      Actions.registerScreen();
                  }
-                 else if(!(userdata.jwt)){
-                     Actions.loginScreen();
-                 }
                  else{
-                    fetch('https://interface.blueravine.in/smartmedi/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
-                    method: 'POST', // USE GET, POST, PUT,ETC
-                    headers: { //MODIFY HEADERS
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization':'Bearer '+userdata.jwt,
-                        'mobile':userdata.mobile,
-                        'countrycode':userdata.countrycode,
-                        'jwtaudience':'SmartMedi'
-                        //    application/x-www-form-urlencoded
-                    },
-                    // body: JSON.stringify({mobile:userdata.mobile,
-                    //     jwtaudience:'SmartMedi'  })
-                })
-                    .then((response) => response.json())
-                    .then((responseJson) => {
+                     //check if mobile number exists in server
+        fetch('https://interface.blueravine.in/smartmedi/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({mobile:userdata.mobile,
+                                  countrycode:userdata.countrycode })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                
+                if (responseJson.messagecode===1005){
+                    //User not found in server
+                    Actions.registerScreen();
+                }
+                else  if(responseJson.messagecode===1007) {
+                    
+                            userdata.name = responseJson.User.name;
+                            userdata.mobile = responseJson.User.mobile;
+                            userdata.countrycode = responseJson.User.countrycode;
+                            userdata.email = responseJson.User.email;
+                            userdata.username = responseJson.User.username;
+                            userdata.age = responseJson.User.age;
+                            userdata.gender = responseJson.User.gender;
 
-                        if (responseJson.messagecode===1006) {
-                            // Actions.loginScreen({phone:this.props.phone});
-                            Actions.homeScreen();
-                            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-                        }
-                        else
-                        {
-                            Actions.loginScreen();
-                        }
+                    AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
+                        .then((userInfo) => {
+                            
+                        }).done(() =>{
+                       
+                            // Actions.loginScreen();
+                     //************
+                     if(!(userdata.jwt)){
+                        Actions.loginScreen();
+                    }
+                    else{
+                        fetch('https://interface.blueravine.in/smartmedi/user/token/verify', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+                        method: 'POST', // USE GET, POST, PUT,ETC
+                        headers: { //MODIFY HEADERS
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization':'Bearer '+userdata.jwt,
+                            'mobile':userdata.mobile,
+                            'countrycode':userdata.countrycode,
+                            'jwtaudience':'SmartMedi'
+                            //    application/x-www-form-urlencoded
+                        },
+                        // body: JSON.stringify({mobile:userdata.mobile,
+                        //     jwtaudience:'SmartMedi'  })
+                    })
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+
+                            if (responseJson.messagecode===1006) {
+                                // Actions.loginScreen({phone:this.props.phone});
+                                Actions.homeScreen();
+                                // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                            }
+                            else
+                            {
+                                Actions.loginScreen();
+                            }
 
 
-                    }).catch((error) => {
-                    alert(error);
-                });
-                 }
-             
+                        }).catch((error) => {
+                        alert(error);
+                    });
+                    }
+                    //***********
+                       
+
+                    });
+
+
+                }
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+                     
+
+                }
              });
             // Actions.homeScreen();
             // Actions.registerScreen();
 
-        }, 5000)
+        }, 3000)
 
     }
 

@@ -15,6 +15,7 @@ import CountryPicker, {
     getAllCountries
   } from 'react-native-country-picker-modal';
 import Toast from 'react-native-simple-toast';
+import Snackbar from 'react-native-snackbar';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -26,7 +27,7 @@ import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null};
+    countrycode:null,countryflag:null};
 var genderselect = [
     {
     value: 'MALE',
@@ -60,16 +61,53 @@ export default class Registration extends Component {
             age:null,
             phone:null,
             username:null,
-            countrycode:null,
+            // countrycode:null,
             usereditableflag:false,
             uservisibiltyflag:false,
+            invalidemail:'',
             cca2,
             callingCode
             // cca2: "IN",
               
         };
+        this._validateemail = this._validateemail.bind(this);
         this._onPress = this._onPress.bind(this);
         this.onChangegenderTextPress=this.onChangegenderTextPress.bind(this);
+    }
+
+    async componentDidMount(){
+    
+        await AsyncStorage.getItem('userInfo')
+        .then((userInfo) => {
+            let tempuserdata = userdata;
+            let  jsonuserinfo = userInfo ? JSON.parse(userInfo) : tempuserdata;
+            userdata.name = jsonuserinfo.name;
+            userdata.mobile = jsonuserinfo.mobile;
+            userdata.countrycode = jsonuserinfo.countrycode;
+            userdata.email = jsonuserinfo.email;
+            userdata.username = jsonuserinfo.username;
+            userdata.age = jsonuserinfo.age;
+            userdata.gender = jsonuserinfo.gender;
+            userdata.jwt = jsonuserinfo.jwt;
+            userdata.countryflag = jsonuserinfo.countryflag;
+        }).done(() => {
+                    alert(JSON.stringify(userdata));
+
+            if(userdata.mobile){
+                
+            this.setState({phone : userdata.mobile,
+                         callingCode : userdata.countrycode,
+                         username : userdata.username,
+                         name: userdata.name,
+                        email   : userdata.email,
+                        gender: userdata.gender,
+                        age:userdata.age,
+                        usereditableflag:true,
+                        uservisibiltyflag:true,
+                        cca2:userdata.countryflag});
+            }
+        });
+    
     }
 
     onChangegenderTextPress(value){
@@ -119,6 +157,7 @@ export default class Registration extends Component {
                     userdata.age = this.state.age;
                     userdata.gender = this.state.gender;
                     userdata.jwt = null;
+                    userdata.countryflag=this.state.cca2;
             AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                     .then((userInfo) => {
                         //do nothing
@@ -137,7 +176,20 @@ export default class Registration extends Component {
             console.error(error);
         });
     }
-
+    _validateemail(emailtext){
+        let reg = (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) ;
+        
+        if(reg.test(emailtext) === false)
+        {
+            this.setState({email:emailtext,
+                            invalidemail:'Please enter a valid email.'})
+            return false;
+         }
+        else {
+            this.setState({email:emailtext,
+                invalidemail:''})
+        }
+    }
     _onPhoneEntered(){
         Keyboard.dismiss();
         fetch('https://interface.blueravine.in/smartmedi/user/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
@@ -200,8 +252,9 @@ export default class Registration extends Component {
                         backgroundColor='#f1f1f1f1'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
-                <ScrollView>
+                <ScrollView><View style={{marginBottom:200}}>
 
+            {/* <Card style={{backgroundColor:'#f1f1f1f1'}}> */}
                 <Text style={{marginBottom:5,color:'#4d6bcb','textAlign':'center'}}>Please select Country and enter Mobile Number</Text>
      
              <View style={styles.inputContainer}>
@@ -268,8 +321,13 @@ export default class Registration extends Component {
               returnKeyType={"next"}
               value={this.state.email}
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
+              onChangeText={this._validateemail}/>
+              {/* onChangeText={(email) => this.setState({email})}/> */}
         </View>
+       
+        <Text  style={{fontSize:10,textAlign:'center',color:'#F80617',marginBottom:5}} >
+        {this.state.invalidemail}  </Text>
+                                   
         <Text style={{fontSize:12,marginBottom:2,color:'#4d6bcb','textAlign':'center',fontStyle: 'italic'}}>Age and Gender are used for determining normal range of test result.</Text>
         <View style={styles.inputContainer}>
         <Icons type='Foundation' name='male-female' size={20} color="#4d6bcb" style={{marginLeft:55}}/>
@@ -287,6 +345,7 @@ export default class Registration extends Component {
               placeholder='Please select gender'
                                             // value={'Please select gender'}
                                             baseColor={'#000'}
+                                            value={this.state.gender}
                                             textColor={'#000'}
                                             selectedItemColor={'#000'}
                                             itemColor={'#000'}
@@ -318,7 +377,48 @@ export default class Registration extends Component {
               onChangeText={(age) => this.setState({age})}/>
         </View>
      
-        <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={this.ShowHideActivityIndicator}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} 
+        
+        onPress={() => {        if(this.state.username===''){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Username field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                            }
+                            else if(this.state.gender===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Gender field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else if(this.state.name===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Name field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else if(this.state.age===''){
+                                // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Age field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                                // this.resetData();
+                            }
+                            else{
+                                // Actions.searchScreen(params);
+                                this.ShowHideActivityIndicator();
+                                // this.saveTestsData();
+                                // this._onButtonPressed();
+                            }}}>
+        
+        
+        {/* onPress={this.ShowHideActivityIndicator}> */}
           <Text style={styles.signUpText}>Register</Text>
         </TouchableHighlight>
         </View>
@@ -329,6 +429,9 @@ export default class Registration extends Component {
                         this.state.loading ?  <ActivityIndicator color = '#2eacde'
                                                                  size = "large" style={{padding: 20}} /> : null
                     }
+                    {/* </Card> */}
+                    </View>
+                    
     </ScrollView>
    
                 </View>
@@ -425,7 +528,7 @@ const styles = StyleSheet.create(
             left: 0,
             right: 0,
             top:0,
-
+            bottom:0,
         },
         halfHeight: {
             flex: .5,

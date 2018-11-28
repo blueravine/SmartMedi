@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Navigator,
     Platform, StyleSheet, View, Text,text,TextInput, Image, TouchableOpacity, Alert,AsyncStorage,
     AppRegistry,TouchableHighlight,StatusBar,Dimensions,Button,ScrollView,Animated,Keyboard,
-    Easing,BackHandler,
+    Easing,BackHandler,ActivityIndicator,
 } from 'react-native';
 import {Card,icon} from 'native-base';
 import { Actions, ActionConst } from 'react-native-router-flux'; // 4.0.0-beta.31
@@ -310,6 +310,12 @@ export default class OTPScreen extends Component {
           <Text style={styles.signUpText}>Verify</Text>
         </TouchableHighlight>
 
+ {
+                        // Here the ? Question Mark represent the ternary operator.
+                        //style={{backgroundColor:'#FFFFFF',width:width-220}}
+                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                                                                 size = "large" style={{padding: 20}} /> : null
+                    }
 
                 </View>
 
