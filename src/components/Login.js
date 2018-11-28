@@ -219,7 +219,7 @@ export default class Login extends Component {
         {
                         // Here the ? Question Mark represent the ternary operator.
                         //style={{backgroundColor:'#FFFFFF',width:width-220}}
-                        this.state.loading ?  <ActivityIndicator color = '#2eacde'
+                        this.state.loading ?  <ActivityIndicator color = '#4d6bcb'
                                                                  size = "large" style={{padding: 20}} /> : null
                     }
 
