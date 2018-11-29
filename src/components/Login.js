@@ -21,7 +21,7 @@ global.sessionid ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null,secretquestionid:null};
+    countrycode:null,selectedcountry:null,secretquestionid:null};
 export default class Login extends Component {
     // public static var=sessionid;
     constructor(props) {
@@ -109,6 +109,7 @@ export default class Login extends Component {
             userdata.gender = jsonuserinfo.gender;
             userdata.jwt = jsonuserinfo.jwt;
             userdata.secretquestionid = jsonuserinfo.secretquestionid;
+            userdata.selectedcountry = jsonuserinfo.selectedcountry;
         }).done(() => {
             
         });
