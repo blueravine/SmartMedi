@@ -713,6 +713,7 @@ export default class AlertScreen extends Component{
                             <Text style={{marginBottom:5}}>Medicine</Text>
                             <Text style={{marginBottom:5}}>Frequency</Text>
                             <Text style={{marginBottom:5}}>Repeat</Text>
+                            <Text style={{marginBottom:5}}>Notes</Text>
                         </View>
 
                         <View style={{flexDirection:"column",justifyContent:'flex-start',flex:3}}>
@@ -734,6 +735,7 @@ export default class AlertScreen extends Component{
                                     : (((currentResult.meddate % 10) === 3) ? 'rd ' : 'th ')))}
                              of every month at {currentResult.repeat1}</Text>
                             }
+                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.notes ? currentResult.notes : 'Notes not entered'}</Text>
 
                          </View>
                 </View>

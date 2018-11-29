@@ -133,7 +133,7 @@ export default class SplashScreen extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
             <View style={{  justifyContent: 'space-between',
                 alignItems: 'center',

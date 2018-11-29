@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,
-    countrycode:null,countryflag:null,secretquestionid:null};
+    countrycode:null,countryflag:null,selectedcountry:null,secretquestionid:null};
 var genderselect = [
     {
     value: 'MALE',
@@ -66,7 +66,8 @@ export default class Registration extends Component {
             uservisibiltyflag:false,
             invalidemail:'',
             cca2,
-            callingCode
+            callingCode,
+            selectedcountry:'United States'
             // cca2: "IN",
               
         };
@@ -91,6 +92,7 @@ export default class Registration extends Component {
             userdata.jwt = jsonuserinfo.jwt;
             userdata.countryflag = jsonuserinfo.countryflag;
             userdata.secretquestionid = jsonuserinfo.secretquestionid;
+            userdata.selectedcountry = jsonuserinfo.selectedcountry;
         }).done(() => {
                     // alert(JSON.stringify(userdata));
 
@@ -105,7 +107,8 @@ export default class Registration extends Component {
                         age:userdata.age,
                         usereditableflag:true,
                         uservisibiltyflag:true,
-                        cca2:userdata.countryflag});
+                        cca2:userdata.countryflag,
+                        selectedcountry:userdata.selectedcountry});
             }
         });
     
@@ -159,6 +162,7 @@ export default class Registration extends Component {
                     userdata.gender = this.state.gender;
                     userdata.jwt = null;
                     userdata.countryflag=this.state.cca2;
+                    userdata.selectedcountry=this.state.selectedcountry;
             AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                     .then((userInfo) => {
                         //do nothing
@@ -241,7 +245,6 @@ export default class Registration extends Component {
 
 }
 
-
     render() {
      
         return(
@@ -251,30 +254,38 @@ export default class Registration extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
                 <ScrollView><View style={{marginBottom:200}}>
 
             {/* <Card style={{backgroundColor:'#f1f1f1f1'}}> */}
-                <Text style={{marginBottom:5,color:'#4d6bcb','textAlign':'center'}}>Please select Country and enter Mobile Number</Text>
+                <Text style={{marginBottom:5,color:'#4d6bcb','textAlign':'center'}}>Please tap on flag to select Country</Text>
      
-             <View style={styles.inputContainer}>
+             <View style={styles.inputselectpickerContainer}>
             
-            <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+            {/* <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/> */}
           
             <View  style={styles.inputContainercountry}>
+            <View style={{flex:3}}>
             <CountryPicker
             //   countryList={NORTH_AMERICA}
-              onChange={value => {
-                this.setState({ cca2: value.cca2, callingCode: value.callingCode })
+              onChange={(value) => {
+                this.setState({ cca2: value.cca2, callingCode: value.callingCode,
+                selectedcountry: value.name})
               }}
               cca2={this.state.cca2}
               translation="eng"
+              showCallingCode={true}
+              filterable={true}
+              closeable={true}
             />
+            </View>
+           <Text style={{flex:7}}>{this.state.selectedcountry}</Text>
            </View>
-           
-              <TextInput style={styles.inputs}
+           <View  style={styles.inputContainercountry}>
+           <Text style={{marginLeft:20, flex:3}}>(+{this.state.callingCode})</Text>
+              <TextInput style={styles.inputsPhone}
                   placeholder="Phone No"
                   keyboardType="phone-pad"
                   maxLength={10}
@@ -284,6 +295,7 @@ export default class Registration extends Component {
                   underlineColorAndroid='transparent'
                   onChangeText={(phone) => this.setState({phone})}/>
                   <Iccon type='Feather' name='arrow-right-circle' size={20} color="#4d6bcb" style={{marginRight:10}}/>
+              </View>
             </View> 
             
             {(this.state.uservisibiltyflag) &&
@@ -383,14 +395,21 @@ export default class Registration extends Component {
      
         <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} 
         
-        onPress={() => {        if(this.state.username===''){
+        onPress={() => {        if(!this.state.username){
                                 // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Username field cannot be empty!',
                                     duration: Snackbar.LENGTH_LONG,
                                 });
                             }
-                            else if(this.state.gender===''){
+                            else if(this.state.invalidemail){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Please provide a valid email address!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                            }
+                            else if(!this.state.gender){
                                 // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Gender field cannot be empty!',
@@ -398,7 +417,7 @@ export default class Registration extends Component {
                                 });
                                 // this.resetData();
                             }
-                            else if(this.state.name===''){
+                            else if(!this.state.name){
                                 // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Name field cannot be empty!',
@@ -406,7 +425,7 @@ export default class Registration extends Component {
                                 });
                                 // this.resetData();
                             }
-                            else if(this.state.age===''){
+                            else if(!this.state.age){
                                 // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Age field cannot be empty!',
@@ -474,10 +493,26 @@ const styles = StyleSheet.create(
                 alignItems:'center'
             },
             inputContainercountry: {
-                width:20,
-                marginLeft:20,
-                justifyContent:"space-evenly",
-                alignItems:'center'
+                // width:250,
+                // height: 30,
+                flexDirection:'row',
+                // marginLeft: 10,
+                marginBottom: 2,
+                flex:1,
+                alignItems:'center',
+                justifyContent:'center'
+            },
+            inputselectpickerContainer: {
+                borderBottomColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
+                // borderRadius:30,
+                borderBottomWidth: 1,
+                width:250,
+                height:80,
+                marginBottom:20,
+                marginLeft:50,
+                flexDirection: 'column',
+                justifyContent:'space-evenly'
             },
             inputs:{
                 height:45,
@@ -485,6 +520,15 @@ const styles = StyleSheet.create(
                 borderBottomColor: '#FFFFFF',
                 flex:1,
                 justifyContent:"space-evenly",
+                alignItems:"center"
+            },
+            inputsPhone:{
+                // width: 200,
+                // height: 30,
+                // marginLeft:16,
+                borderBottomColor: '#FFFFFF',
+                flex:7,
+                // justifyContent:"space-evenly",
                 alignItems:"center"
             },
             inputscountry:{

@@ -619,14 +619,14 @@ export default class AddTestData extends Component {
 
                         </TouchableOpacity>
                         <TouchableOpacity 
-                             onPress={() => {        if(this.state.picked2===''){
+                             onPress={() => {        if(!this.state.picked2){
                                 // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Test Type field cannot be empty!',
                                     duration: Snackbar.LENGTH_SHORT,
                                 });
                             }
-                            else if(this.state.testvalue===''){
+                            else if(!this.state.testvalue){
                                 // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
                                 Snackbar.show({
                                     title: 'Test value field cannot be empty!',

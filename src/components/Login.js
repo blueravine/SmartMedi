@@ -163,7 +163,7 @@ export default class Login extends Component {
                 <View>
                     <StatusBar
                         hidden={false}
-                        backgroundColor='#f1f1f1f1'/>
+                        backgroundColor='#4d6bcb'/>
                 </View>
                 <View style={[styles.headerviewhome]}>
             

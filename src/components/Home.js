@@ -918,6 +918,9 @@ export default class Home extends Component {
                     {(currentResult.result==="between") &&
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
                     }
+                    {((currentResult.result !=="between") && (currentResult.result !=="high") && (currentResult.result !=="normal") ) &&
+                    <Text style={{color:'#000',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
+                    }
             </View>
                     </TouchableOpacity>
                     );
