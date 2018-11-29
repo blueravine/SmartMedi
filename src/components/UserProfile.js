@@ -435,7 +435,8 @@ export default class UserProfile extends Component {
                                                keyboardType='phone-pad'
                                                value={"+"+this.state.countrycode+this.state.phone}
                                                editable={false}
-                                               fontSize={16}
+                                               labelFontSize={10}
+                                               fontSize={14}
                                         // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
@@ -444,7 +445,8 @@ export default class UserProfile extends Component {
                                                lineHeight={30}
                                         value={this.state.name}
                                                editable={this.state.usereditableflag}
-                                               fontSize={16}
+                                               labelFontSize={10}
+                                               fontSize={14}
                                         onChangeText={(itemValue) => this.setState({name: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
@@ -454,7 +456,8 @@ export default class UserProfile extends Component {
                                                lineHeight={30}
                                         value={this.state.email}
                                         editable={this.state.usereditableflag}
-                                               fontSize={16}
+                                               labelFontSize={10}
+                                               fontSize={14}
                                                onChangeText={this._validateemail}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
                                    {(this.state.usereditableflag) &&
@@ -465,7 +468,8 @@ export default class UserProfile extends Component {
                                                lineHeight={30}
                                         value={this.state.username}
                                                editable={false}
-                                               fontSize={16}
+                                               labelFontSize={10}
+                                               fontSize={14}
                                         onChangeText={(itemValue) => this.setState({username: itemValue})}
                                                containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
@@ -475,7 +479,8 @@ export default class UserProfile extends Component {
                                             value={this.state.ageofuser.toString()}
                                             editable={this.state.usereditableflag}
                                                    keyboardType='phone-pad'
-                                                   fontSize={16}
+                                               labelFontSize={10}
+                                               fontSize={14}
                                             onChangeText={(itemValue) => this.setState({ageofuser: itemValue})}
                                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
