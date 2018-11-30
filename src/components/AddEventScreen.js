@@ -47,6 +47,7 @@ var temptests;
 var addtests;
 var alertarray=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var temptr={testdate: null,testname:null,testvalue:null,ageofuser:null,medicinename:null,notes:null};
 var alertdata=[];
 var weeklydata = [
     {

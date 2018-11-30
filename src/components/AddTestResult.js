@@ -23,7 +23,6 @@ import Snackbar from 'react-native-snackbar';
 const ICON_SIZE = 24;
 import { Actions, ActionConst } from 'react-native-router-flux'; // 4.0.0-beta.31
 import Toast from 'react-native-simple-toast';
-
 import SendSMS from 'react-native-sms-x';
 // import Select from 'react-select';
 import Divider from 'react-native-divider';
@@ -46,7 +45,9 @@ const drawerStyles = {
 var temptests;
 var addtests;
 var testarray=[];
+var  alertdata=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
+var temptr={testdate: null,testname:null,testvalue:null,ageofuser:null,medicinename:null,notes:null};
 var testdata=[];
 var tests = [
     // {
@@ -127,7 +128,8 @@ export default class AddTestData extends Component {
             selected1: '',
             selectedtestname:'',
             saveaction:'Add',
-            testheader:'Add Test Result'
+            testheader:'Add Test Result',
+            addalertpiccked:''
 
         };
         
@@ -262,6 +264,12 @@ export default class AddTestData extends Component {
         });
     };
 
+    _onmedicenalertclick = () =>{
+
+        callerscreen='addtestresult';
+            Actions.homeScreen();
+            
+    };
 
     ShowHideActivityIndicator = () =>{
 
@@ -329,6 +337,27 @@ export default class AddTestData extends Component {
 
     });
 //#####
+
+        // //#####
+        
+        // await  AsyncStorage.getItem('useralertInfo')
+        // .then((useralertInfo) => {
+            
+        //     let tempalertdata = alertdata;
+        // let  jsonuseralertinfo = useralertInfo ? JSON.parse(useralertInfo) : tempalertdata;
+        
+        //     alertdata.medicinename = jsonuseralertinfo.name;
+           
+            
+        // }).done(() => {
+        //     if((alertdata.medicinename)) {
+        //         this.setState({addalertpiccked:alertdata.medicinename});
+        //     }
+        //     else{
+        //         this.setState({addalertpiccked:''});
+        //     }
+        //  });
+        // //#####
                 if(this.props.testdate){
                     this.setState({saveaction:'Update',
                                     testheader:'Edit Test Result',
@@ -708,7 +737,17 @@ export default class AddTestData extends Component {
                                     options={testsname}
                                     optionTextStyle={style={fontSize:16}}
                                 />
-
+                                <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+                                                   onPress={this._onmedicenalertclick()}>
+                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                    <TextField label="Add Alert"
+                                               lineHeight={30}
+                                               value={this.state.addalertpiccked}
+                                               editable={false}
+                                               fontSize={16}
+                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                </TouchableOpacity>
                                 <TextField label="Test Result Value"
                                            lineHeight={30}
                                            value={this.state.testvalue}
