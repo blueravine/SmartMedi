@@ -175,6 +175,7 @@ export default class Login extends Component {
               placeholder="Phone No"
               keyboardType="phone-pad"
               returnKeyType={"next"}
+              placeholderTextColor={'#000'}
               editable={false}
               value={"+"+this.state.countrycode+this.state.phone}
               underlineColorAndroid='transparent'
@@ -195,6 +196,7 @@ export default class Login extends Component {
           <TextInput style={styles.inputs}
               placeholder="Password"
               returnKeyType={"done"}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}
                 maxLength={12}
