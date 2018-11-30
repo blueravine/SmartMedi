@@ -41,13 +41,21 @@ export default class OTPScreen extends Component {
             securitypickervisible:false,
             securitypickerquestion:'',
             securityanswer:'',
-            securityquestionid: null
+            securityquestionid: null,
+            hidePassword: true
               
         };
         this._onLinkPress=this._onLinkPress.bind(this);
         this._onVerify = this._onVerify.bind(this);
 
     }
+
+    managePasswordVisibility = () =>
+    {
+        // function used to change password visibility
+        this.setState({ hidePassword: !this.state.hidePassword });
+    }
+
     ShowHideActivityIndicator = () =>{
 
         this.setState({loading: true});
@@ -344,9 +352,16 @@ export default class OTPScreen extends Component {
 
     }
     onTestNameShowpicker = () => {
-        // if(this.state.callerscreen==='registration') {
-        this.setState({ securitypickervisible: true });
-        // }
+        if(callerscreen==='registration') {
+                this.setState({ securitypickervisible: true });
+        }
+        else if(callerscreen==='login')
+        {
+            this.setState({ securitypickervisible: false });
+        }
+        else{
+            this.setState({ securitypickervisible: true });
+        }
     };
     onTestNameSelectpicker = (picked) => {
         this.setState({
@@ -384,6 +399,7 @@ export default class OTPScreen extends Component {
               returnKeyType={"next"}
               editable={false}
               value={this.state.username}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
              >
              {/* {userdata.username} */}
@@ -398,6 +414,7 @@ export default class OTPScreen extends Component {
               keyboardType="phone-pad"
               returnKeyType={"next"}
               editable={false}
+              placeholderTextColor={'#000'}
               value={"+"+this.state.countrycode+this.state.phone}
               underlineColorAndroid='transparent'
               >
@@ -405,12 +422,13 @@ export default class OTPScreen extends Component {
               </TextInput>
         </View>
         <View style={styles.inputContainer}>
-        <Icon type='FontAwesome' name='phone' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
+        <Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
           <TextInput style={styles.inputs}
               placeholder="OTP"
               keyboardType="phone-pad"
               returnKeyType={"next"}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(otp) => this.setState({otp})}/>
         </View>
@@ -418,7 +436,7 @@ export default class OTPScreen extends Component {
         <View style={styles.inputselectpickerContainer}>
                 {/* <Icon type='FontAwesome' name='user-circle' size={20} color="#4d6bcb" style={{marginLeft:15}}/> */}
           {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/male-user/ultraviolet/50/3498db'}}/> */}
-          <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
+          <TouchableOpacity  style={{width:280,justifyContent:'center'}}
                     onPress={this.onTestNameShowpicker}>
           <TextInput style={styles.inputselectpicker}
               placeholder="Please select security question"
@@ -426,6 +444,7 @@ export default class OTPScreen extends Component {
               returnKeyType={"next"}
               editable={false}
               multiline = {true}
+              placeholderTextColor={'#000'}
               value={this.state.securitypickerquestion}
               underlineColorAndroid='transparent'>
             {/* //   onChangeText={(securityquestion) => this.setState({securityquestion})}
@@ -450,20 +469,29 @@ export default class OTPScreen extends Component {
               placeholder="Please enter your security answer"
               keyboardType="email-address"
               returnKeyType={"next"}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(securityanswer) => this.setState({securityanswer:securityanswer.toString().toUpperCase()})}
              >
              {/* {userdata.username} */}
              </TextInput>
         </View>
+        <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
 <View style={styles.inputContainer}>
 <Icoon type='MaterialCommunityIcons' name='key-variant' size={20} color="#4d6bcb" style={{marginLeft:15}}/>
           <TextInput style={styles.inputs}
               placeholder="Password"
-              secureTextEntry={true}
               returnKeyType={"done"}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
+              onChangeText={(password) => this.setState({password})}
+              secureTextEntry = { this.state.hidePassword }
+                />
+            <TouchableOpacity activeOpacity = { 0.8 } style = { styles.visibilityBtn } onPress = { this.managePasswordVisibility }>
+                <Image source = { ( this.state.hidePassword ) ? require('../Images/hide.png') : require('../Images/view.png') }
+                        style = { styles.btnImage } />
+            </TouchableOpacity>
+        </View>
         </View>
         
         <TouchableOpacity
@@ -574,11 +602,26 @@ const styles = StyleSheet.create(
                 justifyContent:"space-evenly",
                 alignItems:'center'
             },
+            visibilityBtn:
+                {
+                    position: 'absolute',
+                    right: 3,
+                    height: 40,
+                    width: 35,
+                    padding: 5
+                },
+            btnImage:
+            {
+                resizeMode: 'contain',
+                height: '100%',
+                width: '100%'
+            },
             inputs:{
                 height:45,
                 marginLeft:16,
                 borderBottomColor: '#FFFFFF',
                 flex:1,
+                color:'#000',
                 justifyContent:"space-evenly",
                 alignItems:"center"
             },
@@ -597,10 +640,11 @@ const styles = StyleSheet.create(
             },
             inputselectpicker:{
                 height:60,
-                marginLeft:16,
+                marginLeft:18,
+                color:'#000',
                 borderBottomColor: '#FFFFFF',
                 flex:1,
-                justifyContent:"space-evenly",
+                justifyContent:"center",
                 alignItems:"center"
             },
             inputscountry:{

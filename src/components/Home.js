@@ -837,6 +837,7 @@ export default class Home extends Component {
     ShowHidesearchActivityIndicator = () =>{
 
         this.setState({isloading: true});
+        // if(this.state.feedbacknotes){
         setTimeout(() => {
             this._OnfeedbackSubmit();
             // Actions.homeScreen();
@@ -845,11 +846,12 @@ export default class Home extends Component {
             //     duration: Snackbar.LENGTH_LONG,
             // });
         }, 500)
+    // }
         // this.setState({loading: false})
     };
     _OnfeedbackSubmit(){
         Keyboard.dismiss();
-        fetch('https://interface.blueravine.in/smartmedi/feedback/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/feedback/feedback/register', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
                 'Accept': 'application/json',
@@ -859,12 +861,14 @@ export default class Home extends Component {
             body: JSON.stringify({id:parseInt(Moment().format('YYYYMMDDhhmmssSSS'))+Math.floor(Math.random() * 100),
                                 name:userdata.name,
                                 mobile:userdata.mobile,
+                                appversion:'1.0.2',
+                                appname:'SmartMedi',
                                 countrycode:userdata.countrycode,
                                 feedback:this.state.feedbacknotes})
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                if (responseJson.messagecode === 6002) {
+                if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
                     Actions.homeScreen();
                     Snackbar.show({
@@ -1080,7 +1084,15 @@ export default class Home extends Component {
                     {/* </View> */}
                        <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10,marginTop:10
                         }}
-                        onPress={() => {(this.openDialog(false)),this.ShowHidesearchActivityIndicator()}}
+                        onPress={() => {
+                            if(!(this.state.feedbacknotes)){
+                                                    Snackbar.show({
+                                title: 'FeedBack cannot be empty!',
+                                duration: Snackbar.LENGTH_LONG,
+                            });
+                        }
+                        else{
+                            (this.openDialog(false)),this.ShowHidesearchActivityIndicator()}}}
                                  >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Submit</Text>

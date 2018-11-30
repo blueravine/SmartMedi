@@ -292,6 +292,7 @@ export default class Registration extends Component {
                   onBlur={() => {this.ShowHideActivityIndicatoruser()}}
                   returnKeyType={"next"}
                   value={this.state.phone}
+              placeholderTextColor={'#000'}
                   underlineColorAndroid='transparent'
                   onChangeText={(phone) => this.setState({phone})}/>
                   <Iccon type='Feather' name='arrow-right-circle' size={20} color="#4d6bcb" style={{marginRight:10}}/>
@@ -309,6 +310,7 @@ export default class Registration extends Component {
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.name}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(name) => this.setState({name})}/>
         </View>
@@ -322,6 +324,7 @@ export default class Registration extends Component {
               keyboardType="email-address"
               returnKeyType={"next"}
               value={this.state.username}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(username) => this.setState({username})}/>
         </View>
@@ -338,6 +341,7 @@ export default class Registration extends Component {
             //   editable={this.state.usereditableflag}
               returnKeyType={"next"}
               value={this.state.email}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={this._validateemail}/>
               {/* onChangeText={(email) => this.setState({email})}/> */}
@@ -389,6 +393,7 @@ export default class Registration extends Component {
               keyboardType="phone-pad"
               returnKeyType={"done"}
               value={this.state.age}
+              placeholderTextColor={'#000'}
               underlineColorAndroid='transparent'
               onChangeText={(age) => this.setState({age})}/>
         </View>
