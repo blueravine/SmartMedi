@@ -47,7 +47,7 @@ var addtests;
 var testarray=[];
 var  alertdata=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: null,testname:null,testvalue:null,ageofuser:null,medicinename:null,notes:null};
+var temptr={testdate: new Date(),testname:null,testvalue:null,ageontest:null,medicinename:null,notes:null};
 var testdata=[];
 var tests = [
     // {
@@ -120,10 +120,10 @@ export default class AddTestData extends Component {
             pickervisible2: false,
             picked1: '',
             picked2: '',
-            testvalue:'',
+            testvalue:null,
             rangevalue:'',
             resultnotes:'',
-            age:'',
+            age:null,
             date: new Date(),
             selected1: '',
             selectedtestname:'',
@@ -265,9 +265,23 @@ export default class AddTestData extends Component {
     };
 
     _onmedicenalertclick = () =>{
+        //#####
+    //    Moment(this.state.date).format('YYYYMMDD');
+        
+        temptr.testname=this.state.picked2;
+        temptr.testdate=this.state.date;
+        temptr.testvalue=this.state.testvalue;
+        temptr.ageontest=this.state.age;
+        temptr.medicinename=this.state.addalertpiccked;
+        temptr.notes=this.state.resultnotes;
+         AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+        .then((temptestresult) => {
+            
+        }).done(() => {
+            callerscreen='addtestresult';
+            Actions.addeventScreen();
+        });
 
-        callerscreen='addtestresult';
-            Actions.homeScreen();
             
     };
 
@@ -363,9 +377,36 @@ export default class AddTestData extends Component {
                                     testheader:'Edit Test Result',
                                     date:Moment(this.props.testdate, 'YYYYMMDD'),
                                    picked2:this.props.testname,
-                                   testvalue:this.props.value.toString(),
-                                   age:this.props.ageontest.toString(),
+                                   testvalue:this.props.value,
+                                   age:this.props.ageontest,
                                    resultnotes:this.props.notes});
+                }
+
+
+                if(callerscreen==='addalert'){
+                    await  AsyncStorage.getItem('temptestresult')
+                    .then((temptestresult) => {
+                        let temptestresultdata = temptr;
+                    let  jsontestresultinfo = temptestresult ? JSON.parse(temptestresult) : temptestresultdata;
+                    
+                    temptr.testdate = jsontestresultinfo.testdate;
+                    temptr.testname = jsontestresultinfo.testname;
+                    temptr.testvalue = jsontestresultinfo.testvalue;
+                    temptr.medicinename = jsontestresultinfo.medicinename;
+                    temptr.testdate = jsontestresultinfo.testdate;
+                    temptr.notes = jsontestresultinfo.notes;
+                        
+                    }).done(() =>{
+                        alert(JSON.stringify(temptr));
+                        this.setState({date:temptr.testdate,
+                            picked2:temptr.testname,
+                            age:temptr.ageontest,
+                            value:temptr.testvalue,      
+                            addalertpiccked:temptr.medicinename,                  
+                            resultnotes:temptr.notes});
+        
+                    });
+        
                 }
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
@@ -738,9 +779,9 @@ export default class AddTestData extends Component {
                                     optionTextStyle={style={fontSize:16}}
                                 />
                                 <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                   onPress={this._onmedicenalertclick()}>
+                                                   onPress={this._onmedicenalertclick}>
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="Add Alert"
+                                    <TextField label="Medicine Alert"
                                                lineHeight={30}
                                                value={this.state.addalertpiccked}
                                                editable={false}
@@ -750,7 +791,7 @@ export default class AddTestData extends Component {
                                 </TouchableOpacity>
                                 <TextField label="Test Result Value"
                                            lineHeight={30}
-                                           value={this.state.testvalue}
+                                           value={this.state.testvalue ? this.state.testvalue.toString() : ''}
                                            editable={true}
                                            fontSize={16}
                                            keyboardType='phone-pad'
@@ -759,7 +800,7 @@ export default class AddTestData extends Component {
 
                                 <TextField label="Age at the time of Test"
                                            lineHeight={30}
-                                           value={this.state.age.toString()}
+                                           value={this.state.age ? this.state.age.toString() : ''}
                                            editable={true}
                                            keyboardType='phone-pad'
                                            fontSize={16}

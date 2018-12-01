@@ -289,7 +289,20 @@ export default class Registration extends Component {
                   placeholder="Phone No"
                   keyboardType="phone-pad"
                   maxLength={10}
-                  onBlur={() => {this.ShowHideActivityIndicatoruser()}}
+                  onFocus={() => {
+                    this.setState({uservisibiltyflag: false,
+                    loading:false});
+                  }}
+                  onBlur={() => {
+                    if(!this.state.phone){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Phone no field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                            }
+                            else{
+                                this.ShowHideActivityIndicatoruser()}}}
                   returnKeyType={"next"}
                   value={this.state.phone}
               placeholderTextColor={'#000'}
@@ -308,6 +321,9 @@ export default class Registration extends Component {
               placeholder="Full Name"
             //   editable={this.state.usereditableflag}
               keyboardType="email-address"
+              onFocus={() => {
+                    this.setState({loading:false});
+                  }}
               returnKeyType={"next"}
               value={this.state.name}
               placeholderTextColor={'#000'}

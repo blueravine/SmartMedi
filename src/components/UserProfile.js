@@ -211,6 +211,7 @@ export default class UserProfile extends Component {
    }
 
    async componentDidMount() {
+    callerscreen='profile';
     await AsyncStorage.getItem('userInfo')
     .then((userInfo) => {
         let tempuserdata = userdata;

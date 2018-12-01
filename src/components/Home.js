@@ -703,7 +703,8 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        
+        callerscreen='home';
+
         this.getusertestdata();
        
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);

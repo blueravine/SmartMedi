@@ -47,7 +47,7 @@ var temptests;
 var addtests;
 var alertarray=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: null,testname:null,testvalue:null,ageofuser:null,medicinename:null,notes:null};
+var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,notes:null};
 var alertdata=[];
 var weeklydata = [
     {
@@ -461,19 +461,44 @@ export default class AddEventScreen extends Component {
         this.setState({loading: true});
         setTimeout(() => {
             this.saveAlertsData();
-            Actions.alertScreen();
-            Snackbar.show({
-                title: 'Medicine details added succesfully. Please "Refresh"',
-                duration: Snackbar.LENGTH_SHORT,
-            });
-            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            if(callerscreen==='addtestresult'){
+                Actions.addtestScreen();
+                Snackbar.show({
+                    title: 'Medicine name added succesfully',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            }
+            else  if(callerscreen==='alert'){
+                Actions.alertScreen();
+                Snackbar.show({
+                    title: 'Medicine details added succesfully. Please "Refresh"',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            }
+            else{
+                Actions.alertScreen();
+                Snackbar.show({
+                    title: 'Medicine details added succesfully. Please "Refresh"',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+
+            }
+            // Snackbar.show({
+            //     title: 'Medicine details added succesfully. Please "Refresh"',
+            //     duration: Snackbar.LENGTH_SHORT,
+            // });
+            // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         }, 500)
         // this.setState({loading: false})
     };
   
     async componentDidMount() {
       //#####
-      
+      callerscreen='addalert';
+
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {
           let tempuserdata = userdata;
@@ -489,6 +514,7 @@ export default class AddEventScreen extends Component {
           userdata.gender = jsonuserinfo.gender;
           
       }).done();
+            
       if(this.props.startdate){
         this.setState({savealert:'Update',
                        alertheader:'Edit Alert',
@@ -504,6 +530,27 @@ export default class AddEventScreen extends Component {
                        "meddate": this.props.meddate,
                        resultnotes:this.props.notes});
       }
+
+
+        if(callerscreen==='addtestresult'){
+            await  AsyncStorage.getItem('temptestresult')
+            .then((temptestresult) => {
+                let temptestresultdata = temptr;
+            let  jsontestresultinfo = temptestresult ? JSON.parse(temptestresult) : temptestresultdata;
+            
+            temptr.testdate = jsontestresultinfo.testdate;
+            temptr.testname = jsontestresultinfo.testname;
+            temptr.testvalue = jsontestresultinfo.testvalue;
+            temptr.testdate = jsontestresultinfo.testdate;
+            temptr.notes = jsontestresultinfo.notes;
+                
+            }).done(() =>{
+
+            });
+
+        }
+
+
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
@@ -514,16 +561,40 @@ export default class AddEventScreen extends Component {
 
 
     handleBackButton = () => {
-        Actions.alertScreen();
+        // Actions.alertScreen();
+            if(callerscreen==='addtestresult'){
+                Actions.addtestScreen();
+            }
+            else  if(callerscreen==='alert'){
+                Actions.alertScreen();
+            }
+            else{
+                Actions.alertScreen();
+            }
+
         return true;
     };
 
       onCancelButtonPress = () => {
-        Actions.alertScreen();
+        if(callerscreen==='addtestresult'){
+            Actions.addtestScreen();
+        }
+        else  if(callerscreen==='alert'){
+            Actions.alertScreen();
+        }
+        // Actions.alertScreen();
     };
 
     async saveAlertsData() {
         Keyboard.dismiss();
+        //#####
+      
+        temptr.medicinename = this.state.picked3;
+        await  AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+        .then((temptestresult) => {
+            
+        }).done();
+
         let alertid1, alertid2, alertid3, alertid4;
         // this.setState({datepicked1: Moment(this.state.date).format('YYYYMMDD'),
         //                datepicked2: Moment(this.state.date).format('YYYYMMDD')});
@@ -711,6 +782,7 @@ export default class AddEventScreen extends Component {
 
                         }).done(() =>{
 
+                           
                             }); //done close
                 }
                 else {

@@ -530,6 +530,7 @@ export default class AlertScreen extends Component{
   
     }
      componentDidMount() {
+        callerscreen='alert';
          this.setState({selectedmedicinefrequency:'All'});
     this._onLoadScreen();
     }

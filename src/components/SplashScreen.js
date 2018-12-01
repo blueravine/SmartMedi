@@ -14,6 +14,7 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount() {
+        callerscreen='splash';
 
         setTimeout(() => {
              AsyncStorage.getItem('userInfo')
