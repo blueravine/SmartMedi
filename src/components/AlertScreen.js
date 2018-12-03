@@ -709,8 +709,8 @@ export default class AlertScreen extends Component{
             medicinename:'',
             testdate:this.state.selectedDate,
             testname:''
-
         };
+        
         let localFilteredResult = this.state.filteredTestResult;
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
