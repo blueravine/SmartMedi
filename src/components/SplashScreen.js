@@ -6,6 +6,8 @@ import Moment from "moment/moment";
 // import Registration from "./Registration"; // 4.0.0-beta.31
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null,secretquestionid:null};
 // var paramsmobile ;
+global.callerscreen ;
+global.currentscreen ;
 export default class SplashScreen extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,7 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        callerscreen='splash';
+        // callerscreen='splash';
 
         setTimeout(() => {
              AsyncStorage.getItem('userInfo')

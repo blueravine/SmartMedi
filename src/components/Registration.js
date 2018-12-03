@@ -22,7 +22,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 global.sessionid ;
-global.callerscreen ;
+// global.callerscreen ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';

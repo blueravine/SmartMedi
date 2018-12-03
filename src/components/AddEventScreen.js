@@ -497,7 +497,7 @@ export default class AddEventScreen extends Component {
   
     async componentDidMount() {
       //#####
-      callerscreen='addalert';
+    //   currentscreen='addalert';
 
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {

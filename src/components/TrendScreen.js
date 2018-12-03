@@ -488,7 +488,7 @@ export default class TrendScreen extends Component {
     async componentDidMount() {
 //#####
 
-    callerscreen='trend';
+    // currentscreen='trend';
 
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {

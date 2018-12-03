@@ -302,6 +302,7 @@ export default class AddTestData extends Component {
    
     async componentDidMount() {
         //#####
+    //   currentscreen='addtest';
         
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -397,7 +398,7 @@ export default class AddTestData extends Component {
                     temptr.notes = jsontestresultinfo.notes;
                         
                     }).done(() =>{
-                        alert(JSON.stringify(temptr));
+                        // alert(JSON.stringify(temptr));
                         this.setState({date:temptr.testdate,
                             picked2:temptr.testname,
                             age:temptr.ageontest,

@@ -703,7 +703,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        callerscreen='home';
+        // currentscreen='home';
 
         this.getusertestdata();
        
