@@ -392,6 +392,8 @@ export default class AlertScreen extends Component{
     }
 
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
         switch (pressedKey) {
             case 'home':
                 Actions.homeScreen();
@@ -416,6 +418,8 @@ export default class AlertScreen extends Component{
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.testname=treandtestname;
         testtdetail.testdate=trendtestdate;
+        
+        callerscreen = currentscreen;
         Actions.trendScreen(testtdetail);
     };
     async refreshalerttestresults(){
@@ -530,7 +534,7 @@ export default class AlertScreen extends Component{
   
     }
      componentDidMount() {
-        // currentscreen='alert';
+        currentscreen='alert';
          this.setState({selectedmedicinefrequency:'All'});
     this._onLoadScreen();
     }
@@ -540,6 +544,7 @@ export default class AlertScreen extends Component{
     }
     
     handleBackButton = () => {
+        callerscreen = currentscreen;
         Actions.homeScreen();
         return true;
     };
@@ -563,6 +568,7 @@ export default class AlertScreen extends Component{
     };
 
     onplusButtonPress = () => {
+        callerscreen = currentscreen;
         Actions.addeventScreen();
     };
 
@@ -577,10 +583,10 @@ export default class AlertScreen extends Component{
         }
     };
 
-    filterByTestName(searchText, nDate){
+    filterByTestName(searchText){
         this.setState({selectedTestName: searchText,
             filteredTestResult: medicinetypes.filter( (testresult) =>
-            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase()) && testresult.startdate === nDate}) });
+            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase())}) });
     };
 
     sortByTestName(sDate) {
@@ -677,6 +683,7 @@ export default class AlertScreen extends Component{
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                     callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -710,7 +717,9 @@ export default class AlertScreen extends Component{
             return(
                 
                 <Card>
-                 <TouchableOpacity onPress={() => {Actions.addeventScreen(currentResult)}}>
+                 <TouchableOpacity onPress={() => {
+                                                    callerscreen = currentscreen;
+                                                    Actions.addeventScreen(currentResult)}}>
                 <View style={{flexDirection:'row' ,marginBottom:25}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
                             <Text style={{marginBottom:5}}>Medicine</Text>
@@ -813,7 +822,7 @@ export default class AlertScreen extends Component{
                                    value={this.state.selectedTestName}
                                    editable={true}
                                    fontSize={16}
-                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedmedicineDate)} }
+                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
                       
                      
@@ -857,7 +866,9 @@ export default class AlertScreen extends Component{
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false));
+                                                callerscreen = currentscreen;
+                                                Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>

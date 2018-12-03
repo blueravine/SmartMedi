@@ -477,6 +477,9 @@ export default class Home extends Component {
     }
     
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
+        
         switch (pressedKey) {
             case 'home':
                 break;
@@ -497,19 +500,7 @@ export default class Home extends Component {
 
         }
     };
-
-
-    ShowHideActivityIndicator = () =>{
-
-        this.setState({loading: true});
-        setTimeout(() => {
-            Actions.searchScreen(params);
-            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
-        // this.setState({loading: false})
-    };
-
-    async getusertestdata(){
+     async getusertestdata(){
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             let tempuserdata = userdata;
@@ -703,7 +694,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        // currentscreen='home';
+        currentscreen='home';
 
         this.getusertestdata();
        
@@ -750,10 +741,14 @@ export default class Home extends Component {
     };
 
     onplusButtonPress = () => {
+        
+        callerscreen = currentscreen;
         Actions.addtestScreen();
     };
 
     onNametextPress = () => {
+        
+        callerscreen = currentscreen;
         Actions.profileScreen();
     };
 
@@ -761,6 +756,8 @@ export default class Home extends Component {
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.testname=treandtestname;
         // testtdetail.testdate=trendtestdate;
+        
+        callerscreen = currentscreen;
         Actions.trendScreen(testtdetail);
     };
 
@@ -871,6 +868,7 @@ export default class Home extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                     callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -901,7 +899,9 @@ export default class Home extends Component {
         renderResultName = localFilteredResult.map( (currentResult, resultIndex) => {
             
             return(
-                    <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
+                    <TouchableOpacity onPress={() => {
+                        callerscreen = currentscreen;
+                        Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
                         <Text style={{marginBottom:10,justifyContent:'flex-start'}}>{(currentResult.testname.length >12) ? 
                             (currentResult.testname.substring(0,12))+ '..': (currentResult.testname)}</Text>
@@ -912,7 +912,9 @@ export default class Home extends Component {
 
         renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
+                <TouchableOpacity onPress={() => {
+                    callerscreen = currentscreen;
+                    Actions.addtestScreen(currentResult)}}>
             <View>
                     {(currentResult.result==="high") &&
                     <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
@@ -933,7 +935,9 @@ export default class Home extends Component {
 
         renderResultNormal = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
+                <TouchableOpacity onPress={() => {
+                    callerscreen = currentscreen;
+                    Actions.addtestScreen(currentResult)}}>
                 <View>
                     {(currentResult.normalcomparator === "lessthan") &&
                     <Text style={{marginBottom:10,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
@@ -1101,7 +1105,9 @@ export default class Home extends Component {
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false));
+                                                callerscreen = currentscreen;
+                                                Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>

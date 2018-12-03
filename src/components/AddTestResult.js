@@ -278,7 +278,7 @@ export default class AddTestData extends Component {
         .then((temptestresult) => {
             
         }).done(() => {
-            callerscreen='addtestresult';
+            callerscreen = currentscreen;
             Actions.addeventScreen();
         });
 
@@ -290,6 +290,7 @@ export default class AddTestData extends Component {
         this.setState({loading: true});
         setTimeout(() => {
             this.saveTestsData();
+            callerscreen = currentscreen;
             Actions.homeScreen();
             Snackbar.show({
                 title: 'Test details added succesfully. Please "Refresh"',
@@ -302,7 +303,7 @@ export default class AddTestData extends Component {
    
     async componentDidMount() {
         //#####
-    //   currentscreen='addtest';
+      currentscreen='addtestresult';
         
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -402,7 +403,7 @@ export default class AddTestData extends Component {
                         this.setState({date:temptr.testdate,
                             picked2:temptr.testname,
                             age:temptr.ageontest,
-                            value:temptr.testvalue,      
+                            testvalue:temptr.testvalue,      
                             addalertpiccked:temptr.medicinename,                  
                             resultnotes:temptr.notes});
         
@@ -424,6 +425,7 @@ export default class AddTestData extends Component {
             {return (testresult.testname.toLowerCase().includes(searchText.toLowerCase()) || testresult.category.toLowerCase().includes(searchText.toLowerCase())) && testresult.testdate === nDate}) });
     };
     handleBackButton = () => {
+        callerscreen = currentscreen;
         Actions.homeScreen();
         return true;
     };
@@ -434,6 +436,14 @@ export default class AddTestData extends Component {
         });
     };
     onCancelButtonPress = () => {
+        callerscreen = currentscreen;
+        if(this.state.addalertpiccked){
+            Snackbar.show({
+                title: 'Please delete the medicine alert for ' +this.state.addalertpiccked,
+                duration: Snackbar.LENGTH_LONG,
+                
+            });
+        }
         Actions.homeScreen();
     };
 
@@ -584,7 +594,9 @@ export default class AddTestData extends Component {
                 
             }, {
                 text: 'OK',
-                onPress: () =>  {this.ondeleteButtonPress(),Actions.homeScreen()}
+                onPress: () =>  {this.ondeleteButtonPress();
+                    callerscreen = currentscreen;
+                    Actions.homeScreen()}
             }, ]
             , {
                 cancelable: false
@@ -619,6 +631,14 @@ export default class AddTestData extends Component {
                 duration: Snackbar.LENGTH_LONG,
                 
             });
+            
+        if(this.state.addalertpiccked){
+            Snackbar.show({
+                title: 'Please delete the medicine alert for ' +this.state.addalertpiccked,
+                duration: Snackbar.LENGTH_LONG,
+                
+            });
+        }
             fetch('https://interface.blueravine.in/smartmedi/testresult/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
@@ -693,7 +713,7 @@ export default class AddTestData extends Component {
                              onPress={() => {        if(!this.state.picked2){
                                 // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                 Snackbar.show({
-                                    title: 'Test Type field cannot be empty!',
+                                    title: 'Test Name field cannot be empty!',
                                     duration: Snackbar.LENGTH_SHORT,
                                 });
                             }
@@ -705,14 +725,6 @@ export default class AddTestData extends Component {
                                 });
                                 // this.resetData();
                             }
-                            // else if(this.state.age===''){
-                            //     // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
-                            //     Snackbar.show({
-                            //         title: 'age field cannot be empty!',
-                            //         duration: Snackbar.LENGTH_SHORT,
-                            //     });
-                            //     // this.resetData();
-                            // }
                             else{
                                 // Actions.searchScreen(params);
                                 this.ShowHideActivityIndicator();
@@ -779,17 +791,7 @@ export default class AddTestData extends Component {
                                     options={testsname}
                                     optionTextStyle={style={fontSize:16}}
                                 />
-                                <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}
-                                                   onPress={this._onmedicenalertclick}>
-                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="Medicine Alert"
-                                               lineHeight={30}
-                                               value={this.state.addalertpiccked}
-                                               editable={false}
-                                               fontSize={16}
-                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                </TouchableOpacity>
+                                
                                 <TextField label="Test Result Value"
                                            lineHeight={30}
                                            value={this.state.testvalue ? this.state.testvalue.toString() : ''}
@@ -809,6 +811,37 @@ export default class AddTestData extends Component {
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
 
+                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}                                    
+                                                    onPress={() => {        if(!this.state.picked2){
+                                                        // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                                        Snackbar.show({
+                                                            title: 'Test Name field cannot be empty!',
+                                                            duration: Snackbar.LENGTH_SHORT,
+                                                        });
+                                                    }
+                                                    else if(!this.state.testvalue){
+                                                        // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                                        Snackbar.show({
+                                                            title: 'Test value field cannot be empty!',
+                                                            duration: Snackbar.LENGTH_SHORT,
+                                                        });
+                                                        // this.resetData();
+                                                    }
+                                                    else{
+                                                        if(this.state.saveaction==='Add'){
+                                                        this._onmedicenalertclick();
+                                                        }
+                                                    }}}>
+                                                   {/* onPress={this._onmedicenalertclick}> */}
+                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                    <TextField label="Medicine Alert"
+                                               lineHeight={30}
+                                               value={this.state.addalertpiccked}
+                                               editable={false}
+                                               fontSize={16}
+                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                                </TouchableOpacity>
                                 <TextField label="Notes and Comments"
                                            lineHeight={30}
                                            value={this.state.resultnotes}

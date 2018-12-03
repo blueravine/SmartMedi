@@ -77,6 +77,8 @@ export default class Registration extends Component {
     }
 
     async componentDidMount(){
+
+        currentscreen = 'registration';
     
         await AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -169,7 +171,8 @@ export default class Registration extends Component {
                     }).done(() =>{
                         
                         sessionid = responseJson.Details;
-                        callerscreen='registration';
+                        
+                     callerscreen = currentscreen;
                         Actions.otpScreen();
                 });
             }
@@ -230,6 +233,7 @@ export default class Registration extends Component {
                             
                         }).done(() =>{
                        
+                     callerscreen = currentscreen;
                             Actions.loginScreen();
                         
 

@@ -16,7 +16,7 @@ export default class SplashScreen extends Component {
     }
 
     componentDidMount() {
-        // callerscreen='splash';
+        currentscreen='splash';
 
         setTimeout(() => {
              AsyncStorage.getItem('userInfo')
@@ -31,6 +31,7 @@ export default class SplashScreen extends Component {
                     
                 }).done(() => {
                  if(!(userdata.mobile)) {
+                     callerscreen = currentscreen;
                      Actions.registerScreen();
                  }
                  else{
@@ -50,6 +51,8 @@ export default class SplashScreen extends Component {
                 
                 if (responseJson.messagecode===1005){
                     //User not found in server
+                    
+                    callerscreen = currentscreen;
                     Actions.registerScreen();
                 }
                 else  if(responseJson.messagecode===1007) {
@@ -72,6 +75,8 @@ export default class SplashScreen extends Component {
                             // Actions.loginScreen();
                      //************
                      if(!(userdata.jwt)){
+                         
+                     callerscreen = currentscreen;
                         Actions.loginScreen();
                     }
                     else{
@@ -94,11 +99,15 @@ export default class SplashScreen extends Component {
 
                             if (responseJson.messagecode===1006) {
                                 // Actions.loginScreen({phone:this.props.phone});
+                                
+                     callerscreen = currentscreen;
                                 Actions.homeScreen();
                                 // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                             }
                             else
                             {
+                                
+                     callerscreen = currentscreen;
                                 Actions.loginScreen();
                             }
 

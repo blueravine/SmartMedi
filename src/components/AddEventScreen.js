@@ -462,6 +462,7 @@ export default class AddEventScreen extends Component {
         setTimeout(() => {
             this.saveAlertsData();
             if(callerscreen==='addtestresult'){
+                callerscreen = currentscreen;
                 Actions.addtestScreen();
                 Snackbar.show({
                     title: 'Medicine name added succesfully',
@@ -470,6 +471,7 @@ export default class AddEventScreen extends Component {
                 BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
             }
             else  if(callerscreen==='alert'){
+                callerscreen = currentscreen;
                 Actions.alertScreen();
                 Snackbar.show({
                     title: 'Medicine details added succesfully. Please "Refresh"',
@@ -478,6 +480,7 @@ export default class AddEventScreen extends Component {
                 BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
             }
             else{
+                callerscreen = currentscreen;
                 Actions.alertScreen();
                 Snackbar.show({
                     title: 'Medicine details added succesfully. Please "Refresh"',
@@ -497,7 +500,7 @@ export default class AddEventScreen extends Component {
   
     async componentDidMount() {
       //#####
-    //   currentscreen='addalert';
+      currentscreen='addalert';
 
       await  AsyncStorage.getItem('userInfo')
       .then((userInfo) => {
@@ -563,12 +566,15 @@ export default class AddEventScreen extends Component {
     handleBackButton = () => {
         // Actions.alertScreen();
             if(callerscreen==='addtestresult'){
+                callerscreen = currentscreen;
                 Actions.addtestScreen();
             }
             else  if(callerscreen==='alert'){
+                callerscreen = currentscreen;
                 Actions.alertScreen();
             }
             else{
+                callerscreen = currentscreen;
                 Actions.alertScreen();
             }
 
@@ -577,9 +583,11 @@ export default class AddEventScreen extends Component {
 
       onCancelButtonPress = () => {
         if(callerscreen==='addtestresult'){
+            callerscreen = currentscreen;
             Actions.addtestScreen();
         }
         else  if(callerscreen==='alert'){
+            callerscreen = currentscreen;
             Actions.alertScreen();
         }
         // Actions.alertScreen();
@@ -1037,7 +1045,9 @@ export default class AddEventScreen extends Component {
                 
             }, {
                 text: 'OK',
-                onPress: () =>  {this.ondeletealertButtonPress(),Actions.alertScreen()}
+                onPress: () =>  {this.ondeletealertButtonPress();
+                    callerscreen = currentscreen;
+                    Actions.alertScreen()}
             }, ]
             , {
                 cancelable: false

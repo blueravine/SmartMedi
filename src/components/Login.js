@@ -71,7 +71,8 @@ export default class Login extends Component {
             AsyncStorage.setItem('userInfo',JSON.stringify(userdata))
                 .then((userInfo) => {
                     
-                }).done(() =>{
+                }).done(() =>{                    
+                    callerscreen = currentscreen;
                     Actions.homeScreen();
                 });
         // Actions.homeScreen();
@@ -93,6 +94,9 @@ export default class Login extends Component {
 
     }
     async componentDidMount(){
+
+        currentscreen = 'login';
+
         await AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             let tempuserdata = userdata;
@@ -115,6 +119,8 @@ export default class Login extends Component {
         });
     }
     _onPresstext(){
+        
+        callerscreen = currentscreen;
        Actions.registerScreen();
     }
     _onPressforgetpassword(){
@@ -143,7 +149,8 @@ export default class Login extends Component {
                 //     //do nothing
                 // }).done(() =>{
                     sessionid = responseJson.Details;
-                    callerscreen='login';
+                    
+                    callerscreen = currentscreen;
                     Actions.otpScreen();
             // });
         }

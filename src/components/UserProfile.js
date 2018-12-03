@@ -131,6 +131,7 @@ export default class UserProfile extends Component {
     }
 
     _handleTabPress(pressedKey) {
+        callerscreen = currentscreen;
         switch (pressedKey) {
             case 'home':
                 Actions.homeScreen();
@@ -211,7 +212,7 @@ export default class UserProfile extends Component {
    }
 
    async componentDidMount() {
-    // currentscreen='profile';
+    currentscreen='profile';
     await AsyncStorage.getItem('userInfo')
     .then((userInfo) => {
         let tempuserdata = userdata;
@@ -242,6 +243,7 @@ export default class UserProfile extends Component {
     }
 
     handleBackButton = () => {
+        callerscreen = currentscreen;
         Actions.homeScreen();
         return true;
     }
@@ -305,10 +307,12 @@ export default class UserProfile extends Component {
      }
      _onPresschangeMobileNo(){
          
-        AsyncStorage.removeItem('userInfo')
-        AsyncStorage.removeItem('testInfo')
-        AsyncStorage.removeItem('usertestInfo')
-        AsyncStorage.removeItem('useralertInfo')
+        AsyncStorage.removeItem('userInfo');
+        AsyncStorage.removeItem('testInfo');
+        AsyncStorage.removeItem('usertestInfo');
+        AsyncStorage.removeItem('useralertInfo');
+
+        callerscreen = currentscreen;
         Actions.registerScreen();
      }
      _onPressCancel(){
@@ -360,6 +364,8 @@ export default class UserProfile extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+
+                     callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -559,7 +565,9 @@ export default class UserProfile extends Component {
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false));
+                                                callerscreen = currentscreen;
+                                                Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>

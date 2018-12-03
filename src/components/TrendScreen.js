@@ -463,6 +463,8 @@ export default class TrendScreen extends Component {
     }
 
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
         switch (pressedKey) {
             case 'home':
                 Actions.homeScreen();
@@ -488,7 +490,7 @@ export default class TrendScreen extends Component {
     async componentDidMount() {
 //#####
 
-    // currentscreen='trend';
+    currentscreen='trend';
 
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -512,6 +514,8 @@ export default class TrendScreen extends Component {
         testInfodata = testInfo ? JSON.parse(testInfo) : temptestdata;
         }).done(() => {
         if(!(testInfodata.length)) {
+            
+            callerscreen = currentscreen;
             Actions.homeScreen();
         } //if no test results in Async Storage
         else {
@@ -527,6 +531,8 @@ export default class TrendScreen extends Component {
 
         }).done(() => {
         if(!(testdata.length)) {
+            
+            callerscreen = currentscreen;
             Actions.homeScreen();
         } //if no test results in Async Storage
         else {
@@ -567,6 +573,8 @@ export default class TrendScreen extends Component {
     }
 
     handleBackButton = () => {
+        
+        callerscreen = currentscreen;
         Actions.homeScreen(testdetail);
         return true;
     };
@@ -657,6 +665,8 @@ export default class TrendScreen extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                    
+                    callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -772,7 +782,9 @@ export default class TrendScreen extends Component {
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <TouchableOpacity style={{marginTop:10}}
-                                          onPress={() => Actions.homeScreen()}>
+                                          onPress={() => {
+                                                    callerscreen = currentscreen;
+                                                    Actions.homeScreen()}}>
                             <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
                         </TouchableOpacity>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Test Result Trend</Text>
@@ -886,7 +898,9 @@ export default class TrendScreen extends Component {
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false)),
+                                                    callerscreen = currentscreen;
+                                                    Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>
