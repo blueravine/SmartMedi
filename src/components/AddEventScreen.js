@@ -47,7 +47,8 @@ var temptests;
 var addtests;
 var alertarray=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,notes:null};
+var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
+// var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,notes:null};
 var alertdata=[];
 var weeklydata = [
     {
@@ -545,6 +546,9 @@ export default class AddEventScreen extends Component {
             temptr.testname = jsontestresultinfo.testname;
             temptr.testvalue = jsontestresultinfo.testvalue;
             temptr.testdate = jsontestresultinfo.testdate;
+            temptr.medfrequency = jsontestresultinfo.medfrequency;
+            temptr.startdate = jsontestresultinfo.startdate;
+            temptr.enddate = jsontestresultinfo.enddate;
             temptr.notes = jsontestresultinfo.notes;
                 
             }).done(() =>{
@@ -598,6 +602,9 @@ export default class AddEventScreen extends Component {
         //#####
       
         temptr.medicinename = this.state.picked3;
+        temptr.medfrequency = this.state.picked2;
+        temptr.startdate = this.state.datepicked1;
+        temptr.enddate = this.state.datepicked2;
         await  AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
         .then((temptestresult) => {
             

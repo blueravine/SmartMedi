@@ -47,7 +47,7 @@ var addtests;
 var testarray=[];
 var  alertdata=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: new Date(),testname:null,testvalue:null,ageontest:null,medicinename:null,notes:null};
+var temptr={testdate: new Date(),testname:null,testvalue:null,ageontest:null,medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
 var testdata=[];
 var tests = [
     // {
@@ -285,6 +285,27 @@ export default class AddTestData extends Component {
             
     };
 
+    // _onmedicenalertupdateshclick = () =>{
+    //     //#####
+    // //    Moment(this.state.date).format('YYYYMMDD');
+        
+    //     temptr.testname=this.state.picked2;
+    //     temptr.testdate=this.state.date;
+    //     temptr.testvalue=this.state.testvalue;
+    //     temptr.ageontest=this.state.age;
+    //     temptr.medicinename=this.state.addalertpiccked;
+    //     temptr.notes=this.state.resultnotes;
+    //      AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+    //     .then((temptestresult) => {
+            
+    //     }).done(() => {
+    //         callerscreen = currentscreen;
+    //         Actions.alertScreen();
+    //     });
+
+            
+    // };
+
     ShowHideActivityIndicator = () =>{
 
         this.setState({loading: true});
@@ -395,6 +416,9 @@ export default class AddTestData extends Component {
                     temptr.testname = jsontestresultinfo.testname;
                     temptr.testvalue = jsontestresultinfo.testvalue;
                     temptr.medicinename = jsontestresultinfo.medicinename;
+                    temptr.medfrequency = jsontestresultinfo.medfrequency;
+                    temptr.startdate = jsontestresultinfo.startdate;
+                    temptr.enddate = jsontestresultinfo.enddate;
                     temptr.testdate = jsontestresultinfo.testdate;
                     temptr.notes = jsontestresultinfo.notes;
                         
@@ -831,6 +855,9 @@ export default class AddTestData extends Component {
                                                         if(this.state.saveaction==='Add'){
                                                         this._onmedicenalertclick();
                                                         }
+                                                        // else  if(this.state.saveaction==='Update'){
+                                                       // this._onmedicenalertupdateshclick();
+                                                       // }
                                                     }}}>
                                                    {/* onPress={this._onmedicenalertclick}> */}
                                     {/*<Text>Select Country: {this.state.picked}</Text>*/}
