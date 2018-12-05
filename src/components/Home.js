@@ -346,7 +346,7 @@ var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:nu
 var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class Home extends Component {
 
     constructor(props) {
@@ -993,7 +993,7 @@ export default class Home extends Component {
                             onSelect={this.onTestNameSelectpicker}
                             onCancel={this.onTestNameCancelpicker}
                             options={testdates}
-                            optionTextStyle={style={fontSize:16}}
+                            // optionTextStyle={style={fontSize:16}}
                         />
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
@@ -1165,6 +1165,8 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     headerview: {
+        // height: hp('70%'), // 70% of height device screen
+        // width: wp('80%'),   // 80% of width device screen
         // height: 250,
         //borderRadius:25,
         // borderWidth:5,
