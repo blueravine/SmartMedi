@@ -46,8 +46,9 @@ var temptests;
 var addtests;
 var testarray=[];
 var  alertdata=[];
+var tempalert={};
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: new Date(),testname:null,testvalue:null,ageontest:null,medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
+var temptr={medicinealertid:null,testdate: new Date(),testname:null,testvalue:null,ageontest:null,medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
 var testdata=[];
 var tests = [
     // {
@@ -267,20 +268,26 @@ export default class AddTestData extends Component {
     _onmedicenalertclick = () =>{
         //#####
     //    Moment(this.state.date).format('YYYYMMDD');
+            temptr.testname=this.state.picked2;
+            temptr.testdate=this.state.date;
+            temptr.testvalue=this.state.testvalue;
+            temptr.ageontest=this.state.age;
+            temptr.medicinename=this.state.addalertpiccked;
+            temptr.notes=this.state.resultnotes;
+            temptr.medicinealertid = this.props.medicinealertid;
+            AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+            .then((temptestresult) => {
+                
+            }).done(() => {
+                callerscreen = currentscreen;
+
+                if(this.state.saveaction==='Add'){
+                    Actions.addeventScreen();
+                } else if(this.state.saveaction==='Update'){
+                    Actions.addeventScreen(tempalert);
+                }
+            });
         
-        temptr.testname=this.state.picked2;
-        temptr.testdate=this.state.date;
-        temptr.testvalue=this.state.testvalue;
-        temptr.ageontest=this.state.age;
-        temptr.medicinename=this.state.addalertpiccked;
-        temptr.notes=this.state.resultnotes;
-         AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
-        .then((temptestresult) => {
-            
-        }).done(() => {
-            callerscreen = currentscreen;
-            Actions.addeventScreen();
-        });
 
             
     };
@@ -326,6 +333,7 @@ export default class AddTestData extends Component {
         //#####
       currentscreen='addtestresult';
         
+
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             
@@ -370,6 +378,37 @@ export default class AddTestData extends Component {
                         testsname.push(eachname);
             }); //forEach
 
+            fetch('https://interface.blueravine.in/smartmedi/alert/id', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+            method: 'POST', // USE GET, POST, PUT,ETC
+            headers: { //MODIFY HEADERS
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization':'Bearer '+userdata.jwt,
+                'mobile':userdata.mobile,
+                'countrycode':userdata.countrycode,
+                'jwtaudience':'SmartMedi'
+                //    application/x-www-form-urlencoded
+            },
+            body: JSON.stringify({"medicinealertid":this.props.medicinealertid})
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson.messagecode === 4002) {
+    
+                tempalert = responseJson.Alert;                
+               
+                }//if condition close
+                else {
+                    alert(responseJson.message);
+    
+                }
+                    //second then end after fetch
+                })
+                .catch((error) => {
+                    console.error(error);
+                });                
+    
+
         });
 
     });
@@ -394,15 +433,19 @@ export default class AddTestData extends Component {
         //         this.setState({addalertpiccked:''});
         //     }
         //  });
+
+        
         // //#####
                 if(this.props.testdate){
+                    // alert(JSON.stringify(this.props));
                     this.setState({saveaction:'Update',
                                     testheader:'Edit Test Result',
                                     date:Moment(this.props.testdate, 'YYYYMMDD'),
                                    picked2:this.props.testname,
                                    testvalue:this.props.value,
                                    age:this.props.ageontest,
-                                   resultnotes:this.props.notes});
+                                   resultnotes:this.props.notes,
+                                   addalertpiccked:this.props.medicinename});
                 }
 
 
@@ -412,6 +455,7 @@ export default class AddTestData extends Component {
                         let temptestresultdata = temptr;
                     let  jsontestresultinfo = temptestresult ? JSON.parse(temptestresult) : temptestresultdata;
                     
+                    temptr.medicinealertid=jsontestresultinfo.medicinealertid;
                     temptr.testdate = jsontestresultinfo.testdate;
                     temptr.testname = jsontestresultinfo.testname;
                     temptr.testvalue = jsontestresultinfo.testvalue;
@@ -461,12 +505,14 @@ export default class AddTestData extends Component {
     };
     onCancelButtonPress = () => {
         callerscreen = currentscreen;
-        if(this.state.addalertpiccked){
-            Snackbar.show({
-                title: 'Please delete the medicine alert for ' +this.state.addalertpiccked,
-                duration: Snackbar.LENGTH_LONG,
-                
-            });
+        if(this.state.saveaction==='Add'){
+            if(this.state.addalertpiccked){
+                Snackbar.show({
+                    title: 'Please delete the medicine alert for ' +this.state.addalertpiccked,
+                    duration: Snackbar.LENGTH_LONG,
+                    
+                });
+        }
         }
         Actions.homeScreen();
     };
@@ -493,7 +539,9 @@ export default class AddTestData extends Component {
                                 "countrycode":userdata.countrycode,
                                 "age":this.state.age,
                                 "value":this.state.testvalue,
-                                "notes":this.state.resultnotes
+                                "notes":this.state.resultnotes,
+                                "medicinename":this.state.addalertpiccked,
+                                "medicinealertid":temptr.medicinealertid
                                 }])
     })
         .then((response) => response.json())
@@ -834,8 +882,52 @@ export default class AddTestData extends Component {
                                            onChangeText={(itemValue) => this.setState({age: itemValue})}
                                            containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
+                                <TextField label="Notes and Comments"
+                                           lineHeight={30}
+                                           value={this.state.resultnotes}
+                                           editable={true}
+                                           fontSize={16}
+                                        //    multiline = {true}
+                                           returnKeyType={"done"}
+                                           onChangeText={(itemValue) => this.setState({resultnotes: itemValue})}
+                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
 
-                                    <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}                                    
+                            </View>
+                            <View style={{flexDirection:"row"}}>
+                            <TouchableOpacity  style={{width:280,justifyContent:'flex-end'}}                                    
+                                                    onPress={() => {        if(!this.state.picked2){
+                                                        // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                                        Snackbar.show({
+                                                            title: 'Test Name field cannot be empty!',
+                                                            duration: Snackbar.LENGTH_SHORT,
+                                                        });
+                                                    }
+                                                    else if(!this.state.testvalue){
+                                                        // Toast.show(" From and To Location cannot be same! ",Toast.LONG);
+                                                        Snackbar.show({
+                                                            title: 'Test value field cannot be empty!',
+                                                            duration: Snackbar.LENGTH_SHORT,
+                                                        });
+                                                        // this.resetData();
+                                                    }
+                                                    else{
+                                                        // if(this.state.saveaction==='Add'){
+                                                        this._onmedicenalertclick();
+                                                        // }
+                                                    }}}>
+                                                   {/* onPress={this._onmedicenalertclick}> */}
+                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
+                                    <TextField label="Medicine Alert"
+                                               lineHeight={30}
+                                               value={this.state.addalertpiccked}
+                                               editable={false}
+                                               fontSize={16}
+                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
+                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
+                        
+                                </TouchableOpacity>
+                                <View style={{flexDirection:"row"}}>
+                                <TouchableOpacity  style={{justifyContent:'flex-end',marginBottom:15,marginRight:45}}                                    
                                                     onPress={() => {        if(!this.state.picked2){
                                                         // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
                                                         Snackbar.show({
@@ -855,30 +947,10 @@ export default class AddTestData extends Component {
                                                         if(this.state.saveaction==='Add'){
                                                         this._onmedicenalertclick();
                                                         }
-                                                        // else  if(this.state.saveaction==='Update'){
-                                                       // this._onmedicenalertupdateshclick();
-                                                       // }
                                                     }}}>
-                                                   {/* onPress={this._onmedicenalertclick}> */}
-                                    {/*<Text>Select Country: {this.state.picked}</Text>*/}
-                                    <TextField label="Medicine Alert"
-                                               lineHeight={30}
-                                               value={this.state.addalertpiccked}
-                                               editable={false}
-                                               fontSize={16}
-                                        // onChangeText={(itemValue) => this.setState({selected2: itemValue})}
-                                               containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-                                </TouchableOpacity>
-                                <TextField label="Notes and Comments"
-                                           lineHeight={30}
-                                           value={this.state.resultnotes}
-                                           editable={true}
-                                           fontSize={16}
-                                        //    multiline = {true}
-                                           returnKeyType={"done"}
-                                           onChangeText={(itemValue) => this.setState({resultnotes: itemValue})}
-                                           containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:10,marginRight:10,justifyContent:'flex-end'}}/>
-
+                               <Iccons type='MaterialCommunityIcons' name='pencil-circle-outline' size={25} color="#4d6bcb"/>
+                               </TouchableOpacity>
+                               </View>
                             </View>
                         
 

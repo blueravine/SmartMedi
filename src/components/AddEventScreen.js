@@ -47,7 +47,7 @@ var temptests;
 var addtests;
 var alertarray=[];
 var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:null,jwt:null,countrycode:null};
-var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
+var temptr={medicinealertid:null,testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
 // var temptr={testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,notes:null};
 var alertdata=[];
 var weeklydata = [
@@ -462,34 +462,34 @@ export default class AddEventScreen extends Component {
         this.setState({loading: true});
         setTimeout(() => {
             this.saveAlertsData();
-            if(callerscreen==='addtestresult'){
-                callerscreen = currentscreen;
-                Actions.addtestScreen();
-                Snackbar.show({
-                    title: 'Medicine name added succesfully',
-                    duration: Snackbar.LENGTH_SHORT,
-                });
-                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            else  if(callerscreen==='alert'){
-                callerscreen = currentscreen;
-                Actions.alertScreen();
-                Snackbar.show({
-                    title: 'Medicine details added succesfully. Please "Refresh"',
-                    duration: Snackbar.LENGTH_SHORT,
-                });
-                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-            }
-            else{
-                callerscreen = currentscreen;
-                Actions.alertScreen();
-                Snackbar.show({
-                    title: 'Medicine details added succesfully. Please "Refresh"',
-                    duration: Snackbar.LENGTH_SHORT,
-                });
-                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            // if(callerscreen==='addtestresult'){
+            //     callerscreen = currentscreen;
+            //     Actions.addtestScreen();
+            //     Snackbar.show({
+            //         title: 'Medicine name added succesfully',
+            //         duration: Snackbar.LENGTH_SHORT,
+            //     });
+            //     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            // }
+            // else  if(callerscreen==='alert'){
+            //     callerscreen = currentscreen;
+            //     Actions.alertScreen();
+            //     Snackbar.show({
+            //         title: 'Medicine details added succesfully. Please "Refresh"',
+            //         duration: Snackbar.LENGTH_SHORT,
+            //     });
+            //     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            // }
+            // else{
+            //     callerscreen = currentscreen;
+            //     Actions.alertScreen();
+            //     Snackbar.show({
+            //         title: 'Medicine details added succesfully. Please "Refresh"',
+            //         duration: Snackbar.LENGTH_SHORT,
+            //     });
+            //     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
-            }
+            // }
             // Snackbar.show({
             //     title: 'Medicine details added succesfully. Please "Refresh"',
             //     duration: Snackbar.LENGTH_SHORT,
@@ -520,6 +520,7 @@ export default class AddEventScreen extends Component {
       }).done();
             
       if(this.props.startdate){
+        temptr.medicinealertid = this.props.medicinealertid ? this.props.medicinealertid : this.props.id;
         this.setState({savealert:'Update',
                        alertheader:'Edit Alert',
                        datepicked1:Moment(this.props.startdate, 'YYYYMMDD'),
@@ -545,7 +546,8 @@ export default class AddEventScreen extends Component {
             temptr.testdate = jsontestresultinfo.testdate;
             temptr.testname = jsontestresultinfo.testname;
             temptr.testvalue = jsontestresultinfo.testvalue;
-            temptr.testdate = jsontestresultinfo.testdate;
+            temptr.medicinealertid = jsontestresultinfo.medicinealertid;
+            temptr.medicinename = jsontestresultinfo.medicinename;
             temptr.medfrequency = jsontestresultinfo.medfrequency;
             temptr.startdate = jsontestresultinfo.startdate;
             temptr.enddate = jsontestresultinfo.enddate;
@@ -601,14 +603,15 @@ export default class AddEventScreen extends Component {
         Keyboard.dismiss();
         //#####
       
-        temptr.medicinename = this.state.picked3;
-        temptr.medfrequency = this.state.picked2;
-        temptr.startdate = this.state.datepicked1;
-        temptr.enddate = this.state.datepicked2;
-        await  AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
-        .then((temptestresult) => {
+        // temptr.medicinename = this.state.picked3;
+        // temptr.medfrequency = this.state.picked2;
+        // temptr.startdate = this.state.datepicked1;
+        // temptr.enddate = this.state.datepicked2;
+        // temptr.medicinealertid=null;
+        // await  AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+        // .then((temptestresult) => {
             
-        }).done();
+        // }).done();
 
         let alertid1, alertid2, alertid3, alertid4;
         // this.setState({datepicked1: Moment(this.state.date).format('YYYYMMDD'),
@@ -653,6 +656,7 @@ export default class AddEventScreen extends Component {
         .then((responseJson) => {
             
             if (responseJson.messagecode === 4001) {
+                temptr.medicinealertid = responseJson.Alert[0].id;
 
                 let rptTyp;
                 rptTyp = (this.state.picked2 === 'Daily') ? 'day'
@@ -807,11 +811,50 @@ export default class AddEventScreen extends Component {
                     alert(error);
                 });
             }//if condition close
-            else {
+                })//second then end after fetch
+        .done(()=>{
+            
+            // alert(JSON.stringify(temptr));
+            temptr.medicinename = this.state.picked3;
+            temptr.medfrequency = this.state.picked2;
+            temptr.startdate = this.state.datepicked1;
+            temptr.enddate = this.state.datepicked2;
+            // temptr.medicinealertid=null;
+            
+            AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+            .then((temptestresult) => {
                 
+            }).done(()=>{
+                
+            if(callerscreen==='addtestresult'){
+                callerscreen = currentscreen;
+                Actions.addtestScreen();
+                Snackbar.show({
+                    title: 'Medicine name added succesfully',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            }
+            else  if(callerscreen==='alert'){
+                callerscreen = currentscreen;
+                Actions.alertScreen();
+                Snackbar.show({
+                    title: 'Medicine details added succesfully. Please "Refresh"',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+            }
+            else{
+                callerscreen = currentscreen;
+                Actions.alertScreen();
+                Snackbar.show({
+                    title: 'Medicine details added succesfully.  Please "Refresh"',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+                BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
 
             }
-                //second then end after fetch
+            });
         })
         .catch((error) => {
             console.error(error);
@@ -820,7 +863,7 @@ export default class AddEventScreen extends Component {
     }
     else if(this.state.savealert==='Update'){
             
-        fetch('https://interface.blueravine.in/smartmedi/alert/update/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/update/id', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -831,7 +874,8 @@ export default class AddEventScreen extends Component {
             'jwtaudience':'SmartMedi'
             //    application/x-www-form-urlencoded
         },
-        body: JSON.stringify({"mobile":userdata.mobile,
+        body: JSON.stringify({"medicinealertid": temptr.medicinealertid,
+                                "mobile":userdata.mobile,
                                 "countrycode":userdata.countrycode,
                                 "startdate": Moment(this.state.datepicked1).format('YYYYMMDD'),
                                 "enddate": Moment(this.state.datepicked2).format('YYYYMMDD'),
@@ -1011,14 +1055,57 @@ export default class AddEventScreen extends Component {
 
             }
                 //second then end after fetch
-            }).catch((error) => {
+            })
+            .done(() => {
+                temptr.medicinename = this.state.picked3;
+                temptr.medfrequency = this.state.picked2;
+                temptr.startdate = this.state.datepicked1;
+                temptr.enddate = this.state.datepicked2;
+                
+                AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+                .then((temptestresult) => {
+                    
+                }).done(()=>{
+                    
+                if(callerscreen==='addtestresult'){
+                    callerscreen = currentscreen;
+                    Actions.addtestScreen();
+                    Snackbar.show({
+                        title: 'Medicine name updated succesfully',
+                        duration: Snackbar.LENGTH_SHORT,
+                    });
+                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                else if(callerscreen==='alert'){
+                    callerscreen = currentscreen;
+                    Actions.alertScreen();
+                    Snackbar.show({
+                        title: 'Medicine details updated succesfully. Please "Refresh"',
+                        duration: Snackbar.LENGTH_SHORT,
+                    });
+                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+                }
+                else{
+                    callerscreen = currentscreen;
+                    Actions.alertScreen();
+                    Snackbar.show({
+                        title: 'Medicine details updated succesfully.  Please "Refresh"',
+                        duration: Snackbar.LENGTH_SHORT,
+                    });
+                    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    
+                }
+            });
+            }
+
+            )
+            .catch((error) => {
                 console.error(error);
             });
 
 
     }
   
-
     }
 
     // _handleAppStateChange =(nextappState) => {
@@ -1053,8 +1140,24 @@ export default class AddEventScreen extends Component {
             }, {
                 text: 'OK',
                 onPress: () =>  {this.ondeletealertButtonPress();
-                    callerscreen = currentscreen;
-                    Actions.alertScreen()}
+                    if(callerscreen==='addtestresult'){
+                        temptr.medicinename = null;
+        temptr.medfrequency = null;
+        temptr.startdate = null;
+        temptr.enddate = null;
+        // temptr.medicinealertid=null;
+        
+        AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+        .then((temptestresult) => {
+            
+        }).done(() => {callerscreen = currentscreen;
+            Actions.addtestScreen();});
+                        
+                    }
+                    else  if(callerscreen==='alert'){
+                        callerscreen = currentscreen;
+                        Actions.alertScreen();
+                    }}
             }, ]
             , {
                 cancelable: false
@@ -1064,7 +1167,7 @@ export default class AddEventScreen extends Component {
     };
 
     ondeletealertButtonPress = () => {
-        fetch('https://interface.blueravine.in/smartmedi/alert/delete/mobile', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
+        fetch('https://interface.blueravine.in/smartmedi/alert/delete/id', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'POST', // USE GET, POST, PUT,ETC
         headers: { //MODIFY HEADERS
             'Accept': 'application/json',
@@ -1075,12 +1178,7 @@ export default class AddEventScreen extends Component {
             'jwtaudience':'SmartMedi'
             //    application/x-www-form-urlencoded
         },
-    body: JSON.stringify({"mobile": userdata.mobile,
-                        "countrycode": userdata.countrycode,
-                        "startdate": this.props.startdate,
-                        "enddate": this.props.enddate,
-                        "medicinename":this.props.medicinename,
-                        "medfrequency":this.props.medfrequency   })
+    body: JSON.stringify({"medicinealertid": temptr.medicinealertid})
     }) //fetch
     .then((response) => response.json())
     .then((responseJson) => {

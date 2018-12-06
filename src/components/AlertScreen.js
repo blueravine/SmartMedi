@@ -722,32 +722,32 @@ export default class AlertScreen extends Component{
                                                     Actions.addeventScreen(currentResult)}}>
                 <View style={{flexDirection:'row' ,marginBottom:25}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
-                            <Text style={{marginBottom:5}}>Medicine</Text>
-                            <Text style={{marginBottom:5}}>Frequency</Text>
-                            <Text style={{marginBottom:5}}>Repeat</Text>
-                            <Text style={{marginBottom:5}}>Notes</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Medicine</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Frequency</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Repeat</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Notes</Text>
                         </View>
 
                         <View style={{flexDirection:"column",justifyContent:'flex-start',flex:3}}>
                            
-                                <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medicinename}</Text>
+                                <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.medicinename}</Text>
                         
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medfrequency}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.medfrequency}</Text>
                             {(currentResult.medfrequency==="Daily") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {"\n"}   {currentResult.repeat4}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {currentResult.repeat4}</Text>
                             }
                             {(currentResult.medfrequency==="Weekly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.weekday} {currentResult.repeat1}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.weekday} {currentResult.repeat1}</Text>
                             }
                             {(currentResult.medfrequency==="Monthly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.meddate}
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.meddate}
                             {(currentResult.meddate > 3 && currentResult.meddate < 21) ? 'th '
                                     : (((currentResult.meddate % 10) === 1) ? 'st '
                                     : (((currentResult.meddate % 10) === 2) ? 'nd '
                                     : (((currentResult.meddate % 10) === 3) ? 'rd ' : 'th ')))}
                              of every month at {currentResult.repeat1}</Text>
                             }
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.notes ? currentResult.notes : 'Notes not entered'}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.notes ? currentResult.notes : 'Notes not entered'}</Text>
 
                          </View>
                 </View>
