@@ -1133,9 +1133,10 @@ export default class AddEventScreen extends Component {
     handleDeletealertButton = () => {
         Alert.alert(
             'Delete Record',
-            'Do you want to delete this test Result?', [{
+            'Do you want to delete this Alert for this medicine?', [{
                 text: 'CANCEL',
-                onPress: () => alert('Successfully canceled the Alert Result Delete.')
+                onPress: () => {}
+                // alert('canceled the Alert.')
                 
             }, {
                 text: 'OK',

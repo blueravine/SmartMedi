@@ -378,6 +378,7 @@ export default class AddTestData extends Component {
                         testsname.push(eachname);
             }); //forEach
 
+        if(this.props.medicinealertid){
             fetch('https://interface.blueravine.in/smartmedi/alert/id', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
             method: 'POST', // USE GET, POST, PUT,ETC
             headers: { //MODIFY HEADERS
@@ -408,7 +409,7 @@ export default class AddTestData extends Component {
                     console.error(error);
                 });                
     
-
+            }
         });
 
     });
