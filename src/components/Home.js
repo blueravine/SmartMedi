@@ -917,13 +917,22 @@ export default class Home extends Component {
                     Actions.addtestScreen(currentResult)}}>
             <View>
                     {(currentResult.result==="high") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {(currentResult.result==="normal") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}> {currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {(currentResult.result==="between") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {((currentResult.result !=="between") && (currentResult.result !=="high") && (currentResult.result !=="normal") ) &&
                     <Text style={{color:'#000',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
@@ -1020,8 +1029,10 @@ export default class Home extends Component {
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
-                                <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>
-                                    Date of Test{"\n"}{this.state.selectedDate.toString().substring(6, 8)
+                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
+                                    Date of Test</Text>
+                                <Text style={{textAlign:'center',fontWeight:'bold'}}>
+                                    {this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
                                 + this.state.selectedDate.toString().substring(0, 4)}</Text>
                                 <View

@@ -1142,16 +1142,16 @@ export default class AddEventScreen extends Component {
                 onPress: () =>  {this.ondeletealertButtonPress();
                     if(callerscreen==='addtestresult'){
                         temptr.medicinename = null;
-        temptr.medfrequency = null;
-        temptr.startdate = null;
-        temptr.enddate = null;
-        // temptr.medicinealertid=null;
-        
-        AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
-        .then((temptestresult) => {
-            
-        }).done(() => {callerscreen = currentscreen;
-            Actions.addtestScreen();});
+                        temptr.medfrequency = null;
+                        temptr.startdate = null;
+                        temptr.enddate = null;
+                        // temptr.medicinealertid=null;
+                        
+                        AsyncStorage.setItem('temptestresult', JSON.stringify(temptr))
+                        .then((temptestresult) => {
+                            
+                        }).done(() => {callerscreen = currentscreen;
+                            Actions.addtestScreen();});
                         
                     }
                     else  if(callerscreen==='alert'){

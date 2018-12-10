@@ -720,7 +720,7 @@ export default class AlertScreen extends Component{
                  <TouchableOpacity onPress={() => {
                                                     callerscreen = currentscreen;
                                                     Actions.addeventScreen(currentResult)}}>
-                <View style={{flexDirection:'row' ,marginBottom:25}}>
+                <View style={{flexDirection:'row'}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
                             <Text style={{marginBottom:5,fontSize:14}}>Medicine</Text>
                             <Text style={{marginBottom:5,fontSize:14}}>Frequency</Text>
@@ -815,7 +815,7 @@ export default class AlertScreen extends Component{
                         </View>
                     </View>
                     <ScrollView >
-                    <View style={{marginBottom:300}}>
+                    <View style={{marginBottom:120}}>
                     <View >
                         <TextField label="Search Medicine By Name"
                                    lineHeight={30}
