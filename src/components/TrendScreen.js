@@ -357,6 +357,9 @@ var trentestresultname = [
     // },
 ];
 var filteredTrendResult=[];
+var temptr={medicinealertid:null,testdate: null,testname:null,testvalue:null,ageontest:'',medicinename:null,medfrequency:null,startdate:null,enddate:null,notes:null};
+var temptesttrresult=[];
+var temptestinfotrresult=[];
 export default class TrendScreen extends Component {
 
     constructor(props) {
@@ -463,6 +466,8 @@ export default class TrendScreen extends Component {
     }
 
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
         switch (pressedKey) {
             case 'home':
                 Actions.homeScreen();
@@ -488,6 +493,8 @@ export default class TrendScreen extends Component {
     async componentDidMount() {
 //#####
 
+    currentscreen='trend';
+
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             let tempuserdata = userdata;
@@ -510,6 +517,8 @@ export default class TrendScreen extends Component {
         testInfodata = testInfo ? JSON.parse(testInfo) : temptestdata;
         }).done(() => {
         if(!(testInfodata.length)) {
+            
+            callerscreen = currentscreen;
             Actions.homeScreen();
         } //if no test results in Async Storage
         else {
@@ -525,6 +534,8 @@ export default class TrendScreen extends Component {
 
         }).done(() => {
         if(!(testdata.length)) {
+            
+            callerscreen = currentscreen;
             Actions.homeScreen();
         } //if no test results in Async Storage
         else {
@@ -555,6 +566,28 @@ export default class TrendScreen extends Component {
             }
 
         });
+
+        // await  AsyncStorage.getItem('temptestresult')
+        //     .then((temptestresult) => {
+        //         let temptestresultdata = temptr;
+        //     let  jsontestresultinfo = temptestresult ? JSON.parse(temptestresult) : temptestresultdata;
+            
+        //     temptr.testdate = jsontestresultinfo.testdate;
+        //     temptr.testname = jsontestresultinfo.testname;
+        //     temptr.testvalue = jsontestresultinfo.testvalue;
+        //     temptr.medicinealertid = jsontestresultinfo.medicinealertid;
+        //     temptr.medicinename = jsontestresultinfo.medicinename;
+        //     temptr.medfrequency = jsontestresultinfo.medfrequency;
+        //     temptr.startdate = jsontestresultinfo.startdate;
+        //     temptr.enddate = jsontestresultinfo.enddate;
+        //     temptr.notes = jsontestresultinfo.notes;
+                
+        //     }).done(() =>{
+
+        //     });
+            
+            
+       
 //#####
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
@@ -565,6 +598,8 @@ export default class TrendScreen extends Component {
     }
 
     handleBackButton = () => {
+        
+        callerscreen = currentscreen;
         Actions.homeScreen(testdetail);
         return true;
     };
@@ -655,6 +690,8 @@ export default class TrendScreen extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                    
+                    callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -708,21 +745,29 @@ export default class TrendScreen extends Component {
             trendchartdata.push(testData);
 
             return(
-                <View style={{flexDirection:'row' , justifyContent:'space-evenly',marginBottom:5,borderWidth:1,borderColor:'#f1f1f1f1'}}>
-                    <Text style={{marginBottom:5}} >{currentTrend.testdate.toString().substring(6, 8)
+            <View style={{flexDirection:'column' , marginBottom:5,borderWidth:1,borderColor:'#f1f1f1f1'}}>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={{marginBottom:2,flex:1,textAlign:'center'}} >{currentTrend.testdate.toString().substring(6, 8)
                     + '/' + currentTrend.testdate.toString().substring(4, 6) + '/'
                     + currentTrend.testdate.toString().substring(0, 4)}</Text>
                     {(currentTrend.result === "high") &&
-                    <Text style={{textAlign:'center',color:'#F80617',marginBottom:5}}>{currentTrend.value}</Text>
+                    <Text style={{flex:1,textAlign:'center',color:'#F80617',marginBottom:2}}>{currentTrend.value}</Text>
                     }
                     {(currentTrend.result === "normal") &&
-                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentTrend.value}</Text>
+                    <Text style={{flex:1,textAlign:'center',color:'#0db75a',marginBottom:2,fontWeight:'bold'}}>{currentTrend.value}</Text>
                     }
                     {(currentTrend.result === "between") &&
-                    <Text style={{textAlign:'center',color:'#0db75a',marginBottom:5,fontWeight:'bold'}}>{currentTrend.value}</Text>
+                    <Text style={{flex:1,textAlign:'center',color:'#0db75a',marginBottom:2,fontWeight:'bold'}}>{currentTrend.value}</Text>
                     }
+                    <Text style={{flex:1,textAlign:'center',fontStyle: 'italic'}}>{currentTrend.medicinename?currentTrend.medicinename:''}</Text>
                     {/* <Text>{currentTrend.normalmax}</Text> */}
                 </View>
+                <View>
+                {(currentTrend.notes.length > 0) &&
+                    <Text style={{textAlign:'right',marginRight:5,fontStyle: 'italic',fontSize:12}}>Notes: {currentTrend.notes}</Text>
+                }
+                </View>
+            </View>
 
             );
         });
@@ -757,6 +802,8 @@ export default class TrendScreen extends Component {
                 );
             }
         });
+
+       
         return (
 
             <View style={styles.container}>
@@ -770,7 +817,9 @@ export default class TrendScreen extends Component {
                     <View style={{flexDirection:"row",paddingRight:10,
                         paddingLeft:10,backgroundColor:'#4d6bcb',height:50}}>
                         <TouchableOpacity style={{marginTop:10}}
-                                          onPress={() => Actions.homeScreen()}>
+                                          onPress={() => {
+                                                    callerscreen = currentscreen;
+                                                    Actions.homeScreen()}}>
                             <Icon type='MaterialIcons' name='arrow-back' size={30} color="#FFFFFF"/>
                         </TouchableOpacity>
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,flex:2,color:'#FFFFFF'}} >  Test Result Trend</Text>
@@ -810,14 +859,17 @@ export default class TrendScreen extends Component {
                         </View>
                         {testNormalRange}
                         {testcategory}
-                        <View style={{marginTop:5,flexDirection:'row',justifyContent:'space-evenly',borderWidth:1,borderColor:'#f1f1f1f1'}}>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
-                            <Text style={{marginBottom:5,marginLeft:20,textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
-                            {/* <Text style={{marginBottom:5,textDecorationLine:'underline',fontWeight:'bold'}}>Normal</Text> */}
+                        <View style={{marginTop:5,flexDirection:'row',borderWidth:1,borderColor:'#f1f1f1f1'}}>
+                            <Text style={{marginBottom:5,flex:1,textAlign:'center',textDecorationLine:'underline',fontWeight:'bold'}}>Test Date</Text>
+                            <Text style={{marginBottom:5,flex:1,textAlign:'center',textDecorationLine:'underline',fontWeight:'bold'}}>Actual</Text>
+                            <Text style={{marginBottom:5,flex:1,textAlign:'center',textDecorationLine:'underline',fontWeight:'bold'}}>Medicine</Text>
+                            
                         </View>
 
                         {renderTrendCard}
+                    
                         </View>
+                        
                         {/* </GestureRecognizer> */}
                         <View style={{marginTop:2,flexDirection:'row',justifyContent:'center'}}>
                         <Text style={{textAlign:'center'}}>Click </Text>
@@ -884,7 +936,9 @@ export default class TrendScreen extends Component {
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false)),
+                                                    callerscreen = currentscreen;
+                                                    Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>

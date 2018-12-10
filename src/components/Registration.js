@@ -22,7 +22,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const MARGIN = 40;
 global.sessionid ;
-global.callerscreen ;
+// global.callerscreen ;
 import PropTypes from 'prop-types';
 import Moment from "moment/moment";
 import { Dropdown } from 'react-native-material-dropdown';
@@ -77,6 +77,8 @@ export default class Registration extends Component {
     }
 
     async componentDidMount(){
+
+        currentscreen = 'registration';
     
         await AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
@@ -169,7 +171,8 @@ export default class Registration extends Component {
                     }).done(() =>{
                         
                         sessionid = responseJson.Details;
-                        callerscreen='registration';
+                        
+                     callerscreen = currentscreen;
                         Actions.otpScreen();
                 });
             }
@@ -230,6 +233,7 @@ export default class Registration extends Component {
                             
                         }).done(() =>{
                        
+                     callerscreen = currentscreen;
                             Actions.loginScreen();
                         
 
@@ -289,7 +293,20 @@ export default class Registration extends Component {
                   placeholder="Phone No"
                   keyboardType="phone-pad"
                   maxLength={10}
-                  onBlur={() => {this.ShowHideActivityIndicatoruser()}}
+                  onFocus={() => {
+                    this.setState({uservisibiltyflag: false,
+                    loading:false});
+                  }}
+                  onBlur={() => {
+                    if(!this.state.phone){
+                                // Toast.show(" From or To Location cannot be empty! ",Toast.LONG);
+                                Snackbar.show({
+                                    title: 'Phone no field cannot be empty!',
+                                    duration: Snackbar.LENGTH_LONG,
+                                });
+                            }
+                            else{
+                                this.ShowHideActivityIndicatoruser()}}}
                   returnKeyType={"next"}
                   value={this.state.phone}
               placeholderTextColor={'#000'}
@@ -308,6 +325,9 @@ export default class Registration extends Component {
               placeholder="Full Name"
             //   editable={this.state.usereditableflag}
               keyboardType="email-address"
+              onFocus={() => {
+                    this.setState({loading:false});
+                  }}
               returnKeyType={"next"}
               value={this.state.name}
               placeholderTextColor={'#000'}

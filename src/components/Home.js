@@ -346,7 +346,7 @@ var userdata={mobile: null,username:null,age:null,gender:null,email:null,name:nu
 var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 export default class Home extends Component {
 
     constructor(props) {
@@ -477,6 +477,9 @@ export default class Home extends Component {
     }
     
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
+        
         switch (pressedKey) {
             case 'home':
                 break;
@@ -497,19 +500,7 @@ export default class Home extends Component {
 
         }
     };
-
-
-    ShowHideActivityIndicator = () =>{
-
-        this.setState({loading: true});
-        setTimeout(() => {
-            Actions.searchScreen(params);
-            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        }, 2000)
-        // this.setState({loading: false})
-    };
-
-    async getusertestdata(){
+     async getusertestdata(){
         await  AsyncStorage.getItem('userInfo')
         .then((userInfo) => {
             let tempuserdata = userdata;
@@ -703,7 +694,8 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        
+        currentscreen='home';
+
         this.getusertestdata();
        
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -749,10 +741,14 @@ export default class Home extends Component {
     };
 
     onplusButtonPress = () => {
+        
+        callerscreen = currentscreen;
         Actions.addtestScreen();
     };
 
     onNametextPress = () => {
+        
+        callerscreen = currentscreen;
         Actions.profileScreen();
     };
 
@@ -760,6 +756,8 @@ export default class Home extends Component {
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.testname=treandtestname;
         // testtdetail.testdate=trendtestdate;
+        
+        callerscreen = currentscreen;
         Actions.trendScreen(testtdetail);
     };
 
@@ -870,6 +868,7 @@ export default class Home extends Component {
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                     callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -900,7 +899,9 @@ export default class Home extends Component {
         renderResultName = localFilteredResult.map( (currentResult, resultIndex) => {
             
             return(
-                    <TouchableOpacity onPress={() => {Actions.trendScreen(currentResult.testname)}}>
+                    <TouchableOpacity onPress={() => {
+                        callerscreen = currentscreen;
+                        Actions.trendScreen(currentResult.testname)}}>
                         {/*{(currentResult.testname.length!==15) &&*/}
                         <Text style={{marginBottom:10,justifyContent:'flex-start'}}>{(currentResult.testname.length >12) ? 
                             (currentResult.testname.substring(0,12))+ '..': (currentResult.testname)}</Text>
@@ -911,16 +912,27 @@ export default class Home extends Component {
 
         renderResultValue = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
+                <TouchableOpacity onPress={() => {
+                    callerscreen = currentscreen;
+                    Actions.addtestScreen(currentResult)}}>
             <View>
                     {(currentResult.result==="high") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#F80617',marginBottom:10, textAlign:'center'}}> {currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {(currentResult.result==="normal") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}> {currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {(currentResult.result==="between") &&
+                    <View style={{flexDirection:'row'}}>
                     <Text style={{color:'#0db75a',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
+                    <Icoons type='FontAwesome' name='pencil' size={12} color="#818181" style={{marginLeft:5,marginTop:5}}/>
+                    </View>
                     }
                     {((currentResult.result !=="between") && (currentResult.result !=="high") && (currentResult.result !=="normal") ) &&
                     <Text style={{color:'#000',marginBottom:10,textAlign:'center'}}>{currentResult.value}</Text>
@@ -932,7 +944,9 @@ export default class Home extends Component {
 
         renderResultNormal = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
-                <TouchableOpacity onPress={() => {Actions.addtestScreen(currentResult)}}>
+                <TouchableOpacity onPress={() => {
+                    callerscreen = currentscreen;
+                    Actions.addtestScreen(currentResult)}}>
                 <View>
                     {(currentResult.normalcomparator === "lessthan") &&
                     <Text style={{marginBottom:10,justifyContent:'flex-end'}}> &#x0003C; {currentResult.normalmax} {currentResult.testunit}</Text>
@@ -988,7 +1002,7 @@ export default class Home extends Component {
                             onSelect={this.onTestNameSelectpicker}
                             onCancel={this.onTestNameCancelpicker}
                             options={testdates}
-                            optionTextStyle={style={fontSize:16}}
+                            // optionTextStyle={style={fontSize:16}}
                         />
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
@@ -1015,8 +1029,10 @@ export default class Home extends Component {
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
 
-                                <Text style={{textAlign:'center',marginTop:10,textDecoration:'underline',fontWeight:'bold'}}>
-                                    Date of Test{"\n"}{this.state.selectedDate.toString().substring(6, 8)
+                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
+                                    Date of Test</Text>
+                                <Text style={{textAlign:'center',fontWeight:'bold'}}>
+                                    {this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
                                 + this.state.selectedDate.toString().substring(0, 4)}</Text>
                                 <View
@@ -1100,7 +1116,9 @@ export default class Home extends Component {
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false));
+                                                callerscreen = currentscreen;
+                                                Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>
@@ -1158,6 +1176,8 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     headerview: {
+        // height: hp('70%'), // 70% of height device screen
+        // width: wp('80%'),   // 80% of width device screen
         // height: 250,
         //borderRadius:25,
         // borderWidth:5,

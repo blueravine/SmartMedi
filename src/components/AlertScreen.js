@@ -392,6 +392,8 @@ export default class AlertScreen extends Component{
     }
 
     _handleTabPress(pressedKey) {
+        
+        callerscreen = currentscreen;
         switch (pressedKey) {
             case 'home':
                 Actions.homeScreen();
@@ -416,6 +418,8 @@ export default class AlertScreen extends Component{
         // Toast.show(" current result name" +msg,Toast.LONG)
         testtdetail.testname=treandtestname;
         testtdetail.testdate=trendtestdate;
+        
+        callerscreen = currentscreen;
         Actions.trendScreen(testtdetail);
     };
     async refreshalerttestresults(){
@@ -530,6 +534,7 @@ export default class AlertScreen extends Component{
   
     }
      componentDidMount() {
+        currentscreen='alert';
          this.setState({selectedmedicinefrequency:'All'});
     this._onLoadScreen();
     }
@@ -539,6 +544,7 @@ export default class AlertScreen extends Component{
     }
     
     handleBackButton = () => {
+        callerscreen = currentscreen;
         Actions.homeScreen();
         return true;
     };
@@ -562,6 +568,7 @@ export default class AlertScreen extends Component{
     };
 
     onplusButtonPress = () => {
+        callerscreen = currentscreen;
         Actions.addeventScreen();
     };
 
@@ -576,10 +583,10 @@ export default class AlertScreen extends Component{
         }
     };
 
-    filterByTestName(searchText, nDate){
+    filterByTestName(searchText){
         this.setState({selectedTestName: searchText,
             filteredTestResult: medicinetypes.filter( (testresult) =>
-            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase()) && testresult.startdate === nDate}) });
+            {return testresult.medicinename.toLowerCase().includes(searchText.toLowerCase())}) });
     };
 
     sortByTestName(sDate) {
@@ -676,6 +683,7 @@ export default class AlertScreen extends Component{
             .then((responseJson) => {
                 if (responseJson.messagecode === 1002) {
                     // Actions.homeScreen();
+                     callerscreen = currentscreen;
                     Actions.homeScreen();
                     Snackbar.show({
                         title: 'FeedBack Submitted succesfully.',
@@ -701,43 +709,45 @@ export default class AlertScreen extends Component{
             medicinename:'',
             testdate:this.state.selectedDate,
             testname:''
-
         };
+        
         let localFilteredResult = this.state.filteredTestResult;
 
         renderResultCard = localFilteredResult.map( (currentResult, resultIndex) => {
             return(
                 
                 <Card>
-                 <TouchableOpacity onPress={() => {Actions.addeventScreen(currentResult)}}>
-                <View style={{flexDirection:'row' ,marginBottom:25}}>
+                 <TouchableOpacity onPress={() => {
+                                                    callerscreen = currentscreen;
+                                                    Actions.addeventScreen(currentResult)}}>
+                <View style={{flexDirection:'row'}}>
                         <View style={{flexDirection:"column",justifyContent:'space-evenly',flex:1}}>
-                            <Text style={{marginBottom:5}}>Medicine</Text>
-                            <Text style={{marginBottom:5}}>Frequency</Text>
-                            <Text style={{marginBottom:5}}>Repeat</Text>
-                            <Text style={{marginBottom:5}}>Notes</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Medicine</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Frequency</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Repeat</Text>
+                            <Text style={{marginBottom:5,fontSize:14}}>Notes</Text>
                         </View>
 
                         <View style={{flexDirection:"column",justifyContent:'flex-start',flex:3}}>
                            
-                                <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medicinename}</Text>
+                                <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.medicinename}</Text>
                         
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.medfrequency}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.medfrequency}</Text>
                             {(currentResult.medfrequency==="Daily") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {"\n"}   {currentResult.repeat4}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.repeat1} {currentResult.repeat2} {currentResult.repeat3} {currentResult.repeat4}</Text>
                             }
                             {(currentResult.medfrequency==="Weekly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.weekday} {currentResult.repeat1}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.weekday} {currentResult.repeat1}</Text>
                             }
                             {(currentResult.medfrequency==="Monthly") &&
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.meddate}
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.meddate}
                             {(currentResult.meddate > 3 && currentResult.meddate < 21) ? 'th '
                                     : (((currentResult.meddate % 10) === 1) ? 'st '
                                     : (((currentResult.meddate % 10) === 2) ? 'nd '
                                     : (((currentResult.meddate % 10) === 3) ? 'rd ' : 'th ')))}
                              of every month at {currentResult.repeat1}</Text>
                             }
-                            <Text style={{marginBottom:5,fontWeight:'bold'}}> : {currentResult.notes ? currentResult.notes : 'Notes not entered'}</Text>
+                            <Text style={{marginBottom:5,fontWeight:'bold',fontSize:14}}> : {currentResult.notes ? currentResult.notes : 'Notes not entered'}</Text>
 
                          </View>
                 </View>
@@ -805,14 +815,14 @@ export default class AlertScreen extends Component{
                         </View>
                     </View>
                     <ScrollView >
-                    <View style={{marginBottom:300}}>
+                    <View style={{marginBottom:120}}>
                     <View >
                         <TextField label="Search Medicine By Name"
                                    lineHeight={30}
                                    value={this.state.selectedTestName}
                                    editable={true}
                                    fontSize={16}
-                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue, this.state.selectedmedicineDate)} }
+                                   onChangeText={(itemValue) => {this.filterByTestName(itemValue)} }
                                    containerStyle={{height:55,width:DEVICE_WIDTH - 120,marginTop:10,marginLeft:60,marginRight:10,justifyContent:'flex-end'}}/>
                       
                      
@@ -856,7 +866,9 @@ export default class AlertScreen extends Component{
 
                         <Button transparent style={{height: 25,width:width-880,backgroundColor: '#FFFFFF',marginBottom:10
                         }}
-                                onPress={() => {(this.openDialog(false)),Actions.homeScreen()}} >
+                                onPress={() => {(this.openDialog(false));
+                                                callerscreen = currentscreen;
+                                                Actions.homeScreen()}} >
                             <Text style={{fontWeight: "bold",fontSize:16,color:'#4d6bcb',flex:2
                                 ,textAlign:'center'}}>Close</Text>
                         </Button>

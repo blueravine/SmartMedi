@@ -129,6 +129,8 @@ export default class OTPScreen extends Component {
                                         .then((userInfo) => {
                                             
                                         }).done(() =>{
+                                            
+                     callerscreen = currentscreen;
                                             Actions.homeScreen();
                                         });
                                 
@@ -198,6 +200,8 @@ export default class OTPScreen extends Component {
                                     .then((userInfo) => {
                                         
                                     }).done(() =>{
+                                        
+                     callerscreen = currentscreen;
                                         Actions.homeScreen();
                             // BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
                                     });
@@ -256,6 +260,7 @@ export default class OTPScreen extends Component {
     componentDidMount(){
         // Fetch code for retreving security question
 
+        currentscreen = 'otp';
         
         fetch('https://interface.blueravine.in/smartmedi/secretquestions/retrieve', { // USE THE LINK TO THE SERVER YOU'RE USING mobile
         method: 'GET', // USE GET, POST, PUT,ETC
