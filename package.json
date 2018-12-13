@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
+    "@okgrow/react-native-copilot": "^2.4.1",
     "accordion-collapse-react-native": "^0.1.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

@@ -1,6 +1,6 @@
-import React, { Component,PropTypes } from 'react';
+import React, { Component} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
-    UIManager, findNodeHandle,Alert,Keyboard,
+    UIManager, findNodeHandle,Alert,Keyboard,Switch,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,DeckSwiper, Text,Item,icon,Input,View,Fab, Button,  Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -347,7 +347,19 @@ var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-export default class Home extends Component {
+import PropTypes from 'prop-types';
+import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
+
+const WalkthroughableText = walkthroughable(Text);
+const WalkthroughableImage = walkthroughable(Image);
+class Home extends Component {
+
+    static propTypes = {
+        start: PropTypes.func.isRequired,
+        copilotEvents: PropTypes.shape({
+          on: PropTypes.func.isRequired,
+        }).isRequired,
+      };
 
     constructor(props) {
         super(props);
@@ -377,7 +389,8 @@ export default class Home extends Component {
             istestSorted: false,
             result:[],
             gestureName: 'none',
-            feedbacknotes:''
+            feedbacknotes:'',
+            secondStepActive: true,
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
@@ -697,6 +710,9 @@ export default class Home extends Component {
         currentscreen='home';
 
         this.getusertestdata();
+
+        this.props.copilotEvents.on('stepChange', this.handleStepChange);
+    this.props.start();
        
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
@@ -704,6 +720,13 @@ export default class Home extends Component {
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    handleStepChange () {
+        // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+        // this.props.start();
+        console.log(`Current step is: ${step.name}`);
+      }
+
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
@@ -969,9 +992,8 @@ export default class Home extends Component {
                         hidden={false}
                         backgroundColor='#1C306F'/>
                 </View>
-                    
                 <View style={[styles.headerview]}>
-
+                
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
                     <TouchableOpacity 
@@ -983,18 +1005,26 @@ export default class Home extends Component {
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
+                                         {/* <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="openApp">
+          <WalkthroughableText style={styles.title}> */}
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Refresh </Text>
+                                    {/* </WalkthroughableText>
+                                    </CopilotStep> */}
                             </View>
                         </TouchableOpacity>
                     
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
+                                          {/* <CopilotStep text="Hey! This is the first step of the tour!" order={2} name="secondtext">
+          <WalkthroughableText style={styles.title}> */}
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
+                                    {/* </WalkthroughableText>
+                                    </CopilotStep> */}
                             </View>
                         </TouchableOpacity>
                         <ModalFilterPicker
@@ -1028,9 +1058,12 @@ export default class Home extends Component {
                         >
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
-
+                                <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="openApp">
+          <WalkthroughableText style={styles.title}>
                                 <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
                                     Date of Test</Text>
+                                    </WalkthroughableText>
+                                    </CopilotStep>
                                 <Text style={{textAlign:'center',fontWeight:'bold'}}>
                                     {this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
@@ -1131,7 +1164,20 @@ export default class Home extends Component {
                     }
                         </View>
                     </Dialog>
-                </View>
+
+                       <View style={styles.activeSwitchContainer}> 
+            <View style={{ flexGrow: 1 }} />
+            <Switch
+              onValueChange={secondStepActive => this.setState({ secondStepActive })}
+              value={this.state.secondStepActive}
+            />
+          </View> 
+
+          <TouchableOpacity style={styles.button} onPress={() => this.props.start()}>
+            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
+          </TouchableOpacity>
+        </View>
+                
 
                 <View style={[styles.footer]}>
                     <BottomNavigation
@@ -1149,6 +1195,10 @@ export default class Home extends Component {
     }
 
 }
+export default copilot({
+    animated: true, // Can be true or false
+    overlay: 'svg', // Can be either view or svg
+  })(Home);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -1191,8 +1241,13 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top:0,
-
+        flex: 1,
+        alignItems: 'center',
     },
+    middleView: {
+        flex: 1,
+        alignItems: 'center',
+      },
     spinner:{
         flex:1,
         justifyContent:'center',
@@ -1298,6 +1353,35 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
-    }
+    },
+    title: {
+        fontSize: 24,
+        textAlign: 'center',
+      },
+      
+  button: {
+    backgroundColor: '#2980b9',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tabItem: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  activeSwitchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
 
 });
