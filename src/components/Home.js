@@ -1,6 +1,6 @@
-import React, { Component} from 'react';
+import React, { Component,PropTypes} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
-    UIManager, findNodeHandle,Alert,Keyboard,Switch,
+    UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,DeckSwiper, Text,Item,icon,Input,View,Fab, Button,  Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -347,22 +347,12 @@ var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import PropTypes from 'prop-types';
-import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
-
-const WalkthroughableText = walkthroughable(Text);
-const WalkthroughableImage = walkthroughable(Image);
-class Home extends Component {
-
-    static propTypes = {
-        start: PropTypes.func.isRequired,
-        copilotEvents: PropTypes.shape({
-          on: PropTypes.func.isRequired,
-        }).isRequired,
-      };
+import { AppTour, AppTourSequence, AppTourView } from 'react-native-app-tour'
+export default class Home extends Component {
 
     constructor(props) {
         super(props);
+        this.appTourTargets = [];
 
         this.state = {
             loading:false,
@@ -389,8 +379,7 @@ class Home extends Component {
             istestSorted: false,
             result:[],
             gestureName: 'none',
-            feedbacknotes:'',
-            secondStepActive: true,
+            feedbacknotes:''
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
@@ -710,23 +699,46 @@ class Home extends Component {
         currentscreen='home';
 
         this.getusertestdata();
-
-        this.props.copilotEvents.on('stepChange', this.handleStepChange);
-    this.props.start();
-       
+        setTimeout(() => {
+            let appTourSequence = new AppTourSequence()
+            this.appTourTargets.forEach(appTourTarget => {
+              appTourSequence.add(appTourTarget)
+            })
+      
+            AppTour.ShowSequence(appTourSequence)
+          }, 1000)
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
     componentWillUnmount() {
+        this.registerSequenceStepEvent();
+    this.registerFinishSequenceEvent();
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
 
-    handleStepChange () {
-        // this.props.copilotEvents.on('stepChange', this.handleStepChange);
-        // this.props.start();
-        console.log(`Current step is: ${step.name}`);
+    registerSequenceStepEvent = () => {
+        if (this.sequenceStepListener) {
+          this.sequenceStepListener.remove()
+        }
+        this.sequenceStepListener = DeviceEventEmitter.addListener(
+          'onShowSequenceStepEvent',
+          (e: Event) => {
+            console.log(e)
+          }
+        )
       }
-
+    
+      registerFinishSequenceEvent = () => {
+        if (this.finishSequenceListener) {
+          this.finishSequenceListener.remove()
+        }
+        this.finishSequenceListener = DeviceEventEmitter.addListener(
+          'onFinishSequenceEvent',
+          (e: Event) => {
+            console.log(e)
+          }
+        )
+      }
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
@@ -1005,26 +1017,18 @@ class Home extends Component {
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
-                                         {/* <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="openApp">
-          <WalkthroughableText style={styles.title}> */}
                             <Iccon type='SimpleLineIcons' name='refresh' size={24} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Refresh </Text>
-                                    {/* </WalkthroughableText>
-                                    </CopilotStep> */}
                             </View>
                         </TouchableOpacity>
                     
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
-                                          {/* <CopilotStep text="Hey! This is the first step of the tour!" order={2} name="secondtext">
-          <WalkthroughableText style={styles.title}> */}
                             <Iconns type='EvilIcons' name='calendar' size={30} color="#FFFFFF"/>
                             <Text note style={{fontSize:10,textAlign:'center',color:'#FFFFFF'}} >
                                     Search</Text>
-                                    {/* </WalkthroughableText>
-                                    </CopilotStep> */}
                             </View>
                         </TouchableOpacity>
                         <ModalFilterPicker
@@ -1058,12 +1062,13 @@ class Home extends Component {
                         >
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
-                                <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="openApp">
-          <WalkthroughableText style={styles.title}>
-                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
+                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}
+                                  style={styles.top}
+          addAppTourTarget={appTourTarget => {
+            this.appTourTargets.push(appTourTarget)
+          }}
+          >
                                     Date of Test</Text>
-                                    </WalkthroughableText>
-                                    </CopilotStep>
                                 <Text style={{textAlign:'center',fontWeight:'bold'}}>
                                     {this.state.selectedDate.toString().substring(6, 8)
                                 + '/' + this.state.selectedDate.toString().substring(4, 6) + '/'
@@ -1164,18 +1169,6 @@ class Home extends Component {
                     }
                         </View>
                     </Dialog>
-
-                       <View style={styles.activeSwitchContainer}> 
-            <View style={{ flexGrow: 1 }} />
-            <Switch
-              onValueChange={secondStepActive => this.setState({ secondStepActive })}
-              value={this.state.secondStepActive}
-            />
-          </View> 
-
-          <TouchableOpacity style={styles.button} onPress={() => this.props.start()}>
-            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
-          </TouchableOpacity>
         </View>
                 
 
@@ -1195,10 +1188,6 @@ class Home extends Component {
     }
 
 }
-export default copilot({
-    animated: true, // Can be true or false
-    overlay: 'svg', // Can be either view or svg
-  })(Home);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -1244,10 +1233,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
-    middleView: {
-        flex: 1,
-        alignItems: 'center',
-      },
     spinner:{
         flex:1,
         justifyContent:'center',
@@ -1353,35 +1338,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
-    },
-    title: {
-        fontSize: 24,
-        textAlign: 'center',
-      },
-      
-  button: {
-    backgroundColor: '#2980b9',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  tabItem: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  activeSwitchContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    alignItems: 'center',
-    paddingHorizontal: 40,
-  },
+    }
 
 });
