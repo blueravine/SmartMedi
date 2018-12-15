@@ -3,7 +3,6 @@ package com.SmartMedi;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.horcrux.svg.SvgPackage;
 import com.azendoo.reactnativesnackbar.SnackbarPackage;
 import com.someone.sendsms.SendSMSPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -20,7 +19,6 @@ import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.smixx.fabric.FabricPackage;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-import ui.apptour.RNAppTourPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -33,8 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SvgPackage(),
-            new RNAppTourPackage(),
           new FabricPackage(),
           new ReactNativePushNotificationPackage(),
           new CalendarEventsPackage(),
