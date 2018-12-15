@@ -706,7 +706,7 @@ export default class Home extends Component {
             })
       
             AppTour.ShowSequence(appTourSequence)
-          }, 1000)
+          }, 3000)
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
