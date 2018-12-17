@@ -1,4 +1,4 @@
-import React, { Component,PropTypes} from 'react';
+import React, { Component} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
     UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
@@ -347,8 +347,11 @@ var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { AppTour, AppTourSequence, AppTourView } from 'react-native-app-tour'
-export default class Home extends Component {
+import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
+import PropTypes from 'prop-types';
+const WalkthroughableText = walkthroughable(Text);
+class Home extends Component {
+
 
     constructor(props) {
         super(props);
@@ -379,7 +382,8 @@ export default class Home extends Component {
             istestSorted: false,
             result:[],
             gestureName: 'none',
-            feedbacknotes:''
+            feedbacknotes:'',
+            secondStepActive: true,
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
@@ -387,6 +391,14 @@ export default class Home extends Component {
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
+
+    static propTypes = {
+        start: PropTypes.func.isRequired,
+        copilotEvents: PropTypes.shape({
+          on: PropTypes.func.isRequired,
+        }).isRequired,
+      };
+
 
     // swiper:Object;
 
@@ -699,46 +711,25 @@ export default class Home extends Component {
         currentscreen='home';
 
         this.getusertestdata();
-        setTimeout(() => {
-            let appTourSequence = new AppTourSequence()
-            this.appTourTargets.forEach(appTourTarget => {
-              appTourSequence.add(appTourTarget)
-            })
-      
-            AppTour.ShowSequence(appTourSequence)
-          }, 3000)
+        setTimeout( () => {
+                this.props.copilotEvents.on('stepChange', this.handleStepChange);
+                this.props.start();
+        }, 2000);
+
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
 
+    handleStepChange = (step) => {
+        // console.log(`Current step is: ${step.name}`);
+        // Toast.show('Current step is:' +step.name,Toast.LONG)
+        // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+        // this.props.start();
+        // alert("button clicked");
+      };
+
     componentWillUnmount() {
-        this.registerSequenceStepEvent();
-    this.registerFinishSequenceEvent();
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
-
-    registerSequenceStepEvent = () => {
-        if (this.sequenceStepListener) {
-          this.sequenceStepListener.remove()
-        }
-        this.sequenceStepListener = DeviceEventEmitter.addListener(
-          'onShowSequenceStepEvent',
-          (e: Event) => {
-            console.log(e)
-          }
-        )
-      }
-    
-      registerFinishSequenceEvent = () => {
-        if (this.finishSequenceListener) {
-          this.finishSequenceListener.remove()
-        }
-        this.finishSequenceListener = DeviceEventEmitter.addListener(
-          'onFinishSequenceEvent',
-          (e: Event) => {
-            console.log(e)
-          }
-        )
-      }
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
@@ -1005,11 +996,12 @@ export default class Home extends Component {
                         backgroundColor='#1C306F'/>
                 </View>
                 <View style={[styles.headerview]}>
-                
+                               
                     <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
                     <TouchableOpacity 
                                          onPress={this.onNametextPress}>
+                                         
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
                     </View>
@@ -1062,12 +1054,7 @@ export default class Home extends Component {
                         >
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
-                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}
-                                  style={styles.top}
-          addAppTourTarget={appTourTarget => {
-            this.appTourTargets.push(appTourTarget)
-          }}
-          >
+                                <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
                                     Date of Test</Text>
                                 <Text style={{textAlign:'center',fontWeight:'bold'}}>
                                     {this.state.selectedDate.toString().substring(6, 8)
@@ -1169,6 +1156,25 @@ export default class Home extends Component {
                     }
                         </View>
                     </Dialog>
+
+                    <TouchableOpacity style={styles.button} onPress={() =>  this.props.start()}>
+            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
+          </TouchableOpacity>
+          <View>
+          <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="unique1">
+                                <WalkthroughableText>{'Step 1'}
+</WalkthroughableText>
+</CopilotStep>
+
+          </View>
+          <View>
+          <CopilotStep text="Second Step" order={2} name="unique2">
+                                <WalkthroughableText>{'Step 2'}
+</WalkthroughableText>
+</CopilotStep>
+
+          </View>
+
         </View>
                 
 
@@ -1188,6 +1194,11 @@ export default class Home extends Component {
     }
 
 }
+export default copilot({
+    animated: true,
+    overlay: 'svg'
+  })(Home);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -1338,6 +1349,45 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
-    }
+    },
+    
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  profilePhoto: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    marginVertical: 20,
+  },
+  middleView: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#2980b9',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tabItem: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  activeSwitchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
 
 });
