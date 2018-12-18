@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
-    UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,
+    UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,Switch,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,DeckSwiper, Text,Item,icon,Input,View,Fab, Button,  Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -713,12 +713,20 @@ class Home extends Component {
         this.getusertestdata();
         setTimeout( () => {
                 this.props.copilotEvents.on('stepChange', this.handleStepChange);
+                // this.props.copilotEvents.on('start', this.AppTutorialstart);
                 this.props.start();
         }, 2000);
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
-
+    // AppTutorialstart = () => {
+    //     // console.log(`Current step is: ${step.name}`);
+    //     // Toast.show('Current step is:' +step.name,Toast.LONG)
+    //     this.props.start();
+    //     // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+    //     // this.props.start();
+    //     // alert("button clicked");
+    //   };
     handleStepChange = (step) => {
         // console.log(`Current step is: ${step.name}`);
         // Toast.show('Current step is:' +step.name,Toast.LONG)
@@ -1156,20 +1164,29 @@ class Home extends Component {
                     }
                         </View>
                     </Dialog>
+                    
 
                     <TouchableOpacity style={styles.button} onPress={() =>  this.props.start()}>
             <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
           </TouchableOpacity>
-          <View>
-          <CopilotStep text="Hey! This is the first step of the tour!" order={1} name="unique1">
+          <View >
+          <CopilotStep  text="Hey! This is the first step of the tour!" order={1} name="unique1">
                                 <WalkthroughableText>{'Step 1'}
 </WalkthroughableText>
 </CopilotStep>
 
           </View>
+          
           <View>
-          <CopilotStep text="Second Step" order={2} name="unique2">
+          <CopilotStep active={this.state.secondStepActive} text="Second Step" order={2} name="unique2">
                                 <WalkthroughableText>{'Step 2'}
+</WalkthroughableText>
+</CopilotStep>
+
+          </View>
+          <View>
+          <CopilotStep text="Second Step" order={3} name="unique3">
+                                <WalkthroughableText>{'Step 3'}
 </WalkthroughableText>
 </CopilotStep>
 
