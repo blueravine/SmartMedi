@@ -1,6 +1,6 @@
-import React, { Component,PropTypes } from 'react';
+import React, { Component,PropTypes} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
-    UIManager, findNodeHandle,Alert,Keyboard,
+    UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,Switch,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Spinner,Thumbnail,Picker,DeckSwiper, Text,Item,icon,Input,View,Fab, Button,  Left, Body, Right,
     Footer, FooterTab} from 'native-base';
@@ -347,10 +347,24 @@ var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-export default class Home extends Component {
+// import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
+// import PropTypes from 'prop-types';
+// const WalkthroughableText = walkthroughable(Text);
+import Tips from 'react-native-tips'
+const primaryColor = '#4d6bcb'
+
+type Props = {};
+export default class Home extends Component{
+
 
     constructor(props) {
         super(props);
+        // this.appTourTargets = [];
+
+        this.waterfallTips = new Tips.Waterfall([
+            'buttonusername','buttonrefresh','buttonsearch','buttonadd'
+            , 'final'
+          ])
 
         this.state = {
             loading:false,
@@ -377,14 +391,29 @@ export default class Home extends Component {
             istestSorted: false,
             result:[],
             gestureName: 'none',
-            feedbacknotes:''
+            feedbacknotes:'',
+            tipsVisible: false
+            // menuVisible: false,
+            // secondStepActive: true,
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
     this.refreshtestresults = this.refreshtestresults.bind(this);
+    this.handleNextTips = this.handleNextTips.bind(this)
+    // this.showMenu = this.showMenu.bind(this)
+    // this.hideMenu = this.hideMenu.bind(this)
+    this.start = this.start.bind(this)
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
+
+    // static propTypes = {
+    //     start: PropTypes.func.isRequired,
+    //     copilotEvents: PropTypes.shape({
+    //       on: PropTypes.func.isRequired,
+    //     }).isRequired,
+    //   };
+
 
     // swiper:Object;
 
@@ -697,9 +726,78 @@ export default class Home extends Component {
         currentscreen='home';
 
         this.getusertestdata();
-       
+        setTimeout( () => {
+            this.start();
+                // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+                // this.props.copilotEvents.on('start', this.AppTutorialstart);
+                // this.props.start();
+        }, 2000);
+
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    handleNextTips() {
+        const tipsVisible = this.waterfallTips.next()
+    
+        switch (tipsVisible) {
+          case 'home':
+            this.setState({
+              tipsVisible: false
+            })
+    
+            // setTimeout(() => this.setState({ menuVisible: true }), 500)
+            setTimeout(() => this.setState({ tipsVisible }), 1500)
+            break
+    
+          case null:
+            this.setState({ tipsVisible })
+    
+            // setTimeout(() => this.setState({ menuVisible: false }), 1000)
+            break
+    
+          default: this.setState({ tipsVisible })
+            break
+        }
+      }
+    
+      /**
+       * Show the menu
+       */
+    //   showMenu() {
+    //     this.setState({ menuVisible: true })
+    //   }
+    
+      /**
+       * Hide the menu
+       */
+    //   hideMenu() {
+    //     this.setState({ menuVisible: false })
+    //   }
+    
+      /**
+       * Start the tips
+       */
+      start() {
+        this.setState({
+          tipsVisible: this.waterfallTips.start()
+        })
+      }
+      
+    // AppTutorialstart = () => {
+    //     // console.log(`Current step is: ${step.name}`);
+    //     // Toast.show('Current step is:' +step.name,Toast.LONG)
+    //     this.props.start();
+    //     // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+    //     // this.props.start();
+    //     // alert("button clicked");
+    //   };
+    // handleStepChange = (step) => {
+        // console.log(`Current step is: ${step.name}`);
+        // Toast.show('Current step is:' +step.name,Toast.LONG)
+        // this.props.copilotEvents.on('stepChange', this.handleStepChange);
+        // this.props.start();
+        // alert("button clicked");
+    //   };
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -884,6 +982,9 @@ export default class Home extends Component {
         });
     }
     render() {
+
+        const {tipsVisible } = this.state
+
         testtdetail = {};
         testtdetail = {
             testdate:this.state.selectedDate,
@@ -969,17 +1070,33 @@ export default class Home extends Component {
                         hidden={false}
                         backgroundColor='#1C306F'/>
                 </View>
-                    
                 <View style={[styles.headerview]}>
-
-                    <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
+                <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
+                    <Tips
+          visible={tipsVisible === 'buttonusername'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click text to go to ProfilePage."
+        >
                     <TouchableOpacity 
                                          onPress={this.onNametextPress}>
+                                         
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
+                        </Tips>
                     </View>
                     <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
+                    <Tips
+          visible={tipsVisible === 'buttonrefresh'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to refresh your TestResults."
+        >
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
@@ -988,7 +1105,15 @@ export default class Home extends Component {
                                     Refresh </Text>
                             </View>
                         </TouchableOpacity>
-                    
+                        </Tips>
+                        <Tips
+          visible={tipsVisible === 'buttonsearch'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to search your TestResults."
+        >
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
@@ -997,6 +1122,7 @@ export default class Home extends Component {
                                     Search</Text>
                             </View>
                         </TouchableOpacity>
+                        </Tips>
                         <ModalFilterPicker
                             visible={this.state.pickervisible2}
                             onSelect={this.onTestNameSelectpicker}
@@ -1004,6 +1130,14 @@ export default class Home extends Component {
                             options={testdates}
                             // optionTextStyle={style={fontSize:16}}
                         />
+                         <Tips
+          visible={tipsVisible === 'buttonadd'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to Add your TestResults."
+        >
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
@@ -1013,6 +1147,7 @@ export default class Home extends Component {
                             </View>
 
                         </TouchableOpacity>
+                        </Tips>
                         </View>
                     
                     </View>
@@ -1028,7 +1163,6 @@ export default class Home extends Component {
                         >
                             <View style={{width:300}}>
                                 {/*<View style={{flexDirection:'column',justifyContent:'space-evenly',marginTop:15}}>*/}
-
                                 <Text style={{textAlign:'center',marginTop:10,textDecorationLine:'underline'}}>
                                     Date of Test</Text>
                                 <Text style={{textAlign:'center',fontWeight:'bold'}}>
@@ -1131,7 +1265,29 @@ export default class Home extends Component {
                     }
                         </View>
                     </Dialog>
-                </View>
+                    
+
+                    {/* <TouchableOpacity style={styles.button} onPress={() =>  this.props.start()}>
+            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
+          </TouchableOpacity> */}
+          {/* <View >
+          <Tips
+          visible={tipsVisible === 'buttonConnect'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          text="When it's done, click here to connect to your user account. (clicking on the button won't close the Tips)"
+        >
+           <TouchableOpacity style={styles.button}
+            onPress={() => { Alert.alert('Click event', 'You have clicked on the button !') }}>
+            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
+          </TouchableOpacity>
+          
+        </Tips>
+          </View> */}
+
+        </View>
+                
 
                 <View style={[styles.footer]}>
                     <BottomNavigation
@@ -1149,6 +1305,11 @@ export default class Home extends Component {
     }
 
 }
+// export default copilot({
+//     animated: true,
+//     overlay: 'svg'
+//   })(Home);
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -1191,7 +1352,8 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         top:0,
-
+        flex: 1,
+        alignItems: 'center',
     },
     spinner:{
         flex:1,
@@ -1298,6 +1460,51 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         fontWeight: 'bold',
-    }
+    },
+    
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  profilePhoto: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    marginVertical: 20,
+  },
+  middleView: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#2980b9',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tabItem: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  activeSwitchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    alignItems: 'center',
+    paddingHorizontal: 40,
+  },
 
+  instructions: {
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  }
 });
