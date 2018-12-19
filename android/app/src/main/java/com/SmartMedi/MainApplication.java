@@ -13,7 +13,6 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.imagepicker.ImagePickerPackage;
 import java.util.Arrays;
-import com.horcrux.svg.SvgPackage;
 import java.util.List;
 import com.calendarevents.CalendarEventsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -33,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new FabricPackage(),
-          new SvgPackage(),
           new ReactNativePushNotificationPackage(),
           new CalendarEventsPackage(),
             new SnackbarPackage(),

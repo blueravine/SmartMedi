@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component,PropTypes} from 'react';
 import { Image,ScrollView,StyleSheet,TouchableOpacity,StatusBar,AsyncStorage,ActivityIndicator,BackHandler,AppState,
     UIManager, findNodeHandle,Alert,Keyboard,DeviceEventEmitter,Switch,
     TouchableHighlight,Dimensions,Animated,Easing } from 'react-native';
@@ -347,15 +347,24 @@ var testarray=[];
 // var temptestarr = {countrcode:null,testname:null,testunit:null,testagemin:null,testagemax:null,testgender:null,normalmin:null,normalmax:null,normalcomparator:null,category:null};
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
-import PropTypes from 'prop-types';
-const WalkthroughableText = walkthroughable(Text);
-class Home extends Component {
+// import { copilot, walkthroughable, CopilotStep } from '@okgrow/react-native-copilot';
+// import PropTypes from 'prop-types';
+// const WalkthroughableText = walkthroughable(Text);
+import Tips from 'react-native-tips'
+const primaryColor = '#4d6bcb'
+
+type Props = {};
+export default class Home extends Component{
 
 
     constructor(props) {
         super(props);
-        this.appTourTargets = [];
+        // this.appTourTargets = [];
+
+        this.waterfallTips = new Tips.Waterfall([
+            'buttonusername','buttonrefresh','buttonsearch','buttonadd'
+            , 'final'
+          ])
 
         this.state = {
             loading:false,
@@ -383,21 +392,27 @@ class Home extends Component {
             result:[],
             gestureName: 'none',
             feedbacknotes:'',
-            secondStepActive: true,
+            tipsVisible: false
+            // menuVisible: false,
+            // secondStepActive: true,
 
     };
     this.getusertestdata = this.getusertestdata.bind(this);
     this.refreshtestresults = this.refreshtestresults.bind(this);
+    this.handleNextTips = this.handleNextTips.bind(this)
+    // this.showMenu = this.showMenu.bind(this)
+    // this.hideMenu = this.hideMenu.bind(this)
+    this.start = this.start.bind(this)
         // this.handleAppStateChange = this.handleAppStateChange.bind(this);
         // this._onButtonPressed = this._onButtonPressed.bind(this);
     }
 
-    static propTypes = {
-        start: PropTypes.func.isRequired,
-        copilotEvents: PropTypes.shape({
-          on: PropTypes.func.isRequired,
-        }).isRequired,
-      };
+    // static propTypes = {
+    //     start: PropTypes.func.isRequired,
+    //     copilotEvents: PropTypes.shape({
+    //       on: PropTypes.func.isRequired,
+    //     }).isRequired,
+    //   };
 
 
     // swiper:Object;
@@ -712,13 +727,62 @@ class Home extends Component {
 
         this.getusertestdata();
         setTimeout( () => {
-                this.props.copilotEvents.on('stepChange', this.handleStepChange);
+            this.start();
+                // this.props.copilotEvents.on('stepChange', this.handleStepChange);
                 // this.props.copilotEvents.on('start', this.AppTutorialstart);
-                this.props.start();
+                // this.props.start();
         }, 2000);
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    handleNextTips() {
+        const tipsVisible = this.waterfallTips.next()
+    
+        switch (tipsVisible) {
+          case 'home':
+            this.setState({
+              tipsVisible: false
+            })
+    
+            // setTimeout(() => this.setState({ menuVisible: true }), 500)
+            setTimeout(() => this.setState({ tipsVisible }), 1500)
+            break
+    
+          case null:
+            this.setState({ tipsVisible })
+    
+            // setTimeout(() => this.setState({ menuVisible: false }), 1000)
+            break
+    
+          default: this.setState({ tipsVisible })
+            break
+        }
+      }
+    
+      /**
+       * Show the menu
+       */
+    //   showMenu() {
+    //     this.setState({ menuVisible: true })
+    //   }
+    
+      /**
+       * Hide the menu
+       */
+    //   hideMenu() {
+    //     this.setState({ menuVisible: false })
+    //   }
+    
+      /**
+       * Start the tips
+       */
+      start() {
+        this.setState({
+          tipsVisible: this.waterfallTips.start()
+        })
+      }
+      
     // AppTutorialstart = () => {
     //     // console.log(`Current step is: ${step.name}`);
     //     // Toast.show('Current step is:' +step.name,Toast.LONG)
@@ -727,13 +791,13 @@ class Home extends Component {
     //     // this.props.start();
     //     // alert("button clicked");
     //   };
-    handleStepChange = (step) => {
+    // handleStepChange = (step) => {
         // console.log(`Current step is: ${step.name}`);
         // Toast.show('Current step is:' +step.name,Toast.LONG)
         // this.props.copilotEvents.on('stepChange', this.handleStepChange);
         // this.props.start();
         // alert("button clicked");
-      };
+    //   };
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -918,6 +982,9 @@ class Home extends Component {
         });
     }
     render() {
+
+        const {tipsVisible } = this.state
+
         testtdetail = {};
         testtdetail = {
             testdate:this.state.selectedDate,
@@ -1004,16 +1071,32 @@ class Home extends Component {
                         backgroundColor='#1C306F'/>
                 </View>
                 <View style={[styles.headerview]}>
-                               
-                    <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
+                <View style={{flexDirection:"row",backgroundColor:'#4d6bcb',height:50}}>
                     <View style={{flex:3,flexDirection:"row"}}>
+                    <Tips
+          visible={tipsVisible === 'buttonusername'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click text to go to ProfilePage."
+        >
                     <TouchableOpacity 
                                          onPress={this.onNametextPress}>
                                          
                         <Text note style={{fontSize:16,textAlign:'left',marginTop:10,marginLeft:10,color:'#FFFFFF'}} > {userdata.name}</Text>
                         </TouchableOpacity>
+                        </Tips>
                     </View>
                     <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
+                    <Tips
+          visible={tipsVisible === 'buttonrefresh'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to refresh your TestResults."
+        >
                         <TouchableOpacity 
                                          onPress={this.refreshtestresults}>
                                          <View style={{flexDirection:"column",alignItems:'center',marginTop:10}}>
@@ -1022,7 +1105,15 @@ class Home extends Component {
                                     Refresh </Text>
                             </View>
                         </TouchableOpacity>
-                    
+                        </Tips>
+                        <Tips
+          visible={tipsVisible === 'buttonsearch'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to search your TestResults."
+        >
                         <TouchableOpacity 
                                           onPress={this.onTestNameShowpicker}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:11}}>
@@ -1031,6 +1122,7 @@ class Home extends Component {
                                     Search</Text>
                             </View>
                         </TouchableOpacity>
+                        </Tips>
                         <ModalFilterPicker
                             visible={this.state.pickervisible2}
                             onSelect={this.onTestNameSelectpicker}
@@ -1038,6 +1130,14 @@ class Home extends Component {
                             options={testdates}
                             // optionTextStyle={style={fontSize:16}}
                         />
+                         <Tips
+          visible={tipsVisible === 'buttonadd'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          style={{alignItems: 'center',marginRight:150,backgroundColor: primaryColor}}
+          text="click icon to Add your TestResults."
+        >
                         <TouchableOpacity 
                                           onPress={this.onplusButtonPress}>
                                           <View style={{flexDirection:"column",alignItems:'center',marginTop:5}}>
@@ -1047,6 +1147,7 @@ class Home extends Component {
                             </View>
 
                         </TouchableOpacity>
+                        </Tips>
                         </View>
                     
                     </View>
@@ -1166,31 +1267,24 @@ class Home extends Component {
                     </Dialog>
                     
 
-                    <TouchableOpacity style={styles.button} onPress={() =>  this.props.start()}>
+                    {/* <TouchableOpacity style={styles.button} onPress={() =>  this.props.start()}>
+            <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
+          </TouchableOpacity> */}
+          {/* <View >
+          <Tips
+          visible={tipsVisible === 'buttonConnect'}
+          onRequestNext={this.handleNextTips}
+          enableChildrenInteraction
+          position="bottom"
+          text="When it's done, click here to connect to your user account. (clicking on the button won't close the Tips)"
+        >
+           <TouchableOpacity style={styles.button}
+            onPress={() => { Alert.alert('Click event', 'You have clicked on the button !') }}>
             <Text style={styles.buttonText}>START THE TUTORIAL!</Text>
           </TouchableOpacity>
-          <View >
-          <CopilotStep  text="Hey! This is the first step of the tour!" order={1} name="unique1">
-                                <WalkthroughableText>{'Step 1'}
-</WalkthroughableText>
-</CopilotStep>
-
-          </View>
           
-          <View>
-          <CopilotStep active={this.state.secondStepActive} text="Second Step" order={2} name="unique2">
-                                <WalkthroughableText>{'Step 2'}
-</WalkthroughableText>
-</CopilotStep>
-
-          </View>
-          <View>
-          <CopilotStep text="Second Step" order={3} name="unique3">
-                                <WalkthroughableText>{'Step 3'}
-</WalkthroughableText>
-</CopilotStep>
-
-          </View>
+        </Tips>
+          </View> */}
 
         </View>
                 
@@ -1211,10 +1305,10 @@ class Home extends Component {
     }
 
 }
-export default copilot({
-    animated: true,
-    overlay: 'svg'
-  })(Home);
+// export default copilot({
+//     animated: true,
+//     overlay: 'svg'
+//   })(Home);
 
 const styles = StyleSheet.create({
     container: {
@@ -1407,4 +1501,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
 
+  instructions: {
+    alignItems: 'center',
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  }
 });
