@@ -728,7 +728,7 @@ export default class Home extends Component{
 
         this.getusertestdata();
 
-        await  AsyncStorage.getItem('Userguide')
+          AsyncStorage.getItem('Userguide')
         .then((Userguide) => {
              UserguideInfo = Userguide;
         //    let  jsonuserguideinfo = Userguide ? JSON.parse(Userguide) : tempuserguideinfo;
@@ -737,9 +737,14 @@ export default class Home extends Component{
             
         }).done(() =>{
             if(!UserguideInfo){
-                UserguideInfo = true;
+                UserguideInfo = "true";
         this.start();
+        AsyncStorage.setItem('Userguide',UserguideInfo)
+            .then((Userguide) => {
+                
+            }).done();
             }
+            
         });
        
         // setTimeout( () => {
@@ -800,10 +805,7 @@ export default class Home extends Component{
       }
 
     componentWillUnmount() {
-        AsyncStorage.setItem('Userguide',UserguideInfo)
-        .then((Userguide) => {
-            
-        }).done();
+       
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
     handleBackButton = () => {
