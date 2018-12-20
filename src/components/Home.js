@@ -354,6 +354,7 @@ import Tips from 'react-native-tips'
 const primaryColor = '#4d6bcb'
 
 type Props = {};
+var UserguideInfo=null;
 export default class Home extends Component{
 
 
@@ -726,12 +727,27 @@ export default class Home extends Component{
         currentscreen='home';
 
         this.getusertestdata();
-        setTimeout( () => {
-            this.start();
+
+        await  AsyncStorage.getItem('Userguide')
+        .then((Userguide) => {
+             UserguideInfo = Userguide;
+        //    let  jsonuserguideinfo = Userguide ? JSON.parse(Userguide) : tempuserguideinfo;
+          
+        //    userdata =jsonuserinfo;
+            
+        }).done(() =>{
+            if(!UserguideInfo){
+                UserguideInfo = true;
+        this.start();
+            }
+        });
+       
+        // setTimeout( () => {
+            // this.start();
                 // this.props.copilotEvents.on('stepChange', this.handleStepChange);
                 // this.props.copilotEvents.on('start', this.AppTutorialstart);
                 // this.props.start();
-        }, 2000);
+        // }, 2000);
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
@@ -782,24 +798,12 @@ export default class Home extends Component{
           tipsVisible: this.waterfallTips.start()
         })
       }
-      
-    // AppTutorialstart = () => {
-    //     // console.log(`Current step is: ${step.name}`);
-    //     // Toast.show('Current step is:' +step.name,Toast.LONG)
-    //     this.props.start();
-    //     // this.props.copilotEvents.on('stepChange', this.handleStepChange);
-    //     // this.props.start();
-    //     // alert("button clicked");
-    //   };
-    // handleStepChange = (step) => {
-        // console.log(`Current step is: ${step.name}`);
-        // Toast.show('Current step is:' +step.name,Toast.LONG)
-        // this.props.copilotEvents.on('stepChange', this.handleStepChange);
-        // this.props.start();
-        // alert("button clicked");
-    //   };
 
     componentWillUnmount() {
+        AsyncStorage.setItem('Userguide',UserguideInfo)
+        .then((Userguide) => {
+            
+        }).done();
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
     }
     handleBackButton = () => {
